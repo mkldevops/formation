@@ -1,10 +1,7 @@
 name: inverse
 class: center, middle, inverse
-
 # Programmation Orientée Objet
-
-# PHP
-
+# .red[PHP]
 ![Right-aligned image](https://ri7.fr/wp-content/uploads/2020/12/logo2-h-195x64-light.png)
 
 ---
@@ -188,7 +185,7 @@ class: middle
 .right-column[
 Créer une instance, c'est créer un objet à partir d'une classe. On utilise le mot `new` pour instancier une classe. Cette instanciation sera alors affecter à une variable qui deviendra donc notre objet de type `Voiture`
 
-Exemple d’instanciation:
+**Exemple d’instanciation:**
 
 ```php
   $voiture = new Voiture();
@@ -381,6 +378,7 @@ class Voiture
 
 `private` ne va être uniquement accessibles depuis l’intérieur de la classe. Pour y avoir acces on utilisera les accesseurs.
 ]
+
 ---
 
 class: middle
@@ -425,7 +423,6 @@ class Voiture
   ...
 }
 ```
-
 ]
 ]
 
@@ -470,7 +467,7 @@ var_dump($voiture);
 ]
 
 ---
-class: midle
+class: middle
 .left-column[
 ### Visibilité private
 ### Les accesseurs et mutateurs
@@ -498,7 +495,7 @@ class: midle
   ```
 ]
 ---
-class: midle
+class: middle
 .left-column[
   ### Visibilité private
   ### Les accesseurs et mutateurs
@@ -516,12 +513,11 @@ class: midle
   - Sécuriser nos méthodes afin - Que l'on ne puisse pas avoir plus de **40 ans d'ancienneté**
 
     - Un employé doit avoir entre **18 ans et 65 ans**
-
   ]
 ]
 
 ---
-class: midle
+class: middle
 .left-column[
   ### Visibilité private
   ### Les accesseurs et mutateurs
@@ -549,7 +545,7 @@ class: midle
 ]
 
 ---
-class: midle
+class: middle
 .left-column[
   ### Visibilité private
   ### Les accesseurs et mutateurs
@@ -586,7 +582,7 @@ class: midle
 ]
 
 ---
-class: midle
+class: middle
 .left-column[
   ### Visibilité private
   ### Les accesseurs et mutateurs
@@ -622,7 +618,7 @@ class: midle
 ]
 
 ---
-class: midle
+class: middle
 .left-column[
   ### Visibilité private
   ### Les accesseurs et mutateurs
@@ -656,7 +652,7 @@ class: middle, center, inverse
 # 3. Réutilisation du code et gain de temps
 
 ---
-class: midle
+class: middle
 .left-column[
   ## Héritage
 ]
@@ -677,7 +673,7 @@ class: midle
 ]
 
 ---
-class: midle
+class: middle
 .left-column[
   ## Héritage
   ### Mot clé extends
@@ -700,7 +696,7 @@ class: midle
 ]
 
 ---
-class: midle
+class: middle
 .left-column[
   ## Héritage
   ### Mot clé extends
@@ -729,7 +725,7 @@ class: midle
 ]
 ---
 
-class: midle
+class: middle
 .left-column[
   ## Héritage
   ### Mot clé extends
@@ -765,7 +761,7 @@ class: midle
 
 ---
 
-class: midle
+class: middle
 .left-column[
   ## Héritage
   ### Mot clé extends
@@ -808,7 +804,7 @@ class: midle
 
 ---
 
-class: midle
+class: middle
 .left-column[
   ## Héritage
   ### Mot clé extends
@@ -838,7 +834,7 @@ class: midle
 ]
 ---
 
-class: midle
+class: middle
 .left-column[
   ## Héritage
   ### Mot clé extends
@@ -873,7 +869,7 @@ class: midle
 
 ---
 
-class: midle
+class: middle
 .left-column[
   ## Héritage
   ### Mot clé extends
@@ -900,7 +896,7 @@ class: midle
 
 ---
 
-class: midle
+class: middle
 .left-column[
   ## Héritage
   ### Mot clé extends
@@ -932,7 +928,7 @@ class: middle, center, inverse
 
 ---
 
-class: midle
+class: middle
 .left-column[
 ### Interfaces
 ]
@@ -966,7 +962,7 @@ class: midle
 
 ---
 
-class: midle
+class: middle
 .left-column[
   ### Interfaces
   ### .red[**Travaux Pratique**]
@@ -981,7 +977,7 @@ Dans le projet de la société R pour avoir plus de controle sur le code et les 
 
 ---
 
-class: midle
+class: middle
 .left-column[
   ### Interfaces
   ### .red[**Travaux Pratique**]
@@ -1007,7 +1003,7 @@ class: midle
 
 ---
 
-class: midle
+class: middle
 .left-column[
   ### Interfaces
   ### .red[**Travaux Pratique**]
@@ -1033,7 +1029,7 @@ class: midle
 
 ---
 
-class: midle
+class: middle
 .left-column[
   ### Interfaces
   ### .red[**Travaux Pratique**]
@@ -1041,16 +1037,24 @@ class: midle
   ### Polymorphisme
 ]
 .right-column[
-  **Le polymorphisme** est un outil puissant et fondamental dans la programmation orientée objet. Il décrit un modèle dans lequel les classes ont des fonctionnalités différentes tout en partageant une interface commune.
+  **Le polymorphisme** est un outil puissant et fondamental dans la programmation orientée objet. Il décrit un modèle dans lequel **les classes ont des fonctionnalités différentes tout en partageant une interface commune.**
 
-  La beauté du polymorphisme réside dans le fait que le code travaillant avec les différentes classes n'a pas besoin de savoir quelle classe il utilise, car elles sont toutes utilisées de la même manière.
+  La beauté du polymorphisme réside dans le fait que le code travaillant avec les différentes classes n'a **pas besoin de savoir quelle classe il utilise**, car elles sont toutes utilisées de la même manière.
 
   Dans le monde de la programmation, le polymorphisme est utilisé pour rendre les applications plus modulaires et extensibles. Au lieu d'instructions conditionnelles compliquées décrivant différents plans d'action, vous créez des objets interchangeables que vous sélectionnez en fonction de vos besoins. C'est l'objectif de base du polymorphisme.
 ]
 
 ---
 
-.pull-left[
+class: middle
+.left-column[
+  ### Interfaces
+  ### .red[**Travaux Pratique**]
+  ### Abstraction
+  ### Polymorphisme
+]
+.right-column[
+Exemple : 
 
 ```php
 interface Transport {
@@ -1082,11 +1086,17 @@ class Voyageur {
   }
 }
 ```
-
 ]
 
-.pull-right[
-
+---
+class: middle
+.left-column[
+  ### Interfaces
+  ### .red[**Travaux Pratique**]
+  ### Abstraction
+  ### Polymorphisme
+]
+.right-column[
 ```php
 $dany = new Voyageur('Daniel');
 $voiture = new Voiture();
@@ -1096,27 +1106,51 @@ $avion = new Avion();
 $dany->voyager($avion);
 ```
 
-Cet exemple illustre le polymorphisme. Un voyageur (`$dany`) à la choix entre deux transport : voiture ou avion. Quel que soit le transport, l’action sera appelée par la même méthode : dans notre cas, `voyager()`. La méthode ne se soucie pas des détails de chaque activité. En effet chaque activité devient une classe qui définit les données de l’action.
+Cet exemple illustre le polymorphisme. 
+
+Un voyageur (`$dany`) à la choix entre deux transport : voiture ou avion. Quel que soit le transport, l’action sera appelée par la même méthode : dans notre cas, `voyager()`. 
+
+La méthode ne se soucie pas des détails de chaque activité.
+
+En effet chaque type de transport devient une classe qui définit les données de du voyage.
 ]
 
 ---
 
-class: center, middle
-
-### Travaux Pratique
-
-.left[
+class: middle
+.left-column[
+  ### Interfaces
+  ### .red[**Travaux Pratique**]
+  ### Abstraction
+  ### Polymorphisme
+  ### .red[**Travaux Pratique**]
+]
+.right-column[
+La société R pense à l'éducation des jeunes et souhaite mettre en place la gestion des stagiaires.
+Ils ne seront pas considerer comme des employés mais pourront tout de meme travailler.
 
 - Ajoutons une nouvelle classe **`Stagiaire`** qui n'etendra pas de la classe **`Employe`**
+
   - Le stagiaire aura un nom, prenom, age (Vous pouvez utiliser les traits)
+
 - Ajouter un interface **`Travailleur`** qui aura une fonction `travailler()`
+
 - Implementer cette interface aux classes `Employe` et `Stagiaire`
-  ]
+
+]
 
 ---
 
-### Namespace
-
+class: middle
+.left-column[
+  ### Interfaces
+  ### .red[**Travaux Pratique**]
+  ### Abstraction
+  ### Polymorphisme
+  ### .red[**Travaux Pratique**]
+  ### Namespace
+]
+.right-column[
 Dans ce tutoriel nous allons apprendre les espaces de noms en PHP. En PHP, lorsque nous créons de grandes applications ou lorsque nous intégrons des applications/bibliothèques tierces, il peut y avoir des risques de conflits entre les noms de classes, les noms de fonctions. Donc pour éviter ces problèmes, les « espaces de noms » en PHP fournissent un moyen de regrouper les classes, interfaces, fonctions et constantes.
 
 Pour définir un namespace, rien de plus simple. On va utiliser le mot clé `namespace` juste avant la définition de la classe :
@@ -1134,9 +1168,19 @@ class Vehicule implements VehiculeInterface {}
 ```
 
 L’espace de noms est utilisé pour éviter des conflits et introduire plus de flexibilité et d’organisation dans le code. Tout comme les répertoires, l’espace de noms peut contenir une hiérarchie connue sous le nom de sous-espaces. PHP utilise la barre oblique inverse « `\` » comme séparateur d’espace de noms.
-
+]
 ---
 
+class: middle
+.left-column[
+  ### Interfaces
+  ### .red[**Travaux Pratique**]
+  ### Abstraction
+  ### Polymorphisme
+  ### .red[**Travaux Pratique**]
+  ### Namespace
+]
+.right-column[
 **Conclusion**
 
 - Un espace de noms peut être considéré comme un concept abstrait. Il permet de redéclarer les mêmes fonctions/classes/interfaces dans un espace de noms séparé sans obtenir l’erreur fatale.
@@ -1148,39 +1192,64 @@ L’espace de noms est utilisé pour éviter des conflits et introduire plus de 
 - Un espace de noms concerne les types de code suivants : classes (y compris les classes abstraits et les traits), interfaces, fonctions et constantes.
 
 - Les espaces de noms sont déclarés en utilisant le mot-clé **`namespace`**.
-
+]
 ---
 
-class: center, middle
-
-### Travaux Pratique
-
-.left[
-
+class: middle
+.left-column[
+  ### Interfaces
+  ### .red[**Travaux Pratique**]
+  ### Abstraction
+  ### Polymorphisme
+  ### .red[**Travaux Pratique**]
+  ### Namespace
+  ### .red[**Travaux Pratique**]
+]
+.right-column[
 - Ajouter un répertoires `Classes/` et `Interfaces/` pour stocker nos différentes classes.
 - Pour chaque classe faire un fichier en y définissante les namespace **`Classes`** et **`Interfaces`**
-  ]
+]
 
 ---
 
-### Les exceptions
+class: middle
+.left-column[
+  ### Interfaces
+  ### .red[**Travaux Pratique**]
+  ### Abstraction
+  ### Polymorphisme
+  ### .red[**Travaux Pratique**]
+  ### Namespace
+  ### .red[**Travaux Pratique**]
+  ### Les exceptions
+]
+.right-column[
+  PHP a introduit une nouvelle façon de gérer la plupart des erreurs en utilisant ce qu’on appelle les **exceptions**. Cette nouvelle façon de procéder se base sur le PHP orienté objet et sur la classe **`\Exception`**.
 
-#### Presentation
+  L’idée ici va être de créer ou de **« lancer (`throw`)»** un nouvel objet `\Exception` lorsqu’une erreur spécifique est détectée. Dès qu’une exception est lancée, le script va suspendre son exécution et le PHP va chercher un endroit dans le script où l’exception va être **« attrapée (`catch`) ».**
 
-PHP a introduit une nouvelle façon de gérer la plupart des erreurs en utilisant ce qu’on appelle les **exceptions**. Cette nouvelle façon de procéder se base sur le PHP orienté objet et sur la classe **`\Exception`**.
+  Utiliser des exceptions va nous permettre de gérer les erreurs de manière plus fluide et de personnaliser la façon dont un script doit gérer certaines erreurs.
 
-L’idée ici va être de créer ou de **« lancer (`throw`)»** un nouvel objet `\Exception` lorsqu’une erreur spécifique est détectée. Dès qu’une exception est lancée, le script va suspendre son exécution et le PHP va chercher un endroit dans le script où l’exception va être **« attrapée (`catch`) ».**
+  Notez que quasiment tous les langages serveurs utilisent le concept d’exceptions pour prendre en charge les erreurs car c’est la meilleure façon de procéder à ce jour.
 
-Utiliser des exceptions va nous permettre de gérer les erreurs de manière plus fluide et de personnaliser la façon dont un script doit gérer certaines erreurs.
+  #### Comment utiliser les excepetions
 
-Notez que quasiment tous les langages serveurs utilisent le concept d’exceptions pour prendre en charge les erreurs car c’est la meilleure façon de procéder à ce jour.
-
-#### Comment utiliser les excepetions
-
-Une exception peut être lancée `throw` et attrapée `catch` dans PHP. Le code devra être entouré d'un bloc `try` pour faciliter la saisie d'une exception potentielle.
-
+  Une exception peut être lancée `throw` et attrapée `catch` dans PHP. Le code devra être entouré d'un bloc `try` pour faciliter la saisie d'une exception potentielle.
+]
 ---
 
+class: middle
+.left-column[
+  ### Interfaces
+  ### .red[**Travaux Pratique**]
+  ### Abstraction
+  ### Polymorphisme
+  ### .red[**Travaux Pratique**]
+  ### Namespace
+  ### .red[**Travaux Pratique**]
+  ### Les exceptions
+]
+.right-column[
 On va ameliorer l'accesseur `setCarburant` de notre classe `Vehicule`, en utilisant la gestions des erreurs via les exceptions.
 
 ```php
@@ -1190,7 +1259,7 @@ class Voiture
 
   public function setCarburant($carburant)
   {
-    if(!in_array($carburant, ['diesel', 'essence', 'ethanol']) {
+    if(!in_array($carburant, ['diesel', 'essence', 'ethanol'])) {
       throw new \Exception("La voiture ne supporte pas le carburant ".$carbrant, 1);
     }
 
@@ -1209,29 +1278,55 @@ try {
 ```
 
 L’idée derrière les exceptions va être d’anticiper les situations problématiques (situations qui vont pouvoir causer une erreur) et de lancer une exception si la situation est rencontrée.
+]
 
 ---
 
-### L'autoloader
+class: middle
+.left-column[
+  ### Interfaces
+  ### .red[**Travaux Pratique**]
+  ### Abstraction
+  ### Polymorphisme
+  ### .red[**Travaux Pratique**]
+  ### Namespace
+  ### .red[**Travaux Pratique**]
+  ### Les exceptions
+  ### L'autoloader
+]
+.right-column[
+  Jusqu'ici, nous avons défini les classes et nous les avons instancié pour nous servir des objets qui en sont les instances, et tout ceci dans la même page PHP. Bien que ça marche, ce n'est cependant pas une méthode de travail propre et organisée.
 
-Jusqu'ici, nous avons défini les classes et nous les avons instancié pour nous servir des objets qui en sont les instances, et tout ceci dans la même page PHP. Bien que ça marche, ce n'est cependant pas une méthode de travail propre et organisée.
+  **On conseille donc toujours de séparer les classes dans différents fichiers. **
 
-**On conseille donc toujours de séparer les classes dans différents fichiers. **
+  Le problème c'est que l'on est obligé ensuite de faire beaucoup de **`require`** pour charger nos différentes classes. Heureusement l'**autoloading** nous permet de remédier à ce problème en incluant les classes dès que l'on en a besoin.
 
-Le problème c'est que l'on est obligé ensuite de faire beaucoup de **`require`** pour charger nos différentes classes. Heureusement l'**autoloading** nous permet de remédier à ce problème en incluant les classes dès que l'on en a besoin.
+  Le principe de base est de créer une fonction **`__autoload`** qui permettra à PHP de savoir comment include nos classes.
 
-Le principe de base est de créer une fonction **`__autoload`** qui permettra à PHP de savoir comment include nos classes.
+  ```php
+  function __autoload($class_name){
+      require('class/' . $class_name . '.php');
+  }
+  ```
 
-```php
-function __autoload($class_name){
-    require('class/' . $class_name . '.php');
-}
-```
-
-Le problème de cette méthode c'est qu'on ne peut pas avoir plusieurs fois la même fonction et on ne peut donc pas créer plusieurs autoloader.
+  Le problème de cette méthode c'est qu'on ne peut pas avoir plusieurs fois la même fonction et on ne peut donc pas créer plusieurs autoloader.
+]
 
 ---
 
+class: middle
+.left-column[
+  ### Interfaces
+  ### .red[**Travaux Pratique**]
+  ### Abstraction
+  ### Polymorphisme
+  ### .red[**Travaux Pratique**]
+  ### Namespace
+  ### .red[**Travaux Pratique**]
+  ### Les exceptions
+  ### L'autoloader
+]
+.right-column[
 Heureusement, il est possible de créer et d'enregistrer des fonctions manuellement en utilisant **`spl_autoload_register`**
 
 ```php
@@ -1262,29 +1357,32 @@ On utilise ici une classe avec des méthodes statique pour une meilleur organisa
 require 'autoloader.php';
 Autoloader::register();
 ```
-
+]
 ---
 
-class: center, middle
-
-### Travaux Pratique
-
-.left[
-
+class: middle
+.left-column[
+  ## .red[**Bilan Travaux Pratique**]
+]
+.right-column[
 #### TP commun
 
 Avec tous ce que l'on a appris et vu, nous allons l'appliquer sur l'outils de la société R à repartant de zero
 
+- Recuperer le repo git
 - Structure du projet
   - dossier `public`, `public/css`, `public/js` (tous nos fichiers public)
   - dossier `app`, `app/Classes`, `app/Interfaces` (Toutes nos classes)
   - fichier `public/index.php`
   - fichier `app/Autoloader.php`
   - dossiers `pages`
-- Ajouter nos classes dans les dossiers respectifs
+- Base de données ou Fichier JSON
 - Essayons ensemble de mettre en place
-  - Une page qui liste les employés
-    ]
+  - Un formulaire d'ajout d'employé
+  - Un formulaire pour responsable
+  - Une page qui liste tout les employés
+  - Page du responsable avec son équipe
+]
 
 ---
 
@@ -1362,7 +1460,7 @@ class: middle, center, inverse
 
 PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020 !
 
-## Cette nouvelle mise à jour majeure apporte tout un tas d’optimisations et de puissantes fonctionnalités au langage. Ce sont des changements très intéressants qui nous permettront d’écrire un meilleur code et de construire des applications plus puissantes.
+### Cette nouvelle mise à jour majeure apporte tout un tas d’optimisations et de puissantes fonctionnalités au langage. Ce sont des changements très intéressants qui nous permettront d’écrire un meilleur code et de construire des applications plus puissantes.
 
 ---
 
@@ -1433,3 +1531,6 @@ class Vehicule
   ...
 }
 ```
+
+#### Arguments nommées
+#### null safe
