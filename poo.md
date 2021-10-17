@@ -11,14 +11,14 @@ class: middle
 ## Objectif
 ]
 .right-column[
-- Découvrir un peu plus PHP5
+- Découvrir un peu plus PHP
 
 - Maitriser les bases de la POO
 
 - Vous permettre de repondre aux besoin de votre entreprise
 
 - Gagner en confiance et motivation
-  ]
+]
 
 ---
 class: middle
@@ -35,7 +35,7 @@ class: middle
 - Éditeur de texte (vs-code, phpstorm, sublime-text, ...)
 
 - Shell terminal / Powershell avec le client `php-cli`  
-  ]
+]
 
 ---
 
@@ -66,8 +66,8 @@ class: middle
 .right-column[
 - **Organisation du code**
   - Les classes
-  - Propriétés
-  - Méthodes
+  - Propriétés (attributs) d'une classe
+  - Méthodes d'une classe
 
 * **L'encapsulation, Sécurité du code (intégrité)**
   - Visibilité Private
@@ -100,8 +100,43 @@ La société R souhaite un programme afin d'organiser son personnel, elle fait a
 ```php
 $nom1 = 'Hamada';
 $prenom1 = 'Fahari';
-$age1 = 50;
-$anciennete1 = 20;
+$age1 = 35;
+$anciennete1 = 12;
+
+$nom2 = 'Dupont';
+$prenom2 = 'Michel';
+$age2 = 50;
+$anciennete2 = 20;
+
+function presentation($nom, $prenom, $age, $anciennete)
+{
+  echo "Mon nom est $nom, mon prenom est $prenom,
+    j'ai $age ans
+    je travail depuis $anciennete ans.\n\r";
+}
+
+presentation($nom1, $prenom1, $age1, $anciennete1);
+presentation($nom2, $prenom2, $age2, $anciennete2);
+```
+
+]
+.pull-right[
+]
+---
+
+class: middle
+
+### Analysons un cas
+
+La société R souhaite un programme afin d'organiser son personnel, elle fait appel à un développeur qui écrit le code suivant :
+
+.pull-left[
+
+```php
+$nom1 = 'Hamada';
+$prenom1 = 'Fahari';
+$age1 = 35;
+$anciennete1 = 12;
 
 $nom2 = 'Dupont';
 $prenom2 = 'Michel';
@@ -123,13 +158,13 @@ presentation($nom2, $prenom2, $age2, $anciennete2);
 .pull-right[
 On remarque qu'avec le code presenté :
 
-- Nous avons beaucoup de variables pour représenter les données d'un employé.
+- Nous avons **beaucoup de variables** pour représenter les données d'un employé.
 
-- Une gestion de nouveaux employés qui se complique.
+- Une gestion de **nouveaux employés qui se complique.**
 
-- Il est aussi possible que nous puissions mélanger les variables.
+- Il est aussi possible que nous puissions** mélanger les variables.**
 
-- Au final, un code surchargé et difficile à maintenir
+- Au final, **un code surchargé et difficile à maintenir**
 ]
 
 ---
@@ -151,7 +186,9 @@ class: middle
 
 - **Une classe a aussi des méthodes,** il s’agit de fonctions internes à la classe. Les methode represente le comportement qu'aura notre définition.
 
-Ainsi La classe détermine ce qu'il sera possible de faire avec ce qu'elle représente. Elle va donc nous permettre de structurer et d'organiser l’ensemble de notre code pour le rendre plus solide et facile à entretenir ou à faire évoluer.
+Ainsi **La classe détermine ce qu'il sera possible de faire** avec ce qu'elle représente. 
+
+Elle va donc nous permettre de structurer et d'organiser l’ensemble de notre code pour le rendre plus solide et facile à entretenir ou à faire évoluer.
 ]
 
 ---
@@ -183,6 +220,17 @@ class: middle
 #### Instanciation d'une classe
 ]
 .right-column[
+Une classe se déclare de la manière suivante :
+
+```php
+class Voiture
+{
+
+}
+```
+
+**Note : **Le mot clé `class` est suivi d'un nom en **`PascalCase`**, Prenez soin de nommer votre classe de manière pertinente.
+
 Créer une instance, c'est créer un objet à partir d'une classe. On utilise le mot `new` pour instancier une classe. Cette instanciation sera alors affecter à une variable qui deviendra donc notre objet de type `Voiture`
 
 **Exemple d’instanciation:**
@@ -243,6 +291,29 @@ Ainsi, lorsque l’on modifie la valeur de l’alias, on modifie également la v
 `$date1` et `$date2` désignent le même objet en mémoire. Ils sont donc tous les deux au lendemain.
 ]
 ]
+---
+
+class: middle
+.left-column[
+### Les classes
+#### Déclaration de la classe
+#### Instanciation d'une classe
+#### Référence d'objet
+### Propriétés (attributs) d'une classe
+]
+
+.right-column[
+Les propriétés sont les variables membres de la classe. Ils constituent les caractéristiques de l'objet. En quelque sorte ce qui l'a défini.
+
+```php
+class Voiture
+{
+  $vitesse = 100;
+  $carburant = 'diesel';
+}
+```
+]
+
 ---
 
 class: middle
