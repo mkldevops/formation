@@ -231,7 +231,7 @@ class Voiture
 
 **Note : **Le mot clé `class` est suivi d'un nom en **`PascalCase`**, Prenez soin de nommer votre classe de manière pertinente.
 
-Créer une instance, c'est créer un objet à partir d'une classe. On utilise le mot `new` pour instancier une classe. Cette instanciation sera alors affecter à une variable qui deviendra donc notre objet de type `Voiture`
+Créer une instance, c'est créer un objet à partir d'une classe. On utilise le mot `new` pour instancier une classe. Cette instanciation sera alors affecter à une variable qui deviendra donc notre objet de type `Voiture`. 
 
 **Exemple d’instanciation:**
 
@@ -281,9 +281,9 @@ Ainsi, lorsque l’on modifie la valeur de l’alias, on modifie également la v
 
 ```php
   $date1 = new DateTime();
-  $date2 = $dateUne;
+  $date2 = $date1;
+  $date3 = clone $date1;
   $date2->modify('+1 day');
-  $date3 = new DateTime();
 
   var_dump($date1, $date2, $date3);
 ```
@@ -505,7 +505,7 @@ class: middle
 ### Les accesseurs et mutateurs
 ]
 .right-column[
-Pour pouvoir donc modifier les information de notre objet, on passera par les accesseurs et mutateurs, qyui sont méthodes déclaré public de l'objet.
+Pour pouvoir donc modifier les information de notre objet, on passera par les accesseurs et mutateurs, qui sont méthodes déclaré public de l'objet.
 
 ```php
 $voiture = new Voiture();
@@ -581,7 +581,9 @@ class: middle
 
   - Définir un constructeur pour pouvoir y définir directement les valeurs des propriétés
 
-  - Sécuriser nos méthodes afin - Que l'on ne puisse pas avoir plus de **40 ans d'ancienneté**
+  - Sécuriser nos méthodes afin 
+  
+    - Que l'on ne puisse pas avoir plus de **40 ans d'ancienneté**
 
     - Un employé doit avoir entre **18 ans et 65 ans**
   ]
@@ -1398,37 +1400,79 @@ class: middle
   ### L'autoloader
 ]
 .right-column[
-Heureusement, il est possible de créer et d'enregistrer des fonctions manuellement en utilisant **`spl_autoload_register`**
+  Heureusement, il est possible de créer et d'enregistrer des fonctions manuellement en utilisant **`spl_autoload_register`**
 
-```php
-# autoloader.php
-class Autoloader
-{
-  /** Enregistre notre autoloader */
-  public static function register()
+  ```php
+  # autoloader.php
+  class Autoloader
   {
-      spl_autoload_register(array(__CLASS__, 'autoload'));
+    /** Enregistre notre autoloader */
+    public static function register()
+    {
+        spl_autoload_register(array(__CLASS__, 'autoload'));
+    }
+
+    /**
+     * Inclue le fichier correspondant à notre classe
+     * @param string $class Le nom de la classe à charger
+     */
+    public static function autoload($class)
+    {
+        require 'class/' . $class . '.php';
+    }
   }
+  ```
 
-  /**
-   * Inclue le fichier correspondant à notre classe
-   * @param string $class Le nom de la classe à charger
-   */
-  public static function autoload($class)
-  {
-      require 'class/' . $class . '.php';
-  }
-}
-```
+  On utilise ici une classe avec des méthodes statique pour une meilleur organisation. On peut alors lancer notre autoloader simplement.
 
-On utilise ici une classe avec des méthodes statique pour une meilleur organisation. On peut alors lancer notre autoloader simplement.
-
-```php
-# index.php
-require 'autoloader.php';
-Autoloader::register();
-```
+  ```php
+  # index.php
+  require 'autoloader.php';
+  Autoloader::register();
+  ```
 ]
+
+
+---
+
+.left-column[
+  ### Interfaces
+  ### .red[**Travaux Pratique**]
+  ### Abstraction
+  ### Polymorphisme
+  ### .red[**Travaux Pratique**]
+  ### Namespace
+  ### .red[**Travaux Pratique**]
+  ### Les exceptions
+  ### L'autoloader
+  ### Classe Anonymes
+]
+.right-column[
+**Que sont les classes anonymes en PHP ?**
+
+Lors de la création d'un nouvel objet, une classe est d'abord définie, puis un objet de cette classe est créé. En PHP 7, une classe dite anonyme a été introduite pour permettre aux classes d'être définies sans nom à la volée.
+
+On définit une classe anonyme en utilisant le mot-clé `new class`.
+
+Par exemple :
+```php
+  $obj1 = new class() {};
+
+  $obj2 = new class($x, $y) {
+     private $x;
+     private $y;
+     public function __construct($x, $y) {
+           $this->x = $x;
+           $this->y = $y;
+     }
+  };
+```
+
+Elles peuvent prendre des arguments via le constructeur, hériter d’autres classes, implémenter des interfaces, et utiliser des traits comme dans une classe normale.
+
+Les objets instanciés par une classe anonyme ne sont pas différentes de celle des objets instanciés par une classe normale.
+]
+
 ---
 
 class: middle
@@ -1463,65 +1507,105 @@ class: middle, center, inverse
 
 ---
 
-### Composer
+class: middle
+.left-column[
+  ### Composer
+]
+.right-column[
+  url : https://getcomposer.org/
 
-url : https://getcomposer.org/
+  #### Installer composer
 
-#### Install composer
+  ```bash
+  curl -sS https://getcomposer.org/installer | php -- \
+    --install-dir=/usr/local/bin \
+    --filename=composer
+  ```
 
-```bash
-curl -sS https://getcomposer.org/installer | php -- \
-  --install-dir=/usr/local/bin \
-  --filename=composer
-```
+  #### Utiliser Composer
 
-#### Using Composer
+  la commande suivante permettra d'initialiser composer avec le répertoire `vendor`
 
-la commande suivante permettra d'initialiser composer avec le répertoire `vendor`
+  ```bash
+  composer init
+  ```
 
-```bash
-composer init
-```
+  installer une package
 
-installer une package
+  ```bash
+  composer install symfony/http-client
+  ```
 
-```bash
-composer install symfony/http-client
-```
-
-Vous pouvez retrouver la liste de tout les packages disponible sur https://packagist.org/
-
+  Vous pouvez retrouver la liste de tout les packages disponible sur https://packagist.org/
+]
 ---
 
-## PHP Doc
+class: middle
+.left-column[
+  ### Composer
+  ### PHP Doc
+]
+.right-column[
+  C'est une transposition de Javadoc au langage PHP. Il s'agit d'un standard formalisé pour commenter le code PHP. Il permet aussi à certains IDE de connaître le type des variables et de lever d'autres ambiguïtés dues au typage faible, améliorant ainsi la complétion de code
 
-C'est une transposition de Javadoc au langage PHP. Il s'agit d'un standard formalisé pour commenter le code PHP. Il permet aussi à certains IDE de connaître le type des variables et de lever d'autres ambiguïtés dues au typage faible, améliorant ainsi la complétion de code
+  ```php
+  class Vehicule
+  {
+    ...
 
-```php
-class Vehicule
-{
-  ...
+    /**
+      * @var int Vitesse du véhicule
+      */
+    protected $vitesse = 100;
 
-  /**
-    * @var int Vitesse du véhicule
-    */
-  protected $vitesse = 100;
+    /**
+      * @param int $vitesse Vitesse du véhicule
+      * @param string $carburant Carburant du véhicule
+      */
+    public function __construct($vitesse, $carburant)
+    { ... }
 
-  /**
-    * @param int $vitesse Vitesse du véhicule
-    * @param string $carburant Carburant du véhicule
-    */
-  public function __construct($vitesse, $carburant)
-  { ... }
+    /**
+      * @return int Vitesse du véhicule
+      */
+    public function getVitesse()
+    { ...  }
+    ...
+  }
+  ```
+]
+---
 
-  /**
-    * @return int Vitesse du véhicule
-    */
-  public function getVitesse()
-  { ...  }
-  ...
-}
-```
+class: middle
+.left-column[
+  ### Composer
+  ### PHP Doc
+  ### Typage de données
+]
+.right-column[
+  Si vous souhaitez utiliser cette fonctionnalité, je vous conseille de **toujours activer** le **`declare(strict_types=1);`** dans vos fichiers.
+
+  ```php
+  class Vehicule
+  {
+    private ?int $vitesse = null;
+    private ?string $carburant = null;
+    public function rouler(?int $hour) : int
+    {
+      return $hour ? $hour * $vitesse : null;
+    }
+  }
+
+  class Conducteur
+  {
+    private ?Vehicule $vehicule = null;
+    public function __construct(Vehicule $vehicule)
+    {
+      $this->vehicule = $vehicule;
+    }
+  }
+  ```
+]
 
 ---
 
@@ -1535,73 +1619,152 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
 
 ---
 
-#### Typage de données
-
-Si vous souhaitez utiliser cette fonctionnalité, je vous conseille de **toujours activer** le **`declare(strict_types=1);`** dans vos fichiers.
-
-```php
-class Vehicule
-{
-  private ?int $vitesse = null;
-  private ?string $carburant = null;
-  public function rouler(?int $hour) : int
+class: middle
+.left-column[
+  ### Types d'Union
+]
+.right-column[
+  Vous pouvez utiliser plusieurs types d'entrée pour la même fonction au lieu d'un seul, ce qui permet un plus grand degré de réutilisation du code.
+  ```php
+  class Vehicule
   {
-    return $hour ? $hour * $vitesse : null;
-  }
-}
+    private int|float|null $vitesse = null;
 
-class Conducteur
-{
-  private ?Vehicule $vehicule = null;
-  public function __construct(Vehicule $vehicule)
-  {
-    $this->vehicule = $vehicule;
+    public function setVitesse(int|float|null $vitesse) : self
+    {
+      $vitesse = $vitesse;
+      return $this;
+    }
   }
-}
-```
+  ```
+
+  Vous pouvez aussi utiliser des classes et interfaces définies
+  
+  ```php
+  class Conducteur 
+  {
+    public function conduire(Voiture|Camion $vehicule) 
+    {
+      ...
+    }  
+  }
+  ```
+]
 
 ---
 
-#### Union Type
+class: middle
+.left-column[
+  ### Types d'Union
+  ### Promotion de propriétés de constructeur
+]
+.right-column[
+  Cette fonction devrait vous aider à accélérer votre processus de développement et à réduire les erreurs. En effet moins de code redondant pour définir et initialiser les propriétés.
 
-```php
-class Vehicule
-{
-  private int|float|null $vitesse = null;
-
-  public function setVitesse(int|float|null $vitesse) : int
+  ```php
+  class Vehicule 
   {
-    return
-    $vitesse = $vitesse;
+
+    public function __construct(
+      private ?int $vitesse = 120,
+      protected ?string $carburant = 'essence'
+    ) {
+      ...
+    }
+
   }
-}
-```
+  ```
+]
 
 ---
 
-#### Promotion de propriétés de constructeur
+class: middle
+.left-column[
+  ### Types d'Union
+  ### Promotion de propriétés de constructeur
+  ### visibilité pour les constantes
+]
+.right-column[
 
-Moins de code redondant pour définir et initialiser les propriétés.
-
-```php
-class Vehicule {
-  public function __construct(
-    private ?int $vitesse = null,
-    private ?string $carburant = null
-  ) {
+  ```php
+  class Vehicule
+  {
+    private const NB_ROUES = 4;
+    ...
   }
-}
-```
+  ```
+]
 
-#### visibilité pour les constantes
+---
 
-```php
-class Vehicule
-{
-  private const NB_ROUES = 4;
-  ...
-}
-```
+class: middle
+.left-column[
+  ### Types d'Union
+  ### Promotion de propriétés de constructeur
+  ### visibilité pour les constantes
+  ### Arguments nommées
+]
+.right-column[
+  Les arguments nommés vous donnent plus de souplesse pour appeler les fonctions. Jusqu'à présent, vous deviez appeler une fonction et passer chaque argument dans l'ordre spécifié par la fonction. 
 
-#### Arguments nommées
-#### null safe
+  ```php
+  // Using positional arguments:
+  array_fill(0, 100, 50);
+  ```
+
+  Les arguments nommés vous permettent de définir un nom pour chaque paramètre. Et maintenant, ils peuvent être rappelés à l'ordre, comme décrit ci-dessous : 
+  ```php
+  // Using named arguments:
+  array_fill(start_index: 0, num: 100, value: 50);
+  ```
+]
+
+---
+
+class: middle
+.left-column[
+  ### Types d'Union
+  ### Promotion de propriétés de constructeur
+  ### visibilité pour les constantes
+  ### Arguments nommées
+  ### Fonction str_contains
+]
+.right-column[
+  Cette nouvelle fonction plutôt sympathique renvoie une valeur booléenne (vrai/faux) si une chaîne est trouvée dans une autre chaîne. Il faut deux arguments, la chaîne de caractères à rechercher et la chaîne de caractères à rechercher.
+  ```php
+  str_contains('php8', '8'); // true
+
+  str_contains('php8', 'wordpress'); // false
+  ```
+
+  Pour des filtres de chaînes encore plus utiles, découvrez ces nouvelles fonctionnalités :
+
+  ```php
+  str_starts_with('haystack', 'hay'); // true
+
+  str_ends_with('haystack', 'stack'); // true
+  ```
+]
+
+---
+
+
+class: middle
+.left-column[
+  ### Types d'Union
+  ### Promotion de propriétés de constructeur
+  ### visibilité pour les constantes
+  ### Arguments nommées
+  ### Fonction str_contains
+  ### null safe
+]
+.right-column[
+
+  ```php
+  class Vehicule
+  {
+    private const NB_ROUES = 4;
+    ...
+  }
+  ```
+]
