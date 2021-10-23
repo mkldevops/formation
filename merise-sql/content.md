@@ -923,11 +923,11 @@ class: middle
   Les traits sont déclarés avec le mot-clé **`trait`** :
 
   ```php
-  trait vitesseTrait
+  trait VitesseTrait
   {
-      protected $vitesse = 120;
+    protected $vitesse = 120;
 
-      public function setVitesse($vitesse)
+    public function setVitesse($vitesse)
     {
       $this->vitesse = $vitesse;
     }
@@ -964,7 +964,7 @@ class: middle
     $vehicule->setVitesse(170);
   ```
 
-  Si d’autres classes ont besoin d’utiliser la propriété **`vitesse`** et ses **accesseurs**, utilisez simplement le trait « `vitesseTrait` » dans ces classes. Cela réduit la duplication du code, car il n’est pas nécessaire de déclarer à nouveau la même propriété et méthodes encore et encore.
+  Si d’autres classes ont besoin d’utiliser la propriété **`vitesse`** et ses **accesseurs**, utilisez simplement le trait « `VitesseTrait` » dans ces classes. Cela réduit la duplication du code, car il n’est pas nécessaire de déclarer à nouveau la même propriété et méthodes encore et encore.
 ]
 
 ---
@@ -1001,7 +1001,6 @@ class: middle, center, inverse
 
 ---
 
-class: middle
 .left-column[
 ### Interfaces
 ]
@@ -1035,7 +1034,6 @@ class: middle
 
 ---
 
-class: middle
 .left-column[
   ### Interfaces
   ### .red[**Travaux Pratique**]
@@ -1050,7 +1048,6 @@ Dans le projet de la société R pour avoir plus de controle sur le code et les 
 
 ---
 
-class: middle
 .left-column[
   ### Interfaces
   ### .red[**Travaux Pratique**]
@@ -1066,8 +1063,8 @@ class: middle
   ```php
   abstract class AbstractVehicule
   {
-    private int $vitesse;
-    protected string $carburant;
+    private $vitesse;
+    protected $carburant;
 
     abstract public function rouler();
   }
@@ -1076,7 +1073,6 @@ class: middle
 
 ---
 
-class: middle
 .left-column[
   ### Interfaces
   ### .red[**Travaux Pratique**]
@@ -1088,8 +1084,8 @@ class: middle
   ```php
   class Voiture extends AbstractVehicule
   {
-    private int $vitesse = 90; // Error
-    protected string $carburant = 'diesel';
+    private $vitesse = 90; // Error
+    protected $carburant = 'diesel';
 
     public function rouler()
     {
@@ -1102,11 +1098,49 @@ class: middle
 
 ---
 
-class: middle
 .left-column[
   ### Interfaces
   ### .red[**Travaux Pratique**]
   ### Abstraction
+  ### .red[**Travaux Pratique**]
+]
+.right-column[
+  Pour mieux assimiler l'abstraction nous allons concevoir un programme a partir de module UML suivant:
+
+  [![](https://mermaid.ink/img/eyJjb2RlIjoiY2xhc3NEaWFncmFtXG5cbiAgICBjbGFzcyBQb2ludDJEIHtcbiAgICAgICAgLSBpbnQgeFxuICAgICAgICAtIGludCB5XG4gICAgICAgICsgYm91Z2VyKGludCBkeCwgaW50IGR5KVxuICAgICAgICArIHRvU3RyaW5nKClcbiAgICB9XG5cbiAgICBGb3JtZSA8fC0tIFJlY3RhbmdsZVxuICAgIEZvcm1lIDx8LS0gQ2VyY2xlXG4gICAgRm9ybWUgXCIwLG5cIiAtLT4gXCIxLDFcIiBQb2ludDJEXG4gICAgRm9ybWUgOiAjIGludCBpZFxuICAgIEZvcm1lIDogIyBQb2ludDJEIGNlbnRyZVxuICAgIEZvcm1lIDogKyBpbnQgc3RhdGljIGNvbXB0ZXVyID0gMFxuICAgIEZvcm1lOiArIGFic3RyYWN0IHN1cmZhY2UoKVxuICAgIEZvcm1lOiArIGFic3RyYWN0IHBlcmltZXRyZSgpXG4gICAgRm9ybWU6ICsgYm91Z2VyKGludCBkeCwgaW50IGR5KVxuICAgIFxuICAgIGNsYXNzIFJlY3RhbmdsZXtcbiAgICAgICMgaW50IGxhcmdldXJcbiAgICAgICMgaW50IGxvbmd1ZXVyIFxuICAgICAgKyB0b1N0cmluZygpXG4gICAgICArIHN1cmZhY2UoKVxuICAgICAgKyBwZXJpbWV0cmUoKVxuICAgIH1cbiAgICBcbiAgICBjbGFzcyBDZXJjbGUge1xuICAgICAgLSBpbnQgcmF5b25cbiAgICAgICsgdG9TdHJpbmcoKVxuICAgICAgKyBzdXJmYWNlKClcbiAgICAgICsgcGVyaW1ldHJlKClcbiAgICB9XG4gICAgXG4gICAgY2xhc3MgQ2FycmUge1xuICAgICAgKyB0b1N0cmluZygpXG4gICAgfVxuXG4gICAgUmVjdGFuZ2xlIDx8LS0gQ2FycmUgICAgICAiLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlLCJhdXRvU3luYyI6dHJ1ZSwidXBkYXRlRGlhZ3JhbSI6ZmFsc2V9)](https://mermaid.live/edit#eyJjb2RlIjoiY2xhc3NEaWFncmFtXG5cbiAgICBjbGFzcyBQb2ludDJEIHtcbiAgICAgICAgLSBpbnQgeFxuICAgICAgICAtIGludCB5XG4gICAgICAgICsgYm91Z2VyKGludCBkeCwgaW50IGR5KVxuICAgICAgICArIHRvU3RyaW5nKClcbiAgICB9XG5cbiAgICBGb3JtZSA8fC0tIFJlY3RhbmdsZVxuICAgIEZvcm1lIDx8LS0gQ2VyY2xlXG4gICAgRm9ybWUgXCIwLG5cIiAtLT4gXCIxLDFcIiBQb2ludDJEXG4gICAgRm9ybWUgOiAjIGludCBpZFxuICAgIEZvcm1lIDogIyBQb2ludDJEIGNlbnRyZVxuICAgIEZvcm1lIDogKyBpbnQgc3RhdGljIGNvbXB0ZXVyID0gMFxuICAgIEZvcm1lOiArIGFic3RyYWN0IHN1cmZhY2UoKVxuICAgIEZvcm1lOiArIGFic3RyYWN0IHBlcmltZXRyZSgpXG4gICAgRm9ybWU6ICsgYm91Z2VyKGludCBkeCwgaW50IGR5KVxuICAgIFxuICAgIGNsYXNzIFJlY3RhbmdsZXtcbiAgICAgICMgaW50IGxhcmdldXJcbiAgICAgICMgaW50IGxvbmd1ZXVyIFxuICAgICAgKyB0b1N0cmluZygpXG4gICAgICArIHN1cmZhY2UoKVxuICAgICAgKyBwZXJpbWV0cmUoKVxuICAgIH1cbiAgICBcbiAgICBjbGFzcyBDZXJjbGUge1xuICAgICAgLSBpbnQgcmF5b25cbiAgICAgICsgdG9TdHJpbmcoKVxuICAgICAgKyBzdXJmYWNlKClcbiAgICAgICsgcGVyaW1ldHJlKClcbiAgICB9XG4gICAgXG4gICAgY2xhc3MgQ2FycmUge1xuICAgICAgKyB0b1N0cmluZygpXG4gICAgfVxuXG4gICAgUmVjdGFuZ2xlIDx8LS0gQ2FycmUgICAgICAiLCJtZXJtYWlkIjoie1xuICBcInRoZW1lXCI6IFwiZGVmYXVsdFwiXG59IiwidXBkYXRlRWRpdG9yIjpmYWxzZSwiYXV0b1N5bmMiOnRydWUsInVwZGF0ZURpYWdyYW0iOmZhbHNlfQ)
+]
+
+
+---
+
+.left-column[
+  ### Interfaces
+  ### .red[**Travaux Pratique**]
+  ### Abstraction
+  ### .red[**Travaux Pratique**]
+]
+.right-column[
+1. Définir chaque classe, puis les propriété, ensuite les accesseurs, mutateurs et les constrcuteurs.
+2. La fonction magique **`Point2D::__toString`** permet d’afficher les propriétés sous la forme : **"Point(x =10,y =3)"**
+3. La méthode **`Point2D::bouger`** prenant en paramètre les deux entiers `dx` et `dy` et qui permet de translater le point vers le point  `x + dx` ,`y + dy`.
+4. Lors de l'instanciation d’une Forme, son id est incrémenté selon le nombre de Formes instanciés.
+5. Définir la méthode **`Rectangle::surface`** qui renvoie la surface d’un objet rectangle : **largeur x longueur**.
+6. Définir la méthode **`Rectangle::perimetre`** qui renvoie le périmètre d’un objet rectangle : **2 x (largeur + longueur)**.
+7. Définir la méthode **`Cercle::surface`** qui renvoie la surface d’un objet cercle : **π x r²**
+8. Définir la méthode **`Cercle::perimetre`** qui renvoie le périmètre d’un objet rectangle : **2 x π x r**
+9. Chaque methode __toString affichera `{NomClasse: id, ... liste des propriétés }` 
+  - exemple : `{Rectangle :1, Centre:Point(x=2, y=3), Largeur:1, Longueur:2, surface:2, perimetre:6 }`
+10. Instancier 3 formes : cercle(x=1, y=3, rayon=2), rectangle(x=2, y=3, longueur=3, largeur=2), carre(x=4, y=6, longueur=3)
+11. Appliquer une déplacement du cercle par (dx=2,dy=1), rectangle (dx=3, dy=4), carre (dx=1, y=5)
+
+]
+---
+
+.left-column[
+  ### Interfaces
+  ### .red[**Travaux Pratique**]
+  ### Abstraction
+  ### .red[**Travaux Pratique**]
   ### Polymorphisme
 ]
 .right-column[
@@ -1119,11 +1153,11 @@ class: middle
 
 ---
 
-class: middle
 .left-column[
   ### Interfaces
   ### .red[**Travaux Pratique**]
   ### Abstraction
+  ### .red[**Travaux Pratique**]
   ### Polymorphisme
 ]
 .right-column[
@@ -1162,11 +1196,12 @@ class Voyageur {
 ]
 
 ---
-class: middle
+
 .left-column[
   ### Interfaces
   ### .red[**Travaux Pratique**]
   ### Abstraction
+  ### .red[**Travaux Pratique**]
   ### Polymorphisme
 ]
 .right-column[
@@ -1183,18 +1218,16 @@ Cet exemple illustre le polymorphisme.
 
 Un voyageur (`$dany`) à la choix entre deux transport : voiture ou avion. Quel que soit le transport, l’action sera appelée par la même méthode : dans notre cas, `voyager()`. 
 
-La méthode ne se soucie pas des détails de chaque activité.
-
-En effet chaque type de transport devient une classe qui définit les données de du voyage.
+La méthode ne se soucie pas des détails de chaque voyage. En effet chaque type de transport devient une classe qui définit les données de du voyage.
 ]
 
 ---
 
-class: middle
 .left-column[
   ### Interfaces
   ### .red[**Travaux Pratique**]
   ### Abstraction
+  ### .red[**Travaux Pratique**]
   ### Polymorphisme
   ### .red[**Travaux Pratique**]
 ]
@@ -1210,15 +1243,18 @@ Ils ne seront pas considerer comme des employés mais pourront tout de meme trav
 
 - Implementer cette interface aux classes `Employe` et `Stagiaire`
 
+- Définir une méthode `faireTravailler` à la classe `Responsable` qui pourra faire travailler un objet qui implemente `TravailleurInterface`. Puis l'utiliser.
+ 
+- Définir une methode `faireTravaillerEquipe` à la classe `Responsable` qui faira travailler son équipe. Puis l'utiliser.
 ]
 
 ---
 
-class: middle
 .left-column[
   ### Interfaces
   ### .red[**Travaux Pratique**]
   ### Abstraction
+  ### .red[**Travaux Pratique**]
   ### Polymorphisme
   ### .red[**Travaux Pratique**]
   ### Namespace
@@ -1244,11 +1280,11 @@ L’espace de noms est utilisé pour éviter des conflits et introduire plus de 
 ]
 ---
 
-class: middle
 .left-column[
   ### Interfaces
   ### .red[**Travaux Pratique**]
   ### Abstraction
+  ### .red[**Travaux Pratique**]
   ### Polymorphisme
   ### .red[**Travaux Pratique**]
   ### Namespace
@@ -1268,28 +1304,43 @@ class: middle
 ]
 ---
 
-class: middle
 .left-column[
   ### Interfaces
   ### .red[**Travaux Pratique**]
   ### Abstraction
+  ### .red[**Travaux Pratique**]
   ### Polymorphisme
   ### .red[**Travaux Pratique**]
   ### Namespace
   ### .red[**Travaux Pratique**]
 ]
 .right-column[
-- Ajouter un répertoires `Classes/` et `Interfaces/` pour stocker nos différentes classes.
-- Pour chaque classe faire un fichier en y définissante les namespace **`Classes`** et **`Interfaces`**
+- Ajouter un répertoires `Classes/`, `Traits/`, `Abstracts/` et `Interfaces/` pour stocker nos différentes classes.
+
+- Réorganiser les classes, traits, abstracts et interfaces dans les dossiers respectifs  
+
+- Pour chaque fichier, y définir les namespace 
+
+  - **`namespace Classes;`**
+
+  - **`namespace Interfaces`**
+
+  - **`namespace Traits`**
+
+  - **`namespace Abstracts`**
+
+- Faire une `require_once` de chaque fichier dans `index.php`
+
+- Utiliser le mot clé `use` pour resoudre les erreurs de classe indefini dans chaque fichier
 ]
 
 ---
 
-class: middle
 .left-column[
   ### Interfaces
   ### .red[**Travaux Pratique**]
   ### Abstraction
+  ### .red[**Travaux Pratique**]
   ### Polymorphisme
   ### .red[**Travaux Pratique**]
   ### Namespace
@@ -1311,11 +1362,11 @@ class: middle
 ]
 ---
 
-class: middle
 .left-column[
   ### Interfaces
   ### .red[**Travaux Pratique**]
   ### Abstraction
+  ### .red[**Travaux Pratique**]
   ### Polymorphisme
   ### .red[**Travaux Pratique**]
   ### Namespace
@@ -1343,7 +1394,7 @@ class Voiture
 try {
   $voiture = new Voiture();
   $voiture->setCarburant('eau');
-} catch (\Exception $th) {
+} catch (\Exception $e) {
   echo 'Message d\'erreur : ' .$e->getMessage();
   echo 'Code d\'erreur : ' .$e->getCode();
   echo $e->getFile();
@@ -1355,16 +1406,36 @@ L’idée derrière les exceptions va être d’anticiper les situations problé
 
 ---
 
-class: middle
 .left-column[
   ### Interfaces
   ### .red[**Travaux Pratique**]
   ### Abstraction
+  ### .red[**Travaux Pratique**]
   ### Polymorphisme
   ### .red[**Travaux Pratique**]
   ### Namespace
   ### .red[**Travaux Pratique**]
   ### Les exceptions
+  ### .red[**Travaux Pratique**]
+]
+.right-column[
+  Nous allons appliquer la gestion d'erreur sur notre application de la société R.
+  1. Ajouter une nouveau repertoire `Exceptions`
+  
+  2. Y définir une nouvelle classe `RException` dans le namespace `Exceptions`
+  
+  3. Dans la methode `Employe::setAnciennete` gerer les cas de plus de 40 ans
+  
+  4. Dans la methode `Employe::setAge` gerer les cas des personnes n'entrant pas dans la tranche d'age de 18 - 65 ans.
+  
+  5. Utiliser un `try-catch` lors du set de l'age ou de l'anciennété (present dans le constructeur)
+
+  6. Dans la methode `Employe::incrementeEmploye` gerer par une exception lorsque le quota max est atteint
+]
+
+---
+
+.left-column[
   ### L'autoloader
 ]
 .right-column[
@@ -1377,8 +1448,9 @@ class: middle
   Le principe de base est de créer une fonction **`__autoload`** qui permettra à PHP de savoir comment include nos classes.
 
   ```php
-  function __autoload($class_name){
-      require('class/' . $class_name . '.php');
+  function __autoload($className){
+      
+      require_once './' . str_replace('\\', '/', $className) . '.php';
   }
   ```
 
@@ -1387,23 +1459,14 @@ class: middle
 
 ---
 
-class: middle
 .left-column[
-  ### Interfaces
-  ### .red[**Travaux Pratique**]
-  ### Abstraction
-  ### Polymorphisme
-  ### .red[**Travaux Pratique**]
-  ### Namespace
-  ### .red[**Travaux Pratique**]
-  ### Les exceptions
   ### L'autoloader
 ]
 .right-column[
   Heureusement, il est possible de créer et d'enregistrer des fonctions manuellement en utilisant **`spl_autoload_register`**
 
   ```php
-  # autoloader.php
+  # Autoloader.php
   class Autoloader
   {
     /** Enregistre notre autoloader */
@@ -1416,9 +1479,9 @@ class: middle
      * Inclue le fichier correspondant à notre classe
      * @param string $class Le nom de la classe à charger
      */
-    public static function autoload($class)
+    public static function autoload($className)
     {
-        require 'class/' . $class . '.php';
+        require_once str_replace('\\', '/', $className) . '.php';
     }
   }
   ```
@@ -1427,7 +1490,7 @@ class: middle
 
   ```php
   # index.php
-  require 'autoloader.php';
+  require 'Autoloader.php';
   Autoloader::register();
   ```
 ]
@@ -1436,14 +1499,6 @@ class: middle
 ---
 
 .left-column[
-  ### Interfaces
-  ### .red[**Travaux Pratique**]
-  ### Abstraction
-  ### Polymorphisme
-  ### .red[**Travaux Pratique**]
-  ### Namespace
-  ### .red[**Travaux Pratique**]
-  ### Les exceptions
   ### L'autoloader
   ### Classe Anonymes
 ]
@@ -1475,30 +1530,20 @@ Les objets instanciés par une classe anonyme ne sont pas différentes de celle 
 
 ---
 
-class: middle
 .left-column[
-  ## .red[**Bilan Travaux Pratique**]
+  ### L'autoloader
+  ### Classe Anonymes
 ]
 .right-column[
-#### TP commun
+```php
+  $classX = new class extends Avion implements Transport {
+    use VitesseTrait;
+  };
 
-Avec tous ce que l'on a appris et vu, nous allons l'appliquer sur l'outils de la société R à repartant de zero
-
-- Recuperer le repo git
-- Structure du projet
-  - dossier `public`, `public/css`, `public/js` (tous nos fichiers public)
-  - dossier `app`, `app/Classes`, `app/Interfaces` (Toutes nos classes)
-  - fichier `public/index.php`
-  - fichier `app/Autoloader.php`
-  - dossiers `pages`
-- Base de données ou Fichier JSON
-- Essayons ensemble de mettre en place
-  - Un formulaire d'ajout d'employé
-  - Un formulaire pour responsable
-  - Une page qui liste tout les employés
-  - Page du responsable avec son équipe
+  $classX->setVitesse(120);
+  var_dump($classX);
+```
 ]
-
 ---
 
 class: middle, center, inverse
@@ -1507,9 +1552,9 @@ class: middle, center, inverse
 
 ---
 
-class: middle
 .left-column[
   ### Composer
+  #### started
 ]
 .right-column[
   url : https://getcomposer.org/
@@ -1522,12 +1567,40 @@ class: middle
     --filename=composer
   ```
 
-  #### Utiliser Composer
-
   la commande suivante permettra d'initialiser composer avec le répertoire `vendor`
 
   ```bash
   composer init
+  ```
+Ajouter une section `autoload` au fichier `composer.json`
+  ```json
+  "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+  ```
+
+  Apres avoir ajouter notre section d'autoload vers notrerepertoire `src` faire un generer un fichier autoload
+
+  ```bash
+  composer dump-autoload
+  ```
+]
+
+---
+
+.left-column[
+  ### Composer
+  #### started
+  #### using
+]
+.right-column[
+
+  ```php
+    # index.php
+    require_once 'vendor/autoload.php';
+
   ```
 
   installer une package
@@ -1540,7 +1613,6 @@ class: middle
 ]
 ---
 
-class: middle
 .left-column[
   ### Composer
   ### PHP Doc
@@ -1576,7 +1648,6 @@ class: middle
 ]
 ---
 
-class: middle
 .left-column[
   ### Composer
   ### PHP Doc
@@ -1605,6 +1676,33 @@ class: middle
     }
   }
   ```
+]
+
+---
+
+.left-column[
+  ### Composer
+  ### PHP Doc
+  ### Typage de données
+  ## .red[**Bilan Travaux Pratique**]
+]
+.right-column[
+### TP commun
+
+Avec tous ce que l'on a appris et vu, nous allons l'appliquer sur l'outils de la société R à repartant de zero
+
+- Recuperer le repo git
+- Structure du projet
+  - dossier `public`, `public/css`, `public/js` (tous nos fichiers public)
+  - dossier `src` (Toutes nos classes)
+  - fichier `public/index.php`
+  - dossiers `pages`
+- Base de données ou Fichier JSON
+- Essayons ensemble de mettre en place
+  - Un formulaire d'ajout d'employé
+  - Un formulaire pour responsable
+  - Une page qui liste tout les employés
+  - Page du responsable avec son équipe
 ]
 
 ---
@@ -1689,7 +1787,14 @@ class: middle
   ```php
   class Vehicule
   {
-    private const NB_ROUES = 4;
+    private const CONST_PRIVATE = 'private';
+
+    protected const CONST_PROTECTED = 'protected';
+    
+    public const CONST_PUBLIC = 'public';
+    
+    const CONST_DEFAULT_PUBLIC = 'default_public';
+    
     ...
   }
   ```
