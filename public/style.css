@@ -1,6 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Droid+Serif);
 @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
 @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css);
 
 body {
   font-family: 'Droid Serif';
@@ -108,4 +109,11 @@ code {
   width: 75%;
   float: right;
   padding-top: 1em;
+}
+.small{
+  font-size: 0.8em;
+  color: #333;
+  border: solid 1px #333;
+  border-radius: 0.2em;
+  padding: 0 0.5em;
 }
