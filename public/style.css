@@ -117,3 +117,13 @@ code {
   border-radius: 0.2em;
   padding: 0 0.5em;
 }
+
+.info {
+  color: #084298;
+  background-color: #cfe2ff;
+  border-color: #b6d4fe;
+  padding: 0 1rem;
+  align-items: center !important;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
