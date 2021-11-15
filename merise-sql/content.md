@@ -536,7 +536,7 @@ Vous pouvez établir un lien d'héritage entre une entité générale et des ent
 
 .center[
 ![Cardinalité explication image](./img/heritage.png)
-> *Heritage, Specialisation/Génralisation*
+> *Heritage, Specialisation/Généralisation*
 ]
 ]
 
@@ -3036,8 +3036,120 @@ HAVING points_moyens > 300;
 ### .red[Travaux pratique]
 ]
 .right-column[
-Soit la base de données suivante :
-<blockquote>
-> departements
-</blockquote>
+Soit le modele relationnel suivant :
+.center[
+![TP Logiciel](./img/sql-tp-mld-2.png)
+> *TP logiciel*
 ]
+
+Pour chaque demande donner la requete SQL qui correspond.
+1. Afficher les noms et les prix des logiciels appartenant au projet ayant comme titre « gestion de stock », triés dans l’ordre décroissant des prix
+2. Afficher le total des prix des logiciels du projet numéro 10. Lors de l’affichage, le titre de la colonne sera « cours total du projet ».
+3. Afficher le nombre de développeurs qui ont participé au projet intitulé « gestion de stock »
+4. Afficher les projets qui ont plus que 5 logiciels
+]
+
+---
+.left-column[
+## Fonctions d'agregation
+## Groupement de données
+## Sous-requêtes
+]
+.right-column[
+Une sous-requête, également appelée requête imbriquée ou sous-sélection, est une requête `SELECT` intégrée à la clause `WHERE` ou `HAVING` d'une autre requête SQL. Les données renvoyées par la sous-requête sont utilisées par l'instruction externe de la même manière qu'une valeur littérale serait utilisée.
+
+Les sous-requêtes constituent un moyen simple et efficace de gérer les requêtes qui dépendent des résultats d'une autre requête. Elles sont presque identiques aux instructions `SELECT` normales, mais il existe peu de restrictions. Les plus importantes sont :
+
+* Une sous-requête doit toujours apparaître entre parenthèses.
+* Une sous-requête doit renvoyer une seule colonne. Cela signifie que vous ne pouvez pas utiliser `SELECT *` dans une sous-requête à moins que la table à laquelle vous faites référence ne comporte qu'une seule colonne. Vous pouvez utiliser une sous-requête qui renvoie plusieurs colonnes si le but est la comparaison de lignes.
+* Vous ne pouvez utiliser que des sous-requêtes renvoyant plusieurs lignes avec des opérateurs de valeurs multiples, tels que l'opérateur `IN` ou `NOT IN`.
+* Une clause `ORDER BY` ne peut pas être utilisée dans une sous-requête, bien que la requête principale puisse utiliser un `ORDER BY`
+* La clause `GROUP BY` peut être utilisée pour exécuter la même fonction que `ORDER BY` dans une sous-requête.
+* Une sous-requête ne peut pas être une `UNION`. Une seule instruction `SELECT` est autorisée.
+
+Les sous-requêtes sont le plus souvent utilisées avec l'instruction `SELECT`. Toutefois, vous pouvez également les utiliser dans une instruction `INSERT`, `UPDATE` ou `DELETE` ou dans une autre sous-requête.
+]
+
+---
+
+.left-column[
+## Fonctions d'agregation
+## Groupement de données
+## Sous-requêtes
+]
+.right-column[
+```sql
+CREATE TABLE expose(
+  id                INT           PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  nom               VARCHAR (50)  NOT NULL,
+  duree             INT           NOT NULL,
+  date_realisation  DATETIME      NOT NULL);
+
+CREATE TABLE participer(
+  expose_id INT NOT NULL,
+  eleve_id  INT NOT NULL,
+  PRIMARY KEY (expose_id, eleve_id),
+  FOREIGN KEY(expose_id) REFERENCES expose (id),
+  FOREIGN KEY(eleve_id) REFERENCES eleve (id));
+```
+
+```sql
+INSERT INTO expose VALUES 
+(1, 'La Terre', 200, NOW()),
+(2, 'Planete Mars', 160, '2021-09-21 16:54:00'),
+(3, 'Planete Venus', 178, '2021-11-11 14:54:00');
+
+INSERT INTO participer (eleve_id, expose_id) VALUES 
+(1, 1), (1, 2), (2, 3), (3, 2), (4, 1), (4, 3), (5, 1), (5, 2),
+(6, 1), (6, 2), (7, 3), (7, 1), (8, 1), (8, 3), (9, 1), (10, 2);
+```
+]
+
+---
+
+.left-column[
+## Fonctions d'agregation
+## Groupement de données
+## Sous-requêtes
+### Instruction SELECT
+]
+.right-column[
+Les sous-requêtes sont le plus souvent utilisées avec l'instruction `SELECT`. La syntaxe de base est la suivante :
+```sql
+SELECT nom_colonne [, nom_colonne ]
+FROM   table1 [, table2 ]
+WHERE  nom_colonne OPERATOR
+    (SELECT nom_colonne [, nom_colonne ]
+    FROM table1 [, table2 ]
+    [WHERE])
+```
+
+Il existe principalement deux types de sous-requêtes :
+* Sous-requêtes indépendantes
+
+* Sous-requêtes corrélées
+
+
+]
+
+---
+
+.left-column[
+## Fonctions d'agregation
+## Groupement de données
+## Sous-requêtes
+### Instruction SELECT
+]
+.right-column[
+#### Sous-requêtes indépendantes
+Dans les sous-requêtes indépendantes, l'exécution de la requête commence de la requête la plus interne vers la plus externe. L'exécution d'une requête interne est indépendante de la requête externe, mais le résultat de la requête interne est utilisé dans l'exécution de la requête externe. Divers opérateurs tels que `IN`, `NOT IN`, `ANY`, `ALL`, etc. sont utilisés pour l'écriture de sous-requêtes indépendantes.
+
+
+**Exemple :**
+
+Si nous voulons connaître les Ids des élèves qui participent aux exposés «La Terre» ou «La planete Mars», nous pouvons l’écrire à l’aide d’une sous-requête indépendante et d’un opérateur `IN`. A partir de la table Projet, nous pouvons trouver `expose.id` pour les exposés «La Terre» ou «La planete Mars» et nous pouvons utiliser ces `expose.id` pour trouver les Ids des élèves à partir de la table `particper`.
+
+Nous pouvons le faire en deux étapes :
+]
+
+
