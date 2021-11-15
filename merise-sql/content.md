@@ -553,7 +553,9 @@ Dans la société R, il y a différent profil, tel que des **responsables**, des
 
 * Un responsable est un employé, mais il en plus responsable d'une équipe d'employé.
 
-* Un stagiaire peut occuper un poste mais ne peut faire parti d'une équipe d'employé.
+* L'equipe peut avoir un seul responsable.
+
+* Un stagiaire peut occuper un poste durant une periode, mais ne peut faire parti d'une équipe d'employé.
 
 Mettre à jour le MCD de la société R.
 ]
@@ -995,7 +997,39 @@ La clé étrangère est soulignée d'un trait pointillé, ou bien suivie du sign
 #### Règles pour les entités du MCD
 * L'entité se transforme en une table ;
 * L'identifiant de l'entité devient la clé primaire de la table ;
-* Les propriétés de l'entité deviennent des attributs de la table. 
+* Les propriétés de l'entité deviennent des attributs de la table.
+
+#### Règle pour les relations binaires (ou réflexives) de type (0,n) ou (1,n) – (0,1) ou (1,1)
+Une relation binaire (ou réflexive) ayant des type (0,n) ou (1,n) – (0,1) ou (1,1) se traduit par une redondance de l’identifiant de l’objet à cardinalité (1,n) ou (0,n) dans la table issue de l’entité à cardinalité (1,1) ou (0,1). L’identifiant de l’entité à cardinalité (1,1) devient la
+clé primaire de la table. La propriété dupliquée devient clé étrangère dans la table. Si la relation est réflexive, c’est l’identifiant de l’entité qui est dupliqué dans la table issue de ce même objet après avoir été renommé.
+
+Si l’association est porteuse de données, celles-ci se retrouvent comme attributs dans la relation issue de l’entité à cardinalité (1,1) ou (0,1).
+]
+
+---
+.left-column[
+## Presentation
+## Concepts
+### Table, Attributs, Occurences
+### Clé primaire
+### Clé etrangère
+### Règles de passage d'un MCD à un MLD
+]
+.right-column[
+
+#### Les MCD à relation binaire ci dessous : 
+.center[
+![MLD Clé étrangère](./img/mld-relationbinaire-mcd.png)
+> Une relation binaire à cardinalités (0,n) ou (1,n) – (0,1) ou (1,1)
+
+> Devient
+![MLD Clé étrangère](./img/mld-relationbinaire-mld.png)
+]
+
+.small[
+  salarie = (salarie_id INT, nom VARCHAR(50), prenom VARCHAR(50), #service_id);
+  service = (service_id INT AUTO_INCREMENT, nb_employe INT, specialisation VARCHAR(50));
+]
 ]
 
 ---
@@ -1016,6 +1050,7 @@ Faire le MCD de gestion des employés de la société R vers le MLD.
 * Verifier les clé etrangère
 
 * Verifier la conformité des données.
+
 ]
 
 ---
