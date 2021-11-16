@@ -982,6 +982,11 @@ La clé étrangère est soulignée d'un trait pointillé, ou bien suivie du sign
 ![MLD Clé étrangère](./img/mld-foreign-key.png)
 > *MLD Clé étrangère*
 ]
+
+**Syntaxe de formalisation :**
+.small[
+Table_1 (<u>Cle_Primaire</u>, Attribut_1, Attribut_2, Attribut_n, #CleEtrangère_1, #CleEtrangère_n) 
+]
 ]
 
 ---
@@ -1028,7 +1033,30 @@ Si l’association est porteuse de données, celles-ci se retrouvent comme attri
 
 .small[
   salarie = (salarie_id INT, nom VARCHAR(50), prenom VARCHAR(50), #service_id);
+
   service = (service_id INT AUTO_INCREMENT, nb_employe INT, specialisation VARCHAR(50));
+]
+
+]
+
+---
+.left-column[
+## Presentation
+## Concepts
+### Table, Attributs, Occurences
+### Clé primaire
+### Clé etrangère
+#### Règles de passage d'un MCD à un MLD
+]
+.right-column[
+  #### Le MCD à relation binaire et reflexive ci dessous
+.center[
+![MLD Clé étrangère](./img/relation-reflexive.png)
+]
+
+#### Règle pour les relations binaire de type (0,n) ou (1,n) – (0,n) ou (1,n)
+.center[
+![MLD Clé étrangère](./img/relation-properties.png)
 ]
 ]
 
@@ -1043,7 +1071,7 @@ Si l’association est porteuse de données, celles-ci se retrouvent comme attri
 ### .red[Travaux Pratique]
 ]
 .right-column[
-Faire le MCD de gestion des employés de la société R vers le MLD.
+Transformer le MCD de gestion des employés de la société R vers le MLD.
 
 * Donner des nom logique au clé primaire
 
