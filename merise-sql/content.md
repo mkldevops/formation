@@ -1067,18 +1067,53 @@ Si l’association est porteuse de données, celles-ci se retrouvent comme attri
 ### Table, Attributs, Occurences
 ### Clé primaire
 ### Clé etrangère
+#### Règles de passage d'un MCD à un MLD
+]
+.right-column[
+
+#### Règle pour les relations n-aire
+.center[
+![MLD Clé étrangère](./img/relation-n-aire.png)
+]
+
+#### Cas des héritages :
+.center[
+![MLD Clé étrangère](./img/heritage.png)
+]
+]
+
+---
+.left-column[
+## Presentation
+## Concepts
+### Table, Attributs, Occurences
+### Clé primaire
+### Clé etrangère
 ### Règles de passage d'un MCD à un MLD
 ### .red[Travaux Pratique]
 ]
 .right-column[
-Transformer le MCD de gestion des employés de la société R vers le MLD.
-
+#### Transformer le MCD de gestion des employés de la société R vers le MLD.
 * Donner des nom logique au clé primaire
-
 * Verifier les clé etrangère
-
 * Verifier la conformité des données.
 
+#### Donner le MCD et MLD Textuelle de la demande suivante
+
+Soit une PME spécialisée dans la mise à disposition des employés pour le compte ses clients. Chaque intervention donne lieu à un contrat avec le client.
+
+Les principales informations du contrat sont:
+* La description de l’intervention
+* La date du début de l’intervention
+* La qualification précise de chaque intervenant (il existe une vingtaine de qualifications possibles)
+* Le nombre d’employé prévu pour x jours
+* A chaque qualification correspond un tarif journalier. 
+
+La PME s’accorde en interne une certaine souplesse sur la détermination précise de la qualification de son personnel en procédant de la manière suivante:
+
+* Chaque personne possède a priori une qualification de base. 
+* A chaque intervention il est possible de réajuster la qualification. 
+* La qualification d’intervention est déterminée pour un contrat donné.
 ]
 
 ---
