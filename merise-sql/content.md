@@ -1419,7 +1419,7 @@ Certains fournisseurs de bases de données relationnelles ont leurs types de don
 |-----------------|---------------------------------------------------------------------------------------------------------|
 | CHAR            | Longueur fixe avec une longueur maximale de 8 000 caractères                                            |
 | VARCHAR         | Stockage de longueur variable avec une longueur maximale de 8 000 caractères                            |
-| VARCHAR(max)    | Stockage à longueur variable avec le nombre maximum de caractères fourni, non pris en charge dans MySQL |
+| VARCHAR(max)    | Stockage à longueur variable avec le nombre maximum de caractères fourni |
 | TEXT            | Le stockage de longueur variable avec une taille maximale de 2 Go de données                            |
 ]
 
@@ -1585,10 +1585,31 @@ ALTER TABLE eleve ADD adresse VARCHAR(100);
 ALTER TABLE eleve DROP COLUMN adresse;
 ```
 
-#### Modifier une colonnes
+#### Modifier une colonne
 `MODIFY` est utilisée pour modifier les colonnes existantes dans une table. Plusieurs colonnes peuvent également être modifiées à la fois.
 ```sql
 ALTER TABLE eleve MODIFY nom VARCHAR(100);
+```
+
+
+---
+.left-column[
+## Table
+### Création
+### Suppression
+### Modification
+]
+.right-column[
+#### Renommer une colonne
+`RENAME` est utilisée pour modifier les colonnes existantes dans une table
+```sql
+ALTER TABLE eleve RENAME COLUMN nom TO name;
+```
+
+#### Chnager une colonne
+`CHANGE` est utilisée pour modifier les colonnes existantes dans une table
+```sql
+ALTER TABLE eleve CHANGE name nom VARCHAR(50) NOT NULL;
 ```
 ]
 
