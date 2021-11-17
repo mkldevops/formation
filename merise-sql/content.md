@@ -1694,7 +1694,7 @@ CREATE TABLE eleve(
     id              INT           NOT NULL,
     nom             VARCHAR (50)  NOT NULL,
     prenom          VARCHAR (50)  NOT NULL,
-    date_naissance  DATE          DEFAULT '2015-01-01'
+    date_naissance  DATE          DEFAULT '2015-01-01',
     PRIMARY KEY( id )
 );
 ```
