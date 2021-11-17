@@ -1755,7 +1755,7 @@ ALTER TABLE eleve
 
 ```sql
 CREATE TABLE eleve(
-    id              INT           NOT NULL,
+    id              INT           NOT NULL AUTO_INCREMENT,
     nom             VARCHAR (50)  NOT NULL,
     prenom          VARCHAR (50)  NOT NULL,
     date_naissance  DATE          NOT NULL CHECK (date_naissance <= '2010-01-01'),
