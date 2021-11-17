@@ -1764,8 +1764,7 @@ CREATE TABLE eleve(
 ```
 Exemple lors d'un `ALTER TABLE`, pour ajouter une contrainte `CHECK` à la colonne `date_naissance`.
 ```sql
-ALTER TABLE eleve
-    MODIFY date_naissance DATE NOT NULL CHECK (date_naissance <= '2010-01-01');
+ALTER TABLE eleve ADD CHECK (date_naissance <= '2010-01-01');
 ```
 ]
 
