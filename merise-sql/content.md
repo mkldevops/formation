@@ -2420,6 +2420,23 @@ SELECT * FROM eleve WHERE nom LIKE "%s__" AND points > 200;
 #### .red[Travaux Pratique]
 ]
 .right-column[
+**table :** livre
+
+| id | titre | isbn_10 | auteur | prix |
+|---|---|---|---|---|
+| 1 | Forteresse digitale | 2709626306 | Dan Brown | 20.5 |
+| 2 | La jeune fille et la nuit | 2253237620 | Guillaume Musso | 21.9 |
+| 3 | T'choupi se brosse les dents | 2092589547 | Thierry Courtin | 5.7 |
+| 4 | La Dernière Chasse | 2226439412 | Jean-Christophe Grangé | 22.9 |
+| 5 | Le Signal | 2226319484 | Maxime Chattam | 23.9 |
+
+* Quelle requête utiliser pour afficher l'ensemble des enregistrements dont le titre contient "ss" ?
+* Quelle requête utiliser pour afficher l'ensemble des enregistrements dont le titre commence par "La " ?
+* Quelle requête utiliser pour sélectionner uniquement les livres qui ont un prix strictement supérieur à 20 ?
+* Quelle requête utiliser pour trier les enregistrements du prix le plus élevé aux prix le plus bas ?
+* Quelle requête utiliser pour récupérer le prix du livre le plus élevé ?
+* Quelle requête utiliser pour récupérer les livres qui ont un prix compris entre 20 et 22 ?
+* Quelle requête utiliser pour récupérer tous les livres à l'exception de celui portant la valeur pour la colonne isbn_10 : 2092589547 ?
 
 ]
 
