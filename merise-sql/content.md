@@ -2217,7 +2217,7 @@ INSERT INTO eleve (nom, prenom, date_naissance, points) VALUES
   ('Lizedesan', 'Anna', '2010-01-25', 230),
   ('Dente', 'Hal', '2009-06-15', 420),
   ('Down', 'Marc', '2005-04-21', 120),
-  ('Proviste', 'Alain', '2004-08-01', null),
+  ('Proviste', 'Alain', '2004-08-01', 200),
   ('Homalie', 'Anne', '2012-01-31', 320);
 ```
 ]
