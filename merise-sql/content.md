@@ -2816,7 +2816,11 @@ Soit le modèle relationnel suivant relatif à la gestion des notes annuelles d�
 ![Un exemple de table d'employes](./img/sql-tp-mld.png)
 > *Un exemple de table d'employes*
 ]
-* 
+* Afficher la liste des nom d'etudiants qui ont été evalué sur un coeficient en 2 et 5
+
+* Afficher le nom, prenom des élèves qui n'ont pas eu d'evaluation dans la matière "Mathematique"
+
+* Afficher le nom, prenom, libelle de la matière, coefficient et note des 20 premiers élèves evalué.
 ]
 ---
 .left-column[
@@ -3287,9 +3291,47 @@ Dans les sous-requêtes indépendantes, l'exécution de la requête commence de 
 
 **Exemple :**
 
-Si nous voulons connaître les Ids des élèves qui participent aux exposés «La Terre» ou «La planete Mars», nous pouvons l’écrire à l’aide d’une sous-requête indépendante et d’un opérateur `IN`. A partir de la table Projet, nous pouvons trouver `expose.id` pour les exposés «La Terre» ou «La planete Mars» et nous pouvons utiliser ces `expose.id` pour trouver les Ids des élèves à partir de la table `particper`.
+Si nous voulons connaître les Ids des élèves qui participent aux exposés «La Terre» ou «La planete Mars», nous pouvons l’écrire à l’aide d’une sous-requête indépendante et d’un opérateur `IN`. A partir de la table Exposé, nous pouvons trouver les `expose.id` pour les exposés «La Terre» ou «La planete Mars» et nous pouvons utiliser ces `expose.id` pour trouver les Ids des élèves à partir de la table `particper`.
 
 Nous pouvons le faire en deux étapes :
+
+```sql
+/** Etape 1 - Trouver id pour les expose «La Terre» ou «La planete Mars» **/
+SELECT id FROM expose WHERE titre = "La Terre" OR titre = "La planete Mars";
+
+/* Etape 2 - Utiliser les id de la 1ere etape pour trouver les id des élèves à partir de la table participer */
+SELECT DISTINCT eleve_id FROM participer
+WHERE expose_id IN (SELECT id FROM expose WHERE titre = "La Terre" OR titre = "La planete Mars");
+```
+
+
 ]
 
+---
+
+.left-column[
+## Fonctions d'agregation
+## Groupement de données
+## Sous-requêtes
+### Instruction SELECT
+]
+.right-column[
+#### Sous-requêtes corrélées
+Une sous-requête corrélée est une sous-requête dont le résultat est différent selon les valeurs de la ligne de la requête externe pour laquelle la sous-requête est exécutée. Cela rend nécessaire d'exécuter la sous-requête pour chaque ligne extraite par la requête externe et ajoute au coût de performance de la requête.
+
+**Exemple:**
+Trouver l'élève avec le plus grand nombre de point dans sa classe
+```sql
+SELECT nom FROM eleve e1
+WHERE e1.points = (SELECT MAX(e2.points) FROM eleve e2 
+  WHERE e1.classe_id = e2.classe_id);
+```
+
+#### Sous-requêtes vs jointures
+Comparées aux jointures, les sous-requêtes sont simples à utiliser et à lire. Ils ne sont pas aussi compliqués que les jointures. Par conséquent, les débutants en SQL l'utilisent fréquemment.
+
+Mais les sous-requêtes posent des problèmes de performances. L'utilisation d'une jointure au lieu d'une sous-requête peut parfois vous donner **un gain de performances jusqu'à 500 fois**. Si vous avez le choix, il est recommandé d'utiliser une jointure plutôt qu'une sous-requête.
+
+Les sous-requêtes ne doivent être utilisées comme solution de secours que lorsque vous ne pouvez pas utiliser une opération JOIN pour atteindre les objectifs ci-dessus.
+]
 
