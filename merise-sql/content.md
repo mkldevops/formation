@@ -2346,7 +2346,7 @@ programmer (id, date , #representation_id, tarif)
 
 4. La liste des id de représentation ayant un tarif superieur à 20 € ou inferieur à 12 €
 
-5. La liste des id de représentation ayant un tarif à 15 € and prévu le 15/12/2021
+5. La liste des id de représentation ayant un tarif à 15 € et prévu le 15/12/2021
 
 ]
 
@@ -2373,7 +2373,7 @@ Deux types de caractères génériques sont utilisés pour filtrer les résultat
 | .red[`"%abc%"`] | Qui contiennent la sous-chaîne "abc" en n'importe quelle position. |
 | .red[`"_abc%"`] | Contenant la sous-chaîne "abc" en deuxième position. |
 | .red[`"_a%"`] | Contenant «a» à la deuxième position. |
-| .red[`"a_%__%"`] | Qui commencent par "a" et contiennent au moins 2 caractères supplémentaires. |
+| .red[`"a\__%__%"`] | Qui commencent par "a" et contiennent au moins 2 caractères supplémentaires. |
 
 ]
 
@@ -2389,7 +2389,7 @@ Deux types de caractères génériques sont utilisés pour filtrer les résultat
 .right-column[
 La requête suivante va chercher tous les élèves dont les prenoms commencent par "An"
 ```sql
-SELECT * FROM eleve WHERE nom LIKE "An%";
+SELECT * FROM eleve WHERE prenom LIKE "An%";
 +----+-----------+--------+----------------+--------+
 | id | nom       | prenom | date_naissance | points |
 +----+-----------+--------+----------------+--------+
@@ -2398,7 +2398,7 @@ SELECT * FROM eleve WHERE nom LIKE "An%";
 +----+-----------+--------+----------------+--------+
 ```
 
-La requete suivante va lister tous les eleves avec un prenom par "s" suivi de 2 lettres et ayant plus de 200 points
+La requete suivante va lister tous les eleves avec un nom finissant par "s" suivi de 2 caractères et ayant plus de 200 points
 ```sql
 SELECT * FROM eleve WHERE nom LIKE "%s__" AND points > 200;
 +----+-----------+--------+----------------+--------+
@@ -2433,8 +2433,6 @@ SELECT * FROM eleve WHERE nom LIKE "%s__" AND points > 200;
 * Quelle requête utiliser pour afficher l'ensemble des enregistrements dont le titre contient "ss" ?
 * Quelle requête utiliser pour afficher l'ensemble des enregistrements dont le titre commence par "La " ?
 * Quelle requête utiliser pour sélectionner uniquement les livres qui ont un prix strictement supérieur à 20 ?
-* Quelle requête utiliser pour trier les enregistrements du prix le plus élevé aux prix le plus bas ?
-* Quelle requête utiliser pour récupérer le prix du livre le plus élevé ?
 * Quelle requête utiliser pour récupérer les livres qui ont un prix compris entre 20 et 22 ?
 * Quelle requête utiliser pour récupérer tous les livres à l'exception de celui portant la valeur pour la colonne isbn_10 : 2092589547 ?
 
@@ -2564,7 +2562,14 @@ SELECT * FROM eleve LIMIT 2 OFFSET 4;
 ### .red[Travaux Pratique]
 ]
 .right-column[
+A l'occasion de sa 100 ème année, La société R souhaite que vous puissez lui extraire certaines données sur ces employés.
 
+* Donner une augmentation aleatoire à chaque employé via `salaire = salaire + FLOOR(RAND()*100) * FLOOR(RAND()*10)` 
+* Lister les 10 immatriculations les plus anciennes de la société.
+* Lister les 25 profils avec immatrculation, nom, prenom les plus agées.
+* Lister tous les personnes qui ont "mit" ou "ith" dans leur nom et afficher dans l'ordre de salaire ascendant. 
+* Lister les immatriculations des 5 derniers employe embauché
+* Lister les 5 immatriculation suivantes de la precedente requete.
 ]
 ---
 .left-column[
