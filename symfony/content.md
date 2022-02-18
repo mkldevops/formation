@@ -1,7 +1,7 @@
 name: inverse
 class: center, middle, inverse
-# Symfony Framework 6
-# .red[PHP 8.1]
+# Symfony Framework
+# .red[PHP 8]
 ![Right-aligned image](https://ri7.fr/wp-content/uploads/2020/12/logo2-h-195x64-light.png)
 
 ---
@@ -272,8 +272,10 @@ class: middle
 .left-column[
 ### Nouveau projet symfony
 ### Postgresql
+#### Installation
 ]
 .right-column[
+  
 #### Installation de Postegresql en local
 Nous n'utiliserons pas postgresql en local, mais symfony cli aura besoin sur certaines commande.
 ```bash
@@ -287,20 +289,33 @@ Le client pgcli qui nous aidera a nous connecter à notre base de donnée.
 sudo apt install pgcli
 ```
 
-#### Connect to database
-```bash
-# via docker-compose exec 
-docker-compose exec database psql -U main -d main
+]
 
-# via pgcli, use value of DATABASE_URL
+---
+
+class: middle
+.left-column[
+### Nouveau projet symfony
+### Postgresql
+#### Installation
+#### Connection
+]
+.right-column[
+#### Connect to database
+Via docker-compose exec
+```bash
+docker-compose exec database psql -U main -d main
+```
+Via pgcli, use value of DATABASE_URL
+```bash
 pgcli postgresql://localhost:49743/app?serverVersion=13&charset=utf8
 ```
 
 #### Documentation 
-##### database
+##### Database
 https://www.postgresql.org/docs/13/tutorial-accessdb.html
 
-##### table & query
+##### Table & query
 https://www.postgresql.org/docs/13/tutorial-table.html
 ]
 
@@ -310,6 +325,8 @@ class: middle
 .left-column[
 ### Nouveau projet symfony
 ### Postgresql
+#### Installation
+#### Connection
 #### Commands
 ]
 .right-column[
@@ -317,17 +334,12 @@ class: middle
 |---|---|---|
 | Table, index, view, or sequence | \d | name |
 | Tables | \dt | name |
-| Indexes | \di | name |
-| Sequences | \ds | name |
 | Views | \dv | name |
 | Permissions | \dp or \z | name |
 | System tables | \dS | name |
-| Large objects | \dl | name |
 | Types | \dT | name |
 | Functions | \df | name |
 | Operators | \do | name |
-| Aggregates | \da | name |
-| Comments | \dd | name |
 | Databases | \l | name |
 ]
 
@@ -344,7 +356,8 @@ class: middle
 * **1 :** N'hesitez à demander au formateur, meme si il doit se repeter.
 * **2 :** Demander au gens qui vous entoure
 * **3 :** Demander à Google avec la bonne manière. En clair ne faite pas un copier coller bete de votre erreur, car il ne vous repondra certainement avec les bonnes solutions. La bonne manière c'est de prefixer par la technologie que vous utiliser, puis c'est un bug et ensuite un resumé bref de votre erreur. Utiliser l'anglais vous apportera de meilleur resultat.
-**example :** symfony bug monolog don't work
+
+_**example :**_ symfony bug monolog don't work
 
 #### Variables
 Pour afficher toutes les variables d'environnement exposées 
