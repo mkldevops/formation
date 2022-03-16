@@ -1,30 +1,11 @@
 <?php
 
-class Vehicule
+class Voiture
 {
-  private int $vitesse = 120;
-
-  public function getVitesse(): int
-  {
-    return $this->vitesse;
-  }
-
-  public function setVitesse(int $vitesse): self
-  {
-    $this->vitesse = $vitesse;
-
-    return $this;
-  }
+  public $vitesse = 100;
+  public $carburant = 'diesel';
 }
 
-class Voiture extends Vehicule
-{
-  public static $nbPortes = 5;
-  
-  public static function ajouterPortes()
-  {
-    self::$nbPortes++;
-    echo sprintf("Une voiture avec %d portes", self::$nbPortes);
-  }
-}
-var_dump(Voiture::$nbPortes, Voiture::ajouterPortes());
+$mercedes = new Voiture;
+
+var_dump($mercedes);

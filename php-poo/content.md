@@ -24,7 +24,7 @@ class: middle
 class: middle
 .left-column[
 ## Objectif
-## Requis
+## Prérequis
 
 ]
 .right-column[
@@ -175,7 +175,6 @@ class: middle, center, inverse
 
 ---
 
-class: middle
 .left-column[
 ### Les classes
 ]
@@ -193,7 +192,6 @@ Elle va donc nous permettre de structurer et d'organiser l’ensemble de notre c
 
 ---
 
-class: middle
 .left-column[
 ### Les classes
 #### Déclaration de la classe
@@ -208,44 +206,46 @@ class Voiture
 }
 ```
 
-**Note : **Le mot clé `class` est suivi d'un nom en **`PascalCase`**, Prenez soin de nommer votre classe de manière pertinente.
+
+
+_**Note : **_ 
+>* Le mot clé **`class`** est suivi d'un nom en **`PascalCase`**, Prenez soin de nommer votre classe de manière pertinente.
+>
+>* Le **`PascalCase`** est une convention de dénomination dans laquelle la première lettre de chaque mot d'un mot composé est en majuscule. C'est utilisé pour nommer des fonctions , des classes et d'autres objets.<br/>
+> `PascalCase` est similaire à `camelCase`, sauf que la première lettre de `PascalCase` est toujours en majuscule. Voici quelques exemples.
+
+>   * **`PascalCase`** : `NomDeMaClasse` ;
+>   * **`camelCase`** : `nomDeMaClasse` ;
 ]
 
 ---
 
-class: middle
 .left-column[
 ### Les classes
 #### Déclaration de la classe
 #### Instanciation d'une classe
 ]
 .right-column[
-Une classe se déclare de la manière suivante :
+**Créer une instance**, c'est créer un objet à partir d'une classe. 
 
-```php
-class Voiture
-{
-
-}
-```
-
-**Note : **Le mot clé `class` est suivi d'un nom en **`PascalCase`**, Prenez soin de nommer votre classe de manière pertinente.
-
-Créer une instance, c'est créer un objet à partir d'une classe. On utilise le mot `new` pour instancier une classe. Cette instanciation sera alors affecter à une variable qui deviendra donc notre objet de type `Voiture`. 
+On utilise le mot `new` pour instancier une classe. Cette instanciation sera alors affecter à une variable qui deviendra donc notre objet de type `Voiture`. 
 
 **Exemple d’instanciation:**
 
 ```php
-  $voiture = new Voiture();
+<?php
 
-  var_dump($voiture);
+  $mercedes = new Voiture();
+
+  var_dump($mercedes);
+
+  # object(Voiture)#1 (0) { }
 ```
 
 A savoir qu'au moment de l'instanciation une réference d'objet est mise en place par PHP.
 ]
 ---
 
-class: middle
 .left-column[
 ### Les classes
 #### Déclaration de la classe
@@ -271,6 +271,7 @@ Ainsi, lorsque l’on modifie la valeur de l’alias, on modifie également la v
 
   $a = 1;
   foo($a);
+
   // $a vaut 2 maintenant
   var_dump($a);
 ```
@@ -293,7 +294,7 @@ Ainsi, lorsque l’on modifie la valeur de l’alias, on modifie également la v
 ]
 ---
 
-class: middle
+
 .left-column[
 ### Les classes
 #### Déclaration de la classe
@@ -316,7 +317,6 @@ class Voiture
 
 ---
 
-class: middle
 .left-column[
 ### Les classes
 #### Déclaration de la classe
@@ -326,7 +326,7 @@ class: middle
 ]
 
 .right-column[
-Les propriétés sont les variables membres de la classe. Ils constituent les caractéristiques de l'objet. En quelque sorte ce qui l'a défini.
+**Les propriétés** sont les variables membres de la classe. Ils constituent les caractéristiques de l'objet. En quelque sorte c’est ce qui le définit.
 
 ```php
 class Voiture
@@ -336,7 +336,9 @@ class Voiture
 }
 ```
 
-Pour déclarer un attribut il faut le précéder par sa **visibilité**. **La visibilité** d'un attribut indique à partir d'où on peut y avoir accès.
+Pour déclarer un attribut il faut le précéder par sa **visibilité**.
+
+**La visibilité** d'un attribut indique à partir d'où on peut y avoir accès.
 **`public`** est un type de visibilité qui permet à l'attribut d'être accessible de partout (de l'intérieur de la classe dont il est membre comme de l'extérieur).
 
 ```php
@@ -354,9 +356,10 @@ var_dump($voiture);
 
 On utilise l’opérateur `->` pour avoir accès **aux propriétés et méthodes** de l'objets instancié.
 ]
+
 ---
 
-class: middle
+
 .left-column[
 ### Les classes
 #### Déclaration de la classe
@@ -366,7 +369,9 @@ class: middle
 ### Méthodes d'une classe
 ]
 .right-column[
-Nous allons également pouvoir déclarer des fonctions à l’intérieur de nos classes. Les fonctions définies à l’intérieur d’une classe sont appelées des **méthodes**. Les méthodes de classes vont donc être ce qui défini le comportement de notre objet.
+Nous allons également pouvoir déclarer des fonctions à l’intérieur de nos classes. 
+
+Les fonctions définies à l’intérieur d’une classe sont appelées des **méthodes**. Les méthodes de classes vont donc être ce qui défini le comportement de notre objet.
 
 ```php
 class Voiture
@@ -386,11 +391,11 @@ $voiture->rouler();
 
 Vous remarquez que pour utiliser les propriété de la classe nous utilise le mot clé `$this`. La pseudo-variable `$this` est disponible lorsqu'une méthode est appelée depuis un contexte objet. `$this` est la valeur de l'objet appelant.
 
-**Note :** Par défaut la méthode à une visibilité `public`, on pourrait donc ne pas le mentionner mais par convention il est mieux de le définir.
+**Note :** 
+> Par défaut la méthode à une visibilité `public`, on pourrait donc ne pas le mentionner mais par convention il est mieux de le définir.
 ]
 ---
 
-class:middle
 .left-column[
 ### Les classes
 #### Déclaration de la classe
@@ -409,13 +414,15 @@ class:middle
 
 - Lancer notre serveur PHP avec `php -S localhost:8000`
 
-- Réorganiser le code de la société R en utilisant la POO
+- Reprenons le code de la société R et essayons de le réorganiser en utilisant la POO
 
   - Définir la classe `Employe` et ses propriétés
 
   - Faite en sorte que l'employé puisse se présenter avec une méthode `presentation()`
 
-  - Ajouter 3 instances d'employés qui se presenteront chacun
+  - Définir 3 instances d'employés differentes qui se presenteront chacune avec la methode `presentation()`
+  
+  - Ajouter aleatoirement à chaque instance d'employé entre 5 et 10 ans 
 ]
 
 ---
@@ -426,14 +433,15 @@ class: middle, center, inverse
 
 ---
 
-class:middle
 .left-column[
 ### Visibilité private
 ]
 .right-column[
-Nous avons définit les attributs avec un visibilité `public` et peuvent être modifié par n'importe qui à un autre instant dans le code.
+Nous avons définit les attributs avec un visibilité `public` et peuvent être modifié par n'importe qui et n'importe où, à un autre endroit dans le code.
 
-Pour remédier à cela on va utiliser le concept **d'encapsulation** afin de protéger certaines données des interférences extérieures en se forçant à utiliser les méthodes définies pour manipuler les données. L’encapsulation va ici être très intéressante pour empêcher que certaines propriétés ne soient manipulées depuis l’extérieur de la classe.
+Pour remédier à cela on va utiliser le concept **d'encapsulation** afin de protéger certaines données des interférences extérieures en se forçant à utiliser les méthodes définies pour manipuler les données. 
+
+**L’encapsulation** va ici être très intéressante pour empêcher que certaines propriétés ne soient manipulées depuis l’extérieur de la classe.
 
 Nous allons donc utiliser la visibilité **`private`** au niveau de nos propriétés.
 
@@ -447,30 +455,34 @@ class Voiture
 }
 ```
 
-`private` ne va être uniquement accessibles depuis l’intérieur de la classe. Pour y avoir acces on utilisera les accesseurs.
+La propriété `private` ne va être uniquement accessibles depuis l’intérieur de la classe. Pour y avoir acces on utilisera **les accesseurs** et pour modifier **les mutateurs**.
 ]
 
 ---
 
-class: middle
 .left-column[
 ### Visibilité private
 ### Les accesseurs et mutateurs
 ]
 .right-column[
 .pull-left[
-On ne peut plus accèder directement aux attributs d'un objet. Pour lire et modifier leurs valeurs, on passe par des méthodes qui permettent de sécuriser leur utilisation.
+Ayant défini la visibilité à **`private`** des propriétés de la classe, on ne peut plus accèder directement aux propriété d'un objet instancié.
 
-Ces méthodes s'appellent des **accesseurs** (`getter`) pour lire leurs valeurs et des **mutateurs** (**`setter`**) pour modifier leurs valeurs.
+Pour lire et modifier leurs valeurs, on passe par des méthodes qui permettent de sécuriser leur utilisation.
 
-Une des conventions souvent utilisée et de reprendre le nom de l'attribut pour créer les méthodes, en ajoutant `get` pour les accesseurs et `set` pour les mutateurs.
+Ces méthodes se nomme
+* **accesseurs** (**`getter`**) pour lire leurs valeurs 
+* **mutateurs** (**`setter`**) pour modifier leurs valeurs.
+
+Une des conventions souvent utilisée est de reprendre le nom de l'attribut pour définir les méthodes, en ajoutant `get` pour les accesseurs et `set` pour les mutateurs. Tout en en utilisant le `camelCase`
 ]
 .pull-right[
 
 ```php
 class Voiture
 {
-  ...
+  private $vitesse = 100;
+  private $carburant = 'diesel';
 
   public function setVitesse($vitesse)
   {
@@ -491,7 +503,6 @@ class Voiture
   {
     return $this->carburant;
   }
-  ...
 }
 ```
 ]
@@ -499,7 +510,6 @@ class Voiture
 
 ---
 
-class: middle
 .left-column[
 ### Visibilité private
 ### Les accesseurs et mutateurs
@@ -545,7 +555,9 @@ class: middle
 ### Le constructeur
 ]
 .right-column[
-  PHP permet de déclarer des constructeurs pour les classes via la fonction magique `__construct()`. Les classes qui possèdent cette méthode l'appellent à chaque création d'une nouvelle instance d'objet, ce qui est intéressant pour toutes les initialisations dont l'objet a besoin avant d'être utilisé.
+  PHP permet de déclarer des constructeurs pour les classes via la fonction magique `__construct()`. 
+  
+  Les classes qui possèdent cette méthode l'appellent à chaque initition de nouvel instance d'objet, ce qui est intéressant pour toutes les initialisations dont l'objet a besoin avant d'être utilisé.
 
   ```php
   class Voiture
@@ -558,7 +570,8 @@ class: middle
       $this->vitesse = $vitesse;
       $this->setCarburant($carburant);
     }
-    ...
+
+    # getters & setters ...
   }
 
   $voiture = new Voiture(90, 'essence');
@@ -575,7 +588,7 @@ class: middle
 ]
 .right-column[
   .left[
-  Reprenons notre cas sur la société R.
+  Reprenons le cas de la société R, nous continuons à ameliorer le code en appliquant les chapitres precedents
 
   - Appliquer l'encapsulation sur la classe `Employe`
 
@@ -585,7 +598,9 @@ class: middle
   
     - Que l'on ne puisse pas avoir plus de **40 ans d'ancienneté**
 
-    - Un employé doit avoir entre **18 ans et 65 ans**
+    - Un employé doit avoir par defaut 18 ans et 0 années d'ancienneté.
+    
+    - Un employé doit avoir entre **18 ans** minimum et **65 ans** maximum
   ]
 ]
 
@@ -601,16 +616,16 @@ class: middle
 .right-column[
   Les méthodes magiques sont des méthodes qui, si elles sont déclarées dans une classe, ont une fonction déjà prévue par le langage.
 
-  - **`__construct()` :** Constructeur de la classe.
-  - **`__destruct()` :** Destructeur de la classe.
+  - **`__construct()` :** Methode appelé lors de la construction de l'objet (instanciation).
+  - **`__destruct()` :** Methode appelé lors de la destruction de l'objet (`unset()`).
   - **`__set()` :** Déclenchée lors de l'accès en écriture à une propriété de l'objet.
   - **`__get()` :** Déclenchée lors de l'accès en lecture à une propriété de l'objet.
   - **`__call()` :** Déclenchée lors de l'appel d'une méthode inexistante de la classe (appel non statique).
-  - **`__callstatic()` :** Déclenchée lors de l'appel d'une méthode inexistante de la classe (appel statique), disponible depuis PHP 5.3.
-  - **`__isset()` :** Déclenchée si on applique isset() à une propriété de l'objet.
-  - **`__unset()` :** Déclenchée si on applique unset() à une propriété de l'objet.
-  - **`__sleep()` :** Exécutée si la fonction serialize() est appliquée à l'objet.
-  - **`__wakeup()` :** Exécutée si la fonction unserialize() est appliquée à l'objet.
+  - **`__callstatic()` :** Déclenchée lors de l'appel d'une méthode inexistante de la classe (appel statique).
+  - **`__isset()` :** Déclenchée si on applique `isset()` à une propriété de l'objet.
+  - **`__unset()` :** Déclenchée si on applique `unset()` à une propriété de l'objet.
+  - **`__sleep()` :** Exécutée si la fonction `serialize()` est appliquée à l'objet.
+  - **`__wakeup()` :** Exécutée si la fonction `unserialize()` est appliquée à l'objet.
   - **`__toString()` :** Appelée lorsque l'on essaie d'afficher directement l'objet : `echo $object.`
   - **`__set_state()` :** Méthode statique lancée lorsque l'on applique la fonction `var_export()` à l'objet
   - **`__clone()` :** Appelés lorsque l'on essaie de cloner l'objet ;
