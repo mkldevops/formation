@@ -416,13 +416,13 @@ Vous remarquez que pour utiliser les propriété de la classe nous utilise le mo
 
 - Reprenons le code de la société R et essayons de le réorganiser en utilisant la POO
 
-  - Définir la classe `Employe` et ses propriétés
+  - Définir la classe `Employe` et ses propriétés `id`, `nom`, `prenom`, `age` et `anciennete`
 
   - Faite en sorte que l'employé puisse se présenter avec une méthode `presentation()`
 
   - Définir 3 instances d'employés differentes qui se presenteront chacune avec la methode `presentation()`
   
-  - Ajouter aleatoirement à chaque instance d'employé entre 5 et 10 ans 
+  - Ajouter aleatoirement à chaque instance d'employé entre 5 et 10 ans d'ancienneté
 ]
 
 ---
@@ -849,7 +849,6 @@ class: middle
 
 ---
 
-class: middle
 .left-column[
   ## Héritage
   ### Mot clé extends
@@ -892,7 +891,6 @@ class: middle
 
 ---
 
-class: middle
 .left-column[
   ## Héritage
   ### Mot clé extends
@@ -922,7 +920,6 @@ class: middle
 ]
 ---
 
-class: middle
 .left-column[
   ## Héritage
   ### Mot clé extends
@@ -957,7 +954,6 @@ class: middle
 
 ---
 
-class: middle
 .left-column[
   ## Héritage
   ### Mot clé extends
@@ -984,7 +980,6 @@ class: middle
 
 ---
 
-class: middle
 .left-column[
   ## Héritage
   ### Mot clé extends
@@ -994,13 +989,17 @@ class: middle
   ### .red[**Travaux Pratique**]
 ]
 .right-column[
-Continuons d’améliorer l'outils de gestion de la société R. En effet elle souhaiterai gérer aussi les responsable qui est un employé mais avec des privilèges.
+Continuons à améliorer l'outils de gestion de la **société R**. En effet elle souhaiterai maintenant gérer **les responsables**. **Le responsable** est un employé mais avec des privilèges.
 
-- Ajouter une classe `Responsable` qui étendra de `Employe`
+- Ajouter une nouvelle classe `Responsable` qui étendra de `Employe`.
 
-- Cette nouvelle classe aura comme nouvelle propriété `equipe` (accesseurs compris) qui sera un tableau d'employé
+- Faire en sorte qu'on ne puisse plus étendre de la classe `Responsable`
 
-- Ajouter lui une nouvelle méthode `ajouterEmploye` qui pendra en paramètre un objet de type `Employe`
+- Cette nouvelle classe aura comme nouvelle propriété `equipe` qui sera un tableau d'employé
+
+- Ajouter lui une nouvelle méthode `ajouterEmploye` qui pendra en paramètre un objet de type `Employe`. Verifier que l'employé n'est pas present dans la liste avant ajout dans la liste.
+
+- Ajouter lui une methode `supressionEmploye` qui s'occupera de supprimer un Employé de la liste via son `id`
 
 **Note :** Il est possible depuis PHP5 de typer les variable de type classe comme ce qui suit
 
@@ -1450,6 +1449,91 @@ L’idée derrière les exceptions va être d’anticiper les situations problé
 ---
 
 .left-column[
+  ### Classe anonyme
+]
+.right-column[
+**Que sont les classes anonymes en PHP ?**
+
+Lors de la création d'un nouvel objet, une classe est d'abord définie, puis un objet de cette classe est créé. En PHP 7, une classe dite anonyme a été introduite pour permettre aux classes d'être définies sans nom à la volée.
+
+On définit une classe anonyme en utilisant le mot-clé `new class`.
+
+Par exemple :
+```php
+  $obj1 = new class() {};
+
+  $obj2 = new class($x, $y) {
+     private $x;
+     private $y;
+     public function __construct($x, $y) {
+           $this->x = $x;
+           $this->y = $y;
+     }
+  };
+```
+
+Elles peuvent prendre des arguments via le constructeur, hériter d’autres classes, implémenter des interfaces, et utiliser des traits comme dans une classe normale.
+]
+
+---
+
+.left-column[
+  ### Classe anonyme
+]
+.right-column[
+  Les objets instanciés par une classe anonyme ne sont pas différentes de celle des objets instanciés par une classe normale.
+
+  ```php
+    $classX = new class extends Avion implements Transport {
+      use VitesseTrait;
+    };
+
+    $classX->setVitesse(120);
+    var_dump($classX);
+  ```
+]
+---
+
+.left-column[
+  ### Classe anonyme
+  ### Methode anonyme
+]
+.right-column[
+```php
+  $classX = new class extends Avion implements Transport {
+    use VitesseTrait;
+  };
+
+  $classX->setVitesse(120);
+  var_dump($classX);
+```
+]
+---
+
+.left-column[
+  ### Classe anonyme
+  ### Methode anonyme
+  ### Reflection de classe
+]
+.right-column[
+```php
+  $classX = new class extends Avion implements Transport {
+    use VitesseTrait;
+  };
+
+  $classX->setVitesse(120);
+  var_dump($classX);
+```
+]
+---
+
+class: middle, center, inverse
+
+## 5. Bonus
+
+---
+
+.left-column[
   ### L'autoloader
 ]
 .right-column[
@@ -1513,78 +1597,81 @@ L’idée derrière les exceptions va être d’anticiper les situations problé
 
 .left-column[
   ### L'autoloader
-  ### Classe Anonymes
+  ### Composer
+  #### Qu'est-ce que c'est ?
 ]
 .right-column[
-**Que sont les classes anonymes en PHP ?**
+  <img src="https://getcomposer.org/img/logo-composer-transparent5.png" height="120" style="display:block; margin: 0 auto">
 
-Lors de la création d'un nouvel objet, une classe est d'abord définie, puis un objet de cette classe est créé. En PHP 7, une classe dite anonyme a été introduite pour permettre aux classes d'être définies sans nom à la volée.
+  Composer est un outil mis en place pour la communauté des développeurs de PHP. A l’image de « `npm` » pour nodejs ou « `bundler` » pour ruby, il sert de gestionnaire de dépendance entre applications et librairies.
 
-On définit une classe anonyme en utilisant le mot-clé `new class`.
+  De façon plus précise, Composer permet de gérer pour chaque projet, la liste des modules et bibliothèques nécessaires à son fonctionnement ainsi que leurs versions. Il est utilisable via la console en ligne de commande. De plus, il permet de mettre en place un système d’autoload pour les bibliothèques compatibles.
 
-Par exemple :
-```php
-  $obj1 = new class() {};
+  url : https://getcomposer.org/
 
-  $obj2 = new class($x, $y) {
-     private $x;
-     private $y;
-     public function __construct($x, $y) {
-           $this->x = $x;
-           $this->y = $y;
-     }
-  };
-```
+  ### Installer composer
 
-Elles peuvent prendre des arguments via le constructeur, hériter d’autres classes, implémenter des interfaces, et utiliser des traits comme dans une classe normale.
-
-Les objets instanciés par une classe anonyme ne sont pas différentes de celle des objets instanciés par une classe normale.
+  Vous pouvez installer composer sur n'importe quel système d'exploitation.
+  
+  ```bash
+  curl -sS https://getcomposer.org/installer | php -- \
+    --install-dir=/usr/local/bin \
+    --filename=composer
+  ```
 ]
 
 ---
 
 .left-column[
   ### L'autoloader
-  ### Classe Anonymes
+  ### Composer
+  #### Qu'est-ce que c'est ?
+  #### Implementation
 ]
 .right-column[
-```php
-  $classX = new class extends Avion implements Transport {
-    use VitesseTrait;
-  };
 
-  $classX->setVitesse(120);
-  var_dump($classX);
+Pour initialiser `composer` dans un projet, c'est avec la commande suivante :
+```bash
+composer init
 ```
+
+Cette commande, vous demande certaines informations concernant votre projet et génère le répertoire `vendor`, `src` et un fichier `composer.json` contenant les différentes configurations de notre projet. Vous pouvez ouvrir ce dernier et voir, c'est le même contenu que vous venez de remplir.
+
+```json
+{
+    "name": "formation/composer",
+    "description": "test",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Formation\\Composer\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Fahari Hamada Sidi",
+            "email": "mkl.devops@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
+```
+
+C'est dans ce fichier que nous allons définir nos dépendances et leurs différentes versions, voyons tout de suite donc comment ajouter une dépendance à notre projet.
 ]
----
-
-class: middle, center, inverse
-
-## 5. Bonus
 
 ---
 
 .left-column[
+  ### L'autoloader
   ### Composer
-  #### started
+  #### Qu'est-ce que c'est ?
+  #### Implementation
+  #### Autoload
 ]
 .right-column[
-  url : https://getcomposer.org/
 
-  #### Installer composer
-
-  ```bash
-  curl -sS https://getcomposer.org/installer | php -- \
-    --install-dir=/usr/local/bin \
-    --filename=composer
-  ```
-
-  la commande suivante permettra d'initialiser composer avec le répertoire `vendor`
-
-  ```bash
-  composer init
-  ```
 Nous avions precedement fait notre propre autoloader, mais composer peut en generer un aussi, qui comprendra tout aussi les namespaces des composant que l'on pourant installer.
 Ajouter une section `autoload` au fichier `composer.json`
   ```json
@@ -1595,21 +1682,11 @@ Ajouter une section `autoload` au fichier `composer.json`
     },
   ```
 
-  Apres avoir ajouter notre section d'autoload vers notrerepertoire `src` faire un generer un fichier autoload
+  Apres avoir ajouter notre section d'autoload vers notre répertoire `src`, génerer le fichier autoload composer via la commande
 
   ```bash
   composer dump-autoload
   ```
-]
-
----
-
-.left-column[
-  ### Composer
-  #### started
-  #### using
-]
-.right-column[
 
   ```php
     # index.php
@@ -1617,18 +1694,45 @@ Ajouter une section `autoload` au fichier `composer.json`
 
   ```
 
-  installer une package
+]
+
+---
+
+.left-column[
+  ### L'autoloader
+  ### Composer
+  #### Implementation
+  #### Autoload
+  #### Gestion de packages
+]
+.right-column[
+  Le site : https://packagist.org/
+
+  Ce site permet d’enregistrer vos propres packages mais aussi de chercher tous les packages disponible, avec une page complète qui liste les différentes versions du package, et une description.
+
+  ### Installer une package
 
   ```bash
-  composer install symfony/http-client
-  composer install symfony/var-dumper
+  composer require symfony/http-client symfony/var-dumper
   ```
 
-  Vous pouvez retrouver la liste de tout les packages disponible sur https://packagist.org/
+  un fichier `comoser`
+
+  ### Mettre à jour les packages installés
+  la commande suivante met à jour un package precis ou/et tout ceux qui appartienne à symfony
+  ```bash
+  composer update symfony/http-client symfony/*
+  ```
+
+  ### Supprimer les packages installés
+  ```bash
+  composer remove symfony/http-client symfony/var-dumper
+  ```
 ]
 ---
 
 .left-column[
+  ### L'autoloader
   ### Composer
   ### PHP Doc
 ]
@@ -1672,6 +1776,8 @@ Ajouter une section `autoload` au fichier `composer.json`
   Si vous souhaitez utiliser cette fonctionnalité, je vous conseille de **toujours activer** le **`declare(strict_types=1);`** dans vos fichiers.
 
   ```php
+  declare(strict_types=1);
+
   class Vehicule
   {
     private ?int $vitesse = null;
@@ -1775,6 +1881,21 @@ class: middle
   Cette fonction devrait vous aider à accélérer votre processus de développement et à réduire les erreurs. En effet moins de code redondant pour définir et initialiser les propriétés.
 
   ```php
+  # before php 8
+  class Vehicule 
+  {
+    private ?int $vitesse = 120,
+    protected ?string $carburant = 'essence'
+
+    public function __construct(?int $vitesse, ?string $carburant)
+    {
+      $this->vitesse = $vitesse;
+      $this->carburant = $carburant;
+    }
+
+  }
+
+  # with php 8
   class Vehicule 
   {
 
@@ -1782,7 +1903,6 @@ class: middle
       private ?int $vitesse = 120,
       protected ?string $carburant = 'essence'
     ) {
-      ...
     }
 
   }
