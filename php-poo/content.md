@@ -8,7 +8,7 @@ class: center, middle, inverse
 
 class: middle
 .left-column[
-## Objectif
+### Objectif
 ]
 .right-column[
 - Découvrir un peu plus PHP
@@ -23,8 +23,8 @@ class: middle
 ---
 class: middle
 .left-column[
-## Objectif
-## Prérequis
+### Objectif
+### Prérequis
 
 ]
 .right-column[
@@ -34,16 +34,22 @@ class: middle
 
 - Éditeur de texte (vs-code, phpstorm, sublime-text, ...)
 
-- Shell terminal / Powershell avec le client `php-cli`  
+- Shell terminal / Powershell avec le client `php-cli`
+
+- clone du repo git pour les tp, qui vous permettra de faire le suivi du cours à differente étape.
+
+```sh
+git clone https://github.com/mkldevops/php-poo-tp.git -b 1.0
+```
 ]
 
 ---
 
 class: middle
 .left-column[
-## Objectif
-## Requis
-## Pourquoi la POO ?
+### Objectif
+### Requis
+### Pourquoi la POO ?
 ]
 .right-column[
 La programmation orientée objet (POO) est devenue **l'un des éléments constitutifs de la programmation**, qui remplace ou améliore la programmation procédurale. Alors que l'idée plus traditionnelle de la programmation procédurale place l'action et la logique au centre, **la POO utilise des objets et des données pour produire des résultats.**
@@ -57,10 +63,37 @@ La majorité des langages de programmation modernes tels que C++, Object Pascal,
 
 class: middle
 .left-column[
-## Objectif
-## Requis
-## Pourquoi la POO ?
-## Au programme
+### Objectif
+### Requis
+### Pourquoi la POO ?
+### Stats des versions PHP
+]
+
+.right-column[
+  📊 La dernière version de PHP à ce jour est la version 8.1 qui à été publié en Novembre 2021
+
+| Version | juillet 2021 (%) | janvier 2022 (%) |
+|-------------|------------------|------------------|
+| **8.1**     | 0,1              | 9.1              |
+| **8.0**     | 14.7             | 23,9             |
+| **7.4**     | 46,8             | 43,9             |
+| **7.3**     | 19.2             | 12.0             |
+| **7.2**     | 10.4             | 6.6              |
+| **7.1**     | 3.8              | 2.4              |
+| **7.0**     | 1.3              | 0,8              |
+
+On remarque que la communauté utilisant PHP suivent et migre vers les derniers versions.
+]
+
+---
+
+class: middle
+.left-column[
+### Objectif
+### Requis
+### Pourquoi la POO ?
+### Stats des versions PHP
+### Au programme
 ]
 
 .right-column[
@@ -181,6 +214,8 @@ class: middle, center, inverse
 .right-column[
 **Une classe est une définition ou une représentation de quelque chose**. La classe va contenir des propriétés qu’on pourra manipuler ainsi que des méthodes.
 
+[![](https://mermaid.ink/img/pako:eNpNj8sKAjEMRX-lZKWoP9C1foHgqpvYZsZAH5Kmggzz785L9K7CuYeEDOBLILDgI9Z6ZuwFk8tmykLMrbA2ITOscM6Js5oXK9VKf7SqcO6NR7k3way_6iClRZLd3qzO2oxwhESSkMN0f9nvQB-UyIGdxkAdtqgOXJ7V9gyodAmsRcB2GCsdAZuW6zt7sCqNvtL2xmaNH2-nSos)](https://mermaid-js.github.io/mermaid-live-editor/edit#pako:eNpNj8sKAjEMRX-lZKWoP9C1foHgqpvYZsZAH5Kmggzz785L9K7CuYeEDOBLILDgI9Z6ZuwFk8tmykLMrbA2ITOscM6Js5oXK9VKf7SqcO6NR7k3way_6iClRZLd3qzO2oxwhESSkMN0f9nvQB-UyIGdxkAdtqgOXJ7V9gyodAmsRcB2GCsdAZuW6zt7sCqNvtL2xmaNH2-nSos)
+
 - **Les propriétés (attributs),** ce sont des variables internes à cette définition dans lesquelles on stocke des valeurs.
 
 - **Une classe a aussi des méthodes,** il s’agit de fonctions internes à la classe. Les methode represente le comportement qu'aura notre définition.
@@ -200,6 +235,8 @@ Elle va donc nous permettre de structurer et d'organiser l’ensemble de notre c
 Une classe se déclare de la manière suivante :
 
 ```php
+<?php
+
 class Voiture
 {
 
@@ -228,21 +265,32 @@ _**Note : **_
 .right-column[
 **Créer une instance**, c'est créer un objet à partir d'une classe. 
 
-On utilise le mot `new` pour instancier une classe. Cette instanciation sera alors affecter à une variable qui deviendra donc notre objet de type `Voiture`. 
+On utilise le mot `new` pour instancier une classe. Cette instanciation sera alors affecter à une variable qui deviendra donc notre objet de type `Voiture` 🚘. 
 
 **Exemple d’instanciation:**
 
 ```php
+# cours/index.php
 <?php
 
-  $mercedes = new Voiture();
+class Voiture
+{
 
-  var_dump($mercedes);
+}
 
-  # object(Voiture)#1 (0) { }
+$mercedes = new Voiture();
+
+var_dump($mercedes);
+
 ```
 
-A savoir qu'au moment de l'instanciation une réference d'objet est mise en place par PHP.
+Lançons le script via la commande PHP
+```sh
+php cours/index.php
+# object(Voiture)#1 (0) { }
+```
+
+📌 A savoir qu'au moment d'une nouvelle instanciation de classe, une **réference d'objet** est mise en place par PHP.
 ]
 ---
 
@@ -254,7 +302,9 @@ A savoir qu'au moment de l'instanciation une réference d'objet est mise en plac
 ]
 
 .right-column[
-Une **« référence »** en PHP ou plus précisément un **alias** est un moyen d’accéder au contenu d’une même variable en utilisant un autre nom. Pour le dire simplement, créer un alias signifie déclarer un autre nom de variable qui va partager la même valeur que la variable de départ.
+Une **« référence »** en PHP ou plus précisément un **alias** est un moyen d’accéder au contenu d’une même variable en utilisant un autre nom. 
+
+Pour le dire simplement, créer un alias signifie déclarer un autre nom de variable qui va partager la même valeur que la variable de départ.
 
 Notez qu’en PHP le nom d’une variable et son contenu ou sa valeur sont identifiés comme deux choses distinctes par le langage. Cela permet donc de donner plusieurs noms à un même contenu.
 
@@ -264,16 +314,16 @@ Ainsi, lorsque l’on modifie la valeur de l’alias, on modifie également la v
 **Déclaration par référence avec `&`**
 
 ```php
-  function foo(&$var)
-  {
-      $var = 2;
-  }
+function foo(&$var)
+{
+    $var = 2;
+}
 
-  $a = 1;
-  foo($a);
+$a = 1;
+foo($a);
 
-  // $a vaut 2 maintenant
-  var_dump($a);
+// $a vaut 2 maintenant
+var_dump(compact('a'));
 ```
 
 ]
@@ -281,12 +331,12 @@ Ainsi, lorsque l’on modifie la valeur de l’alias, on modifie également la v
 **Déclaration par reference avec l'instanciation**
 
 ```php
-  $date1 = new DateTime();
-  $date2 = $date1;
-  $date3 = clone $date1;
-  $date2->modify('+1 day');
+$date1 = new DateTime();
+$date2 = $date1;
+$date3 = clone $date1;
+$date2->modify('+1 day');
 
-  var_dump($date1, $date2, $date3);
+var_dump(compact('date1', 'date2', 'date3'));
 ```
 
 `$date1` et `$date2` désignent le même objet en mémoire. Ils sont donc tous les deux au lendemain.
@@ -300,11 +350,11 @@ Ainsi, lorsque l’on modifie la valeur de l’alias, on modifie également la v
 #### Déclaration de la classe
 #### Instanciation d'une classe
 #### Référence d'objet
-### Propriétés (attributs) d'une classe
+### Propriétés d'une classe
 ]
 
 .right-column[
-Les propriétés sont les variables membres de la classe. Ils constituent les caractéristiques de l'objet. En quelque sorte ce qui l'a défini.
+**Les propriétés** (Appelé parfois attribut) sont les variables membres de la classe. Ils constituent les caractéristiques de l'objet. En quelque sorte c’est ce qui le définit.
 
 ```php
 class Voiture
@@ -322,11 +372,11 @@ class Voiture
 #### Déclaration de la classe
 #### Instanciation d'une classe
 #### Référence d'objet
-### Propriétés (attributs) d'une classe
+### Propriétés d'une classe
 ]
 
 .right-column[
-**Les propriétés** sont les variables membres de la classe. Ils constituent les caractéristiques de l'objet. En quelque sorte c’est ce qui le définit.
+**Les propriétés** (Appelé parfois attribut) sont les variables membres de la classe. Ils constituent les caractéristiques de l'objet. En quelque sorte c’est ce qui le définit.
 
 ```php
 class Voiture
@@ -336,9 +386,9 @@ class Voiture
 }
 ```
 
-Pour déclarer un attribut il faut le précéder par sa **visibilité**.
+⚡ Pour déclarer un attribut il faut le précéder par sa **visibilité**.
 
-**La visibilité** d'un attribut indique à partir d'où on peut y avoir accès.
+👀 **La visibilité** d'un attribut indique à partir d'où on peut y avoir accès.
 **`public`** est un type de visibilité qui permet à l'attribut d'être accessible de partout (de l'intérieur de la classe dont il est membre comme de l'extérieur).
 
 ```php
@@ -348,10 +398,12 @@ class Voiture
   public $carburant = 'diesel';
 }
 
-$voiture = new Voiture();
-$voiture->vitesse = 120;
-$voiture->carburant = 'ethanol';
-var_dump($voiture);
+$mercedes = new Voiture();
+var_dump($mercedes);
+
+$mercedes->vitesse = 120;
+$mercedes->carburant = 'ethanol';
+var_dump($mercedes);
 ```
 
 On utilise l’opérateur `->` pour avoir accès **aux propriétés et méthodes** de l'objets instancié.
@@ -365,7 +417,7 @@ On utilise l’opérateur `->` pour avoir accès **aux propriétés et méthodes
 #### Déclaration de la classe
 #### Instanciation d'une classe
 #### Référence d'objet
-### Propriétés (attributs) d'une classe
+### Propriétés d'une classe
 ### Méthodes d'une classe
 ]
 .right-column[
@@ -385,11 +437,11 @@ class Voiture
   }
 }
 
-$voiture  = new Voiture();
-$voiture->rouler();
+$mercedes  = new Voiture();
+$mercedes->rouler();
 ```
 
-Vous remarquez que pour utiliser les propriété de la classe nous utilise le mot clé `$this`. La pseudo-variable `$this` est disponible lorsqu'une méthode est appelée depuis un contexte objet. `$this` est la valeur de l'objet appelant.
+🔵 Vous remarquez que pour utiliser les propriété de la classe nous utilise le mot clé `$this`. La pseudo-variable `$this` est disponible lorsqu'une méthode est appelée depuis un contexte objet. `$this` est la valeur de l'objet appelant.
 
 **Note :** 
 > Par défaut la méthode à une visibilité `public`, on pourrait donc ne pas le mentionner mais par convention il est mieux de le définir.
@@ -403,26 +455,30 @@ Vous remarquez que pour utiliser les propriété de la classe nous utilise le mo
 #### Référence d'objet
 ### Propriétés (attributs) d'une classe
 ### Méthodes d'une classe
-### .red[**Travaux Pratique**]
+### .red[**🏗 T. P.**]
 ]
 
 .right-column[
 
-- Faire un nouveau répertoire de travail `php-poo` et y accéder
+Lors des travaux pratique nous utiliserons le dossier `/societe-r` comme repertoire racine.
 
-- Faire un nouveau ficher `index.php` avec à l'intérieur `<?php`
+Un fichier `index.php` y est présent avec le code que nous avons analysé lors du début de la formation.
 
-- Lancer notre serveur PHP avec `php -S localhost:8000`
+- Lancer notre serveur PHP avec `php -S localhost:8000 societe-r/index.php`
 
-- Reprenons le code de la société R et essayons de le réorganiser en utilisant la POO
+Une fois notre serveur prêt, appliquons le POO sur le cas analysé appartenant à la **Société R**
 
-  - Définir la classe `Employe` et ses propriétés `id`, `nom`, `prenom`, `age` et `anciennete`
+- Définir une nouvelle classe `Employe` et ses propriétés public `id`, `nom`, `prenom`, `age` et `anciennete`
 
-  - Faite en sorte que l'employé puisse se présenter avec une méthode `presentation()`
+- Faite en sorte que l'employé puisse se présenter avec une méthode `presentation()`
 
-  - Définir 3 instances d'employés differentes qui se presenteront chacune avec la methode `presentation()`
+- Définir 3 instances d'employés differentes avec un `id` unique. Chaque instance se presentera avec la methode `presentation()`
   
-  - Ajouter aleatoirement à chaque instance d'employé entre 5 et 10 ans d'ancienneté
+- Ajouter aleatoirement à chaque instance d'employé entre 5 et 10 ans d'ancienneté.
+
+- Ajouter une classe `Equipe` qui aura une propriété public `nom` et `employes` qui sera un tableau de `Employe`
+
+- Ajouter nos employés instancié dans une Equipe nommé `Dream Team`
 ]
 
 ---
@@ -441,7 +497,7 @@ Nous avons définit les attributs avec un visibilité `public` et peuvent être 
 
 Pour remédier à cela on va utiliser le concept **d'encapsulation** afin de protéger certaines données des interférences extérieures en se forçant à utiliser les méthodes définies pour manipuler les données. 
 
-**L’encapsulation** va ici être très intéressante pour empêcher que certaines propriétés ne soient manipulées depuis l’extérieur de la classe.
+🛡 **L’encapsulation** va ici être très intéressante pour empêcher que certaines propriétés ne soient manipulées depuis l’extérieur de la classe.
 
 Nous allons donc utiliser la visibilité **`private`** au niveau de nos propriétés.
 
@@ -455,7 +511,7 @@ class Voiture
 }
 ```
 
-La propriété `private` ne va être uniquement accessibles depuis l’intérieur de la classe. Pour y avoir acces on utilisera **les accesseurs** et pour modifier **les mutateurs**.
+🔵 La propriété `private` ne va être uniquement accessibles depuis l’intérieur de la classe. Pour y avoir acces on utilisera **les accesseurs** et pour modifier **les mutateurs**.
 ]
 
 ---
@@ -466,15 +522,15 @@ La propriété `private` ne va être uniquement accessibles depuis l’intérieu
 ]
 .right-column[
 .pull-left[
-Ayant défini la visibilité à **`private`** des propriétés de la classe, on ne peut plus accèder directement aux propriété d'un objet instancié.
+Ayant modifié la visibilité des propriétés de la classe sur la valeur **`private`**. Il n'est plus possible d'accèder directement aux propriété d'un objet instancié en dehors de la classe.
 
-Pour lire et modifier leurs valeurs, on passe par des méthodes qui permettent de sécuriser leur utilisation.
+Pour y remedier et pouvoir lire et modifier leurs valeurs, on passe par des méthodes publiques.
 
-Ces méthodes se nomme
+Ces méthodes se nommes :
 * **accesseurs** (**`getter`**) pour lire leurs valeurs 
 * **mutateurs** (**`setter`**) pour modifier leurs valeurs.
 
-Une des conventions souvent utilisée est de reprendre le nom de l'attribut pour définir les méthodes, en ajoutant `get` pour les accesseurs et `set` pour les mutateurs. Tout en en utilisant le `camelCase`
+Une des conventions souvent utilisée est de reprendre le nom de la propriété pour définir le nom des méthodes, en ajoutant `get` pour les accesseurs et `set` pour les mutateurs. Tout en en utilisant le `camelCase` comme convention de nommage.
 ]
 .pull-right[
 
@@ -483,6 +539,8 @@ class Voiture
 {
   private $vitesse = 100;
   private $carburant = 'diesel';
+
+  ...
 
   public function setVitesse($vitesse)
   {
@@ -518,10 +576,10 @@ class Voiture
 Pour pouvoir donc modifier les information de notre objet, on passera par les accesseurs et mutateurs, qui sont méthodes déclaré public de l'objet.
 
 ```php
-$voiture = new Voiture();
-$voiture->setCarburant('essence');
-$voiture->setVitesse(120);
-$voiture->rouler();
+$mercedes = new Voiture();
+$mercedes->setCarburant('essence');
+$mercedes->setVitesse(120);
+$mercedes->rouler();
 ```
 
 Nous pouvons ainsi sécuriser la modification de nos propriétés.
@@ -541,14 +599,14 @@ class Voiture
   }
 }
 
-$voiture = new Voiture();
-$voiture->setCarburant('eau');
-var_dump($voiture);
+$mercedes = new Voiture();
+$mercedes->setCarburant('eau');
+var_dump($mercedes);
 ```
 ]
 
 ---
-class: middle
+
 .left-column[
 ### Visibilité private
 ### Les accesseurs et mutateurs
@@ -579,7 +637,7 @@ class: middle
   ```
 ]
 ---
-class: middle
+
 .left-column[
   ### Visibilité private
   ### Les accesseurs et mutateurs
@@ -605,7 +663,7 @@ class: middle
 ]
 
 ---
-class: middle
+
 .left-column[
   ### Visibilité private
   ### Les accesseurs et mutateurs
@@ -633,7 +691,7 @@ class: middle
 ]
 
 ---
-class: middle
+
 .left-column[
   ### Visibilité private
   ### Les accesseurs et mutateurs
@@ -670,7 +728,7 @@ class: middle
 ]
 
 ---
-class: middle
+
 .left-column[
   ### Visibilité private
   ### Les accesseurs et mutateurs
@@ -706,7 +764,7 @@ class: middle
 ]
 
 ---
-class: middle
+
 .left-column[
   ### Visibilité private
   ### Les accesseurs et mutateurs
@@ -740,7 +798,7 @@ class: middle, center, inverse
 # 3. Réutilisation du code et gain de temps
 
 ---
-class: middle
+
 .left-column[
   ## Héritage
 ]
@@ -761,7 +819,7 @@ class: middle
 ]
 
 ---
-class: middle
+
 .left-column[
   ## Héritage
   ### Mot clé extends
@@ -784,7 +842,7 @@ class: middle
 ]
 
 ---
-class: middle
+
 .left-column[
   ## Héritage
   ### Mot clé extends
@@ -813,7 +871,7 @@ class: middle
 ]
 ---
 
-class: middle
+
 .left-column[
   ## Héritage
   ### Mot clé extends
@@ -1701,6 +1759,7 @@ Ajouter une section `autoload` au fichier `composer.json`
 .left-column[
   ### L'autoloader
   ### Composer
+  #### Qu'est-ce que c'est ?
   #### Implementation
   #### Autoload
   #### Gestion de packages
@@ -1768,6 +1827,7 @@ Ajouter une section `autoload` au fichier `composer.json`
 ---
 
 .left-column[
+  ### L'autoloader
   ### Composer
   ### PHP Doc
   ### Typage de données
@@ -1802,28 +1862,39 @@ Ajouter une section `autoload` au fichier `composer.json`
 ---
 
 .left-column[
+  ### L'autoloader
   ### Composer
   ### PHP Doc
   ### Typage de données
-  ## .red[**Bilan Travaux Pratique**]
+  ### .red[**Travaux Pratique**]
 ]
 .right-column[
-### TP commun
+### Implementer composer
 
-Avec tous ce que l'on a appris et vu, nous allons l'appliquer sur l'outils de la société R à repartant de zero
+Avec tous ce que l'on a appris et vu sur l'autoloader, composer et le typage de données, nous allons l'appliquer sur le projet de la société R.
 
-- Recuperer le repo git
-- Structure du projet
-  - dossier `public`, `public/css`, `public/js` (tous nos fichiers public)
-  - dossier `src` (Toutes nos classes)
-  - fichier `public/index.php`
-  - dossiers `pages`
-- Base de données ou Fichier JSON
-- Essayons ensemble de mettre en place
-  - Un formulaire d'ajout d'employé
-  - Un formulaire pour responsable
-  - Une page qui liste tout les employés
-  - Page du responsable avec son équipe
+- Installer composer et definir l'autoloader
+- Deplacer les classes dans le repertoire `/src`
+- Redefinir le bon namespace de chaque classe / interfaces, ... avec `App`
+- Appliqué le typage le plus strict sur toute nos classes
+- Installer le package `php-cs-fixer` via https://packagist.org/packages/friendsofphp/php-cs-fixer
+
+```sh
+# installer
+composer require friendsofphp/php-cs-fixer --dev
+
+# utiliser
+./vendor/bin/php-cs-fixer fix --allow-risky=yes
+```
+- Installer le package `php-stan` via https://packagist.org/packages/phpstan/phpstan
+
+```sh
+# installer
+composer require phpstan/phpstan --dev
+
+# utiliser
+./vendor/bin/phpstan analyse -l 9 src
+```
 ]
 
 ---
@@ -1838,7 +1909,6 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
 
 ---
 
-class: middle
 .left-column[
   ### Types d'Union
 ]
@@ -1872,7 +1942,6 @@ class: middle
 
 ---
 
-class: middle
 .left-column[
   ### Types d'Union
   ### Promotion de propriétés de constructeur
@@ -1881,7 +1950,7 @@ class: middle
   Cette fonction devrait vous aider à accélérer votre processus de développement et à réduire les erreurs. En effet moins de code redondant pour définir et initialiser les propriétés.
 
   ```php
-  # before php 8
+  # with php 7.4
   class Vehicule 
   {
     private ?int $vitesse = 120,
@@ -1892,26 +1961,21 @@ class: middle
       $this->vitesse = $vitesse;
       $this->carburant = $carburant;
     }
-
   }
 
   # with php 8
   class Vehicule 
   {
-
     public function __construct(
       private ?int $vitesse = 120,
       protected ?string $carburant = 'essence'
-    ) {
-    }
-
+    ) { }
   }
   ```
 ]
 
 ---
 
-class: middle
 .left-column[
   ### Types d'Union
   ### Promotion de propriétés de constructeur
@@ -1920,24 +1984,31 @@ class: middle
 .right-column[
 
   ```php
-  class Vehicule
+  interface Vehicule
   {
+    # accessible uniquement dans la classe/interface déclaré
     private const CONST_PRIVATE = 'private';
 
+    # accessible uniquement dans la classe/interface déclaré et ceux qui héritent
     protected const CONST_PROTECTED = 'protected';
     
+    # Accessible de partout
     public const CONST_PUBLIC = 'public';
     
+    # Accessible de partout
     const CONST_DEFAULT_PUBLIC = 'default_public';
+
+    # Accessible de partout, mais ne peut etre redefini dans les classes qui héritent
+    final public const CONST_PUBLIC = 'public';
     
-    ...
   }
+
+
   ```
 ]
 
 ---
 
-class: middle
 .left-column[
   ### Types d'Union
   ### Promotion de propriétés de constructeur
@@ -1945,23 +2016,27 @@ class: middle
   ### Arguments nommées
 ]
 .right-column[
-  Les arguments nommés vous donnent plus de souplesse pour appeler les fonctions. Jusqu'à présent, vous deviez appeler une fonction et passer chaque argument dans l'ordre spécifié par la fonction. 
+  **Les arguments nommés** vous donnent plus de souplesse pour appeler les fonctions. Jusqu'à présent, vous deviez appeler une fonction et passer chaque argument dans l'ordre spécifié par la fonction.
+
+  Un exemple d'utilisation avec la methode `number_format` : https://www.php.net/manual/en/function.number-format.php
 
   ```php
-  // Using positional arguments:
-  array_fill(0, 100, 50);
+  // avec php 7.4, si je veux modifier le separateur des centaines
+  number_format(1063, 0, ".", " ");
   ```
 
-  Les arguments nommés vous permettent de définir un nom pour chaque paramètre. Et maintenant, ils peuvent être rappelés à l'ordre, comme décrit ci-dessous : 
+  Les arguments nommés vous permettent de définir un nom pour chaque paramètre. Et maintenant, ils peuvent être rappelés dans l'ordre ou le desordre, comme décrit ci-dessous : 
   ```php
-  // Using named arguments:
-  array_fill(start_index: 0, num: 100, value: 50);
+  // En utilisant le nom des arguments
+  number_format(num: 1063, decimals: 0, decimal_separator: ".", thousands_separator: " ");
+
+  // En utilisant le nom des arguments sur ceux que modifié
+  number_format(num: 1063, thousands_separator: " ");
   ```
 ]
 
 ---
 
-class: middle
 .left-column[
   ### Types d'Union
   ### Promotion de propriétés de constructeur
@@ -1988,15 +2063,13 @@ class: middle
 
 ---
 
-
-class: middle
 .left-column[
   ### Types d'Union
   ### Promotion de propriétés de constructeur
   ### visibilité pour les constantes
   ### Arguments nommées
   ### Fonction str_contains
-  ### null safe
+  ### Null safe
 ]
 .right-column[
 
@@ -2007,4 +2080,97 @@ class: middle
     ...
   }
   ```
+]
+
+---
+
+.left-column[
+  ### Types d'Union
+  ### Promotion de propriétés de constructeur
+  ### visibilité pour les constantes
+  ### Arguments nommées
+  ### Fonction str_contains
+  ### Null safe
+  ### Enum
+]
+.right-column[
+
+  ```php
+  class Vehicule
+  {
+    private const NB_ROUES = 4;
+    ...
+  }
+  ```
+]
+
+---
+
+.left-column[
+  ### Types d'Union
+  ### Promotion de propriétés de constructeur
+  ### visibilité pour les constantes
+  ### Arguments nommées
+  ### Fonction str_contains
+  ### Null safe
+  ### Enum
+  ### Readonly
+]
+.right-column[
+
+  ```php
+  class Vehicule
+  {
+    private const NB_ROUES = 4;
+    ...
+  }
+  ```
+]
+
+---
+
+.left-column[
+  ### Types d'Union
+  ### Promotion de propriétés de constructeur
+  ### visibilité pour les constantes
+  ### Arguments nommées
+  ### Fonction str_contains
+  ### Null safe
+  ### Enum
+  ### Readonly
+  ### Les attributes
+]
+.right-column[
+
+  ```php
+  class Vehicule
+  {
+    private const NB_ROUES = 4;
+    ...
+  }
+  ```
+]
+
+---
+
+.left-column[
+  ### .red[**Bilan Travaux Pratique**]
+]
+.right-column[
+### TP commun
+
+Avec tous ce que l'on a appris et vu, nous allons l'appliquer sur l'outils de la société R à repartant de zero
+
+- Recuperer le repo git
+- Structure du projet
+  - dossier `public`, `public/css`, `public/js` (tous nos fichiers public)
+  - dossier `src` (Toutes nos classes)
+  - fichier `public/index.php`
+  - dossiers `pages`
+- Base de données ou Fichier JSON
+- Essayons ensemble de mettre en place
+  - Un formulaire d'ajout d'employé
+  - Un formulaire pour responsable
+  - Une page qui liste tout les employés
+  - Page du responsable avec son équipe
 ]
