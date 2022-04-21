@@ -623,17 +623,22 @@ var_dump($mercedes);
     private $vitesse = 100;
     private $carburant = 'diesel';
 
-    public function __construct($vitesse, $carburant)
+    public function __construct($vitesse = null, $carburant = null)
     {
-      $this->vitesse = $vitesse;
+      if($vitesse !== null) {
+        $this->vitesse = $vitesse;
+      }
+      
       $this->setCarburant($carburant);
     }
 
     # getters & setters ...
   }
 
-  $voiture = new Voiture(90, 'essence');
-  var_dump($voiture);
+  $mercedes = new Voiture();
+  $scenic = new Voiture(90, 'ethanol');
+
+  var_dump(compact('scenic', 'mercedes'));
   ```
 ]
 ---
@@ -642,23 +647,32 @@ var_dump($mercedes);
   ### Visibilité private
   ### Les accesseurs et mutateurs
   ### Le constructeur
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
 ]
 .right-column[
   .left[
-  Reprenons le cas de la société R, nous continuons à ameliorer le code en appliquant les chapitres precedents
+  Reprenons le projet de la **Société R**. Continuons à améliorer le code en appliquant ce qu'on a appris sur les chapitres précedents
 
-  - Appliquer l'encapsulation sur la classe `Employe`
+  - Déplacer les classes `Employe` et `Equipe` dans des fichiers php spécifique `Employe.php` et `Equipe.php` et faire un `require_once`  des 2 fichiers.
 
-  - Définir un constructeur pour pouvoir y définir directement les valeurs des propriétés
+  - Appliquer le pricinpe d'encapsulation sur les classes `Employe` et `Equipe`
 
-  - Sécuriser nos méthodes afin 
+  - Définir les constructeur pour pouvoir aussi y définir directement les valeurs des propriétés lors de l'instanciation
+
+  - Generer automatiquement l'`id` lors de l'instanciation.
   
-    - Que l'on ne puisse pas avoir plus de **40 ans d'ancienneté**
+  - Ajouter 3 nouveaux employés qui seront dans un nouvelle équipe `Rocket Team` en utilisant seulement le constructeur.
 
+  - Sécuriser nos méthodes afin de respecter les regles suivantes :
+  
     - Un employé doit avoir par defaut 18 ans et 0 années d'ancienneté.
     
+    - Un employé doit avoir entre **0** et **47** années d'anciennetés
+
     - Un employé doit avoir entre **18 ans** minimum et **65 ans** maximum
+
+
+  .center[💻💻💻💻]
   ]
 ]
 
@@ -668,7 +682,7 @@ var_dump($mercedes);
   ### Visibilité private
   ### Les accesseurs et mutateurs
   ### Le constructeur
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Méthodes magiques
 ]
 .right-column[
@@ -696,13 +710,14 @@ var_dump($mercedes);
   ### Visibilité private
   ### Les accesseurs et mutateurs
   ### Le constructeur
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Méthodes magiques
-  ### Attributs et Méthodes static
+  ### Propriétés et Méthodes static
 ]
 .right-column[
-  **Les attributs et méthodes statiques appartiennent à la classe et non à l'objet**. Par conséquent on ne peut pas y accéder par l'opérateur `->` mais plutôt par l'opérateur de résolution de portée `::` précédé par le nom de la classe dans laquelle ils sont définis.
-  Pour spécifier si une propriété est statique on déclare le mot clé `static` après la visibilité.
+  **Les propriétés et méthodes statiques appartiennent à la classe et non à l'objet**. Par conséquent on ne peut pas y accéder par l'opérateur `->` mais plutôt par l'opérateur de résolution de portée `::` précédé par le nom de la classe dans laquelle ils sont définis.
+
+  Pour **spécifier si une propriété est statique** on déclare le mot clé `static` après la visibilité.
   La valeur d'une propriété statique peut être modifié, tout au long du processus, après l'avoir défini dans la classe.
 
   Par exemple:
@@ -717,11 +732,11 @@ var_dump($mercedes);
     public static function ajouterPortes()
     {
       self::$nbPortes++;
-      echo sprintf("Une voiture avec %d portes", self::$nbPortes);
+      return sprintf("Une voiture avec %d portes", self::$nbPortes);
     }
   }
 
-  var_dump(Voiture::$nbPortes, Voiture::ajouterPortes());
+  var_dump([Voiture::$nbPortes, Voiture::ajouterPortes()]);
   ```
 
   **Note :** On utilise un nouveau mot clé **`self`**. Dans la définition d’une classe, « `$this` » se réfère à l’objet actuel, tandis que « `self` » se réfère à la classe actuelle.
@@ -733,17 +748,17 @@ var_dump($mercedes);
   ### Visibilité private
   ### Les accesseurs et mutateurs
   ### Le constructeur
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Méthodes magiques
-  ### Attributs et Méthodes static
+  ### Propriétés et Méthodes static
   ### Constante
 ]
 .right-column[
   Une constante de classe est un élément statique par défaut. Son rôle est le même que celui d'une constante classique déclarée à l'aide de la fonction `define()`. **Sa valeur est inchangée, contrairement à la propriété statique** et elle appartient aussi à la classe dans laquelle est elle déclaré et non à l'objet qui constitue l'instance de classe.
 
-  Pour définir une constante on utilise le mot clé `const` suivi du nom de la constante à laquelle on affecte la valeur souhaitée. Par convention l'identifiant de la constante est déclaré en **majuscule**.
+  Pour définir une **constante**, on utilise le mot clé **`const`** suivi du nom de la constante à laquelle on affecte la valeur souhaitée. Par convention l'identifiant de la constante est déclaré en **majuscule**.
 
-  La constante de classe peut être appelée de l'intérieur comme de l'extérieur de la classe grâce à l'opérateur de résolution de portée `::`
+  La constante de classe peut être appelée de l'intérieur comme de l'extérieur de la classe grâce à l'opérateur de résolution de portée **`::`**
 
   ```php
   class Voiture
@@ -754,12 +769,14 @@ var_dump($mercedes);
 
     public function rouler()
     {
-      echo 'Voiture '.$this->carburant.', roulant à '.$this->vitesse.' KM/h avec '.
+      return 'Voiture '.$this->carburant.', roulant à '.$this->vitesse.' KM/h avec '.
       self::NB_ROUES.' roues';
     }
   }
 
-  var_dump(Voiture::NB_ROUES);
+  $mercedes = new Voiture();
+
+  var_dump([Voiture::NB_ROUES, $mercedes->rouler()]);
   ```
 ]
 
@@ -769,26 +786,32 @@ var_dump($mercedes);
   ### Visibilité private
   ### Les accesseurs et mutateurs
   ### Le constructeur
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Méthodes magiques
-  ### Attributs et Méthodes static
+  ### Propriétés et Méthodes static
   ### Constante
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
 ]
 .right-column[
-  Reprenons notre cas sur la société R.
+  Reprenons notre projet fil rouge avec la société R.
 
-  - Ajouter à la classe `Employe`
+  - Ajouter à la classe `Equipe` une constante `NB_EMPLOYE_MAX` qui aura comme valeur 5, qui correspond à la limite du nombre d'employé dans une équipe.
 
-    - Une constante `NB_EMPLOYE_MAX` qui aura comme valeur 10, qui correspond à la limite du nombre d'employé.
+  - Modifier la methode `setEmployes` pour `ajouterEmploye` :
+    - Elle pendra en parametre un seul `Employe`.
+    - Elle devra verifier que le nombre maximum d'employé n'est pas atteint pour ajouter un employe
+    - Etre utilisé au niieau du constructeur avec un `foreach`
 
-    - Une propriété statique `$nbEmploye` qui aura comme valeur 0
+  - Ajouter une propriété privé statique `$nbHeuresTravails` dans les classe `Equipe` qui aura comme valeur 0.
 
-    - Ajouter une fonction statique `incrementeEmploye` qui aura pour fonctionne d’incrémenter `$nbEmploye`
+  - Ajouter une fonction `travailler` à la classe `Equipe` : 
+    - Qui aura en parametre le nombre d'heure `$nbHeures` travaillé par personnes.
+    - Elle ajoutera pour chaque `Employe` dans l'équipe, le nombre d'heure dans `$nbHeuresTravails`
+    - Faire travailler l'équipe "Rocket Team" 8 heures / employes
+    - Faire travailler l'équipe "Dream Team" 7 heures / employes
+    - Afficher le nombre d'heures travaillé par les deux équipes via une methode static `getbHeuresTravails`.
 
-    - Appeler la méthode à chaque instanciation de la classe `Employe`
-
-  - En fin de code afficher le pourcentage d'employé par rapport à la limite, via une fonction
+  - Pour chaque équipe, afficher le pourcentage d'employé par rapport à la limite max.
 ]
 
 ---
@@ -830,15 +853,22 @@ class: middle, center, inverse
   ```php
   class Vehicule 
   { 
-    ...
+    
   }
 
   class Voiture extends Vehicule 
   { 
-    ...
+    # codes
+  }
+
+  class Camion extends Vehicule 
+  { 
+    
   }
   ```
-  Notre classe `Voiture` étend la classe `Vehicule`. Elle hérite et va pouvoir accéder à toutes les méthodes et aux propriétés de notre classe `Vehicule` qui n’ont pas été définies avec le mot clé `private`.
+  Nos classes **`Voiture`** et **`Camion`** étendent de la classe **`Vehicule`**. 
+  
+  Elles héritent et vont pouvoir accéder à toutes les méthodes et aux propriétés de la classe `Vehicule` qui n’ont pas été définies avec le mot clé **`private`**.
 ]
 
 ---
@@ -854,20 +884,27 @@ class: middle, center, inverse
   ```php
   class Vehicule
   {
-    private $vitesse = 120;
-    protected $carburant = 'diesel';
-    ...
+      private $vitesse = 120;
+      protected $carburant = 'diesel';
   }
 
   class Voiture extends Vehicule
   {
-    private $vitesse = 90; // Error
-    protected $carburant = 'diesel';
-    ...
+      # methods, getters & setters
   }
+
+  $mercedes = new Voiture();
+
+  var_dump([
+      'carburant' => $mercedes->getCarburant()
+      'vitesse' => $mercedes->getVitesse()
+  ]);
+  # PHP Warning:  Undefined property: Voiture::$vitesse
   ```
 
-  Nous allons avoir une erreur car `$vitesse` est `private` ne peut etre accessible hors de la classe `Voiture` contraiement à `$carburant`.
+  La methode `getVitesse` va avoir une valeur `null` car elle n'a pas accesà la propriété `$vitesse` qui est défini en `private`.
+  
+  Elle ne peut donc pas etre accessible hors de la classe `Voiture` contraiement à la propriété `$carburant`.
 ]
 ---
 
@@ -878,7 +915,7 @@ class: middle, center, inverse
   ### Visibilité protected
 ]
 .right-column[
-  Maintenant, nous allons ajouter quelques méthodes à notre classe `Vehicule` et regardons comment nous pouvons les utiliser dans les classes filles `Voiture` et `Camion`.
+  Déplaçons maintenant les propriétés, constantes, constructeur et méthodes vers la classe `Vehicule`. Ainsi nous pourront voir comment nous les utiliser dans les classes filles `Voiture` et `Camion`.
 
   ```php
   class Vehicule
@@ -895,12 +932,10 @@ class: middle, center, inverse
     }
 
     public function rouler() { ... }
-
     public static function ajouterPortes() { ... }
   }
 
   class Voiture extends Vehicule { }
-
   class Camion extends Vehicule { }
   ```
 ]
@@ -916,16 +951,15 @@ class: middle, center, inverse
   **Instanciation et utilisation :**
 
   ```php
+  $suziki = new Vehicule(120, 'diesel');
+  $volvoTruck = new Camion(150, 'essence');
+  $mercedes = new Voiture(90, 'ethanol');
 
-  $vehicule = new Vehicule(120, 'diesel');
-  $camion = new Camion(150, 'essence');
-  $voiture = new Voiture(90, 'ethanol');
+  $suziki->rouler();
+  $volvoTruck->rouler();
+  $mercedes->rouler();
 
-  $vehicule->rouler();
-  $camion->rouler();
-  $voiture->rouler();
-
-  var_dump($vehicule, $camion, $voiture);
+  var_dump(compact('mercedes', 'volvoTruck', 'suziki'));
   ```
 
   Lorsqu’une **classe fille hérite d’une classe mère**, elle peut accéder et utiliser tous les membres non privés de la classe mère. Nous le savons, mais est-ce qu'une classe fille peut avoir ses propres propriétés et méthodes ? Oui, elle peut en avoir.
@@ -937,13 +971,15 @@ class: middle, center, inverse
   {
     public function conduire()
     {
-      echo 'Bonne conduite à '.$this->vitesse.' Km/h  ...\n';
+      return 'Bonne conduite à '.$this->vitesse.' Km/h  ...';
     }
   }
 
-
-  $voiture = new Voiture(90, 'ethanol');
-  $voiture->conduire();
+  $volvoTruck = new Camion(150, 'essence');
+  $mercedes = new Voiture(90, 'ethanol');
+  var_dump($mercedes->conduire());
+  var_dump($volvoTruck->conduire());
+  # PHP Fatal error:  Uncaught Error: Call to undefined method Camion::conduire()
    ```
 ]
 
@@ -956,7 +992,7 @@ class: middle, center, inverse
   ### Mot clé Final
 ]
 .right-column[
-  Le mot-clé **`final`** empêche les classes enfants de surcharger une méthode en préfixant la définition avec final. Si la classe elle-même est définie comme **`finale`**, elle ne pourra pas être étendue.
+  Le mot-clé **`final`** empêche les classes enfants de surcharger une méthode en préfixant la définition avec final. Si la classe elle-même est définie comme **`final`**, elle ne pourra pas être étendue.
 
   Cela peut être utile si vous souhaitez empêcher explicitement certains développeurs de surcharger certaines méthodes ou d’étendre certaines classes dans le cas d’un projet Open Source par exemple.
 
@@ -988,7 +1024,7 @@ class: middle, center, inverse
 .right-column[
   PHP ne supporte que l’héritage simple, c’est à dire, une classe fille ne peut hériter que d’une seul classe mère. Donc, que faire si une classe a besoin d’hériter de plusieurs classes mères ? Les **traits** résolvent ce problème.
 
-  Les **traits** sont utilisés pour déclarer les méthodes qui peuvent être utilisées dans plusieurs classes. Les **traits** peuvent avoir des méthodes et des méthodes abstraites qui peuvent être utilisées dans plusieurs classes, et les méthodes peuvent avoir n’importe quel modificateur d’accès (`public`, `private`, or `protected`).
+  Les **traits** sont utilisés pour déclarer les méthodes qui peuvent être utilisées dans plusieurs classes. Les **traits** peuvent avoir des propriétés, méthodes simple et abstraites qui peuvent être utilisées dans plusieurs classes, et les méthodes peuvent avoir n’importe quel modificateur d’accès (`public`, `private`, or `protected`).
 
   Les traits sont déclarés avec le mot-clé **`trait`** :
 
@@ -1023,17 +1059,33 @@ class: middle, center, inverse
   **Utilisation de trait dans une classe**
 
   ```php
-    class Vehicule
-    {
-      use vitesseTrait;
-      ...
-    }
+  class Vehicule
+  {
+    use vitesseTrait;
+    ...
+  }
 
-    $vehicule = new Vehicule();
-    $vehicule->setVitesse(170);
+  $vehicule = new Vehicule();
+  $vehicule->setVitesse(170);
   ```
 
   Si d’autres classes ont besoin d’utiliser la propriété **`vitesse`** et ses **accesseurs**, utilisez simplement le trait « `VitesseTrait` » dans ces classes. Cela réduit la duplication du code, car il n’est pas nécessaire de déclarer à nouveau la même propriété et méthodes encore et encore.
+
+  Un trait peut aussi inclure d'autres traits.
+  ```php
+  trait PropVitesseTrait { 
+    protected $vitesse = 120;
+
+    abstract public function setVitesse($vitesse); 
+  }
+
+  trait VitesseTrait {
+    use PropVitesseTrait;
+
+    public function setVitesse($vitesse) { ... }
+    public function getVitesse() { ... }
+  }
+  ```
 ]
 
 ---
@@ -1044,20 +1096,22 @@ class: middle, center, inverse
   ### Visibilité protected
   ### Mot clé Final
   ### Trait
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
 ]
 .right-column[
-Continuons à améliorer l'outils de gestion de la **société R**. En effet elle souhaiterai maintenant gérer **les responsables**. **Le responsable** est un employé mais avec des privilèges.
+Continuons à améliorer l'outils de gestion de la **société R**. En effet elle souhaiterai maintenant gérer **les responsables**. 
+
+**Le responsable** est un employé mais avec des privilèges.
 
 - Ajouter une nouvelle classe `Responsable` qui étendra de `Employe`.
 
 - Faire en sorte qu'on ne puisse plus étendre de la classe `Responsable`
 
-- Cette nouvelle classe aura comme nouvelle propriété `equipe` qui sera un tableau d'employé
+- Cette nouvelle classe aura comme nouvelle propriété `equipe` qui sera de type classe `Equipe`.
 
-- Ajouter lui une nouvelle méthode `ajouterEmploye` qui pendra en paramètre un objet de type `Employe`. Verifier que l'employé n'est pas present dans la liste avant ajout dans la liste.
+- Utiliser les traits pour le code dupliqué.
 
-- Ajouter lui une methode `supressionEmploye` qui s'occupera de supprimer un Employé de la liste via son `id`
+- Ajouter une methode `supressionEmploye` à la classe `Equipe` qui s'occupera de supprimer un employé de la liste via son `id`
 
 **Note :** Il est possible depuis PHP5 de typer les variable de type classe comme ce qui suit
 
@@ -1108,7 +1162,7 @@ class: middle, center, inverse
 
 .left-column[
   ### Interfaces
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
 ]
 .right-column[
 Dans le projet de la société R pour avoir plus de controle sur le code et les classes, nous allons utiliser les interfaces.
@@ -1122,7 +1176,7 @@ Dans le projet de la société R pour avoir plus de controle sur le code et les 
 
 .left-column[
   ### Interfaces
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Abstraction
 ]
 .right-column[
@@ -1147,7 +1201,7 @@ Dans le projet de la société R pour avoir plus de controle sur le code et les 
 
 .left-column[
   ### Interfaces
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Abstraction
 ]
 .right-column[
@@ -1172,9 +1226,9 @@ Dans le projet de la société R pour avoir plus de controle sur le code et les 
 
 .left-column[
   ### Interfaces
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Abstraction
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
 ]
 .right-column[
   Pour mieux assimiler l'abstraction nous allons concevoir un programme a partir de module UML suivant:
@@ -1187,9 +1241,9 @@ Dans le projet de la société R pour avoir plus de controle sur le code et les 
 
 .left-column[
   ### Interfaces
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Abstraction
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
 ]
 .right-column[
 1. Définir chaque classe, puis les propriété, ensuite les accesseurs, mutateurs et les constrcuteurs.
@@ -1210,9 +1264,9 @@ Dans le projet de la société R pour avoir plus de controle sur le code et les 
 
 .left-column[
   ### Interfaces
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Abstraction
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Polymorphisme
 ]
 .right-column[
@@ -1227,9 +1281,9 @@ Dans le projet de la société R pour avoir plus de controle sur le code et les 
 
 .left-column[
   ### Interfaces
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Abstraction
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Polymorphisme
 ]
 .right-column[
@@ -1270,9 +1324,9 @@ class Voyageur {
 ---
 .left-column[
   ### Interfaces
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Abstraction
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Polymorphisme
 ]
 .right-column[
@@ -1296,11 +1350,11 @@ La méthode ne se soucie pas des détails de chaque voyage. En effet chaque type
 
 .left-column[
   ### Interfaces
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Abstraction
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Polymorphisme
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
 ]
 .right-column[
 La société R pense à l'éducation des jeunes et souhaite mettre en place la gestion des stagiaires.
@@ -1323,11 +1377,11 @@ Ils ne seront pas considerer comme des employés mais pourront tout de meme trav
 
 .left-column[
   ### Interfaces
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Abstraction
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Polymorphisme
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Namespace
 ]
 .right-column[
@@ -1353,11 +1407,11 @@ L’espace de noms est utilisé pour éviter des conflits et introduire plus de 
 
 .left-column[
   ### Interfaces
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Abstraction
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Polymorphisme
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Namespace
 ]
 .right-column[
@@ -1377,13 +1431,13 @@ L’espace de noms est utilisé pour éviter des conflits et introduire plus de 
 
 .left-column[
   ### Interfaces
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Abstraction
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Polymorphisme
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Namespace
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
 ]
 .right-column[
 - Ajouter un répertoires `Classes/`, `Traits/`, `Abstracts/` et `Interfaces/` pour stocker nos différentes classes.
@@ -1409,13 +1463,13 @@ L’espace de noms est utilisé pour éviter des conflits et introduire plus de 
 
 .left-column[
   ### Interfaces
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Abstraction
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Polymorphisme
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Namespace
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Les exceptions
 ]
 .right-column[
@@ -1435,13 +1489,13 @@ L’espace de noms est utilisé pour éviter des conflits et introduire plus de 
 
 .left-column[
   ### Interfaces
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Abstraction
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Polymorphisme
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Namespace
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Les exceptions
 ]
 .right-column[
@@ -1479,15 +1533,15 @@ L’idée derrière les exceptions va être d’anticiper les situations problé
 
 .left-column[
   ### Interfaces
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Abstraction
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Polymorphisme
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Namespace
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
   ### Les exceptions
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
 ]
 .right-column[
   Nous allons appliquer la gestion d'erreur sur notre application de la société R.
@@ -1656,26 +1710,20 @@ class: middle, center, inverse
 .left-column[
   ### L'autoloader
   ### Composer
-  #### Qu'est-ce que c'est ?
+  #### Gestionnaire de dépendence ?
 ]
 .right-column[
-  <img src="https://getcomposer.org/img/logo-composer-transparent5.png" height="120" style="display:block; margin: 0 auto">
+  <img src="https://getcomposer.org/img/logo-composer-transparent5.png" height="100" style="display:block; margin: 0 auto">
 
   Composer est un outil mis en place pour la communauté des développeurs de PHP. A l’image de « `npm` » pour nodejs ou « `bundler` » pour ruby, il sert de gestionnaire de dépendance entre applications et librairies.
+
+  **Qu'est-ce qu'un gestionnaire de dépendence ?**
+
+  Le gestionnaire de dépendances est un outil qui peut être utilisé pour gérer les dépendances d’un projet. Le gestionnaire de dépendances est un excellent concept. C’est principalement un outil pour installer, désinstaller et mettre à jour ces dépendances. Grosso-modo, un ensemble de mécanismes et permet également la création de packages (vos projets) qui peuvent être distribués. 
 
   De façon plus précise, Composer permet de gérer pour chaque projet, la liste des modules et bibliothèques nécessaires à son fonctionnement ainsi que leurs versions. Il est utilisable via la console en ligne de commande. De plus, il permet de mettre en place un système d’autoload pour les bibliothèques compatibles.
 
   url : https://getcomposer.org/
-
-  ### Installer composer
-
-  Vous pouvez installer composer sur n'importe quel système d'exploitation.
-  
-  ```bash
-  curl -sS https://getcomposer.org/installer | php -- \
-    --install-dir=/usr/local/bin \
-    --filename=composer
-  ```
 ]
 
 ---
@@ -1683,7 +1731,41 @@ class: middle, center, inverse
 .left-column[
   ### L'autoloader
   ### Composer
-  #### Qu'est-ce que c'est ?
+  #### Gestionnaire de dépendence ?
+  #### Installation
+]
+.right-column[
+### Installer composer
+
+Vous pouvez installer composer sur n'importe quel système d'exploitation.
+
+**Via curl**
+```shell
+curl -sS https://getcomposer.org/installer | php -- \
+  --install-dir=/usr/local/bin \
+  --filename=composer
+```
+
+**Via getcomposer.org**
+
+Sinon vous pouvez aussi passer par la page de download de composer : https://getcomposer.org/download/
+
+**Mettre à jour composer**
+```sh
+composer self-update
+# Upgrading to version 2.3.4 (stable channel).
+   
+# Use composer self-update --rollback to return to version 2.2.7
+```
+]
+
+---
+
+.left-column[
+  ### L'autoloader
+  ### Composer
+  #### Gestionnaire de dépendence ?
+  #### Installation
   #### Implementation
 ]
 .right-column[
@@ -1724,7 +1806,8 @@ C'est dans ce fichier que nous allons définir nos dépendances et leurs différ
 .left-column[
   ### L'autoloader
   ### Composer
-  #### Qu'est-ce que c'est ?
+  #### Gestionnaire de dépendence ?
+  #### Installation
   #### Implementation
   #### Autoload
 ]
@@ -1746,12 +1829,12 @@ Ajouter une section `autoload` au fichier `composer.json`
   composer dump-autoload
   ```
 
+  Inclure à notre fichier index.php l'inclusion de l'autoloader genéré par composer
   ```php
     # index.php
     require_once 'vendor/autoload.php';
 
   ```
-
 ]
 
 ---
@@ -1759,31 +1842,38 @@ Ajouter une section `autoload` au fichier `composer.json`
 .left-column[
   ### L'autoloader
   ### Composer
-  #### Qu'est-ce que c'est ?
+  #### Gestionnaire de dépendence ?
+  #### Installation
   #### Implementation
   #### Autoload
   #### Gestion de packages
 ]
 .right-column[
-  Le site : https://packagist.org/
+  Le site https://packagist.org/ permet d’enregistrer vos propres packages mais aussi de chercher tous les packages disponible, avec une page complète qui liste les différentes versions du packages.
 
-  Ce site permet d’enregistrer vos propres packages mais aussi de chercher tous les packages disponible, avec une page complète qui liste les différentes versions du package, et une description.
-
-  ### Installer une package
+  #### Installer une package
 
   ```bash
   composer require symfony/http-client symfony/var-dumper
   ```
 
-  un fichier `comoser`
+  Après l’exécution de la commande, votre projet contiendra un nouveau fichier `composer.lock`
 
-  ### Mettre à jour les packages installés
-  la commande suivante met à jour un package precis ou/et tout ceux qui appartienne à symfony
+  #### Mettre à jour les packages installés
+  Vous devez savoir comment mettre à jour vos paquets. Cela peut se faire de deux manières :
+
+  * **Mise à jour universelle**. Vérifie et installe les mises à jour de tous vos paquets et dépendances en même temps :
+  ```bash
+  composer update
+  ```
+
+  * **Mise à jour spécifique au paquet.** Vérifier les mises à jour d’un ou de plusieurs paquets spécifiques :
   ```bash
   composer update symfony/http-client symfony/*
   ```
 
-  ### Supprimer les packages installés
+
+  #### Supprimer les packages installés
   ```bash
   composer remove symfony/http-client symfony/var-dumper
   ```
@@ -1804,20 +1894,20 @@ Ajouter une section `autoload` au fichier `composer.json`
     ...
 
     /**
-      * @var int Vitesse du véhicule
-      */
+     * @var int Vitesse du véhicule
+     */
     protected $vitesse = 100;
 
     /**
-      * @param int $vitesse Vitesse du véhicule
-      * @param string $carburant Carburant du véhicule
-      */
+     * @param int $vitesse Vitesse du véhicule
+     * @param string $carburant Carburant du véhicule
+     */
     public function __construct($vitesse, $carburant)
     { ... }
 
     /**
-      * @return int Vitesse du véhicule
-      */
+     * @return int Vitesse du véhicule
+   */
     public function getVitesse()
     { ...  }
     ...
@@ -1866,7 +1956,7 @@ Ajouter une section `autoload` au fichier `composer.json`
   ### Composer
   ### PHP Doc
   ### Typage de données
-  ### .red[**Travaux Pratique**]
+  ### .red[**🏗 T. P.**]
 ]
 .right-column[
 ### Implementer composer
@@ -2073,12 +2163,25 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
 ]
 .right-column[
 
+  Dans l’évaluation de null-safe `$a?->value`, le second opérateur n’est évalué que si le premier opérateur n’évalue pas à null. Si un opérateur d’une chaîne est évalué à null, l’exécution de la chaîne entière s’arrête et est évaluée à null
+
+**Exemple**
   ```php
+  class Category {
+    public __construct(public string $name) {}
+  }
+
   class Vehicule
   {
-    private const NB_ROUES = 4;
-    ...
+    public ?Category $category = null;
   }
+
+  $mercedes = new Voiture();
+  var_dump($mercedes->category?->name); // affiche null
+
+  $berline = new Category(name: 'Berline');
+  $mercedes->category = $berline;
+  var_dump($mercedes->category?->name); // affiche "Berline"
   ```
 ]
 
