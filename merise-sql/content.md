@@ -11,13 +11,15 @@ class: middle
 ## Objectif
 ]
 .right-column[
+  #🎯
+
 - Vous présenter la méthode de conception des systèmes d'information Merise.
 
 - Vous rendre capable de concevoir ou de participer à la conception d'un système d'information. 
 
-- Vous permettre d'apporter des solutions pertinantes aux projet.
+- Vous permettre d'apporter des solutions pertinantes aux projets.
 
-- Vous permettre de repondre aux besoin de votre entreprise.
+- Vous permettre d'analyser et répondre aux besoins de votre entreprise.
 
 - Gagner en confiance et motivation
 ]
@@ -121,8 +123,6 @@ Grâce à ses deux étapes nous avons ce que l'on attend du système d'informtio
 ]
 
 ---
-
-class: middle
 .left-column[
 ## Présentation
 ## Système d'information
@@ -142,6 +142,9 @@ Aborder un problème selon ces trois axes en facilite l'analyse. Ainsi,
 
 * **L'informaticien** précisera les moyens techniques à mettre en œuvre pour satisfaire les besoins relatifs aux niveaux précédents.
 
+Ce tableau fait clairement apparaître les modèles que propose la méthode MERISE pour la
+formalisation des données et des traitements à chacun des niveaux supportés.
+
 ]
 
 ---
@@ -154,9 +157,7 @@ class: middle
 ## Niveaux de Modelisations
 ]
 .right-column[
-  Ce tableau fait clairement apparaître les modèles que propose la méthode MERISE pour la
-formalisation des données et des traitements à chacun des niveaux supportés. Les différents
-modèles Merise sont donc :
+  Les différents modèles Merise sont donc :
 * **MCD :** Modèle Conceptuel de Données
 
 * **MCT :** Modèle Conceptuel de Traitements

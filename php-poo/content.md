@@ -15,7 +15,7 @@ class: middle
 
 - Maitriser les bases de la POO
 
-- Vous permettre de repondre aux besoin de votre entreprise
+- Vous permettre de répondre aux besoins de votre entreprise
 
 - Gagner en confiance et motivation
 ]
@@ -30,13 +30,13 @@ class: middle
 .right-column[
 - Version **PHP >=7.4** (avec laragon, lamp, wamp, ...)
 
-- Avoir les base de PHP (variable, if, for, while, ...)
+- Avoir les bases de PHP (variable, if, for, while, ...)
 
 - Éditeur de texte (vs-code, phpstorm, sublime-text, ...)
 
-- Shell terminal / Powershell avec le client `php-cli`
+- Shell terminal avec le client `php-cli`
 
-- clone du repo git pour les tp, qui vous permettra de faire le suivi du cours à differente étape.
+- clone du repo git pour les TP, qui vous permettra de faire le suivi du cours à differente étape.
 
 ```sh
 git clone https://github.com/mkldevops/php-poo-tp.git -b 1.0
@@ -99,25 +99,43 @@ class: middle
 .right-column[
 - **Organisation du code**
   - Les classes
-  - Propriétés (attributs) d'une classe
+  - Propriétés d'une classe
   - Méthodes d'une classe
 
 * **L'encapsulation, Sécurité du code (intégrité)**
   - Visibilité Private
   - Accesseurs & Mutateurs
+  - Le constructeur
+  - Méthodes magiques
+  - Propriétés et Méthodes static
+  - Constante
 
 - **Réutilisation du code et gain de temps**
   - Héritage
+  - Mot clé extends
+  - Visibilité protected
   - Mot clé final
   - Trait
 
 * **Plus de contrôle sur votre développement**
-  - Abstraction & interfaces
+  - Interfaces
+  - Abstraction
   - Polymorphisme
   - Namespace
   - Exceptions
+
+* **L'auto-chargement des classes**
   - Autoloader
-* **Bonus** (Composer, PHP8, ...)
+  - Composer
+
+* **Le typage de données**
+  - PHP Doc
+  - Typage de données
+  - Type callable
+  - Types d'Union
+  - Arguments nommées
+
+* **PHP 8** (nouveautés)
   ]
 
 ---
@@ -126,7 +144,7 @@ class: middle
 
 ### Analysons un cas
 
-La société R souhaite un programme afin d'organiser son personnel, elle fait appel à un développeur qui écrit le code suivant :
+**La société R** souhaite un programme afin d'organiser son personnel, elle fait appel à un développeur qui écrit le code suivant :
 
 .pull-left[
 
@@ -1105,11 +1123,13 @@ Continuons à améliorer l'outils de gestion de la **société R**. En effet ell
 
 - Ajouter une nouvelle classe `Responsable` qui étendra de `Employe`.
 
-- Faire en sorte qu'on ne puisse plus étendre de la classe `Responsable`
+  - Faire en sorte qu'on ne puisse plus étendre de la classe `Responsable`
+  - Cette nouvelle classe aura comme nouvelle propriété `equipe` qui sera de type classe `Equipe`.
+  - Ajouter à la classe `Equipe` une propriété `responsable`
+  - Faire en sorte dans le mutateur de la propriété `Equipe.responsable` d'affecter au responsable l'equipe actuel.
+  - Ajouter deux nouveaux reponsables à affecter dans les deux équipes.
 
-- Cette nouvelle classe aura comme nouvelle propriété `equipe` qui sera de type classe `Equipe`.
-
-- Utiliser les traits pour le code dupliqué.
+- Ajouter des traits pour le code qui est dupliqué.
 
 - Ajouter une methode `supressionEmploye` à la classe `Equipe` qui s'occupera de supprimer un employé de la liste via son `id`
 
@@ -1129,33 +1149,127 @@ class: middle, center, inverse
 
 .left-column[
 ### Interfaces
+#### Déclaration
 ]
 .right-column[
-  Une interface permet aux utilisateurs de créer des programmes, en spécifiant les méthodes publiques qu’une classe doit implémenter, sans impliquer la complexité et les détails de l’implémentation des méthodes. Une interface est définie comme une classe, mais avec le mot-clé **`interface`**. L’interface ne contient pas de propriétés ou de variables comme le cas dans une classe
+  **Une interface** permet aux utilisateurs de créer des programmes, en spécifiant les méthodes publiques qu’une classe doit implémenter, sans impliquer la complexité et les détails de l’implémentation des méthodes. 
+  
+  .small[
+    💁 En clair une interface permet de spécifier un contrat qu'une classe doit implémenter.
+  ]
+  
+  Une interface est définie comme une classe, mais avec le mot-clé **`interface`**.
 
   ```php
-  interface VehiculeInterface
+  interface RoulerInterface
   {
+    const NB_ROUES = 4;
     public function rouler();
-    public static function afficherNbPortes();
   }
-
-  class Vehicule implements VehiculeInterface
-  { ... }
   ```
 
-  Une classe peut implémenter plusieurs interfaces, séparées par des virgules.
+  - L’interface **ne contient pas de propriétés ou de variables** comme le cas dans une classe.
+  - Les interfaces **peuvent contenir des constantes.** Les constantes d'interfaces fonctionnent exactement comme les constantes de classe.
+  - Une interface **se compose de méthodes qui ne contiennent aucune implémentation.** En d'autres termes, toutes les méthodes de l'interface sont des méthodes abstraites.
+  - Les interfaces ne peuvent pas être instanciés, ni définir des méthodes privées ou protégées pour une classe et ne peut définir les propriétés d'une classe.
+
+
+  .small[
+    🚨 Notez que toutes les méthodes de l'interface doivent être publiques.
+  ]
+]
+
+---
+
+.left-column[
+  ### Interfaces
+  #### Déclaration
+  #### Implementation
+]
+.right-column[
+
+Pour implémenter une interface, l'opérateur `implements` est utilisé. Lorsqu'une classe implémente une interface, elle doit implementer toutes les méthodes de l'interface.
 
   ```php
-  interface VoitureInterface
+  class Vehicule implements RoulerInterface
   {
-    public function conduire();
+    # codes 
+
+    final public function rouler()
+    {
+        return 'Voiture '.$this->carburant.', roulant à '.$this->vitesse.' KM/h avec '.
+        self::NB_ROUES.' roues';
+    }
+  }
+  ```
+
+  La classe implémentant l'interface doit déclarer toutes les méthodes dans l'interface avec une signature compatible.
+]
+
+---
+
+.left-column[
+  ### Interfaces
+  #### Déclaration
+  #### Implementation
+  #### Implementation multiple
+]
+.right-column[
+  Une classe ne peut hériter que d'une seule classe. Cependant, elle peut implémenter plusieurs interfaces, en séparant chaque interface par une virgule.
+
+  ```php
+  interface PorteInterface
+  {
+    public static function getNbPortes();
 
   }
 
-  class Voiture extends Vehicule implements VehiculeInterface, VoitureInterface
-  { ... }
+  class Vehicule implements RoulerInterface, PorteInterface
+  { 
+    # codes
+
+    final public function rouler()
+    {
+        return 'Voiture '.$this->carburant.', roulant à '.$this->vitesse.' KM/h avec '.
+        self::NB_ROUES.' roues';
+    }
+
+    public static function getNbPortes() 
+    {
+        return self::$nbPortes;
+    }
+  }
   ```
+
+  Ainsi la classe `Vehicule` doit implementer les deux contrats.
+]
+
+---
+
+.left-column[
+  ### Interfaces
+  #### Déclaration
+  #### Implementation
+  #### Implementation multiple
+  #### Héritage, avantage
+]
+.right-column[
+  Comme une classe , une interface peut étendre d'autres interfaces en utilisant le mot-clé `extends`. 
+  
+  L'exemple suivant montre comment `VehiculeInterface` etend de `PorteInterface`, `RoulerInterface`
+  ```php
+  interface VehiculeInterface extends PorteInterface, RoulerInterface
+  {
+
+  }
+  ```
+
+  #### Pourquoi utiliser les interfaces PHP ?
+Voici les raisons d'utiliser les interfaces :
+
+- En implémentant une interface, l'appelant de l'objet doit se soucier uniquement de l'interface de l'objet, pas des implémentations des méthodes de l'objet. Par conséquent, vous pouvez modifier les implémentations sans affecter l'appelant de l'interface.
+- Une interface permet à des classes non liées d'implémenter le même ensemble de méthodes, quelle que soit leur position dans la hiérarchie d'héritage de classe.
+- Une interface vous permet de modéliser plusieurs héritages car une classe peut implémenter plusieurs interfaces.
 ]
 
 ---
@@ -1167,9 +1281,22 @@ class: middle, center, inverse
 .right-column[
 Dans le projet de la société R pour avoir plus de controle sur le code et les classes, nous allons utiliser les interfaces.
 
-  - Ajouter une interface pour la classe `Employe` avec ses méthodes
+  - Ajouter une interface pour les classes
+   - `Employe` avec ses méthodes accesseurs et `presentation()`
 
-  - Ajouter une interface pour la classe `Responsable` avec ses méthodes (héritage compris)
+   - `Responsable` avec ses méthodes accesseurs (héritage compris)
+   
+   - `Equipe` avec ses méthodes accesseurs, `travailler()`, `percent()` et `getNbHeuresTravails` .
+
+  - Deplacer les constantes aux niveaux des interfaces. 
+  - Ajouter les constantes `AGE_MIN`, `AGE_MAX`, `ANCIENNETE_MIN`, `ANCIENNETE_MAX` puis les utiliser.
+
+  - Déplacer les fichiers de type :
+    - `interface` dans un nouveau répertoire `Interface`.
+
+    - `trait` dans un nouveau répertoire `Traits`.
+
+    - `class` dans un nouveau répertoire `Model`.
 ]
 
 ---
@@ -1178,23 +1305,32 @@ Dans le projet de la société R pour avoir plus de controle sur le code et les 
   ### Interfaces
   ### .red[**🏗 T. P.**]
   ### Abstraction
+  #### Déclaration
 ]
 .right-column[
-  PHP a des classes et méthodes abstraites. Les classes définies comme abstraites ne peuvent pas être instanciées, et toute classe contenant au moins une méthode abstraite doit elle-aussi être abstraite. Les méthodes définies comme abstraites déclarent simplement la signature de la méthode ; elles ne peuvent définir son implémentation.
+  **Les classes abstraites** sont très similaires aux interfaces. Ils ne sont pas conçus pour **être instanciés seuls** et fournissent une implémentation de base à partir de laquelle vous pouvez vous étendre.
+  
+  Toute classe contenant au moins une méthode abstraite doit elle-aussi être abstraite. **Les méthodes définies comme abstraites** déclarent simplement la signature de la méthode ; elles ne peuvent définir son implémentation.
 
   Lors de l'héritage d'une classe abstraite, toutes les méthodes marquées comme abstraites dans la déclaration de la classe parente doivent être définies par la classe enfant et suivre les règles habituelles d'[héritage](https://www.php.net/manual/fr/language.oop5.inheritance.php) et de [compatibilité de signature](https://www.php.net/manual/fr/language.oop5.basic.php#language.oop.lsp).
-
-  #### Définition d'une classe abstraite
 
   ```php
   abstract class AbstractVehicule
   {
-    private $vitesse;
+    use VitesseTrait;
+
+    private $dimensions;
     protected $carburant;
 
     abstract public function rouler();
+    public function getDimensions() 
+    {
+      return $this->dimensions;
+    }
   }
   ```
+
+  La classe `AbstractVehicule` est abstraite, ce qui signifie que nous ne pouvons pas l'instancier directement. Pour pouvoir l'utiliser, il faudrait en hériter.
 ]
 
 ---
@@ -1203,14 +1339,16 @@ Dans le projet de la société R pour avoir plus de controle sur le code et les 
   ### Interfaces
   ### .red[**🏗 T. P.**]
   ### Abstraction
+  #### Déclaration
+  #### Héritage
 ]
 .right-column[
   #### Héritage de la classe abstraite
 
   ```php
-  class Voiture extends AbstractVehicule
+  class Voiture extends AbstractVehicule implements VehiculeInterface
   {
-    private $vitesse = 90; // Error
+    private $dimensions = 90; // !== AbstractVehicule::$vitesse
     protected $carburant = 'diesel';
 
     public function rouler()
@@ -1220,6 +1358,12 @@ Dans le projet de la société R pour avoir plus de controle sur le code et les 
     }
   }
   ```
+
+  Vous avez peut-être remarqué que dans la classe `AbstractVehicule` que nous avons déclarée, a une méthode **publique abstraite** appelée `rouler()`. 
+  
+  Cela nous permet essentiellement de définir la signature d'une méthode qu'une classe enfant doit inclure de la même manière que nous le ferions avec une interface. 
+  
+  C'est très pratique si vous souhaitez partager certaines fonctionnalités avec vos classes enfants, mais aussi imposer qu'elles incluent leurs propres implémentations de certaines méthodes.
 ]
 
 ---
@@ -1228,12 +1372,32 @@ Dans le projet de la société R pour avoir plus de controle sur le code et les 
   ### Interfaces
   ### .red[**🏗 T. P.**]
   ### Abstraction
+  ### Abstract Vs Interface
+]
+.right-column[
+  | Classe d'interface | Classe abstraite |
+|-----|------|
+| ✅ Prend en charge la fonctionnalité d'héritage multiple | ❌ Prend pas en charge les héritages multiples.|
+| ❌ Ne contient pas de propriétés | La classe abstraite contient un membre de données.|
+| L'interface n'autorise pas les constructeurs. | La classe abstraite prend en charge les constructeurs. |
+| ❌ Ne contient que des méthodes abstraites qui font référence à la signature du membre. | ✅ Contient à la fois des methodes abstraits et completes. |
+| Puisque tout est supposé être public, une classe d'interface n'a pas de modificateurs d'accès par défaut.  | Une classe abstraite peut contenir des modificateurs d'accès dans des sous-titres, des fonctions et des propriétés. |
+| Tout membre d'une interface ne peut pas être statique. | Seul un membre complet de la classe abstraite peut être statique. |
+]
+
+---
+
+.left-column[
+  ### Interfaces
+  ### .red[**🏗 T. P.**]
+  ### Abstraction
+  ### Abstract Vs Interface
   ### .red[**🏗 T. P.**]
 ]
 .right-column[
   Pour mieux assimiler l'abstraction nous allons concevoir un programme a partir de module UML suivant:
 
-  [![](https://mermaid.ink/img/eyJjb2RlIjoiY2xhc3NEaWFncmFtXG5cbiAgICBjbGFzcyBQb2ludDJEIHtcbiAgICAgICAgLSBpbnQgeFxuICAgICAgICAtIGludCB5XG4gICAgICAgICsgYm91Z2VyKGludCBkeCwgaW50IGR5KVxuICAgICAgICArIHRvU3RyaW5nKClcbiAgICB9XG5cbiAgICBGb3JtZSA8fC0tIFJlY3RhbmdsZVxuICAgIEZvcm1lIDx8LS0gQ2VyY2xlXG4gICAgRm9ybWUgXCIwLG5cIiAtLT4gXCIxLDFcIiBQb2ludDJEXG4gICAgRm9ybWUgOiAjIGludCBpZFxuICAgIEZvcm1lIDogIyBQb2ludDJEIGNlbnRyZVxuICAgIEZvcm1lIDogKyBpbnQgc3RhdGljIGNvbXB0ZXVyID0gMFxuICAgIEZvcm1lOiArIGFic3RyYWN0IHN1cmZhY2UoKVxuICAgIEZvcm1lOiArIGFic3RyYWN0IHBlcmltZXRyZSgpXG4gICAgRm9ybWU6ICsgYm91Z2VyKGludCBkeCwgaW50IGR5KVxuICAgIFxuICAgIGNsYXNzIFJlY3RhbmdsZXtcbiAgICAgICMgaW50IGxhcmdldXJcbiAgICAgICMgaW50IGxvbmd1ZXVyIFxuICAgICAgKyB0b1N0cmluZygpXG4gICAgICArIHN1cmZhY2UoKVxuICAgICAgKyBwZXJpbWV0cmUoKVxuICAgIH1cbiAgICBcbiAgICBjbGFzcyBDZXJjbGUge1xuICAgICAgLSBpbnQgcmF5b25cbiAgICAgICsgdG9TdHJpbmcoKVxuICAgICAgKyBzdXJmYWNlKClcbiAgICAgICsgcGVyaW1ldHJlKClcbiAgICB9XG4gICAgXG4gICAgY2xhc3MgQ2FycmUge1xuICAgICAgKyB0b1N0cmluZygpXG4gICAgfVxuXG4gICAgUmVjdGFuZ2xlIDx8LS0gQ2FycmUgICAgICAiLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlLCJhdXRvU3luYyI6dHJ1ZSwidXBkYXRlRGlhZ3JhbSI6ZmFsc2V9)](https://mermaid.live/edit#eyJjb2RlIjoiY2xhc3NEaWFncmFtXG5cbiAgICBjbGFzcyBQb2ludDJEIHtcbiAgICAgICAgLSBpbnQgeFxuICAgICAgICAtIGludCB5XG4gICAgICAgICsgYm91Z2VyKGludCBkeCwgaW50IGR5KVxuICAgICAgICArIHRvU3RyaW5nKClcbiAgICB9XG5cbiAgICBGb3JtZSA8fC0tIFJlY3RhbmdsZVxuICAgIEZvcm1lIDx8LS0gQ2VyY2xlXG4gICAgRm9ybWUgXCIwLG5cIiAtLT4gXCIxLDFcIiBQb2ludDJEXG4gICAgRm9ybWUgOiAjIGludCBpZFxuICAgIEZvcm1lIDogIyBQb2ludDJEIGNlbnRyZVxuICAgIEZvcm1lIDogKyBpbnQgc3RhdGljIGNvbXB0ZXVyID0gMFxuICAgIEZvcm1lOiArIGFic3RyYWN0IHN1cmZhY2UoKVxuICAgIEZvcm1lOiArIGFic3RyYWN0IHBlcmltZXRyZSgpXG4gICAgRm9ybWU6ICsgYm91Z2VyKGludCBkeCwgaW50IGR5KVxuICAgIFxuICAgIGNsYXNzIFJlY3RhbmdsZXtcbiAgICAgICMgaW50IGxhcmdldXJcbiAgICAgICMgaW50IGxvbmd1ZXVyIFxuICAgICAgKyB0b1N0cmluZygpXG4gICAgICArIHN1cmZhY2UoKVxuICAgICAgKyBwZXJpbWV0cmUoKVxuICAgIH1cbiAgICBcbiAgICBjbGFzcyBDZXJjbGUge1xuICAgICAgLSBpbnQgcmF5b25cbiAgICAgICsgdG9TdHJpbmcoKVxuICAgICAgKyBzdXJmYWNlKClcbiAgICAgICsgcGVyaW1ldHJlKClcbiAgICB9XG4gICAgXG4gICAgY2xhc3MgQ2FycmUge1xuICAgICAgKyB0b1N0cmluZygpXG4gICAgfVxuXG4gICAgUmVjdGFuZ2xlIDx8LS0gQ2FycmUgICAgICAiLCJtZXJtYWlkIjoie1xuICBcInRoZW1lXCI6IFwiZGVmYXVsdFwiXG59IiwidXBkYXRlRWRpdG9yIjpmYWxzZSwiYXV0b1N5bmMiOnRydWUsInVwZGF0ZURpYWdyYW0iOmZhbHNlfQ)
+  [![](https://mermaid.ink/img/pako:eNq1k8FuwyAMhl8FsUunJlK7Y7Ttsm7nabsiVS64KVIClQNSoy7vPkKSNk2m3sYJff7Bv7E5c2kV8ozLAqpqoyEnKIURhoUVGfu02rinDTt3sF0pC4id2AtbTWF9C5dsZ32OtGhj6pREjaofx4rt1tlvR9rki543g4MPSyWy5580ZV8oHZi8wFnkDUneYsFXiRGcpelr2K-Tddj3ZYxlGXuIfrSa0qFmicYR3kaX8UzlwGnJpC2PDj1dq46yVgW7yhHIIPW0B4lDcXPBEUmXGBLNJPceb9yjy-NcmtRVVgDlwd0EWpP71vOA_2pBSyfGWzSz2szNdP24zks3GAS1Nf-VEYhGCe-O1OWp-uGJR-PiCS-RStAq_Id4meDugCUKnoWtwj34wgkuTBOk_qjA4bvSzhLP9lBUmHDwIW9tJM8ceRxE_bfqVc0vHHwHTw)](https://mermaid.live/edit#pako:eNq1k8FuwyAMhl8FsUunJlK7Y7Ttsm7nabsiVS64KVIClQNSoy7vPkKSNk2m3sYJff7Bv7E5c2kV8ozLAqpqoyEnKIURhoUVGfu02rinDTt3sF0pC4id2AtbTWF9C5dsZ32OtGhj6pREjaofx4rt1tlvR9rki543g4MPSyWy5580ZV8oHZi8wFnkDUneYsFXiRGcpelr2K-Tddj3ZYxlGXuIfrSa0qFmicYR3kaX8UzlwGnJpC2PDj1dq46yVgW7yhHIIPW0B4lDcXPBEUmXGBLNJPceb9yjy-NcmtRVVgDlwd0EWpP71vOA_2pBSyfGWzSz2szNdP24zks3GAS1Nf-VEYhGCe-O1OWp-uGJR-PiCS-RStAq_Id4meDugCUKnoWtwj34wgkuTBOk_qjA4bvSzhLP9lBUmHDwIW9tJM8ceRxE_bfqVc0vHHwHTw)
 ]
 
 
@@ -1243,20 +1407,31 @@ Dans le projet de la société R pour avoir plus de controle sur le code et les 
   ### Interfaces
   ### .red[**🏗 T. P.**]
   ### Abstraction
+  ### Abstract Vs Interface
   ### .red[**🏗 T. P.**]
 ]
 .right-column[
 1. Définir chaque classe, puis les propriété, ensuite les accesseurs, mutateurs et les constrcuteurs.
+
 2. La fonction magique **`Point2D::__toString`** permet d’afficher les propriétés sous la forme : **"Point(x =10,y =3)"**
+
 3. La méthode **`Point2D::bouger`** prenant en paramètre les deux entiers `dx` et `dy` et qui permet de translater le point vers le point  `x + dx` ,`y + dy`.
+
 4. Lors de l'instanciation d’une Forme, son id est incrémenté selon le nombre de Formes instanciés.
+
 5. Définir la méthode **`Rectangle::surface`** qui renvoie la surface d’un objet rectangle : **largeur x longueur**.
+
 6. Définir la méthode **`Rectangle::perimetre`** qui renvoie le périmètre d’un objet rectangle : **2 x (largeur + longueur)**.
+
 7. Définir la méthode **`Cercle::surface`** qui renvoie la surface d’un objet cercle : **π x r²**
+
 8. Définir la méthode **`Cercle::perimetre`** qui renvoie le périmètre d’un objet rectangle : **2 x π x r**
-9. Chaque methode __toString affichera `{NomClasse: id, ... liste des propriétés }` 
-  - exemple : `{Rectangle :1, Centre:Point(x=2, y=3), Largeur:1, Longueur:2, surface:2, perimetre:6 }`
+
+9. Chaque methode __toString affichera `{ NomClasse: id, ... liste des propriétés }` 
+  
+  _**Exemple :**_ `{ Rectangle: 1, Centre: Point(x=2, y=3), Largeur: 1, Longueur: 2, surface: 2, perimetre: 6 }`
 10. Instancier 3 formes : cercle(x=1, y=3, rayon=2), rectangle(x=2, y=3, longueur=3, largeur=2), carre(x=4, y=6, longueur=3)
+
 11. Appliquer une déplacement du cercle par (dx=2,dy=1), rectangle (dx=3, dy=4), carre (dx=1, y=5)
 
 ]
@@ -1266,15 +1441,19 @@ Dans le projet de la société R pour avoir plus de controle sur le code et les 
   ### Interfaces
   ### .red[**🏗 T. P.**]
   ### Abstraction
+  ### Abstract Vs Interface
   ### .red[**🏗 T. P.**]
   ### Polymorphisme
+  #### Qu'est-ce que c'est ?
 ]
 .right-column[
   **Le polymorphisme** est un outil puissant et fondamental dans la programmation orientée objet. Il décrit un modèle dans lequel **les classes ont des fonctionnalités différentes tout en partageant une interface commune.**
 
   La beauté du polymorphisme réside dans le fait que le code travaillant avec les différentes classes n'a **pas besoin de savoir quelle classe il utilise**, car elles sont toutes utilisées de la même manière.
 
-  Dans le monde de la programmation, le polymorphisme est utilisé pour rendre les applications plus modulaires et extensibles. Au lieu d'instructions conditionnelles compliquées décrivant différents plans d'action, vous créez des objets interchangeables que vous sélectionnez en fonction de vos besoins. C'est l'objectif de base du polymorphisme.
+  Dans le monde de la programmation, le polymorphisme est utilisé pour rendre les applications plus modulaires et extensibles. 
+  
+  Au lieu d'instructions conditionnelles compliquées décrivant différents plans d'action, vous créez des objets interchangeables que vous sélectionnez en fonction de vos besoins. C'est l'objectif de base du polymorphisme.
 ]
 
 ---
@@ -1283,24 +1462,25 @@ Dans le projet de la société R pour avoir plus de controle sur le code et les 
   ### Interfaces
   ### .red[**🏗 T. P.**]
   ### Abstraction
+  ### Abstract Vs Interface
   ### .red[**🏗 T. P.**]
   ### Polymorphisme
+  #### Qu'est-ce que c'est ?
+  #### Exemple
 ]
 .right-column[
-Exemple : 
-
 ```php
-interface Transport {
+interface TransportInterface {
   public function voyager(Voyageur $voyageur);
 }
 
-class Voiture implements Transport {
+class Voiture implements TransportInterface {
   public function voyager(Voyageur $voyageur) {
     return $voyageur->getNom().' voyage en voiture' ;
   }
 }
 
-class Avion implements Transport {
+class Avion implements TransportInterface {
   public function voyager(Voyageur $voyageur) {
     return $voyageur->getNom().' voyage en avion' ;
   }
@@ -1311,10 +1491,12 @@ class Voyageur {
   public function __construct($nom){
       $this->nom = $nom;
   }
+
   public function getNom(){
       return $this->nom;
   }
-  public function voyager(Transport $transport){
+
+  public function voyager(TransportInterface $transport){
       return $transport->voyager($this);
   }
 }
@@ -1326,24 +1508,36 @@ class Voyageur {
   ### Interfaces
   ### .red[**🏗 T. P.**]
   ### Abstraction
+  ### Abstract Vs Interface
   ### .red[**🏗 T. P.**]
   ### Polymorphisme
+  #### Qu'est-ce que c'est ?
+  #### Exemple
 ]
 .right-column[
 ```php
+# cours/index.php
+
 $dany = new Voyageur('Daniel');
+
 $voiture = new Voiture();
-$dany->voyager($voiture);
+var_dump($dany->voyager($voiture));
+# string(24) "Daniel voyage en voiture"
 
 $avion = new Avion();
-$dany->voyager($avion);
+var_dump($dany->voyager($avion));
+# string(22) "Daniel voyage en avion"
 ```
 
-Cet exemple illustre le polymorphisme. 
+Cet exemple illustre bien le concept de polymorphisme via les interfaces. 
 
-Un voyageur (`$dany`) à la choix entre deux transport : voiture ou avion. Quel que soit le transport, l’action sera appelée par la même méthode : dans notre cas, `voyager()`. 
+🙋 Un voyageur (`$dany`) à la choix entre deux transport : voiture 🚙 ou avion 🛫. 
 
-La méthode ne se soucie pas des détails de chaque voyage. En effet chaque type de transport devient une classe qui définit les données de du voyage.
+→ Quel que soit le transport, l’action sera appelée par la même méthode : dans notre cas, `voyager()`. 
+
+📌 La méthode ne se soucie pas des détails de chaque voyage. En effet chaque type de transport devient une classe qui définit les données de du voyage. 
+
+On pourra ainsi ajouter autant de type de transport que l'on souhaite si l'interface `TransportInterface` y est implementé.
 ]
 
 ---
@@ -1352,36 +1546,38 @@ La méthode ne se soucie pas des détails de chaque voyage. En effet chaque type
   ### Interfaces
   ### .red[**🏗 T. P.**]
   ### Abstraction
+  ### Abstract Vs Interface
   ### .red[**🏗 T. P.**]
   ### Polymorphisme
   ### .red[**🏗 T. P.**]
 ]
 .right-column[
-La société R pense à l'éducation des jeunes et souhaite mettre en place la gestion des stagiaires.
-Ils ne seront pas considerer comme des employés mais pourront tout de meme travailler.
+**La société R** pense à l'éducation des jeunes et souhaite mettre en place la gestion des stagiaires.
+
+Ainsi les enfants stagiaire ne seront pas consideré comme des employéss mais pourront tout de meme travailler.
 
 - Ajoutons une nouvelle classe **`Stagiaire`** qui n'etendra pas de la classe **`Employe`**
 
-  - Le stagiaire aura un nom, prenom, age (Vous pouvez utiliser les traits)
+  - Le stagiaire aura un id, nom, prenom, age (entre 12 et 18 ans) (Vous pouvez utiliser les traits)
 
-- Ajouter un interface **`Travailleur`** qui aura une fonction `travailler()`
+- Ajouter un interface **`TravailleurInterface`** qui aura une fonction `travailler()` qui retournera un entier representant le nombre d'heures travaillés.
 
-- Implementer cette interface aux classes `Employe` et `Stagiaire`
+- Implementer cette interface aux classes `Employe` et `Stagiaire`. Un stagiaire travail entre 5 et 7 heures et un employé entre 6 et 9.
 
-- Définir une méthode `faireTravailler` à la classe `Responsable` qui pourra faire travailler un objet qui implemente `TravailleurInterface`. Puis l'utiliser.
+- Définir une méthode `faireTravailler` à la classe `Responsable` qui pourra faire travailler un objet qui implemente `TravailleurInterface`.
+
+- Une équipe aura dorenavant des `travailleurs` au lieu d'`employes`.
  
-- Définir une methode `faireTravaillerEquipe` à la classe `Responsable` qui faira travailler son équipe. Puis l'utiliser.
+- Modifier la methode `Equipe::travailler` pour demander au responsable de faire travailler les membres de son équipe.
+
+- Un Stagiaire fera parti d'une équipe. Ajouter donc 5 nouveaux stagiaires repartie dans les deux équipe.
+
+- Faire en sorte que chaque responsable d'équipe fasse travailler son équipe.
 ]
 
 ---
 
 .left-column[
-  ### Interfaces
-  ### .red[**🏗 T. P.**]
-  ### Abstraction
-  ### .red[**🏗 T. P.**]
-  ### Polymorphisme
-  ### .red[**🏗 T. P.**]
   ### Namespace
 ]
 .right-column[
@@ -1406,12 +1602,6 @@ L’espace de noms est utilisé pour éviter des conflits et introduire plus de 
 ---
 
 .left-column[
-  ### Interfaces
-  ### .red[**🏗 T. P.**]
-  ### Abstraction
-  ### .red[**🏗 T. P.**]
-  ### Polymorphisme
-  ### .red[**🏗 T. P.**]
   ### Namespace
 ]
 .right-column[
@@ -1430,12 +1620,6 @@ L’espace de noms est utilisé pour éviter des conflits et introduire plus de 
 ---
 
 .left-column[
-  ### Interfaces
-  ### .red[**🏗 T. P.**]
-  ### Abstraction
-  ### .red[**🏗 T. P.**]
-  ### Polymorphisme
-  ### .red[**🏗 T. P.**]
   ### Namespace
   ### .red[**🏗 T. P.**]
 ]
@@ -1462,12 +1646,6 @@ L’espace de noms est utilisé pour éviter des conflits et introduire plus de 
 ---
 
 .left-column[
-  ### Interfaces
-  ### .red[**🏗 T. P.**]
-  ### Abstraction
-  ### .red[**🏗 T. P.**]
-  ### Polymorphisme
-  ### .red[**🏗 T. P.**]
   ### Namespace
   ### .red[**🏗 T. P.**]
   ### Les exceptions
@@ -1488,12 +1666,6 @@ L’espace de noms est utilisé pour éviter des conflits et introduire plus de 
 ---
 
 .left-column[
-  ### Interfaces
-  ### .red[**🏗 T. P.**]
-  ### Abstraction
-  ### .red[**🏗 T. P.**]
-  ### Polymorphisme
-  ### .red[**🏗 T. P.**]
   ### Namespace
   ### .red[**🏗 T. P.**]
   ### Les exceptions
@@ -1532,12 +1704,6 @@ L’idée derrière les exceptions va être d’anticiper les situations problé
 ---
 
 .left-column[
-  ### Interfaces
-  ### .red[**🏗 T. P.**]
-  ### Abstraction
-  ### .red[**🏗 T. P.**]
-  ### Polymorphisme
-  ### .red[**🏗 T. P.**]
   ### Namespace
   ### .red[**🏗 T. P.**]
   ### Les exceptions
@@ -1626,22 +1792,72 @@ Elles peuvent prendre des arguments via le constructeur, hériter d’autres cla
   ### Classe anonyme
   ### Methode anonyme
   ### Reflection de classe
+  #### Qu'est-ce que c'est ?
 ]
 .right-column[
-```php
-  $classX = new class extends Avion implements Transport {
-    use VitesseTrait;
-  };
+**La réflexion** dans le développement logiciel est quelque chose qui est utilisé assez souvent.
 
-  $classX->setVitesse(120);
-  var_dump($classX);
+**La réflexion** est l'endroit où un objet est capable de s'examiner de manière introspective pour vous informer de ses méthodes et propriétés au moment de l'exécution.
+
+À première vue, cela ne semble pas être quelque chose qui serait particulièrement utile. Cependant, `Reflection` est en fait un aspect vraiment intéressant du développement logiciel et c'est quelque chose que vous aborderez probablement souvent.
+
+L'une des façons les plus courantes d'utiliser Reflection consiste à déboguer votre code. Vous avez probablement utilisé les fonctions `get_class()` et `get_class_methods()` lorsque vous travaillez avec un objet dont le nom est ambigu. La possibilité d'obtenir le type ou les méthodes d'un objet lorsque vous ne savez pas de quel type d'objet il s'agit est la réflexion.
+
+Une autre utilisation courante de `Reflection` est la création de documentation. Il serait extrêmement laborieux d'écrire une documentation sur chaque méthode de chaque classe d'un grand framework ou d'une application. Au lieu de cela, `Reflection` peut générer automatiquement la documentation pour vous. Pour ce faire, il inspecte chaque méthode, constructeur et classe pour déterminer ce qui entre et ce qui sort.
+
+Inspectons la classe `Voiture`.
+```php
+
+$mercedes = new Voiture(90, 'ethanol');
+$reflection = new \ReflectionClass($mercedes);
 ```
+]
+---
+
+.left-column[
+  ### Classe anonyme
+  ### Methode anonyme
+  ### Reflection de classe
+  #### Qu'est-ce que c'est ?
+  #### Cas d'utilisation
+]
+.right-column[
+#### Obtenir le nom de la classe
+```php
+var_dump($reflection->getName());
+# App\Model\Voiture
+
+var_dump($reflection->getShortName());
+# Voiture
+
+var_dump($reflection->getNamespaceName());
+# App\Model
+```
+
+#### Obtenir la classe parent
+```php
+$parent = $reflection->getParentClass();
+var_dump($parent->getName());
+# App\Model\Vehicule
+```
+
+#### Obtenir les interfaces
+```php
+$interfaces = $reflection->getInterfaceNames();
+var_dump(interfaces);
+/* array(3) {
+[0] => string(28) "App\Interfaces\VehiculeInterface"
+[1] => string(26) "App\Interfaces\TransportInterface"
+} */
+```
+
+d'autres possibilités à voir sur https://www.php.net/manual/fr/class.reflectionclass.php
 ]
 ---
 
 class: middle, center, inverse
 
-## 5. Bonus
+## 5. L'auto-chargement des classes
 
 ---
 
@@ -1880,9 +2096,13 @@ Ajouter une section `autoload` au fichier `composer.json`
 ]
 ---
 
+class: middle, center, inverse
+
+## 6. Le typage de données
+
+---
+
 .left-column[
-  ### L'autoloader
-  ### Composer
   ### PHP Doc
 ]
 .right-column[
@@ -1917,13 +2137,51 @@ Ajouter une section `autoload` au fichier `composer.json`
 ---
 
 .left-column[
-  ### L'autoloader
-  ### Composer
   ### PHP Doc
   ### Typage de données
+  #### Pourquoi ?
 ]
 .right-column[
-  Si vous souhaitez utiliser cette fonctionnalité, je vous conseille de **toujours activer** le **`declare(strict_types=1);`** dans vos fichiers.
+  PHP est un langage typé dynamiquement. Lorsque vous définissez une fonction , vous n'avez pas besoin de déclarer des types pour les paramètres . Par example:
+
+  ```php
+  function add($x, $y) {
+      return $x + $y;
+  }
+
+  var_dump(add(1,2)); # int(3)
+  var_dump(add(1.0,2.3)); # int(3.3)
+  var_dump(add(1.0,'3')); # int(4)
+
+  var_dump(add('un','deux')); 
+  # PHP Fatal error: Uncaught TypeError: Unsupported operand types: string + string
+  ```
+
+  Pour appliquer les types pour les paramètres de fonction et la valeur de retour, vous pouvez utiliser des indications de type.
+  ```php
+  function add(int $x, int $y): int {
+      return $x + $y;
+  }
+
+  var_dump(add(1,2)); # int(3)
+  var_dump(add(1.0,2.3)); # int(3)
+  var_dump(add(1.0,'3')); # int(4)
+
+  var_dump(add('un','deux')); 
+  # PHP Fatal error:  Uncaught TypeError: 
+  # add(): Argument #1 ($x) must be of type int, string given
+  ```
+]
+---
+
+.left-column[
+  ### PHP Doc
+  ### Typage de données
+  #### Pourquoi ?
+  #### Utilisation
+]
+.right-column[
+  Si vous souhaitez utiliser cette fonctionnalité, je vous conseille de **toujours activer** le **`declare(strict_types=1);`** dans chacun de vos fichiers `.php`.
 
   ```php
   declare(strict_types=1);
@@ -1952,10 +2210,93 @@ Ajouter une section `autoload` au fichier `composer.json`
 ---
 
 .left-column[
-  ### L'autoloader
-  ### Composer
   ### PHP Doc
   ### Typage de données
+  ### Type callable
+]
+.right-column[
+```php
+  $classX = new class extends Avion implements Transport {
+    use VitesseTrait;
+  };
+
+  $classX->setVitesse(120);
+  var_dump($classX);
+```
+]
+---
+
+.left-column[
+  ### PHP Doc
+  ### Typage de données
+  ### Type callable
+  ### Types d'Union
+]
+.right-column[
+  Vous pouvez utiliser plusieurs types d'entrée pour la même fonction au lieu d'un seul, ce qui permet un plus grand degré de réutilisation du code.
+  ```php
+  class Vehicule
+  {
+    private int|float|null $vitesse = null;
+
+    public function setVitesse(int|float|null $vitesse) : self
+    {
+      $vitesse = $vitesse;
+      return $this;
+    }
+  }
+  ```
+
+  Vous pouvez aussi utiliser des classes et interfaces définies
+  
+  ```php
+  class Conducteur 
+  {
+    public function conduire(Voiture|Camion $vehicule) 
+    {
+      ...
+    }  
+  }
+  ```
+]
+
+---
+
+.left-column[
+  ### PHP Doc
+  ### Typage de données
+  ### Type callable
+  ### Types d'Union
+  ### Arguments nommées
+]
+.right-column[
+  **Les arguments nommés** vous donnent plus de souplesse pour appeler les fonctions. Jusqu'à présent, vous deviez appeler une fonction et passer chaque argument dans l'ordre spécifié par la fonction.
+
+  Un exemple d'utilisation avec la methode `number_format` : https://www.php.net/manual/en/function.number-format.php
+
+  ```php
+  // avec php 7.4, si je veux modifier le separateur des centaines
+  number_format(1063, 0, ".", " ");
+  ```
+
+  Les arguments nommés vous permettent de définir un nom pour chaque paramètre. Et maintenant, ils peuvent être rappelés dans l'ordre ou le desordre, comme décrit ci-dessous : 
+  ```php
+  // En utilisant le nom des arguments
+  number_format(num: 1063, decimals: 0, decimal_separator: ".", thousands_separator: " ");
+
+  // En utilisant le nom des arguments sur ceux que modifié
+  number_format(num: 1063, thousands_separator: " ");
+  ```
+]
+
+---
+
+.left-column[
+  ### PHP Doc
+  ### Typage de données
+  ### Type callable
+  ### Types d'Union
+  ### Arguments nommées
   ### .red[**🏗 T. P.**]
 ]
 .right-column[
@@ -2000,40 +2341,6 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
 ---
 
 .left-column[
-  ### Types d'Union
-]
-.right-column[
-  Vous pouvez utiliser plusieurs types d'entrée pour la même fonction au lieu d'un seul, ce qui permet un plus grand degré de réutilisation du code.
-  ```php
-  class Vehicule
-  {
-    private int|float|null $vitesse = null;
-
-    public function setVitesse(int|float|null $vitesse) : self
-    {
-      $vitesse = $vitesse;
-      return $this;
-    }
-  }
-  ```
-
-  Vous pouvez aussi utiliser des classes et interfaces définies
-  
-  ```php
-  class Conducteur 
-  {
-    public function conduire(Voiture|Camion $vehicule) 
-    {
-      ...
-    }  
-  }
-  ```
-]
-
----
-
-.left-column[
-  ### Types d'Union
   ### Promotion de propriétés de constructeur
 ]
 .right-column[
@@ -2067,7 +2374,6 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
 ---
 
 .left-column[
-  ### Types d'Union
   ### Promotion de propriétés de constructeur
   ### visibilité pour les constantes
 ]
@@ -2100,38 +2406,8 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
 ---
 
 .left-column[
-  ### Types d'Union
   ### Promotion de propriétés de constructeur
   ### visibilité pour les constantes
-  ### Arguments nommées
-]
-.right-column[
-  **Les arguments nommés** vous donnent plus de souplesse pour appeler les fonctions. Jusqu'à présent, vous deviez appeler une fonction et passer chaque argument dans l'ordre spécifié par la fonction.
-
-  Un exemple d'utilisation avec la methode `number_format` : https://www.php.net/manual/en/function.number-format.php
-
-  ```php
-  // avec php 7.4, si je veux modifier le separateur des centaines
-  number_format(1063, 0, ".", " ");
-  ```
-
-  Les arguments nommés vous permettent de définir un nom pour chaque paramètre. Et maintenant, ils peuvent être rappelés dans l'ordre ou le desordre, comme décrit ci-dessous : 
-  ```php
-  // En utilisant le nom des arguments
-  number_format(num: 1063, decimals: 0, decimal_separator: ".", thousands_separator: " ");
-
-  // En utilisant le nom des arguments sur ceux que modifié
-  number_format(num: 1063, thousands_separator: " ");
-  ```
-]
-
----
-
-.left-column[
-  ### Types d'Union
-  ### Promotion de propriétés de constructeur
-  ### visibilité pour les constantes
-  ### Arguments nommées
   ### Fonction str_contains
 ]
 .right-column[
@@ -2154,10 +2430,8 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
 ---
 
 .left-column[
-  ### Types d'Union
   ### Promotion de propriétés de constructeur
   ### visibilité pour les constantes
-  ### Arguments nommées
   ### Fonction str_contains
   ### Null safe
 ]
@@ -2188,55 +2462,77 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
 ---
 
 .left-column[
-  ### Types d'Union
   ### Promotion de propriétés de constructeur
   ### visibilité pour les constantes
-  ### Arguments nommées
   ### Fonction str_contains
   ### Null safe
-  ### Enum
+  ### Énumérations
 ]
 .right-column[
-
+  Le support intégré pour les énumérations est disponible depuis la version PHP 8.1
   ```php
-  class Vehicule
+  enum Status
   {
-    private const NB_ROUES = 4;
-    ...
+      case DRAFT;
+      case PUBLISHED;
+      case ARCHIVED;
   }
   ```
+  L'avantage des énumérations est qu'elles représentent une collection de valeurs constantes, mais surtout ces valeurs peuvent être typées, comme ceci.
+  ```php
+  class BlogPost
+  {
+      public function __construct(
+          public Status $status, 
+      ) {}
+  }
+  ```
+  Dans cet exemple, la création d'une énumération et sa transmission à `BlogPost` ressemble à ceci.
+
+  ```php
+  $post = new BlogPost(Status::DRAFT);
+  ```
+
+  Pour en savoir plus https://www.php.net/manual/fr/language.types.enumerations.php
 ]
 
 ---
 
 .left-column[
-  ### Types d'Union
   ### Promotion de propriétés de constructeur
   ### visibilité pour les constantes
-  ### Arguments nommées
   ### Fonction str_contains
   ### Null safe
   ### Enum
-  ### Readonly
+  ### Propriétés readonly
 ]
 .right-column[
+  PHP 8.1 prend en charge les propriétés de classe en lecture seule. Une propriété de classe déclarée en lecture seule ne peut être initialisée qu'une seule fois, et d'autres modifications de la propriété ne sont pas autorisées.
 
+  Les propriétés de classe en lecture seule sont déclarées avec le mot-clé `readonly` dans une propriété typée .
   ```php
-  class Vehicule
+  class User 
   {
-    private const NB_ROUES = 4;
-    ...
+      public readonly int $uid;
+
+      public function __construct(int $uid) 
+      {
+          $this->uid = $uid;
+      }
   }
+
+  $user = new User(42);
+  $user->uid = 56; # Error: Cannot modify readonly property User::$uid in ...:...
   ```
+
+  Les valeurs de propriétés en lecture seule ne peuvent être définies qu'à partir de la classe elle-même, soit à partir du constructeur, soit d'une autre méthode. Une fois définie, aucune autre modification n'est autorisée sur cette propriété, même à l'intérieur de la classe.
 ]
 
 ---
 
 .left-column[
-  ### Types d'Union
   ### Promotion de propriétés de constructeur
   ### visibilité pour les constantes
-  ### Arguments nommées
   ### Fonction str_contains
   ### Null safe
   ### Enum
@@ -2244,14 +2540,18 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
   ### Les attributes
 ]
 .right-column[
+  L'un des plus grands changements de **PHP 8** est la prise en charge des attributs. Les attributs aident à ajouter des métadonnées aux fonctions, paramètres, classes, méthodes de classe, constantes, propriétés, fermetures et même aux classes anonymes PHP. 
+  
+  Ces métadonnées peuvent être récupérées par programmation et fournissent une approche pragmatique pour résoudre les attributs ailleurs dans le code.
 
+  #### Syntaxe et utilisation
+  Les attributs sont déclarés avec `#[` et des `]`.
   ```php
-  class Vehicule
-  {
-    private const NB_ROUES = 4;
-    ...
-  }
+  #[ExampleAttribute('foo', 'bar')]
+  function example() {}
   ```
+
+  Chaque attribut peut avoir zéro ou plusieurs paramètres. Ils seront transmis au constructeur de la classe Attribute si vous tentez d'obtenir un objet instancié de l'attribut.
 ]
 
 ---
