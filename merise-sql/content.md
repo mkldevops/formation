@@ -2211,21 +2211,21 @@ Pour renommer une colonne spécifique dans le jeu de résultats, utilisez le mot
 ### DELETE
 ### SELECT
 ### .red[Travaux Pratique]
-### Truncate
+### TRUNCATE
 ]
 .right-column[
-L'instruction MySQL `TRUNCATE TABLE` vous permet de supprimer toutes les données d'une table.
+L'instruction `TRUNCATE TABLE` vous permet de supprimer toutes les données d'une table.
 
-Logiquement, le `TRUNCATE TABLE` instruction est comme une DELETEinstruction sans WHEREclause qui supprime toutes les lignes d'une table, ou une séquence d' instructions `DROP TABLE` et `CREATE TABLE`.
+Logiquement, le `TRUNCATE TABLE` est comme une instruction `DELETE` sans clause `WHERE` qui supprime toutes les lignes d'une table, ou c'est une séquence d'instructions `DROP TABLE` et `CREATE TABLE`.
 
-Cependant, le `TRUNCATE TABLE` instruction est plus efficace que le `DELETE` instruction car elle supprime et recrée la table au lieu de supprimer les lignes une par une.
+Cependant, le `TRUNCATE TABLE` est plus efficace que l'instruction `DELETE` car il supprime et recrée la table au lieu de supprimer les lignes une par une.
 
 Voici la syntaxe de base de le `TRUNCATE TABLE` instruction :
 ```sql
 TRUNCATE [TABLE] table_name;
 ```
 
-S'il existe des `FOREIGN KEY` contraintes d'autres tables qui font référence à la table que vous tronquez, le `TRUNCATE TABLE` instruction échouera.
+S'il existe des contraintes `FOREIGN KEY` sur d'autres tables qui font référence à la table que vous tronquez, le `TRUNCATE TABLE` échouera.
 ]
 
 ---
