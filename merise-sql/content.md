@@ -2391,7 +2391,7 @@ programmeur (id, date , #representation_id, tarif)
 ### LIKE
 ]
 .right-column[
-Parfois, nous pouvons exiger des enregistrements de la base de données qui correspondent à certains modèles. Par exemple, nous pouvons souhaiter extraire toutes les colonnes où les enregistrement commencent par la lettre "y" ou par "b" et se terminent par "a", ou même par des motifs de chaîne plus compliqués et restrictifs. C'est ici que la lause `LIKE` vient nous sauver, souvent associée à la clause `WHERE` en SQL.
+Parfois, nous pouvons exiger des enregistrements de la base de données qui correspondent à certains modèles. Par exemple, nous pouvons souhaiter extraire toutes les colonnes où les enregistrement commencent par la lettre "y" ou par "b" et se terminent par "a", ou même par des motifs de chaîne plus compliqués et restrictifs. C'est ici que la clause `LIKE` vient nous sauver, souvent associée à la clause `WHERE` en SQL.
 
 Deux types de caractères génériques sont utilisés pour filtrer les résultats:
 * .red[`%`]  : Utilisé pour faire correspondre zéro, un ou plusieurs caractères. (Longueur variable)
