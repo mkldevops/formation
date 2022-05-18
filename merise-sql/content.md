@@ -2179,6 +2179,32 @@ Pour renommer une colonne spécifique dans le jeu de résultats, utilisez le mot
 ### UPDATE
 ### DELETE
 ### SELECT
+### TRUNCATE
+]
+.right-column[
+L'instruction `TRUNCATE TABLE` vous permet de supprimer toutes les données d'une table.
+
+Logiquement, le `TRUNCATE TABLE` est comme une instruction `DELETE` sans clause `WHERE` qui supprime toutes les lignes d'une table, ou c'est une séquence d'instructions `DROP TABLE` et `CREATE TABLE`.
+
+Cependant, le `TRUNCATE TABLE` est plus efficace que l'instruction `DELETE` car il supprime et recrée la table au lieu de supprimer les lignes une par une.
+
+Voici la syntaxe de base de le `TRUNCATE TABLE` instruction :
+```sql
+TRUNCATE [TABLE] table_name;
+```
+
+S'il existe des contraintes `FOREIGN KEY` sur d'autres tables qui font référence à la table que vous tronquez, le `TRUNCATE TABLE` échouera.
+]
+
+---
+.left-column[
+## Opérateurs
+## Instructions
+### INSERT
+### UPDATE
+### DELETE
+### SELECT
+### TRUNCATE
 ### .red[Travaux Pratique]
 ]
 .right-column[
@@ -2197,35 +2223,6 @@ Pour renommer une colonne spécifique dans le jeu de résultats, utilisez le mot
   * nom : San, prenom : fil, date de naissance : 10/11/1991, salaire : 1500, equipe : 2
 
 * Afficher la liste de tout les employés
-]
-
----
-.left-column[]
-
----
-.left-column[
-## Opérateurs
-## Instructions
-### INSERT
-### UPDATE
-### DELETE
-### SELECT
-### .red[Travaux Pratique]
-### TRUNCATE
-]
-.right-column[
-L'instruction `TRUNCATE TABLE` vous permet de supprimer toutes les données d'une table.
-
-Logiquement, le `TRUNCATE TABLE` est comme une instruction `DELETE` sans clause `WHERE` qui supprime toutes les lignes d'une table, ou c'est une séquence d'instructions `DROP TABLE` et `CREATE TABLE`.
-
-Cependant, le `TRUNCATE TABLE` est plus efficace que l'instruction `DELETE` car il supprime et recrée la table au lieu de supprimer les lignes une par une.
-
-Voici la syntaxe de base de le `TRUNCATE TABLE` instruction :
-```sql
-TRUNCATE [TABLE] table_name;
-```
-
-S'il existe des contraintes `FOREIGN KEY` sur d'autres tables qui font référence à la table que vous tronquez, le `TRUNCATE TABLE` échouera.
 ]
 
 ---
