@@ -185,6 +185,7 @@ class: middle
 ## Presentation
 ]
 .right-column[
+  #📖
 Le modèle conceptuel des données **(MCD)** a pour but d'écrire de façon formelle les données qui seront utilisées par le système d'information. Il s'agit donc d'une représentation des données, facilement compréhensible, permettant de décrire le système d'information à l'aide d'entités.
 
 Il doit être le plus complet possible. Sa représentation doit se faire en toute indépendance de considérations techniques et/ou organisationnelles. Le MCD est une représentation statique des données et, par conséquent, ne doit comporter aucune référence aux traitements effectués.
@@ -269,6 +270,8 @@ La valeur de l'identifiant **rend unique chaque occurrence** de l'entité. Ainsi
 ## .red[Travaux Pratique]
 ]
 .right-column[
+  
+  # 👷
 **La société R** est désireuse de vouloir analyser ses besoins afin de mettre en place une nouvelle version de son logiciel utilisé en interne.
 
 Elle fait appel à vous pour lui réaliser un modèle conceptuel de données dans un premier temps.
@@ -888,6 +891,7 @@ class: center, middle, inverse
 ## Presentation
 ]
 .right-column[
+  #📖
 Alors que le **Système d'Information** a été décrit au niveau conceptuel et organisationnel, il est maintenant nécessaire de le décrire sur le plan informatique.
 
 **Le Modèle Logique des Données (MLD)** permet de prendre en compte la structuration technique propre au stockage informatisé. L'utilisation de l'informatique permet d'améliorer l'organisation et la gestion d'un SI. Depuis le début du cours, il a été vu comment constituer théoriquement une base de données. Cette base de données peut être réalisée et gérée par un **Système de Gestion de Bases de Données Relationnelles (SGBDR).**
@@ -1270,23 +1274,23 @@ Les commandes SQL standard pour interagir avec les bases de données relationnel
 ### Run container
 ]
 .right-column[
-Nous utiliserons Docker pour configurer notre environnement de travail avec le conteneur SGBDR Mysql dans sa version 5.7.
+Nous utiliserons Docker pour configurer notre environnement de travail avec le conteneur SGBDR Mysql dans sa version 8.0.
 
 Nous devons exécuter la commande docker suivante pour extraire l'image docker du hub docker et l'exécuter sur votre machine.
 ```bash
-docker run -p 3306:3306 --name=mysql-demo-db \
-  -d mysql/mysql-server:5.7 mysqld --lower_case_table_names=1
-```
-Avec la commande ci-dessus, nous avons lancé un serveur mysql qui tourne sur notre machine via Docker.
-Pour récuperer le mot de passe
-```bash
-docker logs mysql-demo-db 2>&1 | grep GENERATED
-[Entrypoint] GENERATED ROOT PASSWORD: 6=J#+5Ir#1Q6W&.0H8ZDl=8%vO3UQqzY
+docker run -p 3306:3306 --name=mysql-demo-db -e MYSQL_ROOT_PASSWORD=change \
+  -d -v /tmp/mysql-demo-db:/var/lib/mysql mysql/mysql-server:8.0 mysqld --lower_case_table_names=1
 ```
 
-Maintenant nous allons nous y connecter en utilisant le mot de passe generé ci-dessus
+Maintenant nous allons nous y connecter en utilisant le mot de passe generé : `root`
 ```bash
 docker exec -it mysql-demo-db mysql -uroot -p
+```
+
+Pour supprimer le container
+
+```sh
+docker rm -f mysql-demo-db
 ```
 ]
 
@@ -1884,7 +1888,8 @@ Dans l’exemple ci-dessus, la valeur initiale pour cette incrémentation sera 5
 
 ```sql
 CREATE TABLE examen(
-    [...]
+    id AUTO_INCREMENT PRIMARY KEY,
+    eleve_id INT NOT NULLL,
     FOREIGN KEY (eleve_id) REFERENCES eleve(id) );
 
 /* Via ALTER TABLE*/
@@ -1893,7 +1898,7 @@ ALTER TABLE examen ADD FOREIGN KEY (eleve_id) REFERENCES eleve(id);
 
 Pour supprimer une contrainte `FOREIGN KEY`, utilisez la syntaxe suivante :
 ```sql
-ALTER TABLE examen DROP FOREIGN KEY;
+ALTER TABLE examen DROP FOREIGN KEY nom_contrainte;
 ```
 
 Toute contrainte que vous avez définie peut être supprimée à l'aide de la commande `ALTER TABLE` avec l'option `DROP CONSTRAINT`.
@@ -2192,6 +2197,35 @@ Pour renommer une colonne spécifique dans le jeu de résultats, utilisez le mot
   * nom : San, prenom : fil, date de naissance : 10/11/1991, salaire : 1500, equipe : 2
 
 * Afficher la liste de tout les employés
+]
+
+---
+.left-column[]
+
+---
+.left-column[
+## Opérateurs
+## Instructions
+### INSERT
+### UPDATE
+### DELETE
+### SELECT
+### .red[Travaux Pratique]
+### Truncate
+]
+.right-column[
+L'instruction MySQL `TRUNCATE TABLE` vous permet de supprimer toutes les données d'une table.
+
+Logiquement, le `TRUNCATE TABLE` instruction est comme une DELETEinstruction sans WHEREclause qui supprime toutes les lignes d'une table, ou une séquence d' instructions `DROP TABLE` et `CREATE TABLE`.
+
+Cependant, le `TRUNCATE TABLE` instruction est plus efficace que le `DELETE` instruction car elle supprime et recrée la table au lieu de supprimer les lignes une par une.
+
+Voici la syntaxe de base de le `TRUNCATE TABLE` instruction :
+```sql
+TRUNCATE [TABLE] table_name;
+```
+
+S'il existe des `FOREIGN KEY` contraintes d'autres tables qui font référence à la table que vous tronquez, le `TRUNCATE TABLE` instruction échouera.
 ]
 
 ---
@@ -3334,5 +3368,60 @@ Comparées aux jointures, les sous-requêtes sont simples à utiliser et à lire
 Mais les sous-requêtes posent des problèmes de performances. L'utilisation d'une jointure au lieu d'une sous-requête peut parfois vous donner **un gain de performances jusqu'à 500 fois**. Si vous avez le choix, il est recommandé d'utiliser une jointure plutôt qu'une sous-requête.
 
 Les sous-requêtes ne doivent être utilisées comme solution de secours que lorsque vous ne pouvez pas utiliser une opération JOIN pour atteindre les objectifs ci-dessus.
+]
+
+---
+
+.left-column[
+## Triggers
+]
+.right-column[
+  **Un trigger**, également appelé **déclencheur**, permet d’exécuter un ensemble d’instruction SQL juste après un événement. Cela permet de faciliter et d’automatiser des actions au sein d’un Système de Gestion de Base de Données (SGBD).
+  
+
+```sql
+ CREATE OR REPLACE TRIGGER trigger_eleve
+ BEFORE INSERT OR UPDATE ON eleve
+ FOR EACH ROW
+ WHEN (new.no_line > 0)
+ DECLARE
+     evol_exemple number;
+ BEGIN
+     evol_exemple := :new.exemple  - :old.exemple;
+     DBMS_OUTPUT.PUT_LINE('  evolution : ' || evol_exemple);
+ END;
+```
+
+]
+
+---
+
+.left-column[
+## Triggers
+## procedure stockées
+]
+.right-column[
+  **Une procédure stockée**, aussi appelée **stored procedure** en anglais, est un concept utilisé en administration de base de données afin d’exécuter un ensemble d’instructions SQL. Une telle procédure est stockée au sein du Système de Gestion de Base de Donneés (SGBD) et peut être appelée à tout moment par son nom afin d’exécuter celle-ci.
+
+  L’exemple ci-dessous est une procédure stockée au sein de MySQL qui permet lire les pays d’un continent rapidement en donnant le nom du contient concerné :
+
+  ```sql
+  DELIMITER //
+  CREATE PROCEDURE country_hos
+  (IN con CHAR(20))
+  BEGIN
+  SELECT Name, HeadOfState
+  FROM Country
+  WHERE Continent = con;
+  END //
+  DELIMITER ;
+
+  ```
+
+  Pour appeler la procédure, il est possible d’exécuter la requête SQL suivante:
+
+  ```sql
+  CALL country_hos('Europe');
+  ```
 ]
 

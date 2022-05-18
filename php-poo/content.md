@@ -1730,13 +1730,10 @@ L’idée derrière les exceptions va être d’anticiper les situations problé
   ### Classe anonyme
 ]
 .right-column[
-**Que sont les classes anonymes en PHP ?**
-
 Lors de la création d'un nouvel objet, une classe est d'abord définie, puis un objet de cette classe est créé. En PHP 7, une classe dite anonyme a été introduite pour permettre aux classes d'être définies sans nom à la volée.
 
 On définit une classe anonyme en utilisant le mot-clé `new class`.
 
-Par exemple :
 ```php
   $obj1 = new class() {};
 
@@ -1751,15 +1748,6 @@ Par exemple :
 ```
 
 Elles peuvent prendre des arguments via le constructeur, hériter d’autres classes, implémenter des interfaces, et utiliser des traits comme dans une classe normale.
-]
-
----
-
-.left-column[
-  ### Classe anonyme
-]
-.right-column[
-  Les objets instanciés par une classe anonyme ne sont pas différentes de celle des objets instanciés par une classe normale.
 
   ```php
     $classX = new class extends Avion implements Transport {
@@ -1769,7 +1757,10 @@ Elles peuvent prendre des arguments via le constructeur, hériter d’autres cla
     $classX->setVitesse(120);
     var_dump($classX);
   ```
+  
+  Les objets instanciés par une classe anonyme ne sont pas différentes de celle des objets instanciés par une classe normale.
 ]
+
 ---
 
 .left-column[
@@ -1777,14 +1768,21 @@ Elles peuvent prendre des arguments via le constructeur, hériter d’autres cla
   ### Methode anonyme
 ]
 .right-column[
+  **Les fonctions anonymes**, qu’on appelle également **des closures**, sont des fonctions qui ne possèdent pas de nom.
+
 ```php
-  $classX = new class extends Avion implements Transport {
-    use VitesseTrait;
+  $squ = function(float $x){
+      return $x**2;
   };
 
-  $classX->setVitesse(120);
-  var_dump($classX);
+  var_dump($squ(3));
+  # int(9)
 ```
+Lorsqu’on assigne une fonction anonyme en valeur de variable, notre variable va automatiquement devenir un objet de la classe prédéfinie Closure.
+
+Les classes anonymes vont être utiles dans le cas ou des objets simples et uniques ont besoin d’être créés à la volée.
+
+Créer des classes anonymes va donc principalement nous faire gagner du temps et améliorer in-fine la clarté de notre code.
 ]
 ---
 
@@ -2379,6 +2377,11 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
 ]
 .right-column[
 
+
+  Depuis la version 7.1 de PHP, on peut définir une visibilité pour nos constantes (public, protected ou private).
+
+  Par défaut (si rien n’est précisé), une constante sera considérée comme publique et on pourra donc y accéder depuis l’intérieur et depuis l’extérieur de la classe dans laquelle elle a été définie.
+
   ```php
   interface Vehicule
   {
@@ -2536,7 +2539,7 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
   ### Fonction str_contains
   ### Null safe
   ### Enum
-  ### Readonly
+  ### Propriétés readonly
   ### Les attributes
 ]
 .right-column[
