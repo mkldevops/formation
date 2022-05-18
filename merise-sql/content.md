@@ -2365,7 +2365,7 @@ Soit la base de données d’un festival de musique : Dans une représentation p
 ```sql
 representation (id, titre , lieu)
 musicien (id, nom , #representation_id)
-programmer (id, date , #representation_id, tarif)
+programmeur (id, date , #representation_id, tarif)
 ```
 
 ### Donner les requete SQL pour chaque demande
@@ -2376,9 +2376,9 @@ programmer (id, date , #representation_id, tarif)
 
 3. La liste des musiciens qui participent à la représentation n°20.
 
-4. La liste des id de représentation ayant un tarif superieur à 20 € ou inferieur à 12 €
+4. La liste des id de programmeur ayant un tarif superieur à 20 € ou inferieur à 12 €
 
-5. La liste des id de représentation ayant un tarif à 15 € et prévu le 15/12/2021
+5. La liste des id de programmeur ayant un tarif à 15 € et prévu le 15/12/2021
 
 ]
 
