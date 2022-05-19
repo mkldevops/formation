@@ -2365,7 +2365,7 @@ Soit la base de données d’un festival de musique : Dans une représentation p
 ```sql
 representation (id, titre , lieu)
 musicien (id, nom , #representation_id)
-programmeur (id, date , #representation_id, tarif)
+programmer (id, date , #representation_id, tarif)
 ```
 
 ### Donner les requete SQL pour chaque demande
@@ -2376,9 +2376,9 @@ programmeur (id, date , #representation_id, tarif)
 
 3. La liste des musiciens qui participent à la représentation n°20.
 
-4. La liste des id de programmeur ayant un tarif superieur à 20 € ou inferieur à 12 €
+4. La liste des id de representation ayant un tarif superieur à 20 € ou inferieur à 12 €
 
-5. La liste des id de programmeur ayant un tarif à 15 € et prévu le 15/12/2021
+5. La liste des id de representation ayant un tarif à 15 € et prévu le 15/12/2021
 
 ]
 
@@ -2460,13 +2460,15 @@ SELECT * FROM eleve WHERE nom LIKE "%s__" AND points > 200;
 | 2 | La jeune fille et la nuit | 2253237620 | Guillaume Musso | 21.9 |
 | 3 | T'choupi se brosse les dents | 2092589547 | Thierry Courtin | 5.7 |
 | 4 | La Dernière Chasse | 2226439412 | Jean-Christophe Grangé | 22.9 |
+| 4 | La Dernière Chasse II | 22264374127| Jean-Christophe Grangé | 23.9 |
 | 5 | Le Signal | 2226319484 | Maxime Chattam | 23.9 |
 
-* Quelle requête utiliser pour afficher l'ensemble des enregistrements dont le titre contient "ss" ?
-* Quelle requête utiliser pour afficher l'ensemble des enregistrements dont le titre commence par "La " ?
-* Quelle requête utiliser pour sélectionner uniquement les livres qui ont un prix strictement supérieur à 20 ?
-* Quelle requête utiliser pour récupérer les livres qui ont un prix compris entre 20 et 22 ?
-* Quelle requête utiliser pour récupérer tous les livres à l'exception de celui portant la valeur pour la colonne isbn_10 : 2092589547 ?
+* Indiquez la requête pour afficher l'ensemble des enregistrements dont le titre contient "ss" ?
+* Indiquez la requête pour afficher l'ensemble des enregistrements dont le titre commence par "La " ?
+* Indiquez la requête pour sélectionner uniquement les livres qui ont un prix strictement supérieur à 20 ?
+* Indiquez la requête pour récupérer les livres qui ont un prix compris entre 20 et 22 ?
+* Indiquez la requête pour récupérer tous les livres à l'exception de celui portant la valeur pour la colonne isbn_10 : 2092589547 ?
+* Indiquez la requête pour afficher les livres qui commence par "La" et finissent par "Chasse" ?
 
 ]
 
