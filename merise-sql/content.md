@@ -2460,8 +2460,8 @@ SELECT * FROM eleve WHERE nom LIKE "%s__" AND points > 200;
 | 2 | La jeune fille et la nuit | 2253237620 | Guillaume Musso | 21.9 |
 | 3 | T'choupi se brosse les dents | 2092589547 | Thierry Courtin | 5.7 |
 | 4 | La Dernière Chasse | 2226439412 | Jean-Christophe Grangé | 22.9 |
-| 4 | La Dernière Chasse II | 22264374127| Jean-Christophe Grangé | 23.9 |
-| 5 | Le Signal | 2226319484 | Maxime Chattam | 23.9 |
+| 5 | La Dernière Chasse II | 22264374127| Jean-Christophe Grangé | 23.9 |
+| 6 | Le Signal | 2226319484 | Maxime Chattam | 23.9 |
 
 * Indiquez la requête pour afficher l'ensemble des enregistrements dont le titre contient "ss" ?
 * Indiquez la requête pour afficher l'ensemble des enregistrements dont le titre commence par "La " ?
