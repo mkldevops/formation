@@ -2601,8 +2601,8 @@ A l'occasion de sa 100 ème année, La société R souhaite que vous puissez lui
 * Donner une augmentation aleatoire à chaque employé via `salaire = salaire + FLOOR(RAND()*100) * FLOOR(RAND()*10)` 
 * Lister les 10 immatriculations les plus anciennes de la société.
 * Lister les 25 profils avec `immatriculation`, `nom`, `prenom` les plus agées.
-* Lister 5 premieres personnes qui ont "mit" ou "ith" dans leur nom et afficher dans l'ordre de salaire ascendant. 
-* Lister les immatriculations des 5 derniers employe embauché
+* Lister 5 premieres employes qui ont "mit" ou "ith" dans leur nom et afficher dans l'ordre de salaire ascendant. 
+* Lister les immatriculations des 5 derniers employés embauchés
 * Lister les 5 immatriculation suivantes de la precedente requete.
 ]
 ---
@@ -2709,7 +2709,7 @@ La jointure la plus importante et la plus utilisée est la jointure **INNER**. E
 SELECT liste-colonnes
 FROM table1 
   INNER JOIN table2
-  ON table1.champ_commun = table1.champ_commun;
+  ON table1.champ_commun = table2.champ_commun;
 ```
 
 **Exemple :**
@@ -2850,11 +2850,11 @@ Soit le modèle relationnel suivant relatif à la gestion des notes annuelles d�
 ![Un exemple de table d'employes](./img/sql-tp-mld.png)
 > *Un exemple de table d'employes*
 ]
-* Afficher la liste des nom d'etudiants qui ont été evalué sur un coeficient en 2 et 5
+* Afficher la liste des nom d'etudiants qui ont été evalué sur un coéfficient entre 2 et 5
 
-* Afficher le nom, prenom des élèves qui n'ont pas eu d'evaluation dans la matière "Mathematique"
+* Afficher le nom, prenom des élèves qui n'ont pas eu d'évaluation dans la matière "Mathematique"
 
-* Afficher le nom, prenom, libelle de la matière, coefficient et note des 20 premiers élèves evalué.
+* Afficher le nom, prenom, libelle de la matière, coefficient et note des 20 premiers élèves evalués.
 ]
 ---
 .left-column[
