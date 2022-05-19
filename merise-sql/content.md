@@ -2848,9 +2848,9 @@ Soit le modèle relationnel suivant relatif à la gestion des notes annuelles d�
 
 .center[
 ![Un exemple de table d'employes](./img/sql-tp-mld.png)
-> *Un exemple de table d'employes*
+> *Un exemple de schéma mld*
 ]
-* Afficher la liste des nom d'etudiants qui ont été evalué sur un coéfficient entre 2 et 5
+* Afficher la liste des nom d'etudiants qui ont été evalué sur un coefficient entre 2 et 5
 
 * Afficher le nom, prenom des élèves qui n'ont pas eu d'évaluation dans la matière "Mathematique"
 
@@ -3043,7 +3043,7 @@ SELECT MAX(points) FROM eleve;
 +-------------+
 | MAX(points) |
 +-------------+
-|         120 |
+|         420 |
 +-------------+
 ```
 ]
@@ -3379,16 +3379,38 @@ Les sous-requêtes ne doivent être utilisées comme solution de secours que lor
   
 
 ```sql
- CREATE OR REPLACE TRIGGER trigger_eleve
- BEFORE INSERT OR UPDATE ON eleve
+  CREATE TABLE `logs` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `text` text NOT NULL,
+    `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`)
+  );
+
+ CREATE TRIGGER trigger_eleve_insert
+ BEFORE INSERT ON eleve
  FOR EACH ROW
- WHEN (new.no_line > 0)
- DECLARE
-     evol_exemple number;
- BEGIN
-     evol_exemple := :new.exemple  - :old.exemple;
-     DBMS_OUTPUT.PUT_LINE('  evolution : ' || evol_exemple);
- END;
+    INSERT INTO logs (`text`) VALUES (CONCAT_WS(' ', 'insert', NEW.nom, NEW.prenom));
+
+
+ CREATE TRIGGER trigger_eleve_delete
+ AFTER DELETE ON eleve
+ FOR EACH ROW
+    INSERT INTO logs (`text`) VALUES (CONCAT_WS(' ', 'delete', OLD.nom, OLD.prenom));
+```
+
+Ajoutons et supprimons des données
+```sql
+INSERT INTO eleve 
+VALUES (null, 'Térieur', 'Alain', '2014-08-08', 300, 4), (null, 'Térieur', 'Alex', '2014-08-08', 300, 4);
+
+DELETE FROM eleve WHERE prenom = 'Alain';
+
+SELECT * FROM logs;
+```
+
+Pour supprimer un trigger
+```sql
+DROP TRIGGER trigger_eleve_insert
 ```
 
 ]
