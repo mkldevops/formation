@@ -2600,7 +2600,7 @@ A l'occasion de sa 100 ème année, La société R souhaite que vous puissez lui
 
 * Donner une augmentation aleatoire à chaque employé via `salaire = salaire + FLOOR(RAND()*100) * FLOOR(RAND()*10)` 
 * Lister les 10 immatriculations les plus anciennes de la société.
-* Lister les 25 profils avec immatrculation, nom, prenom les plus agées.
+* Lister les 25 profils avec `immatriculation`, `nom`, `prenom` les plus agées.
 * Lister 5 premieres personnes qui ont "mit" ou "ith" dans leur nom et afficher dans l'ordre de salaire ascendant. 
 * Lister les immatriculations des 5 derniers employe embauché
 * Lister les 5 immatriculation suivantes de la precedente requete.
