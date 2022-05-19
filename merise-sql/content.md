@@ -3397,7 +3397,14 @@ Les sous-requêtes ne doivent être utilisées comme solution de secours que lor
  FOR EACH ROW
     INSERT INTO logs (`text`) VALUES (CONCAT_WS(' ', 'delete', OLD.nom, OLD.prenom));
 ```
+]
 
+---
+
+.left-column[
+## Triggers
+]
+.right-column[
 Ajoutons et supprimons des données
 ```sql
 INSERT INTO eleve 
