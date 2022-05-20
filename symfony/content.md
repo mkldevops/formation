@@ -35,7 +35,7 @@ class: middle
 .right-column[
 - **Installation de notre environnement**
   - Docker
-  - WSL 2
+  - WSL 2 (Pour windows)
   - PHP 8.1
   - Composer
   - Node
@@ -62,17 +62,36 @@ class: middle
 ]
 .right-column[
 ### Docker
-* Installation de docker sur Linux via [apt](https://https://docs.docker.com/engine/install/ubuntu/)
+* **Installation de docker sur Linux/Mac :** 
+  * [engine ubuntu](https://https://docs.docker.com/engine/install/ubuntu/)
+  * [deskstop mac](https://docs.docker.com/desktop/mac/install/)
 
-* Installation de docker sur Windows 
-
+* **Installation de docker desktop sur Windows** 
   * Télecharger [Windows Desktop](https://https://www.docker.com/products/docker-desktop)
-
   * Installer WSL (Ubuntu) via le store de Microsoft
-
   * Activer WSL 2 (Redemmarage necessaire)
+  * Installer Windows terminal (facultatif)
 
-* Installer Windows terminal (facultatif)
+Pour utiliser docker sans le mode `sudo` https://docs.docker.com/engine/install/linux-postinstall/
+```sh
+sudo groupadd docker
+
+sudo usermod -aG docker $USER
+
+newgrp docker 
+```
+
+### Docker-compose
+Voir https://docs.docker.com/compose/install/
+
+```sh
+ curl -SL https://github.com/docker/compose/releases/download/v2.5.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+ 
+ sudo chmod +x /usr/local/bin/docker-compose
+ 
+ docker-compose --version
+
+```
 ]
 
 ---
