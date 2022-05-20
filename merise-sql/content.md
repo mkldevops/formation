@@ -3405,20 +3405,20 @@ Les sous-requêtes ne doivent être utilisées comme solution de secours que lor
 ## Triggers
 ]
 .right-column[
-Ajoutons et supprimons des données
-```sql
-INSERT INTO eleve 
-VALUES (null, 'Térieur', 'Alain', '2014-08-08', 300, 4), (null, 'Térieur', 'Alex', '2014-08-08', 300, 4);
+  Ajoutons et supprimons des données dans la table élève
+  ```sql
+  INSERT INTO eleve 
+  VALUES (null, 'Térieur', 'Alain', '2014-08-08', 300, 4), (null, 'Térieur', 'Alex', '2014-08-08', 300, 4);
 
-DELETE FROM eleve WHERE prenom = 'Alain';
+  DELETE FROM eleve WHERE prenom = 'Alain' and nom = 'Térieur';
 
-SELECT * FROM logs;
-```
+  SELECT * FROM logs;
+  ```
 
-Pour supprimer un trigger
-```sql
-DROP TRIGGER trigger_eleve_insert
-```
+  Pour supprimer un trigger
+  ```sql
+  DROP TRIGGER trigger_eleve_insert
+  ```
 
 ]
 
