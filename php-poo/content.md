@@ -11,13 +11,15 @@ class: middle
 ### Objectif
 ]
 .right-column[
-- Découvrir un peu plus PHP
+- Découvrir un peu plus PHP.
 
-- Maitriser les bases de la POO
+- Maitriser les bases de la Programation orientée objet (POO)
 
-- Vous permettre de répondre aux besoins de votre entreprise
+  *Concept que l'on retrouve dans beaucoup de language tel que Javascript, Java, C ...*
 
-- Gagner en confiance et motivation
+- Vous permettre de répondre aux attente et besoins de votre entreprise.
+
+- Gagner en confiance et motivation.
 ]
 
 ---
@@ -28,13 +30,15 @@ class: middle
 
 ]
 .right-column[
-- Version **PHP >=7.4** (avec laragon, lamp, wamp, ...)
+- Version **PHP >=8.1**
 
 - Avoir les bases de PHP (variable, if, for, while, ...)
 
-- Éditeur de texte (vs-code, phpstorm, sublime-text, ...)
+- Compte gitlab (https://gitlab.com) ou github (https://github.com/)
 
-- Shell terminal avec le client `php-cli`
+- Éditeur de texte en ligne Gitpod (https://gitpod.io/workspaces)
+
+- Utiliser terminal shell avec le client `php-cli`
 
 - clone du repo git pour les TP, qui vous permettra de faire le suivi du cours à differente étape.
 
@@ -56,7 +60,14 @@ La programmation orientée objet (POO) est devenue **l'un des éléments constit
 
 Au niveau le plus simple, la POO se concentre sur les objets qu'un programmeur souhaite modifier plutôt que sur les actions nécessaires pour effectuer ce changement. Cela **facilite l'exécution d'analyses de code** par les programmeurs et ces objets sont **réutilisables dans d'autres projets.**
 
-La majorité des langages de programmation modernes tels que C++, Object Pascal, Java, Python et PHP combinent à la fois la programmation orientée objet et la programmation procédurale, ce qui signifie que la programmation orientée objet est devenue une évolution très importante dans le monde de la programmation.
+La majorité des langages de programmation modernes tels que : 
+* ***C++***
+* ***Object Pascal***
+* ***Java***
+* ***Python***
+* ***PHP*** 
+
+combinent à la fois la programmation orientée objet et la programmation procédurale,** ce qui signifie que la programmation orientée objet est devenue une évolution très importante dans le monde de la programmation.**
 ]
 
 ---
@@ -66,23 +77,15 @@ class: middle
 ### Objectif
 ### Requis
 ### Pourquoi la POO ?
-### Stats des versions PHP
+### PHP's not dead
 ]
 
 .right-column[
-  📊 La dernière version de PHP à ce jour est la version 8.1 qui à été publié en Novembre 2021
+**PHP est loin d’être mort,** quoi qu’en dise un développeur mécontent. Après tout, 79,2 % des sites web dans le monde ne peuvent pas tous avoir tort, et surtout, la part de marché de PHP est **restée relativement stable au cours des cinq dernières années** (oscillant entre 78 et 80 %). Peu de langages de programmation ont une telle longévité.
 
-| Version | juillet 2021 (%) | janvier 2022 (%) |
-|-------------|------------------|------------------|
-| **8.1**     | 0,1              | 9.1              |
-| **8.0**     | 14.7             | 23,9             |
-| **7.4**     | 46,8             | 43,9             |
-| **7.3**     | 19.2             | 12.0             |
-| **7.2**     | 10.4             | 6.6              |
-| **7.1**     | 3.8              | 2.4              |
-| **7.0**     | 1.3              | 0,8              |
+Si vous êtes un développeur web, vous devriez **avoir au moins une connaissance de base du PHP pour compléter vos compétences.** Idéalement, vous vous familiariserez également avec un ou plusieurs des frameworks PHP les plus populaires, **tels que Laravel, Symfony ou CodeIgniter**. 
 
-On remarque que la communauté utilisant PHP suivent et migre vers les derniers versions.
+💹 Si vous y parvenez, il y a de fortes chances que vous puissiez gagner un salaire élevé.
 ]
 
 ---
@@ -92,11 +95,12 @@ class: middle
 ### Objectif
 ### Requis
 ### Pourquoi la POO ?
-### Stats des versions PHP
+### PHP's not dead
 ### Au programme
 ]
 
 .right-column[
+.pull-left[
 - **Organisation du code**
   - Les classes
   - Propriétés d'une classe
@@ -123,6 +127,9 @@ class: middle
   - Polymorphisme
   - Namespace
   - Exceptions
+  ]
+  
+  .pull-right[
 
 * **L'auto-chargement des classes**
   - Autoloader
@@ -136,7 +143,15 @@ class: middle
   - Arguments nommées
 
 * **PHP 8** (nouveautés)
+  - Promotion de propriétés de constructeur
+  - Visibilité pour les constantes
+  - Fonction str_contains
+  - Null safe
+  - Énumérations
+  - Propriétés readonly
+  - Les attributes
   ]
+]
 
 ---
 
@@ -144,7 +159,7 @@ class: middle
 
 ### Analysons un cas
 
-**La société R** souhaite un programme afin d'organiser son personnel, elle fait appel à un développeur qui écrit le code suivant :
+**La société R** souhaite un programme afin d'organiser son personnel, elle fait appel à un développeur qui a écrit le code suivant :
 
 .pull-left[
 
@@ -471,7 +486,7 @@ $mercedes->rouler();
 #### Déclaration de la classe
 #### Instanciation d'une classe
 #### Référence d'objet
-### Propriétés (attributs) d'une classe
+### Propriétés d'une classe
 ### Méthodes d'une classe
 ### .red[**🏗 T. P.**]
 ]
@@ -490,13 +505,13 @@ Une fois notre serveur prêt, appliquons le POO sur le cas analysé appartenant 
 
 - Faite en sorte que l'employé puisse se présenter avec une méthode `presentation()`
 
-- Définir 3 instances d'employés differentes avec un `id` unique. Chaque instance se presentera avec la methode `presentation()`
+- Définir 3 instances d'employés differentes avec un `id` unique. Chaque instance se presentera avec la méthode `presentation()`
   
 - Ajouter aleatoirement à chaque instance d'employé entre 5 et 10 ans d'ancienneté.
 
 - Ajouter une classe `Equipe` qui aura une propriété public `nom` et `employes` qui sera un tableau de `Employe`
 
-- Ajouter nos employés instancié dans une Equipe nommé `Dream Team`
+- Ajouter nos employés instanciés dans une équipe nommé `Dream Team`
 ]
 
 ---
@@ -511,7 +526,7 @@ class: middle, center, inverse
 ### Visibilité private
 ]
 .right-column[
-Nous avons définit les attributs avec un visibilité `public` et peuvent être modifié par n'importe qui et n'importe où, à un autre endroit dans le code.
+Nous avons définit les attributs avec une visibilité `public` et peuvent être modifié par n'importe qui et n'importe où, à un autre endroit dans le code.
 
 Pour remédier à cela on va utiliser le concept **d'encapsulation** afin de protéger certaines données des interférences extérieures en se forçant à utiliser les méthodes définies pour manipuler les données. 
 
@@ -591,7 +606,7 @@ class Voiture
 ### Les accesseurs et mutateurs
 ]
 .right-column[
-Pour pouvoir donc modifier les information de notre objet, on passera par les accesseurs et mutateurs, qui sont méthodes déclaré public de l'objet.
+Pour pouvoir donc modifier les informations de notre objet, on passera par les accesseurs et mutateurs, qui sont les méthodes déclarés public de l'objet.
 
 ```php
 $mercedes = new Voiture();
@@ -602,7 +617,7 @@ $mercedes->rouler();
 
 Nous pouvons ainsi sécuriser la modification de nos propriétés.
 
-**Exemple :** On ne souhaite modifier le carburant que si la nouvel valeur est parmi "`diesel`", "`essence`" ou "`ethanol`".
+**Exemple :** On ne souhaite modifier le carburant que si la nouvelle valeur est parmi "`diesel`", "`essence`" ou "`ethanol`".
 
 ```php
 class Voiture
@@ -669,7 +684,7 @@ var_dump($mercedes);
 ]
 .right-column[
   .left[
-  Reprenons le projet de la **Société R**. Continuons à améliorer le code en appliquant ce qu'on a appris sur les chapitres précedents
+  Reprenons le projet de la **Société R**. Continuons à améliorer le code en appliquant ce que l'on a précedemment appris.
 
   - Déplacer les classes `Employe` et `Equipe` dans des fichiers php spécifique `Employe.php` et `Equipe.php` et faire un `require_once`  des 2 fichiers.
 
@@ -2373,7 +2388,7 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
 
 .left-column[
   ### Promotion de propriétés de constructeur
-  ### visibilité pour les constantes
+  ### Visibilité pour les constantes
 ]
 .right-column[
 
@@ -2410,7 +2425,7 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
 
 .left-column[
   ### Promotion de propriétés de constructeur
-  ### visibilité pour les constantes
+  ### Visibilité pour les constantes
   ### Fonction str_contains
 ]
 .right-column[
@@ -2476,18 +2491,18 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
   ```php
   enum Status
   {
-      case DRAFT;
-      case PUBLISHED;
-      case ARCHIVED;
+    case DRAFT;
+    case PUBLISHED;
+    case ARCHIVED;
   }
   ```
   L'avantage des énumérations est qu'elles représentent une collection de valeurs constantes, mais surtout ces valeurs peuvent être typées, comme ceci.
   ```php
   class BlogPost
   {
-      public function __construct(
-          public Status $status, 
-      ) {}
+    public function __construct(
+      public Status $status, 
+    ) {}
   }
   ```
   Dans cet exemple, la création d'une énumération et sa transmission à `BlogPost` ressemble à ceci.
@@ -2506,7 +2521,7 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
   ### visibilité pour les constantes
   ### Fonction str_contains
   ### Null safe
-  ### Enum
+  ### Énumérations
   ### Propriétés readonly
 ]
 .right-column[
@@ -2516,12 +2531,12 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
   ```php
   class User 
   {
-      public readonly int $uid;
+    public readonly int $uid;
 
-      public function __construct(int $uid) 
-      {
-          $this->uid = $uid;
-      }
+    public function __construct(int $uid) 
+    {
+      $this->uid = $uid;
+    }
   }
 
   $user = new User(42);
@@ -2534,12 +2549,6 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
 ---
 
 .left-column[
-  ### Promotion de propriétés de constructeur
-  ### visibilité pour les constantes
-  ### Fonction str_contains
-  ### Null safe
-  ### Enum
-  ### Propriétés readonly
   ### Les attributes
 ]
 .right-column[
@@ -2560,6 +2569,56 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
 ---
 
 .left-column[
+  ### Les attributes
+  ### Match
+]
+.right-column[
+PHP 8 introduit la nouvelle expression `match`. Une fonctionnalité puissante qui sera souvent le meilleur choix pour utiliser le `switch`. Alors quelles sont exactement les différences ?
+
+Commençons par comparer les deux. Voici un exemple classique de `switch` :
+.pull-left[
+```php
+switch ($statusCode) {
+  case 200:
+  case 300:
+    $message = null;
+    break;
+  case 400:
+    $message = 'not found';
+    break;
+  case 500:
+    $message = 'server error';
+    break;
+  default:
+    $message = 'unknown status code';
+    break;
+}
+```
+]
+.pull-right[
+Voici son équivalent en match :
+
+```php
+$message = match ($statusCode) {
+  200, 300 => null,
+  400 => 'not found',
+  500 => 'server error',
+  default => 'unknown status code',
+};
+```
+]
+
+Tout d'abord, l'expression de correspondance est nettement plus courte :
+- elle ne nécessite pas d'instruction `break`
+- elle peut combiner différentes armes en une seule en utilisant une virgule
+- elle renvoie une valeur, de sorte que vous ne devez attribuer une valeur qu'une seule fois.
+]
+
+---
+
+.left-column[
+  ### Les attributes
+  ### Match
   ### .red[**Bilan Travaux Pratique**]
 ]
 .right-column[

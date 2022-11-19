@@ -1,0 +1,52 @@
+# Initialison du projet
+## Installons un nouveau projet symfony (via gitpod)
+## Ajoutons une page d'acceuil
+## utilisons Makefile
+
+# Docker
+## Qu'est-ce que docker
+## install Docker
+## Les images docker, dockerhub
+## Lancer un container
+## Construire notre image via Dockerfile
+### FROM
+### RUN
+### ADD
+### COPY
+### CMD / ENTRYPOINT
+## Lancer un container via notre build
+## Docker compose
+### fichier docker-compose.yaml
+### fichier docker-compose.override.yaml
+
+# Gitlab CI/CD 
+## le CI via la Pipeline
+### Utiliser notre propre image php
+### Ajouter le service database
+### Optimisons notre pipeline
+needs, template, config
+
+## le CD via le deploiement
+### Build de l'image de notre projet
+### Deploiement
+### Release note
+
+# Easyadmin
+## Install
+## Mise en place de l'authentification
+## Ajouter un dashboard
+## Gerer le menu
+## Ajouter un crud d'une entité
+## some configuration
+
+# Api Platform
+## Installtion et configuration
+## 
+
+# Tests
+## Type of test presentation
+## Installation
+## Unit test
+## Integration test
+## Functionnal test
+## End to end test
