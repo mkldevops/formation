@@ -251,7 +251,7 @@ class: middle, center, inverse
 
 - **Les propriétés (attributs),** ce sont des variables internes à cette définition dans lesquelles on stocke des valeurs.
 
-- **Une classe a aussi des méthodes,** il s’agit de fonctions internes à la classe. Les methode represente le comportement qu'aura notre définition.
+- **Une classe a aussi des méthodes,** il s’agit de fonctions internes à la classe. Les méthode represente le comportement qu'aura notre définition.
 
 Ainsi **La classe détermine ce qu'il sera possible de faire** avec ce qu'elle représente. 
 
@@ -721,8 +721,8 @@ var_dump($mercedes);
 .right-column[
   Les méthodes magiques sont des méthodes qui, si elles sont déclarées dans une classe, ont une fonction déjà prévue par le langage.
 
-  - **`__construct()` :** Methode appelé lors de la construction de l'objet (instanciation).
-  - **`__destruct()` :** Methode appelé lors de la destruction de l'objet (`unset()`).
+  - **`__construct()` :** méthode appelé lors de la construction de l'objet (instanciation).
+  - **`__destruct()` :** méthode appelé lors de la destruction de l'objet (`unset()`).
   - **`__set()` :** Déclenchée lors de l'accès en écriture à une propriété de l'objet.
   - **`__get()` :** Déclenchée lors de l'accès en lecture à une propriété de l'objet.
   - **`__call()` :** Déclenchée lors de l'appel d'une méthode inexistante de la classe (appel non statique).
@@ -830,7 +830,7 @@ var_dump($mercedes);
 
   - Ajouter à la classe `Equipe` une constante `NB_EMPLOYE_MAX` qui aura comme valeur 5, qui correspond à la limite du nombre d'employé dans une équipe.
 
-  - Modifier la methode `setEmployes` pour `ajouterEmploye` :
+  - Modifier la méthode `setEmployes` pour `ajouterEmploye` :
     - Elle pendra en parametre un seul `Employe`.
     - Elle devra verifier que le nombre maximum d'employé n'est pas atteint pour ajouter un employe
     - Etre utilisé au niieau du constructeur avec un `foreach`
@@ -842,7 +842,7 @@ var_dump($mercedes);
     - Elle ajoutera pour chaque `Employe` dans l'équipe, le nombre d'heure dans `$nbHeuresTravails`
     - Faire travailler l'équipe "Rocket Team" 8 heures / employes
     - Faire travailler l'équipe "Dream Team" 7 heures / employes
-    - Afficher le nombre d'heures travaillé par les deux équipes via une methode static `getbHeuresTravails`.
+    - Afficher le nombre d'heures travaillé par les deux équipes via une méthode static `getbHeuresTravails`.
 
   - Pour chaque équipe, afficher le pourcentage d'employé par rapport à la limite max.
 ]
@@ -935,7 +935,7 @@ class: middle, center, inverse
   # PHP Warning:  Undefined property: Voiture::$vitesse
   ```
 
-  La methode `getVitesse` va avoir une valeur `null` car elle n'a pas accesà la propriété `$vitesse` qui est défini en `private`.
+  La méthode `getVitesse` va avoir une valeur `null` car elle n'a pas accesà la propriété `$vitesse` qui est défini en `private`.
   
   Elle ne peut donc pas etre accessible hors de la classe `Voiture` contraiement à la propriété `$carburant`.
 ]
@@ -1041,7 +1041,7 @@ class: middle, center, inverse
   }
 
   ```
-  * La methode `Vehicule::rouler()` ne pourra pas etre redefini par les classes enfants
+  * La méthode `Vehicule::rouler()` ne pourra pas etre redefini par les classes enfants
 
   * La classe `Voiture` ne pourra pas étendre à d'autres classes
 ]
@@ -1141,12 +1141,12 @@ Continuons à améliorer l'outils de gestion de la **société R**. En effet ell
   - Faire en sorte qu'on ne puisse plus étendre de la classe `Responsable`
   - Cette nouvelle classe aura comme nouvelle propriété `equipe` qui sera de type classe `Equipe`.
   - Ajouter à la classe `Equipe` une propriété `responsable`
-  - Faire en sorte dans le mutateur de la propriété `Equipe.responsable` d'affecter au responsable l'equipe actuel.
-  - Ajouter deux nouveaux reponsables à affecter dans les deux équipes.
+  - Ajouter au mutateur de la propriété `responsable` de la classe `Equipe` l'affectation au responsable l'equipe actuel.
+  - Ajouter deux nouveaux responsables dont chacun sera affecté à une équipe.
 
 - Ajouter des traits pour le code qui est dupliqué.
 
-- Ajouter une methode `supressionEmploye` à la classe `Equipe` qui s'occupera de supprimer un employé de la liste via son `id`
+- Ajouter une méthode `supressionEmploye` à la classe `Equipe` qui s'occupera de supprimer un employé de la liste via son `id`
 
 **Note :** Il est possible depuis PHP5 de typer les variable de type classe comme ce qui suit
 
@@ -1199,11 +1199,11 @@ class: middle, center, inverse
 .left-column[
   ### Interfaces
   #### Déclaration
-  #### Implementation
+  #### Implémentation
 ]
 .right-column[
 
-Pour implémenter une interface, l'opérateur `implements` est utilisé. Lorsqu'une classe implémente une interface, elle doit implementer toutes les méthodes de l'interface.
+Pour implémenter une interface, l'opérateur `implements` est utilisé. Lorsqu'une classe implémente une interface, elle doit implémenter toutes les méthodes de l'interface.
 
   ```php
   class Vehicule implements RoulerInterface
@@ -1218,7 +1218,7 @@ Pour implémenter une interface, l'opérateur `implements` est utilisé. Lorsqu'
   }
   ```
 
-  La classe implémentant l'interface doit déclarer toutes les méthodes dans l'interface avec une signature compatible.
+  La classe implémentant l'interface doit déclarer toutes les méthodes dans l'interface **avec une signature compatible.**
 ]
 
 ---
@@ -1226,8 +1226,8 @@ Pour implémenter une interface, l'opérateur `implements` est utilisé. Lorsqu'
 .left-column[
   ### Interfaces
   #### Déclaration
-  #### Implementation
-  #### Implementation multiple
+  #### Implémentation
+  #### implémentation multiple
 ]
 .right-column[
   Une classe ne peut hériter que d'une seule classe. Cependant, elle peut implémenter plusieurs interfaces, en séparant chaque interface par une virgule.
@@ -1256,7 +1256,7 @@ Pour implémenter une interface, l'opérateur `implements` est utilisé. Lorsqu'
   }
   ```
 
-  Ainsi la classe `Vehicule` doit implementer les deux contrats.
+  Ainsi la classe `Vehicule` doit implémenter les deux contrats.
 ]
 
 ---
@@ -1264,14 +1264,14 @@ Pour implémenter une interface, l'opérateur `implements` est utilisé. Lorsqu'
 .left-column[
   ### Interfaces
   #### Déclaration
-  #### Implementation
-  #### Implementation multiple
+  #### implémentation
+  #### implémentation multiple
   #### Héritage, avantage
 ]
 .right-column[
-  Comme une classe , une interface peut étendre d'autres interfaces en utilisant le mot-clé `extends`. 
+  Comme une classe, une interface peut étendre d'autres interfaces en utilisant le mot-clé `extends`. 
   
-  L'exemple suivant montre comment `VehiculeInterface` etend de `PorteInterface`, `RoulerInterface`
+  L'exemple suivant montre comment `VehiculeInterface` étend de `PorteInterface`, `RoulerInterface`
   ```php
   interface VehiculeInterface extends PorteInterface, RoulerInterface
   {
@@ -1282,7 +1282,7 @@ Pour implémenter une interface, l'opérateur `implements` est utilisé. Lorsqu'
   #### Pourquoi utiliser les interfaces PHP ?
 Voici les raisons d'utiliser les interfaces :
 
-- En implémentant une interface, l'appelant de l'objet doit se soucier uniquement de l'interface de l'objet, pas des implémentations des méthodes de l'objet. Par conséquent, vous pouvez modifier les implémentations sans affecter l'appelant de l'interface.
+- En implémentant une interface, l'appelant de l'objet doit se soucier **uniquement de l'interface de l'objet, pas des implémentations des méthodes de l'objet.** Par conséquent, vous pouvez modifier les implémentations sans affecter l'appelant de l'interface.
 - Une interface permet à des classes non liées d'implémenter le même ensemble de méthodes, quelle que soit leur position dans la hiérarchie d'héritage de classe.
 - Une interface vous permet de modéliser plusieurs héritages car une classe peut implémenter plusieurs interfaces.
 ]
@@ -1294,17 +1294,17 @@ Voici les raisons d'utiliser les interfaces :
   ### .red[**🏗 T. P.**]
 ]
 .right-column[
-Dans le projet de la société R pour avoir plus de controle sur le code et les classes, nous allons utiliser les interfaces.
+Dans le projet de la **société R** pour avoir plus de contrôle sur le code et les classes, nous y utiliserons les interfaces.
 
-  - Ajouter une interface pour les classes
-   - `Employe` avec ses méthodes accesseurs et `presentation()`
+  - Ajouter une interface pour les classes: 
+   - **`Employe`** avec ses méthodes accesseurs et `presentation()`
 
-   - `Responsable` avec ses méthodes accesseurs (héritage compris)
+   - **`Responsable`** avec ses méthodes accesseurs (héritage compris)
    
-   - `Equipe` avec ses méthodes accesseurs, `travailler()`, `percent()` et `getNbHeuresTravails` .
+   - **`Equipe`** avec ses méthodes accesseurs, `travailler()`, `percent()` et `getNbHeuresTravails` .
 
-  - Deplacer les constantes aux niveaux des interfaces. 
-  - Ajouter les constantes `AGE_MIN`, `AGE_MAX`, `ANCIENNETE_MIN`, `ANCIENNETE_MAX` puis les utiliser.
+  - Déplacer toutes les constantes aux niveaux des interfaces fraîchement ajoutées. 
+  - Ajouter les constantes `AGE_MIN`, `AGE_MAX`, `ANCIENNETE_MIN`, `ANCIENNETE_MAX`, puis les utiliser.
 
   - Déplacer les fichiers de type :
     - `interface` dans un nouveau répertoire `Interface`.
@@ -1395,7 +1395,7 @@ Dans le projet de la société R pour avoir plus de controle sur le code et les 
 | ✅ Prend en charge la fonctionnalité d'héritage multiple | ❌ Prend pas en charge les héritages multiples.|
 | ❌ Ne contient pas de propriétés | La classe abstraite contient un membre de données.|
 | L'interface n'autorise pas les constructeurs. | La classe abstraite prend en charge les constructeurs. |
-| ❌ Ne contient que des méthodes abstraites qui font référence à la signature du membre. | ✅ Contient à la fois des methodes abstraits et completes. |
+| ❌ Ne contient que des méthodes abstraites qui font référence à la signature du membre. | ✅ Contient à la fois des méthodes abstraits et completes. |
 | Puisque tout est supposé être public, une classe d'interface n'a pas de modificateurs d'accès par défaut.  | Une classe abstraite peut contenir des modificateurs d'accès dans des sous-titres, des fonctions et des propriétés. |
 | Tout membre d'une interface ne peut pas être statique. | Seul un membre complet de la classe abstraite peut être statique. |
 ]
@@ -1442,7 +1442,7 @@ Dans le projet de la société R pour avoir plus de controle sur le code et les 
 
 8. Définir la méthode **`Cercle::perimetre`** qui renvoie le périmètre d’un objet rectangle : **2 x π x r**
 
-9. Chaque methode __toString affichera `{ NomClasse: id, ... liste des propriétés }` 
+9. Chaque méthode __toString affichera `{ NomClasse: id, ... liste des propriétés }` 
   
   _**Exemple :**_ `{ Rectangle: 1, Centre: Point(x=2, y=3), Largeur: 1, Longueur: 2, surface: 2, perimetre: 6 }`
 10. Instancier 3 formes : cercle(x=1, y=3, rayon=2), rectangle(x=2, y=3, longueur=3, largeur=2), carre(x=4, y=6, longueur=3)
@@ -1577,13 +1577,13 @@ Ainsi les enfants stagiaire ne seront pas consideré comme des employéss mais p
 
 - Ajouter un interface **`TravailleurInterface`** qui aura une fonction `travailler()` qui retournera un entier representant le nombre d'heures travaillés.
 
-- Implementer cette interface aux classes `Employe` et `Stagiaire`. Un stagiaire travail entre 5 et 7 heures et un employé entre 6 et 9.
+- implémenter cette interface aux classes `Employe` et `Stagiaire`. Un stagiaire travail entre 5 et 7 heures et un employé entre 6 et 9.
 
-- Définir une méthode `faireTravailler` à la classe `Responsable` qui pourra faire travailler un objet qui implemente `TravailleurInterface`.
+- Définir une méthode `faireTravailler` à la classe `Responsable` qui pourra faire travailler un objet qui implémente `TravailleurInterface`.
 
 - Une équipe aura dorenavant des `travailleurs` au lieu d'`employes`.
  
-- Modifier la methode `Equipe::travailler` pour demander au responsable de faire travailler les membres de son équipe.
+- Modifier la méthode `Equipe::travailler` pour demander au responsable de faire travailler les membres de son équipe.
 
 - Un Stagiaire fera parti d'une équipe. Ajouter donc 5 nouveaux stagiaires repartie dans les deux équipe.
 
@@ -1730,13 +1730,13 @@ L’idée derrière les exceptions va être d’anticiper les situations problé
   
   2. Y définir une nouvelle classe `RException` dans le namespace `Exceptions`
   
-  3. Dans la methode `Employe::setAnciennete` gerer les cas de plus de 40 ans
+  3. Dans la méthode `Employe::setAnciennete` gerer les cas de plus de 40 ans
   
-  4. Dans la methode `Employe::setAge` gerer les cas des personnes n'entrant pas dans la tranche d'age de 18 - 65 ans.
+  4. Dans la méthode `Employe::setAge` gerer les cas des personnes n'entrant pas dans la tranche d'age de 18 - 65 ans.
   
   5. Utiliser un `try-catch` lors du set de l'age ou de l'anciennété (present dans le constructeur)
 
-  6. Dans la methode `Employe::incrementeEmploye` gerer par une exception lorsque le quota max est atteint
+  6. Dans la méthode `Employe::incrementeEmploye` gerer par une exception lorsque le quota max est atteint
 ]
 
 ---
@@ -1780,7 +1780,7 @@ Elles peuvent prendre des arguments via le constructeur, hériter d’autres cla
 
 .left-column[
   ### Classe anonyme
-  ### Methode anonyme
+  ### méthode anonyme
 ]
 .right-column[
   **Les fonctions anonymes**, qu’on appelle également **des closures**, sont des fonctions qui ne possèdent pas de nom.
@@ -1803,7 +1803,7 @@ Créer des classes anonymes va donc principalement nous faire gagner du temps et
 
 .left-column[
   ### Classe anonyme
-  ### Methode anonyme
+  ### méthode anonyme
   ### Reflection de classe
   #### Qu'est-ce que c'est ?
 ]
@@ -1829,7 +1829,7 @@ $reflection = new \ReflectionClass($mercedes);
 
 .left-column[
   ### Classe anonyme
-  ### Methode anonyme
+  ### méthode anonyme
   ### Reflection de classe
   #### Qu'est-ce que c'est ?
   #### Cas d'utilisation
@@ -1995,7 +1995,7 @@ composer self-update
   ### Composer
   #### Gestionnaire de dépendence ?
   #### Installation
-  #### Implementation
+  #### implémentation
 ]
 .right-column[
 
@@ -2037,7 +2037,7 @@ C'est dans ce fichier que nous allons définir nos dépendances et leurs différ
   ### Composer
   #### Gestionnaire de dépendence ?
   #### Installation
-  #### Implementation
+  #### implémentation
   #### Autoload
 ]
 .right-column[
@@ -2073,7 +2073,7 @@ Ajouter une section `autoload` au fichier `composer.json`
   ### Composer
   #### Gestionnaire de dépendence ?
   #### Installation
-  #### Implementation
+  #### implémentation
   #### Autoload
   #### Gestion de packages
 ]
@@ -2285,7 +2285,7 @@ class: middle, center, inverse
 .right-column[
   **Les arguments nommés** vous donnent plus de souplesse pour appeler les fonctions. Jusqu'à présent, vous deviez appeler une fonction et passer chaque argument dans l'ordre spécifié par la fonction.
 
-  Un exemple d'utilisation avec la methode `number_format` : https://www.php.net/manual/en/function.number-format.php
+  Un exemple d'utilisation avec la méthode `number_format` : https://www.php.net/manual/en/function.number-format.php
 
   ```php
   // avec php 7.4, si je veux modifier le separateur des centaines
@@ -2313,7 +2313,7 @@ class: middle, center, inverse
   ### .red[**🏗 T. P.**]
 ]
 .right-column[
-### Implementer composer
+### implémenter composer
 
 Avec tous ce que l'on a appris et vu sur l'autoloader, composer et le typage de données, nous allons l'appliquer sur le projet de la société R.
 
