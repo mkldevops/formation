@@ -1726,17 +1726,17 @@ L’idée derrière les exceptions va être d’anticiper les situations problé
 ]
 .right-column[
   Nous allons appliquer la gestion d'erreur sur notre application de la société R.
-  1. Ajouter une nouveau repertoire `Exceptions`
+  1. Ajouter une nouveau répertoire `Exceptions`
   
-  2. Y définir une nouvelle classe `RException` dans le namespace `Exceptions`
+  2. Y définir une nouvelle classe `RException` dans le namespace `Exceptions` qui étende de `\Exception`
   
   3. Dans la méthode `Employe::setAnciennete` gerer les cas de plus de 40 ans avec le `throw` d'une exception `RException` 
   
-  4. Dans la méthode `Employe::setAge` gerer les cas des personnes n'entrant pas dans la tranche d'age de 18 - 65 ans avec le `throw` d'une exception `RException` 
+  4. Dans la méthode `Employe::setAge` gerer les cas des personnes n'entrant pas dans la tranche d'âge de 18 - 65 ans avec le `throw` d'une exception `RException` 
   
-  5. Utiliser un `try-catch` lors du set de l'age ou de l'anciennété dans `index.php`
+  5. Utiliser un `try-catch` lors du set de l'âge ou de l'anciennété dans `index.php`
 
-  6. Dans la méthode `Equipe::ajouterTravailleur` gerer par une exception lorsque le quota max est atteint avec le `throw` d'une exception `RException` 
+  6. Dans la méthode `Equipe::ajouterTravailleur` gérer par une exception lorsque le quota max est atteint avec le `throw` d'une exception `RException` 
 ]
 
 ---
