@@ -1730,13 +1730,13 @@ L’idée derrière les exceptions va être d’anticiper les situations problé
   
   2. Y définir une nouvelle classe `RException` dans le namespace `Exceptions`
   
-  3. Dans la méthode `Employe::setAnciennete` gerer les cas de plus de 40 ans
+  3. Dans la méthode `Employe::setAnciennete` gerer les cas de plus de 40 ans avec le `throw` d'une exception `RException` 
   
-  4. Dans la méthode `Employe::setAge` gerer les cas des personnes n'entrant pas dans la tranche d'age de 18 - 65 ans.
+  4. Dans la méthode `Employe::setAge` gerer les cas des personnes n'entrant pas dans la tranche d'age de 18 - 65 ans avec le `throw` d'une exception `RException` 
   
-  5. Utiliser un `try-catch` lors du set de l'age ou de l'anciennété (present dans le constructeur)
+  5. Utiliser un `try-catch` lors du set de l'age ou de l'anciennété dans `index.php`
 
-  6. Dans la méthode `Employe::incrementeEmploye` gerer par une exception lorsque le quota max est atteint
+  6. Dans la méthode `Equipe::ajouterTravailleur` gerer par une exception lorsque le quota max est atteint avec le `throw` d'une exception `RException` 
 ]
 
 ---
