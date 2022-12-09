@@ -2659,7 +2659,7 @@ Tout d'abord, l'expression de correspondance est nettement plus courte :
 
 class: middle, center, inverse
 
-## 8.PRINCIPE SOLID
+## 8.Les principes SOLID
 ---
 
 
@@ -2667,6 +2667,9 @@ class: middle, center, inverse
   #### Qu’est-ce que SOLID ?
 ]
 .right-column[
+
+*Sources : https://alexsoyes.com/solid/*
+
 **SOLID**, c’est un acronyme pour ces 5 principes de programmation.
 
 
@@ -2815,22 +2818,4 @@ class UserUpdatorService
 * Chaque fichier a désormais un rôle qui lui est propre.
 * Tout le monde peut comprendre à quoi servent les classes dans le dossier Services/User grâce à au nommage.
 * Le projet sera beaucoup plus maintenable, plus facile et agréable à faire évoluer.
-]
-
-
----
-
-.left-column[
-  ### .red[**Bilan Travaux Pratique**]
-]
-.right-column[
-### TP commun
-
-Avec tous ce que l'on a appris et vu, nous allons l'appliquer sur l'outils de la société R à repartant de zero
-
-- Structure du projet
-  - dossier `public`, `public/css`, `public/js` (tous nos fichiers public)
-  - dossier `src` (Toutes nos classes)
-  - fichier `public/index.php`
-  - dossiers `templates`
 ]
