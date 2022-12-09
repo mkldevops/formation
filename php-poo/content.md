@@ -2107,6 +2107,30 @@ Ajouter une section `autoload` au fichier `composer.json`
   composer remove symfony/http-client symfony/var-dumper
   ```
 ]
+
+---
+
+.left-column[
+  ### L'autoloader
+  ### Composer
+  #### Gestionnaire de dépendence ?
+  #### Installation
+  #### implémentation
+  #### Autoload
+  #### Gestion de packages
+  #### .red[**🏗 T. P.**]
+]
+.right-column[
+Avec tous ce que l'on a appris et vu sur l'autoloader et composer, nous allons l'installer sur le projet de la société R.
+
+- Installer composer et definir l'autoloader dans le repertoire `societe-r`
+- Définir le `psr-4` par `"App\\": "src/"`
+- Déplacer `index.php` dans un nouveau repertoire `/public`
+- Déplacer toutes les classes dans un nouveau repertoire `/src`
+- Redefinir le bon namespace de chaque classe, interfaces, traits... en precedent celui-ci par `App\`
+- Inclure l'autoloader de composer dans le fichier `public/index.php`
+- Installer le package `symfony/var-dumper`
+]
 ---
 
 class: middle, center, inverse
@@ -2289,16 +2313,24 @@ class: middle, center, inverse
 
   ```php
   // avec php 7.4, si je veux modifier le separateur des centaines
-  number_format(1063, 0, ".", " ");
+  class Voiture extends AbstractVehicule
+  {
+    #...
+    public function __construct(int $vitesse = null, string $carburant = null, int $dimension = null) 
+    {
+      #....
+    }
+  }
+  $voiture = new Voiture(null, null, 900);
   ```
 
   Les arguments nommés vous permettent de définir un nom pour chaque paramètre. Et maintenant, ils peuvent être rappelés dans l'ordre ou le desordre, comme décrit ci-dessous : 
   ```php
-  // En utilisant le nom des arguments
-  number_format(num: 1063, decimals: 0, decimal_separator: ".", thousands_separator: " ");
+    // En utilisant le nom des arguments
+    $voiture = new Voiture(vitesse: null, carburant: null, dimension: 900);
 
-  // En utilisant le nom des arguments sur ceux que modifié
-  number_format(num: 1063, thousands_separator: " ");
+    // En utilisant le nom des arguments sur ceux que modifié
+    $voiture = new Voiture(dimension: 900);
   ```
 ]
 
@@ -2313,14 +2345,10 @@ class: middle, center, inverse
   ### .red[**🏗 T. P.**]
 ]
 .right-column[
-### implémenter composer
+### Installer php-cs-fixer et phpstan
 
-Avec tous ce que l'on a appris et vu sur l'autoloader, composer et le typage de données, nous allons l'appliquer sur le projet de la société R.
+Pour respecter le typage de données, il y a des packages spécifique qui nous aident à le respeccter.
 
-- Installer composer et definir l'autoloader
-- Deplacer les classes dans le repertoire `/src`
-- Redefinir le bon namespace de chaque classe / interfaces, ... avec `App`
-- Appliqué le typage le plus strict sur toute nos classes
 - Installer le package `php-cs-fixer` via https://packagist.org/packages/friendsofphp/php-cs-fixer
 
 ```sh
@@ -2339,6 +2367,7 @@ composer require phpstan/phpstan --dev
 # utiliser
 ./vendor/bin/phpstan analyse -l 9 src
 ```
+- Appliquer le typage le plus strict sur toute nos classes
 ]
 
 ---
@@ -2354,7 +2383,7 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
 ---
 
 .left-column[
-  ### Promotion de propriétés de constructeur
+  #### Promotion de propriétés de constructeur
 ]
 .right-column[
   Cette fonction devrait vous aider à accélérer votre processus de développement et à réduire les erreurs. En effet moins de code redondant pour définir et initialiser les propriétés.
@@ -2387,8 +2416,8 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
 ---
 
 .left-column[
-  ### Promotion de propriétés de constructeur
-  ### Visibilité pour les constantes
+  #### Promotion de propriétés de constructeur
+  #### Visibilité pour les constantes
 ]
 .right-column[
 
@@ -2424,9 +2453,9 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
 ---
 
 .left-column[
-  ### Promotion de propriétés de constructeur
-  ### Visibilité pour les constantes
-  ### Fonction str_contains
+  #### Promotion de propriétés de constructeur
+  #### Visibilité pour les constantes
+  #### Fonction str_contains
 ]
 .right-column[
   Cette nouvelle fonction plutôt sympathique renvoie une valeur booléenne (vrai/faux) si une chaîne est trouvée dans une autre chaîne. Il faut deux arguments, la chaîne de caractères à rechercher et la chaîne de caractères à rechercher.
@@ -2448,10 +2477,10 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
 ---
 
 .left-column[
-  ### Promotion de propriétés de constructeur
-  ### visibilité pour les constantes
-  ### Fonction str_contains
-  ### Null safe
+  #### Promotion de propriétés de constructeur
+  #### Visibilité pour les constantes
+  #### Fonction str_contains
+  #### Null safe
 ]
 .right-column[
 
@@ -2480,11 +2509,11 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
 ---
 
 .left-column[
-  ### Promotion de propriétés de constructeur
-  ### visibilité pour les constantes
-  ### Fonction str_contains
-  ### Null safe
-  ### Énumérations
+  #### Promotion de propriétés de constructeur
+  #### Visibilité pour les constantes
+  #### Fonction str_contains
+  #### Null safe
+  #### Énumérations
 ]
 .right-column[
   Le support intégré pour les énumérations est disponible depuis la version PHP 8.1
@@ -2517,12 +2546,12 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
 ---
 
 .left-column[
-  ### Promotion de propriétés de constructeur
-  ### visibilité pour les constantes
-  ### Fonction str_contains
-  ### Null safe
-  ### Énumérations
-  ### Propriétés readonly
+  #### Promotion de propriétés de constructeur
+  #### Visibilité pour les constantes
+  #### Fonction str_contains
+  #### Null safe
+  #### Énumérations
+  #### Propriétés readonly
 ]
 .right-column[
   PHP 8.1 prend en charge les propriétés de classe en lecture seule. Une propriété de classe déclarée en lecture seule ne peut être initialisée qu'une seule fois, et d'autres modifications de la propriété ne sont pas autorisées.
@@ -2549,7 +2578,13 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
 ---
 
 .left-column[
-  ### Les attributes
+  #### Promotion de propriétés de constructeur
+  #### Visibilité pour les constantes
+  #### Fonction str_contains
+  #### Null safe
+  #### Énumérations
+  #### Propriétés readonly
+  #### Les attributes
 ]
 .right-column[
   L'un des plus grands changements de **PHP 8** est la prise en charge des attributs. Les attributs aident à ajouter des métadonnées aux fonctions, paramètres, classes, méthodes de classe, constantes, propriétés, fermetures et même aux classes anonymes PHP. 
@@ -2569,8 +2604,14 @@ PHP 8 a été officiellement mis à la disposition du public le 26 novembre 2020
 ---
 
 .left-column[
-  ### Les attributes
-  ### Match
+  #### Promotion de propriétés de constructeur
+  #### Visibilité pour les constantes
+  #### Fonction str_contains
+  #### Null safe
+  #### Énumérations
+  #### Propriétés readonly
+  #### Les attributes
+  #### Match
 ]
 .right-column[
 PHP 8 introduit la nouvelle expression `match`. Une fonctionnalité puissante qui sera souvent le meilleur choix pour utiliser le `switch`. Alors quelles sont exactement les différences ?
@@ -2616,9 +2657,170 @@ Tout d'abord, l'expression de correspondance est nettement plus courte :
 
 ---
 
+class: middle, center, inverse
+
+## 8.PRINCIPE SOLID
+---
+
+
 .left-column[
-  ### Les attributes
-  ### Match
+  #### Qu’est-ce que SOLID ?
+]
+.right-column[
+**SOLID**, c’est un acronyme pour ces 5 principes de programmation.
+
+
+  * **S** : Single Responsibility Principle
+  * **O** : Open/Closed Principle
+  * **L** : Liskov’s Substitution Principle
+  * **I** : Interface Segregation Principle
+  * **D** : Dependency Inversion Principle
+
+En informatique, ces principes sont considérés comme des bonnes pratiques pour les développeurs.
+Nous sommes censés les appliquer afin de produire du code de qualité.
+
+**C’est ça SOLID.**
+
+Le but est de rendre le code :
+
+* Moins bogué
+* Plus facile à lire
+* Plus logique
+* Maintenable
+* Testable
+* Extensible (tu changes une partie du programme et il continue de fonctionner)
+
+Comprendre **SOLID** et l’utiliser au quotidien te permettront surtout d’améliorer la qualité de ton code et de comprendre des codes plus évolués
+
+]
+---
+
+.left-column[
+  #### Qu’est-ce que SOLID ?
+  #### S : Single Responsibility Principle (SRP)
+]
+.right-column[
+C’est sans doute le principe le plus simple à comprendre dans SOLID.
+
+>#### **Une classe ne doit avoir qu'une seule et unique responsabilité.**
+
+Une erreur que l’on retrouve beaucoup dans les projets, c’est d’avoir une classe type `UserService.php` avec tout et n’importe quoi dedans.
+
+De plus, le nom `UserService.php` n’est pas du tout explicite, on ne sait pas ce que le fichier contient.
+
+❌ Code qui ne respecte pas le principe de responsabilité unique (SRP)
+
+```php
+class UserService 
+{
+	public function updateFromAPI( User $user): User {
+		// ...	
+	}
+
+	public function removeSession( User $user ): void {
+		// ...	
+	}
+
+	public function isUserAllowedToAccessAdmin( User $user ): bool {
+		// ...
+	}
+
+	public function serialize( User $user ): string {
+		// ...
+	}
+}
+```
+
+]
+---
+
+.left-column[
+  #### Qu’est-ce que SOLID ?
+  #### S : Single Responsibility Principle (SRP)
+]
+.right-column[
+Ici, `UserService.php` a plusieurs rôles (ou responsabilités).
+
+* Gérer la mise à jour d’un utilisateur
+* Gérer la session de l’utilisateur
+* Vérifier ses droits
+* Convertir l’objet d’un format vers un autre
+
+Cela fait déjà pas mal, et encore.
+
+>*Généralement quand cela commence comme ça sur les projets, on se retrouve avec des services un peu fourre-tout de plusieurs centaines de lignes.*
+
+Plusieurs méthodes qui font la même chose, le code est dupliqué de toute part, les classes deviennent de plus en plus lourdes… À maintenir c’est très compliqué.
+
+✅ Code PHP qui respecte le principe de responsabilité unique (SRP)
+
+.pull-left[
+Plutôt que d’avoir une arborescence de telle sorte.
+```sh
+Services/
+└── UserService.php
+├── ...
+```
+Et ainsi avoir un service énorme par type de données (comme UserService, ImageService, StatsService…) qui contient beaucoup (trop) de codes.
+]
+.pull-right[
+On applique le principe SRP qui va naturellement tendre vers une arborescence plus facile à lire.
+```sh
+Services/
+├── ...
+└── User
+    ├── UserAuthenticatorService.php
+    ├── UserFormatterService.php
+    ├── UserSessionService.php
+    └── UserUpdatorService.php
+    ├── ...
+```
+]
+]
+---
+
+.left-column[
+  #### Qu’est-ce que SOLID ?
+  #### S : Single Responsibility Principle (SRP)
+]
+.right-column[
+```php
+# Services/User/UserAuthenticatorService.php
+class UserAuthenticatorService
+{
+	public function isAllowedToAccessAdmin( User $user ): bool { /*...*/ }
+}
+
+# Services/User/UserFormatterService.php
+class UserFormatterService
+{
+	public function serialize( User $user ): string { /*...*/ }
+}
+
+# Services/User/UserSessionService.php
+class UserSessionService
+{
+	public function invalidate( User $user ): void { /*...*/ }
+}
+
+# Services/User/UserUpdatorService.php
+class UserUpdatorService
+{
+	public function updateFromAPI( User $user): User { /*...*/ }
+}
+```
+
+⭐️ Pourquoi utiliser le principe de responsabilité unique (SRP) ?
+* Le code est beaucoup plus clair (une classe de 1000 lignes, ce n’est pas clair).
+* Chaque fichier a désormais un rôle qui lui est propre.
+* Tout le monde peut comprendre à quoi servent les classes dans le dossier Services/User grâce à au nommage.
+* Le projet sera beaucoup plus maintenable, plus facile et agréable à faire évoluer.
+]
+
+
+---
+
+.left-column[
   ### .red[**Bilan Travaux Pratique**]
 ]
 .right-column[
@@ -2626,16 +2828,9 @@ Tout d'abord, l'expression de correspondance est nettement plus courte :
 
 Avec tous ce que l'on a appris et vu, nous allons l'appliquer sur l'outils de la société R à repartant de zero
 
-- Recuperer le repo git
 - Structure du projet
   - dossier `public`, `public/css`, `public/js` (tous nos fichiers public)
   - dossier `src` (Toutes nos classes)
   - fichier `public/index.php`
-  - dossiers `pages`
-- Base de données ou Fichier JSON
-- Essayons ensemble de mettre en place
-  - Un formulaire d'ajout d'employé
-  - Un formulaire pour responsable
-  - Une page qui liste tout les employés
-  - Page du responsable avec son équipe
+  - dossiers `templates`
 ]
