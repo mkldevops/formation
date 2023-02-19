@@ -8,41 +8,41 @@ class: center, middle, inverse
 
 class: middle
 .left-column[
-## Objectif
+### Objectif
 ]
 .right-column[
 
-- Vous présenter le framework Symfony dans sa version 6. 
+  **La formation Symfony** est destinée aux développeurs qui souhaitent améliorer leurs compétences en matière de développement web. Elle vise à fournir aux participants une compréhension approfondie du framework Symfony, ainsi qu'à leur donner les connaissances et les compétences nécessaires pour créer des applications web de qualité supérieure.
 
-- Vous permettre d'apporter des solutions pertinantes aux projet.
+### 🧗 
+Au cours de la formation, les participants apprendront comment utiliser les différents composants de Symfony pour construire des applications web robustes et évolutives. Ils découvriront également comment travailler avec les différents modèles de données, comment gérer les utilisateurs et les autorisations, et comment implémenter des fonctionnalités avancées telles que les formulaires, les validations, les routes, les contrôleurs, les vues, etc.
 
-- Vous permettre de repondre aux besoin de votre entreprise.
+### 🤝 
+En outre, la formation permettra aux participants de développer leur capacité à travailler en équipe, à communiquer avec d'autres développeurs et à gérer les défis du développement web. Les participants auront également l'opportunité de mettre en pratique leurs compétences en travaillant sur des projets concrets.
 
-- Gagner en confiance et motivation
-
-- Voir les bonnes pratiques developpement
-
-- Travail en équipe et Pair programming
+### 😎 
+En somme, la formation Symfony est une occasion unique pour les développeurs de développer leurs compétences en développement web et de se faire remarquer sur le marché du travail. Les participants auront les outils et les connaissances nécessaires pour construire des applications web performantes et pour atteindre leurs objectifs professionnels.
 ]
 
 ---
 
 class: middle
 .left-column[
-## Objectif
-## Au programme
+### Objectif
+### Au programme
 ]
 .right-column[
-- **Installation de notre environnement**
+#### **Installation de notre environnement**
+  - Gitpod / Codespace (github)
   - Docker
   - Un environement docker avec 
-    - PHP 8.1
-    - Composer
-    - Node
-    - Symfony cli
+      - PHP 8.2
+      - Composer
+      - Nodejs
+      - Symfony cli
 
-- **En route vers Symfony 6**
-  - Nouveau projet symfony
+#### **Symfony 6**
+  - Nouveau projet symfony 6.2
   - Postgresql
   - Environnement de dev
   - Entité, Controller, Event
@@ -56,220 +56,128 @@ class: center, middle, inverse
 ---
 
 .left-column[
-## Installations
-### Docker
+### Editeur en ligne
 ]
 .right-column[
-* **Installation de docker sur Linux/Mac :** 
-  * [engine ubuntu](https://https://docs.docker.com/engine/install/ubuntu/)
-  * [deskstop mac](https://docs.docker.com/desktop/mac/install/)
 
-* **Installation de docker desktop sur Windows** 
-  * Télecharger [Windows Desktop](https://https://www.docker.com/products/docker-desktop)
-  * Installer WSL (Ubuntu) via le store de Microsoft
-  * Activer WSL 2 (Redemmarage necessaire)
-  * Installer Windows terminal (facultatif)
+### **Avantages de l'utilisation d'éditeurs de code en ligne pour la formation Symfony**
+* Accès depuis n'importe où, à tout moment
+* Interface utilisateur conviviale
+* Fonctionnalités de collaboration en temps réel
+* Intégration transparente avec des services tels que Git
+* Expérience de développement uniforme pour tous les participants
+* Possibilité de se concentrer sur le développement des compétences
+* Accès aux mêmes outils et fonctionnalités pour tous les participants
+* Facilitation de la collaboration en équipe et du partage de connaissances
 
-Pour utiliser docker sans le mode `sudo` https://docs.docker.com/engine/install/linux-postinstall/
-```sh
-sudo groupadd docker
+En utilisant des éditeurs de code en ligne pour la formation Symfony, vous bénéficierez d'une expérience plus souple et plus facile, tout en garantissant une expérience de développement uniforme pour tous les participants.
 
-sudo usermod -aG docker $USER
+### **Liens** 
+  * gitpod (https://gitpod.io/projects)
+  * codespace (https://github.com/codespaces)
+]
 
-newgrp docker 
+---
+
+.left-column[
+### Editeur en ligne
+### Mise en place
+]
+.right-column[
+#### **Utilisation d'éditeurs de code en ligne pour la formation Symfony**
+Pendant cette formation, nous privilégierons l'utilisation de Gitpod. Pour pouvoir en bénéficier, vous devrez disposer d'un nouveau dépôt Git existant (sur Github, Gitlab ou Bitbucket).
+
+Gitpod embarque une image par défaut accessible à partir de https://hub.docker.com/r/gitpod/workspace-full. Toutefois, il est possible de personnaliser votre environnement de développement en configurant, par exemple, les extensions de PHP.
+
+Pour spécifier l'utilisation d'une image Docker à partir d'un fichier **Dockerfile**, il est nécessaire d'ajouter un fichier `.gitpod.yml` à la racine du projet avec le contenu suivant :
+```yml
+image:
+    file: .gitpod.Dockerfile
 ```
 ]
 
 ---
 
 .left-column[
-## Installations
-### Docker
-### Docker-compose
+### Editeur en ligne
+### Mise en place
 ]
 .right-column[
-Docker desktop `docker-compose` est installé par defaut.
+Ensuite, il faut créer un fichier nommé `.gitpod.Dockerfile` à la racine du projet et y ajouter le contenu suivant :
+```dockerfile
+FROM gitpod/workspace-full:latest
 
-#### Installation
-Voir https://docs.docker.com/compose/install/
+RUN sudo apt update
+RUN sudo apt install -y apt-utils apt-transport-https postgresql postgresql-contrib
+RUN sudo install-packages php-intl php-redis php-amqp php-pdo_pgsql
 
-```sh
- curl -SL https://github.com/docker/compose/releases/download/v2.5.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
- 
- sudo chmod +x /usr/local/bin/docker-compose
+RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | sudo -E bash
+RUN sudo apt install symfony-cli
 ```
 
-Verifions que docker-compose est bien installé
-```sh
- docker-compose --version
+Ce fichier **Dockerfile** spécifie l'utilisation de l'image de base `gitpod/workspace-full` et installe des paquets supplémentaires nécessaires, tels que `php-intl`, `php-redis` et `php-amqp`. Il installe également `apt-utils` et `apt-transport-https` pour la gestion des paquets, et installe `symfony-cli` en utilisant les scripts d'installation fournis par Symfony. Bien sûr, le contenu de ce fichier peut être modifié en fonction des besoins spécifiques de chaque projet.
 
-```
+Puis, committez et poussez ces deux fichiers sur votre branche principale.
+
+Rendez-vous sur https://gitpod.io, puis sur l'onglet "Project", cliquez sur "New Project". Choisissez le répertoire git préalablement configuré.
+
+Assurez-vous de suivre ces étapes pour vous préparer à utiliser l'éditeur de code en ligne pour la formation Symfony.
 ]
 
 ---
 
 .left-column[
-## Installations
-### Docker
-### Docker-compose
-### Notre image PHP 8.1
-#### Initialisation
+### Editeur en ligne
+### Mise en place
+### Verification
+]
+.right-column[
+#### **Préparation pour la formation**
+* Sur l'éditeur de code en ligne, certains logiciels sont déjà installés.
+* Vérifions que nous avons tous les outils nécessaires pour cette formation.
+
+Assurez-vous de vérifier les outils nécessaires avant de commencer la formation avec un éditeur de code en ligne.
+
+| .red[software] | .red[command version] | .red[version] |
+|--|--|
+| **docker** | `docker --version` | +20.10 |
+| **docker compose** | `docker compose version` | +2.10 |
+| **php** | `php -version` | +8.1 |
+| **composer** | `composer -version` | +2.4 |
+| **node** | `node -version` | +16 |
+| **yarn** | `yarn -version` | +1.22 |
+]
+
+---
+
+.left-column[
+### Editeur en ligne
+### Mise en place
+### Verification
+### Initialisation
 ]
 .right-column[
 
-Ajouter un nouveau repertoire de travail que nous nommeront `guestbook`.
+### **Initialisation du projet avec Symfony**
+* Nous allons initialiser le projet avec le client Symfony.
+* Nous utiliserons la **version 6.2**, la dernière en date.
+* Nous utiliserons également **PHP 8.1+**.
 
-```bash
-mkdir guestbook
+Assurez-vous de suivre ces étapes pour initialiser correctement votre projet avec Symfony en utilisant les dernières versions disponibles.
+
+Lancer la commande suivante depuis le terminal, elle va permettre de cloner symfony-skeleton, lancer composer ...
+❗ Assurez-vous que le repertoire en cours soit vide.
+```sh
+symfony new --dir=guestbook --webapp --version=6.2
 cd guestbook
+rm -rf .git
 ```
+* **`new`** L'argument permet de construire un nouveau projet
+* **`--dir=guestbook`** repertoire d'installation du projet symfony
+* **`--webapp`** L'option installe tous les paquets dont vous avez généralement besoin pour créer des applications Web.
 
-Pour definir notre image PHP 8.1 avec les extensions et les outils dont nous avons besoin, on va definir tous cela dans un fichier `Dockerfile`, qui est un fichier sur lequel se base docker pour construire (build) des images. 
-
-Nous utiliserons l'image officielle `php:8.1-fpm-alpine`, on choisit la version `alpine` car elle est réputé pour etre légère.
+Le binaire symfony fournit également un outil permettant de vérifier si votre ordinateur répond à toutes les exigences. Ouvrez votre terminal de console et exécutez cette commande :
 ```sh
-# Dockerfile
-FROM php:8.1-fpm-alpine AS php
-```
-
-On donne ici un alias `php` pour pouvoir composer plusieurs build dans notre `Dockerfile`
-]
-
----
-
-class: middle
-.left-column[
-## Installations
-### Docker
-### Notre image PHP 8.1
-#### Initialisation
-#### Installation des paquets et extensions
-]
-.right-column[
-  #### Installation des paquets
-Nous allons avoir besoins de certaines libraries pour avoir un environnement complet, qui pourra faire tourner notre projet aisement.
-Ajoutons-y :
-* Git
-* Zsh / Bash
-* Nodejs
-* Symfony cli
-
-```sh
-# Dockerfile
-RUN apk add --no-cache $PHPIZE_DEPS git build-base zsh nodejs npm bash
-
-# Symfony binary installation
-RUN wget https://get.symfony.com/cli/installer -O - | bash && mv /root/.symfony/bin/symfony /usr/local/bin/symfony
-```
-
-On Peut avoir un prompt sexy grace à `Oh my zsh`
-```sh
-RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-```
-
-  #### Installation des extensions
-Nous aurons besoin aussi de certaine extensions php, grace à `mlocati/php-extension-installer` qui facilite grandement l'installation des extensions et configuration. Il integre aussi `composer`.
-```sh
-# Php extension installation
-COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
-RUN install-php-extensions xsl pdo_mysql intl redis amqp pgsql @composer
-```
-
-]
-
----
-
-class: middle
-.left-column[
-## Installations
-### Docker
-### PHP 8.11
-#### Initialisation
-#### Installation des paquets et extensions
-#### Projet symfony
-]
-.right-column[
-Nous avons à present un environnment qui nous permet de travailler avec notre projet
-```sh
-# Dockerfile
-WORKDIR /srv/app
-```
-Copions notre repertoire de travail directement dans l'image, grâce à cette pratique on pourra faire tourner notre projet dans le container sans avoir besoin de passer par les volumes lorque nous travaillons en local.
-
-```sh
-COPY . /tmp/app
-
-RUN test -f /tmp/app/composer.json && echo cp -r /tmp/app ./ || echo symfony new ./ --webapp --version=6.0 --php=${PHP_VERSION}
-```
-
-Après la copie de notre on verifie que le projet symfony est initialisé via symfony-cli en verifiant la presence du fichier `composer.json`. Si ce n'est pas le cas on lance la commande `symfony new` 
-]
-
----
-
-class: middle
-.left-column[
-## Installations
-### Docker
-### PHP 8.1
-### Composer
-### Node
-]
-.right-column[
-### Node
-Voir https://github.com/nodesource/distributions/blob/master/README.md
-
-Procedure d'installation de npm
-```bash
-curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-sudo apt-get install -y nodejs
-
-# verifier que nodejs et npm sont bien installé
-node -v
-npm -v 
-```
-
-Procedure d'installation de yarn via npm
-```bash
-sudo npm install --global yarn
-
-# verifier que yarn est bien installé
-yarn -v
-```
-]
-
----
-
-class: middle
-.left-column[
-## Installations
-### Docker
-### PHP 8.1
-### Composer
-### Node
-### Symfony
-]
-.right-column[
-### Symfony
-Procdure d'installation de symfony cli, on outil devenu essentielle lors de l'étape de developpement
-```bash
-# téléchargement du symfony cli
-wget https://get.symfony.com/cli/installer -O - | bash
-
-# Installion global
-sudo mv /home/$USER/.symfony/bin/symfony /usr/local/bin/symfony
-
-# Verifier que symfony cli est bien installé
-symfony --version
-```
-
-Nous pouvons aussi installer un certificat en local pour avoir des urls en https
-```bash
-symfony server:ca:install
-```
-
-Verifier que votre environmement de travail à ce qui est requis pour travailler sur symfony framework
-```bash
 symfony book:check-requirements
 ```
 ]
@@ -277,90 +185,585 @@ symfony book:check-requirements
 ---
 
 .left-column[
-## Installations
-### Docker
-### PHP 8.1
-### Composer
-### Node
-### Symfony
-### vscode extension
+### Editeur en ligne
+### Mise en place
+### Verification
+### Initialisation
+### VsCode Extensions
 ]
 .right-column[
+
 Nous aurons besoin de certaines extension sur Vscode pour travailler correctement et facilement.
 
 Liste des extensions
+- PHP Debug
 - PHP Intelephense
 - PHP Namespace Resolver
 - DotENV
 - YAML
 - PHP 8 Getter & Setter
 - Extension Twig Language 2
-
-Si vous avez la possibilité de travailler sur phpstorm c'est encore plus simple, un seul plugin sera necessaire
-- Symfony support
 ]
 
 ---
 class: center, middle, inverse
 # 2. En route vers symfony 6
+https://symfony.com/doc/current/the-fast-track/fr/index.html
 ---
 
-class: middle
-.left-column[
-## Nouveau projet symfony 6
-]
-.right-column[
-  ### Liens vers le tutoriel
-  En entendnat le tutoriel sur la version 6, on s'appuyer sur la doc de la version 5.2 en utilisant symfony 6 et php 8.1
-  https://symfony.com/doc/current/the-fast-track/fr/index.html
 
-  ### New repository symfony
-  La commande suivante va permettre de cloner symfony-skeleton en local, lancer composer ...
+### .center[Présentation du projet]
+Nous devons trouver un projet sur lequel travailler. C'est un certain défi car nous devons choisir un projet assez vaste pour couvrir complètement Symfony, mais en même temps, il devrait être assez petit ; Afin que vous ne vous ennuyiez pas à implémenter des fonctionnalités similaires plusieurs fois.
 
-  Noter qu'il possible d'utiliser --full pour avoir symfony avec les composant essentiel pour developper un site web.
-  ```bash
-  # clone du repo symfony-skeleton
-  symfony new guestbook --version=6.0
+#### Description du projet
+Le projet a pour but d'obtenir un retour d'expérience sur les conférences : une liste des conférences sur la page d'accueil ainsi qu'une page pour chacune d'entre elles, pleine de commentaires sympathiques. Un commentaire est composé d'un petit texte et d'une photo, optionnelle, prise pendant la conférence.
 
-  # entrer dans le repertoire
-  cd guestbook
+Le projet comprendra plusieurs applications : une application web traditionnelle avec une interface HTML, une API et une SPA pour les téléphones mobiles.
+#### La maîtrise s’acquiert par la pratique
+La maîtrise s’acquiert par la pratique. Point final. Lire un livre sur Symfony, c'est bien. Coder une application sur votre ordinateur tout en lisant un livre sur Symfony, c'est encore mieux. Cette formation est très spécial puisque tout a été fait pour que vous puissiez suivre et  coder.
 
-  # afficher le contenu du repertoire
-  ls -al
-
-  # afficher le repertoire de travail sur vscode
-  code .
-  ```
-]
-
----
-
-class: middle
-.left-column[
-### Nouveau projet symfony
-### Postgresql
-#### Installation
-]
-.right-column[
-  
-#### Installation de Postegresql en local
-Nous n'utiliserons pas postgresql en local, mais symfony cli aura besoin sur certaines commande.
-```bash
-sudo apt install postgresql postgresql-contrib
+#### Récupérer le code source du projet
+Clonez [le dépôt du livre](https://github.com/the-fast-track/book-6.2-1) d'or quelque part sur votre machine :
+```sh
+symfony new --version=6.2-1 --book guestbook
 ```
 
-### Installation du Client pgcli
-Le client pgcli qui nous aidera a nous connecter à notre base de donnée.
-```bash
-# Installation
-sudo apt install pgcli
+---
+
+.left-column[
+### A. Structure
+]
+.right-column[
+
+Comme Git est installé sur notre machine, `symfony new` nous a également créé un dépôt Git, dans lequel a été ajouté le tout premier commit.
+
+Jetons un coup d'oeil à la structure des répertoires :
+```
+├── bin/
+├── composer.json
+├── composer.lock
+├── config/
+├── public/
+├── src/
+├── symfony.lock
+├── var/
+└── vendor/
+```
+* Le répertoire **`bin/`** contient le principal point d'entrée de la ligne de commande : `console`. Vous l'utiliserez tout le temps.
+
+* Le répertoire **`config/`** est constitué d'un ensemble de fichiers de configuration sensibles, initialisés avec des valeurs par défaut. Un fichier par paquet. Vous les modifierez rarement : faire confiance aux valeurs par défaut est presque toujours une bonne idée.
+
+* Le répertoire **`public/`** est le répertoire racine du site web, et le script index.php est le point d'entrée principal de toutes les ressources HTTP dynamiques.
+
+]
+---
+
+.left-column[
+### A. Structure
+
+]
+.right-column[
+* Le répertoire **`src/`** héberge tout le code que vous allez écrire ; c'est ici que vous passerez la plupart de votre temps. Par défaut, toutes les classes de ce répertoire utilisent le namespace PHP App. C'est votre répertoire de travail, votre code, votre logique de domaine. Symfony n'a pas grand-chose à y faire.
+
+* Le répertoire **`var/`** contient les caches, les logs et les fichiers générés par l'application lors de son exécution. Vous pouvez le laisser tranquille. C'est le seul répertoire qui doit être en écriture en production.
+
+* Le répertoire **`vendor/`** contient tous les paquets installés par Composer, y compris Symfony lui-même. C'est notre arme secrète pour un maximum de productivité. Ne réinventons pas la roue. Vous profiterez des bibliothèques existantes pour vous faciliter le travail. Le répertoire est géré par Composer. N'y touchez jamais.
+
+C'est tout ce que vous avez besoin de savoir pour l'instant. 🏁
+
+> 📬 Commitez notre travail via `git commit .`
+
+]
+
+---
+
+.left-column[
+### A. Structure
+### B. Resources publique
+]
+.right-column[
+#### Créer des ressources publiques
+Tout ce qui se trouve dans le répertoire **`public/`** est accessible par un navigateur. Par exemple, si vous déplacez votre fichier GIF animé (nommez-le under-construction.gif) dans un nouveau répertoire `public/images/`, il sera alors disponible à une URL comme https://localhost/images/under-construction.gif.
+
+Téléchargez mon image GIF ici :
+```sh
+mkdir public/images/
+php -r "copy('http://clipartmag.com/images/website-under-construction-image-6.gif', 'public/images/under-construction.gif');"
+```
+]
+
+---
+
+.left-column[
+### A. Structure
+### B. Resources publique
+### C. Serveur symfony
+]
+.right-column[
+#### Lancer un serveur web local
+La commande symfony inclut un serveur web optimisé pour le développement. Comme vous vous en doutez, il marche très bien avec Symfony. Cependant, ne l'utilisez jamais en production.
+
+À partir du répertoire du projet, démarrez le serveur web en arrière-plan (option -d) :
+```sh
+symfony server:start -d
+```
+
+depuis l'éditeur en ligne vous pouvez retrouver le lien de notre serveur lancé sur l'onglet `PORTS`. Choisissez le port 8000, un nouvel onglet s'ouvre affichant une page "welcome to symfony"
+> 🗒 Pour résoudre les problèmes, exécutez `symfony server:log` ; cette commande affiche les derniers logs de votre serveur web, de PHP et de votre application.
+
+Naviguez vers `/images/under-construction.gif.` Pour percevoir notre image animé sur notre projet symfony.
+
+> 📬 Commitez notre travail via `git commit .`
+]
+
+
+---
+
+.left-column[
+### A. Structure
+### B. Resources publique
+### C. Serveur symfony
+### D. Diagnostiquer
+]
+.right-column[
+Mettre en place un projet, c'est aussi avoir les bons outils pour déboguer les problèmes. Fort heureusement, des assistants très utiles sont inclus avec le paquet webapp.
+
+#### Découvrir les outils de débogage de Symfony
+Pour commencer, le Symfony Profiler vous fait gagner un temps fou lorsque vous avez besoin de trouver l'origine d'un problème.
+
+Si vous regardez la page d'accueil
+
+.center[![Debug page](img/debug-page.png)]
+
+Ce n'est qu'une page de remplissage, car nous n'avons toujours pas défini de page d'accueil. Même si la page par défaut qui vous accueille est belle, c'est une page d'erreur **`404`**.
+]
+
+---
+
+.left-column[
+### A. Structure
+### B. Resources publique
+### C. Serveur symfony
+### D. Diagnostiquer
+]
+.right-column[
+
+Si vous vous rendez sur la route `/_profiler` puis la première ligne avce le code **`404`**, vous obtenez le "vrai" message d'exception dans les logs du *Symfony Profiler*.
+
+.center[![Symfony profiler](img/symfony-profiler.png)]
+
+Les logs sont également très utiles dans les sessions de débogage. Symfony a une commande pratique pour consulter tous les logs (du serveur web, de PHP et de votre application) :
+```sh
+symfony server:log
+```
+]
+
+---
+
+.left-column[
+### A. Structure
+### B. Resources publique
+### C. Serveur symfony
+### D. Diagnostiquer
+### E. Les environemments
+]
+.right-column[
+
+#### Comprendre les environnements Symfony
+Comme le Symfony Profiler n'est utile que pendant le développement, nous voulons éviter qu'il soit installé en production. Par défaut, Symfony ne l'installe que pour les environnements de dev et de test.
+
+Symfony intègre une notion d'environnement. Par défaut, il y en a trois, mais vous pouvez en ajouter autant que vous le souhaitez : `dev`, `prod` et `test`. Tous les environnements partagent le même code, mais ils représentent des configurations différentes.
+
+Par exemple, tous les outils de débogage sont activés en environnement de `dev`. Dans celui de `prod`, l'application est optimisée pour la performance.
+
+Basculer d'un environnement à l'autre peut se faire en changeant la variable d'environnement `APP_ENV`.
+
+#### Gérer la configuration des environnements
+`APP_ENV` peut être défini en utilisant des variables d'environnement "réelles" depuis votre terminal : `export APP_ENV=dev`
+
+Essayez de modifier la valeur de la variable `APP_ENV` à "prod", redemarrez le serveur symfony, puis rendez-vous sur la page du profiler qui n'est disponible qu'en environnement de développement.
+
+Pour supprimer notre variable d'environnement, vous pouvez utiliser la commande `unset APP_ENV` dans un terminal
+]
+
+---
+
+.left-column[
+### A. Structure
+### B. Resources publique
+### C. Serveur symfony
+### D. Diagnostiquer
+### E. Les environemments
+]
+.right-column[
+L'utilisation de variables d'environnement réelles est la meilleure façon de définir des valeurs comme `APP_ENV` en production. Mais sur les machines de développement, avoir à définir beaucoup de variables d'environnement peut s'avérer fastidieux. Définissez-les plutôt dans un fichier `.env.`
+
+Un fichier sensible `.env` a été généré automatiquement pour vous lorsque le projet a été créé :
+```sh
+###> symfony/framework-bundle ###
+APP_ENV=dev
+APP_SECRET=76f040716bf0a94fa2409642b1883e55
+###< symfony/framework-bundle ###
+```
+> 💡 N'importe quel paquet peut ajouter plus de variables d'environnement à ce fichier grâce à leur [recette utilisée par Symfony Flex](https://github.com/symfony/recipes).
+
+Le fichier .env est commité sur le dépôt Git et liste les valeurs par défaut de la production. Vous pouvez surcharger ces valeurs en créant un fichier .env.local. Ce fichier ne doit pas être commité : c'est pourquoi le fichier .gitignore l'ignore déjà.
+
+Ne stockez jamais des données secrètes ou sensibles dans ces fichiers. Nous verrons comment gérer ces données sensibles dans une autre étape.
+]
+
+---
+class: center, middle, inverse
+# 3. Notre première route
+---
+
+.left-column[
+  ### A. Contrôleur
+  ##### Maker bundle
+]
+.right-column[
+La page d'accueil est une ennuyeuse page d'erreur 404. Corrigeons cela.
+
+Lorsqu'une requête HTTP arrive au serveur, comme pour notre page d'accueil (http://localhost:8000/), **Symfony** essaie de trouver une route qui corresponde au chemin de la requête (`/` ici). Une route est le lien entre le chemin de la requête et un callable PHP, une fonction devant créer la réponse HTTP associée à cette requête.
+
+Ces callables sont nommés **"contrôleurs"**. Dans Symfony, la plupart des contrôleurs sont implémentés sous la forme de classes PHP. Vous pouvez créer ces classes manuellement, mais comme nous aimons aller vite, voyons comment Symfony peut nous aider.
+
+#### Se faciliter la vie avec le Maker Bundle
+Pour générer des contrôleurs facilement, nous pouvons utiliser le paquet `symfony/maker-bundle`, qui a été installé en tant que composant du paquet `webapp`.
+
+**Le Maker Bundle** vous permet de générer un grand nombre de classes différentes. Nous l'utiliserons constamment dans cette formation. Chaque **"générateur"** correspond à une commande et chacune d'entre elles appartient au même namespace `make`.
+
+La commande `list`, intégrée nativement à la console symfony, permet d'afficher toutes les commandes disponibles sous un namespace donné. Utilisez-la pour découvrir les générateurs fournis par **Maker Bundle** :
+```sh
+symfony console list make
+```
+]
+
+---
+
+.left-column[
+  ### A. Contrôleur
+  #### Maker bundle
+  #### Générer un contrôleur
+]
+.right-column[
+#### Générer un contrôleur
+Créez votre premier Controller avec la commande `make:controller` :
+```sh
+symfony console make:controller ConferenceController
+```
+La commande crée une classe `ConferenceController` dans le répertoire `src/Controller/`. La classe générée contient du code standard prêt à être ajusté :
+    
+```php
+# src/Controller/ConferenceController.php
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+class ConferenceController extends AbstractController
+{
+    #[Route('/conference', name: 'conference')]
+    public function index(): Response
+    {
+        return $this->render('conference/index.html.twig', [
+            'controller_name' => 'ConferenceController',
+        ]);
+    }
+}
+```
+
+> 📬 Commitez notre travail via `git commit .`
+]
+
+---
+
+.left-column[
+  ### A. Contrôleur
+  #### Maker bundle
+  #### Générer un contrôleur
+  #### Personnaliser la route
+]
+
+.right-column[
+L'attribut `#[Route('/conference', name: 'conference')]` est ce qui fait de la méthode `index()` un contrôleur (la configuration est à côté du code qu'elle configure).
+
+Lorsque vous visitez la page `/conference` dans un navigateur, le contrôleur est exécuté et une réponse est renvoyée.
+
+
+Modifiez la route afin qu'elle corresponde à la page d'accueil (`/`) :
+
+```diff
+class ConferenceController extends AbstractController
+{
+-   #[Route('/conference', name: 'app_conference')]
++   #[Route('/', name: 'homepage')]
+    public function index(): Response
+    {
+```
+
+Le nom de la route (`name`) sera utile lorsque nous voudrons faire référence à la page d'accueil dans notre code. Au lieu de coder en dur le chemin `/`, nous utiliserons le nom de la route. À la place de la page par défaut, retournons une simple page HTML :
+```diff
+     public function index(): Response
+     {
+-        return $this->render('conference/index.html.twig', [
+-            'controller_name' => 'ConferenceController',
+-        ]);
++        return new Response(<<<EOF
++            <html>
++                <body><img src="/images/under-construction.gif" /></body>
++            </html>
++        EOF);
+     }
+```
+]
+
+---
+
+.left-column[
+  ### A. Contrôleur
+  #### Maker bundle
+  #### Générer un contrôleur
+  #### Personnaliser la route
+]
+
+.right-column[
+Rafraîchissez le navigateur :
+
+![Symfony Contrôleur](img/symfony-controleur.png)
+
+La responsabilité principale d'un contrôleur est de retourner une réponse **HTTP** (Response) pour la requête.
+
+> 📬 Commitez notre travail via `git commit .`
+]
+
+---
+
+.left-column[
+  ### A. Contrôleur
+  #### Maker bundle
+  #### Générer un contrôleur
+  #### Personnaliser la route
+  #### Ajouter un easter egg
+]
+
+.right-column[
+#### Ajouter un easter egg
+Pour montrer comment une réponse peut tirer parti de l'information contenue dans la requête, ajoutons un petit easter egg. Lorsqu'une requête vers la page d'accueil sera réalisée avec un paramètre d'URL comme `?hello=Fabien`, nous ajouterons du texte pour saluer la personne :
+
+```diff
+ namespace App\Controller;
+
+ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
++use Symfony\Component\HttpFoundation\Request;
+ use Symfony\Component\HttpFoundation\Response;
+ use Symfony\Component\Routing\Annotation\Route;
+
+ class ConferenceController extends AbstractController
+ {
+     #[Route('/', name: 'homepage')]
+-    public function index(): Response
++    public function index(Request $request): Response
+     {
++        $greet = '';
++        if ($name = $request->query->get('hello')) {
++            $greet = sprintf('<h1>Hello %s!</h1>', htmlspecialchars($name));
++        }
++
+         return new Response(<<<EOF
+             <html>
+-                <body><img src="/images/under-construction.gif" /></body>
++                <body>$greet<img src="/images/under-construction.gif" /></body>
+             </html>
+```
+]
+
+---
+
+.left-column[
+  ### A. Contrôleur
+  #### Maker bundle
+  #### Générer un contrôleur
+  #### Personnaliser la route
+  #### Ajouter un easter egg
+]
+
+.right-column[
+Symfony expose les données de la requête à travers un objet `Request`. Lorsque Symfony voit un argument de contrôleur avec ce typage précis, il sait automatiquement qu'il doit vous le passer. Nous pouvons l'utiliser pour récupérer le nom depuis le paramètre d'URL et ajouter un titre `<h1>`.
+
+Dans un navigateur, rendez-vous sur `/`, puis sur `/?hello=Fabien` pour constater la différence.
+
+Nous aurions également pu inclure le nom directement dans l'URL :
+```diff
+ class ConferenceController extends AbstractController
+ {
+-    #[Route('/', name: 'homepage')]
+-    public function index(Request $request): Response
++    #[Route('/hello/{name}', name: 'homepage')]
++    public function index(string $name = ''): Response
+     {
+         $greet = '';
+-        if ($name = $request->query->get('hello')) {
++        if ($name) {
+             $greet = sprintf('<h1>Hello %s!</h1>', htmlspecialchars($name));
+         }
+```
+
+La partie de la route {name} est un paramètre de route dynamique - il fonctionne comme un joker. Vous pouvez maintenant vous rendre sur `/hello` et sur `/hello/Fabien` dans un navigateur pour obtenir les mêmes résultats qu'auparavant. Vous pouvez récupérer la valeur du paramètre `{name}` en ajoutant un argument portant le même nom au contrôleur, donc $name.
+
+> ❗ Annulez les changements que nous venons juste de faire via `git checkout .`
+
+]
+
+---
+
+.left-column[
+  ### A. Contrôleur
+  #### Maker bundle
+  #### Générer un contrôleur
+  #### Personnaliser la route
+  #### Ajouter un easter egg
+  #### Débogguer des variables
+]
+
+.right-column[
+La fonction dump() est un utilitaire de déboggage très puissant. Elle est toujours disponible et vous permet de voir le contenu de variables complexes dans un format interactif.
+
+Modifiez temporairement le fichier src/Controller/ConferenceController.php pour afficher le contenu de l'objet Request :
+
+```diff
+ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
++use Symfony\Component\HttpFoundation\Request;
+ use Symfony\Component\HttpFoundation\Response;
+ use Symfony\Component\Routing\Annotation\Route;
+
+ class ConferenceController extends AbstractController
+ {
+     #[Route('/', name: 'homepage')]
+-    public function index(): Response
++    public function index(Request $request): Response
+     {
++        dump($request);
++
+         return new Response(<<<EOF
+             <html>
+                 <body>
+
+```
+Quand vous rafraichissez la page, une icône "cible" apparait dans la barre de déboggage; elle vous permet d'inspecter le dump. Cliquez dessus pour accéder à une page dédiée rendant la navigation plus simple.
+
+> ❗ Annulez les changements que nous venons juste de faire via `git checkout .`
+
+]
+
+---
+
+.left-column[
+  ### A. Contrôleur
+  ### B. Base de données
+  #### PostgreSQL
+]
+
+.right-column[
+  Le site web du livre d'or de la conférence permet de recueillir des commentaires pendant les conférences. Nous avons besoin de stocker ces commentaires dans un stockage persistant.
+
+Un commentaire est mieux décrit par une structure de données fixe : un nom, un email, le texte du commentaire et une photo facultative. Ce type de données se stocke facilement dans un moteur de base de données relationnelle traditionnel.
+
+PostgreSQL est le moteur de base de données que nous allons utiliser.
+#### Ajouter PostgreSQL à Docker Compose
+Sur notre machine locale, nous avons décidé d'utiliser Docker pour gérer nos services. Le fichier docker-compose.yaml généré contient déjà PostgreSQL en tant que service :
+
+```yml
+###> doctrine/doctrine-bundle ###
+database:
+    image: postgres:${POSTGRES_VERSION:-14}-alpine
+    environment:
+        POSTGRES_DB: ${POSTGRES_DB:-app}
+        # You should definitely change the password in production
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ChangeMe}
+        POSTGRES_USER: ${POSTGRES_USER:-app}
+volumes:
+    - db-data:/var/lib/postgresql/data:rw
+    # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+    # - ./docker/db/data:/var/lib/postgresql/data:rw
+###< doctrine/doctrine-bundle ###
 ```
 
 ]
 
 ---
 
-class: middle
+.left-column[
+  ### A. Contrôleur
+  ### B. Base de données
+  #### PostgreSQL
+]
+
+.right-column[
+Un serveur **PostgreSQL** sera alors installé et certaines variables d'environnement, qui contrôlent le nom de la base de données et ses identifiants, seront configurées. Les valeurs n'ont pas vraiment d'importance.
+
+Nous exposons également le port PostgreSQL (`5432`) du conteneur à l'hôte local (`docker-compose.override.yml`). Cela nous aidera à accéder à la base de données à partir de notre machine :
+```yaml
+###> doctrine/doctrine-bundle ###
+database:
+    ports:
+    - "5432"
+###< doctrine/doctrine-bundle ###
+```
+
+> 💡 L'extension `pdo_pgsql` a déjà dû être installée précédemment lors de l'installation de PHP.
+
+]
+
+---
+
+.left-column[
+  ### A. Contrôleur
+  ### B. Base de données
+  #### PostgreSQL
+  #### Docker compose
+]
+
+.right-column[
+Lancez Docker Compose en arrière-plan (-d) :
+```sh
+docker compose up -d
+```
+Attendez un peu pour laisser démarrer la base de données, puis vérifiez que tout fonctionne bien :
+```sh
+docker compose ps
+```
+
+S'il n'y a pas de conteneurs en cours d'exécution ou si la colonne State n'indique pas Up, vérifiez les logs de Docker Compose :
+```sh
+docker compose logs database
+```
+
+]
+
+---
+
+.left-column[
+  ### A. Contrôleur
+  ### B. Base de données
+  #### PostgreSQL
+  #### Docker compose
+  #### Accéder à la base de données
+]
+
+.right-column[
+  'utilitaire en ligne de commande psql peut parfois s'avérer utile. Mais vous devez vous rappelez des informations d'identification et du nom de la base de données. Encore moins évident, vous devez aussi connaître le port local sur lequel la base de données tourne sur l'hôte. Docker choisit un port aléatoire pour que vous puissiez travailler sur plus d'un projet en utilisant PostgreSQL en même temps (le port local fait partie de la sortie de docker-compose ps).
+
+Si vous utilisez psql avec la commande symfony, vous n'avez pas besoin de vous souvenir de quoi que ce soit.
+
+La commande symfony détecte automatiquement les services Docker en cours d'exécution pour le projet et expose les variables d'environnement dont psql a besoin pour se connecter à la base de données.
+
+Grâce à ces conventions, accéder à la base de données avec symfony run est beaucoup plus facile :
+]
+
+---
+
 .left-column[
 ### Nouveau projet symfony
 ### Postgresql
