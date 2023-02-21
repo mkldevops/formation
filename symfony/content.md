@@ -1626,8 +1626,6 @@ Pour gérer la pagination dans le template, transmettez à Twig le Doctrine Pagi
      }
 ```
 Le contrôleur récupère la valeur du décalage (offset) depuis les paramètres de l'URL ($request->query) sous forme d'entier (getInt()). Par défaut, sa valeur sera 0 si le paramètre n'est pas défini.
-
-Les décalages précédent et suivant sont calculés sur la base de toutes les informations que nous avons reçues du paginateur.
 ]
 
 ---
@@ -1642,6 +1640,8 @@ Les décalages précédent et suivant sont calculés sur la base de toutes les i
 #### Paginer les commentaires
 ]
 .right-column[
+Les décalages précédent et suivant sont calculés sur la base de toutes les informations que nous avons reçues du paginateur.
+
 Enfin, mettez à jour le template pour ajouter des liens vers les pages suivantes et précédentes :
 
 ```diff
@@ -1664,6 +1664,73 @@ Enfin, mettez à jour le template pour ajouter des liens vers les pages suivante
      {% else %}
 ```
 Vous devriez maintenant pouvoir naviguer dans les commentaires avec les liens "Previous" et "Next" :
+]
+
+---
+
+.left-column[
+### A. Easy Admin
+### B. Twig
+#### Utiliser Twig pour les templates
+#### Utiliser Twig dans un contrôleur
+#### Créer la page d'une conférence
+#### Lier des pages entre elles
+#### Paginer les commentaires
+#### Optimiser le contrôleur
+]
+.right-column[
+Vous avez peut-être remarqué que les deux méthodes présentes dans ConferenceController prennent un environnement Twig comme argument. Au lieu de l'injecter dans chaque méthode, appelons la méthode render() de la classe parente :
+
+```diff
+-use Twig\Environment;
+
+ class ConferenceController extends AbstractController
+ {
+     #[Route('/', name: 'homepage')]
+-    public function index(Environment $twig, ConferenceRepository $conferenceRepository): Response
++    public function index(ConferenceRepository $conferenceRepository): Response
+     {
+-        return new Response($twig->render('conference/index.html.twig', [
++        return $this->render('conference/index.html.twig', [
+             'conferences' => $conferenceRepository->findAll(),
+-        ]));
++        ]);
+     }
+```
+]
+
+---
+
+.left-column[
+### A. Easy Admin
+### B. Twig
+#### Utiliser Twig pour les templates
+#### Utiliser Twig dans un contrôleur
+#### Créer la page d'une conférence
+#### Lier des pages entre elles
+#### Paginer les commentaires
+#### Optimiser le contrôleur
+]
+.right-column[
+  ```diff
+
+     #[Route('/conference/{id}', name: 'conference')]
+-    public function show(Request $request, Environment $twig, Conference $conference, CommentRepository $commentRepository): Response
++    public function show(Request $request, Conference $conference, CommentRepository $commentRepository): Response
+     {
+         $offset = max(0, $request->query->getInt('offset', 0));
+         $paginator = $commentRepository->getCommentPaginator($conference, $offset);
+
+-        return new Response($twig->render('conference/show.html.twig', [
++        return $this->render('conference/show.html.twig', [
+             'conference' => $conference,
+             'comments' => $paginator,
+             'previous' => $offset - CommentRepository::PAGINATOR_PER_PAGE,
+             'next' => min(count($paginator), $offset + CommentRepository::PAGINATOR_PER_PAGE),
+-        ]));
++        ]);
+     }
+```
 ]
 
 ---
