@@ -1305,7 +1305,7 @@ Vous vous souvenez de l'échappement de caractères que nous avons dû faire dan
 #### Utiliser Twig pour les templates
 Toutes les pages du site Web suivront le même modèle de mise en page, la même structure HTML de base. Lors de l'installation de Twig, un répertoire `templates/` a été créé automatiquement, ainsi qu'un exemple de structure de base dans `base.html.twig`.
 
-```
+```html
 <!DOCTYPE html>
 <html>
     <head>
