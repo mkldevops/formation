@@ -1310,8 +1310,8 @@ Toutes les pages du site Web suivront le même modèle de mise en page, la même
 <html>
     <head>
         ...
-        {% block stylesheets %}{{ encore_entry_link_tags('app') }}{% endblock %}
-        {% block javascripts %}{{ encore_entry_script_tags('app') }}{% endblock %}
+        {% block 'stylesheets' %}{{ encore_entry_link_tags('app') }}{% endblock %}
+        {% block 'javascripts' %}{{ encore_entry_script_tags('app') }}{% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}
