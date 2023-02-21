@@ -143,9 +143,9 @@ Assurez-vous de vérifier les outils nécessaires avant de commencer la formatio
 | **docker** | `docker --version` | +20.10 |
 | **docker compose** | `docker compose version` | +2.10 |
 | **php** | `php -version` | +8.1 |
-| **composer** | `composer -version` | +2.4 |
-| **node** | `node -version` | +16 |
-| **yarn** | `yarn -version` | +1.22 |
+| **composer** | `composer --version` | +2.4 |
+| **node** | `node --version` | +16 |
+| **yarn** | `yarn --version` | +1.22 |
 ]
 
 ---
@@ -1123,9 +1123,100 @@ Le tableau de bord principal est vide pour le moment. C'est ici que vous pouvez 
 #### Des entités Stringable
 ]
 .right-column[
-Quand nous affichons les relations entre les entités (la conférence liée à un commentaire), EasyAdmin essaie d'utiliser la représentation textuelle de la conférence. Par défaut, il s'appuie sur une convention qui utilise le nom de l'entité et la clé primaire (par exemple Conference #1) si l'entité ne définit pas la méthode "magique" `__toString()`. Pour rendre l'affichage plus parlant, ajoutez cette méthode sur la classe Conference :
+Quand nous affichons les relations entre les entités (la conférence liée à un commentaire), EasyAdmin essaie d'utiliser la représentation textuelle de la conférence. Par défaut, il s'appuie sur une convention qui utilise le nom de l'entité et la clé primaire (par exemple `Conference #1`) si l'entité ne définit pas la méthode "magique" `__toString()`. Pour rendre l'affichage plus parlant, ajoutez cette méthode sur la classe `Conference`.
 
-```sh
+La méthode __toString() fait partie du contrat de l'interface Stringable. Nous devons l'implémenter pour respecter le contrat sur nos entités.
+
+```diff
+# src/Entity/Conference.php
+
+- class Conference
++ class Conference implements \Stringable
+
+@@ ....
+
++    public function __toString(): string
++    {
++        return $this->city.' '.$this->year;
++    }
++
+     public function getId(): ?int
+     {
+```
+
+]
+
+---
+
+.left-column[
+### A. Easy Admin
+#### Installation
+#### Configuration
+#### Génerer un CRUD
+#### Lier un CRUD au 
+#### Des entités Stringable
+]
+.right-column[
+Faites de même pour la classe `Comment` :
+
+```diff
+# src/Entity/Comment.php
+
+- class Comment
++ class Comment implements \Stringable
+
+@@ ....
+
++    public function __toString(): string
++    {
++        return (string) $this->getEmail();
++    }
++
+     public function getId(): ?int
+     {
+```
+Vous pouvez maintenant ajouter/modifier/supprimer des conférences directement depuis l'interface d'administration. Jouez avec et ajoutez au moins une conférence.
+
+Ajoutez quelques commentaires sans photos. Réglez la date manuellement pour l'instant ; nous remplirons la colonne createdAt automatiquement dans une étape ultérieure.
+]
+
+---
+
+.left-column[
+### A. Easy Admin
+#### Installation
+#### Configuration
+#### Génerer un CRUD
+#### Lier un CRUD au 
+#### Des entités Stringable
+#### Personnaliser EasyAdmin
+]
+.right-column[
+L'interface d'administration par défaut fonctionne bien, mais elle peut être personnalisée de plusieurs façons pour améliorer son utilisation. Faisons quelques changements simples pour montrer quelques possibilités :
+```diff
+# src/Controller/Admin/CommentCrudController.php
+
+         return Comment::class;
+     }
+
+-    /*
++    public function configureCrud(Crud $crud): Crud
++    {
++        return $crud
++            ->setEntityLabelInSingular('Conference Comment')
++            ->setEntityLabelInPlural('Conference Comments')
++            ->setSearchFields(['author', 'text', 'email'])
++            ->setDefaultSort(['createdAt' => 'DESC'])
++        ;
++    }
++
++    public function configureFilters(Filters $filters): Filters
++    {
++        return $filters
++            ->add(EntityFilter::new('conference'))
++        ;
++    }
++
 ```
 ]
 
@@ -1138,6 +1229,455 @@ Quand nous affichons les relations entre les entités (la conférence liée à u
 #### Génerer un CRUD
 #### Lier un CRUD au 
 #### Des entités Stringable
+#### Personnaliser EasyAdmin
+]
+.right-column[
+```diff
+# src/Controller/Admin/CommentCrudController.php
+
+     public function configureFields(string $pageName): iterable
+     {
+-        return [
+-            IdField::new('id'),
+-            TextField::new('title'),
+-            TextEditorField::new('description'),
+-        ];
++        yield AssociationField::new('conference');
++        yield TextField::new('author');
++        yield EmailField::new('email');
++        yield TextareaField::new('text')
++            ->hideOnIndex()
++        ;
++        yield TextField::new('photoFilename')
++            ->onlyOnIndex()
++        ;
++
++        $createdAt = DateTimeField::new('createdAt')->setFormTypeOptions([
++            'html5' => true,
++            'years' => range(date('Y'), date('Y') + 5),
++            'widget' => 'single_text',
++        ]);
++        if (Crud::PAGE_EDIT === $pageName) {
++            yield $createdAt->setFormTypeOption('disabled', true);
++        } else {
++            yield $createdAt;
++        }
+     }
+-    */
+```
+]
+
+---
+
+.left-column[
+### A. Easy Admin
+#### Installation
+#### Configuration
+#### Génerer un CRUD
+#### Lier un CRUD au 
+#### Des entités Stringable
+#### Personnaliser EasyAdmin
+]
+.right-column[
+  Pour personnaliser la section `Commentaire`, lister les champs de manière explicite dans la méthode `configureFields()` nous permet de les ordonner comme nous le souhaitons. Certains champs bénéficient d'une configuration supplémentaire, comme masquer le champ texte sur la page d'index.
+
+Les méthodes `configureFilters()` définissent quels filtres apparaissent au dessus du champ de recherche.
+
+.center[<img src="img/easy-admin-filter.png" alt="Easy admin filter" width="350px" />]
+
+Ces personnalisations ne sont qu'une petite introduction aux possibilités offertes par EasyAdmin.
+
+Jouez avec l'interface d'administration, filtrez les commentaires par conférence, ou recherchez des commentaires par email par exemple. Le seul problème, c'est que n'importe qui peut accéder à cette interface. Ne vous inquiétez pas, nous la sécuriserons dans une prochaine étape.
+]
+
+---
+
+.left-column[
+### A. Easy Admin
+### B. Twig
+#### Utiliser Twig pour les templates
+]
+.right-column[
+Tout est maintenant en place pour créer la première version de l'interface du site. On ne la fera pas jolie pour le moment, seulement fonctionnelle.
+
+Vous vous souvenez de l'échappement de caractères que nous avons dû faire dans le contrôleur, pour l'easter egg, afin d'éviter les problèmes de sécurité ? Nous n'utiliserons pas PHP pour nos templates pour cette raison. À la place, nous utiliserons **Twig**. En plus de gérer l'échappement de caractères, Twig apporte de nombreuses fonctionnalités intéressantes, comme l'héritage des modèles.
+
+#### Utiliser Twig pour les templates
+Toutes les pages du site Web suivront le même modèle de mise en page, la même structure HTML de base. Lors de l'installation de Twig, un répertoire `templates/` a été créé automatiquement, ainsi qu'un exemple de structure de base dans `base.html.twig`.
+
+```twig
+<!DOCTYPE html>
+<html>
+    <head>
+        ...
+        {% block stylesheets %}{{ encore_entry_link_tags('app') }}{% endblock %}
+        {% block javascripts %}{{ encore_entry_script_tags('app') }}{% endblock %}
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+    </body>
+</html>
+```
+Un modèle peut définir des `blocks`. Un `block` est un emplacement où les *templates enfants*, qui *étendent* le modèle, ajoutent leur contenu.
+]
+
+---
+
+.left-column[
+### A. Easy Admin
+### B. Twig
+#### Utiliser Twig pour les templates
+]
+.right-column[
+Créons un template pour la page d'accueil du projet dans `templates/conference/index.html.twig`.
+```twig
+{% extends 'base.html.twig' %}
+
+{% block title %}Conference Guestbook{% endblock %}
+
+{% block body %}
+    <h2>Give your feedback!</h2>
+
+    {% for conference in conferences %}
+        <h4>{{ conference }}</h4>
+    {% endfor %}
+{% endblock %}
+```
+Le template *étend* (ou `extends`) `base.html.twig` et redéfinit les blocs `title` et `body`.
+
+La notation `{% %}` dans un template indique des actions et des éléments de structure.
+
+La notation `{{ }}` est utilisée pour afficher quelque chose. `{{ conference }}` affiche la représentation de la conférence (le résultat de l'appel à la méthode `__toString` de l'objet `Conference`).
+]
+
+---
+
+.left-column[
+### A. Easy Admin
+### B. Twig
+#### Utiliser Twig pour les templates
+#### Utiliser Twig dans un contrôleur
+]
+.right-column[
+Mettez à jour le contrôleur pour générer le contenu du template Twig :
+```diff
+# src/Controller/ConferenceController.php
+
++use App\Repository\ConferenceRepository;
++use Twig\Environment;
+
+ class ConferenceController extends AbstractController
+ {
+     #[Route('/', name: 'homepage')]
+-    public function index(): Response
++    public function index(Environment $twig, ConferenceRepository $conferenceRepository): Response
+     {
+-        return new Response(<<<EOF
+-            <html>
+-                <body><img src="/images/under-construction.gif" /></body>
+-            </html>
+-            EOF
+-        );
++        return new Response($twig->render('conference/index.html.twig', [
++            'conferences' => $conferenceRepository->findAll(),
++        ]));
+```
+Il se passe beaucoup de choses ici.
+
+
+
+]
+
+---
+
+.left-column[
+### A. Easy Admin
+### B. Twig
+#### Utiliser Twig pour les templates
+#### Utiliser Twig dans un contrôleur
+]
+.right-column[
+Pour pouvoir générer le contenu du template, nous avons besoin de l'objet `Environment` de Twig (le point d'entrée principal de Twig). 
+
+> 👀 Notez que nous demandons l'instance Twig en spécifiant son type dans la méthode du contrôleur. Symfony est assez intelligent pour savoir comment injecter le bon objet. 
+
+> Nous avons également besoin du *repository* des conférences pour récupérer toutes les conférences depuis la base de données.
+
+Dans le code du contrôleur, la méthode `render()` génère le rendu du template et lui passe un tableau de variables. Nous passons la liste des objets `Conference` dans une variable `conferences`.
+
+Un contrôleur est une classe PHP standard. Nous n'avons même pas besoin d'étendre la classe `AbstractController` si nous voulons être explicites sur nos dépendances. Vous pouvez donc supprimer l'héritage (mais ne le faites pas, car nous utiliserons les raccourcis qu'il fournit dans les prochaines étapes).
+]
+
+---
+
+.left-column[
+### A. Easy Admin
+### B. Twig
+#### Utiliser Twig pour les templates
+#### Utiliser Twig dans un contrôleur
+#### Créer la page d'une conférence
+]
+.right-column[
+Chaque conférence devrait avoir une page dédiée à l'affichage de ses commentaires. L'ajout d'une nouvelle page consiste à ajouter un contrôleur, à définir une route et à créer le template correspondant.
+
+Ajoutez une méthode show() dans le fichier `src/Controller/ConferenceController.php` :
+```diff
++use App\Entity\Conference;
++use App\Repository\CommentRepository;
+ use App\Repository\ConferenceRepository;
+
+@@ ...
+     }
+
++
++    #[Route('/conference/{id}', name: 'conference')]
++    public function show(Environment $twig, Conference $conference, CommentRepository $commentRepository): Response
++    {
++        return new Response($twig->render('conference/show.html.twig', [
++            'conference' => $conference,
++            'comments' => $commentRepository->findBy(['conference' => $conference], ['createdAt' => 'DESC']),
++        ]));
++    }
+```
+Cette méthode a un comportement particulier que nous n'avons pas encore vu. Nous demandons qu'une instance de `Conference` soit injectée dans la méthode. Mais il y en a peut-être beaucoup dans la base de données. Symfony est capable de déterminer celle que vous voulez en se basant sur l'`{id}` passé dans le chemin de la requête (`id` étant la clé primaire de la table `conference` dans la base de données).
+]
+
+---
+
+.left-column[
+### A. Easy Admin
+### B. Twig
+#### Utiliser Twig pour les templates
+#### Utiliser Twig dans un contrôleur
+#### Créer la page d'une conférence
+]
+.right-column[
+La récupération des commentaires associés à la conférence peut se faire via la méthode `findBy()`, qui prend un critère comme premier argument.
+
+La dernière étape consiste à créer le fichier `templates/conference/show.html.twig` :
+```twig
+{% extends 'base.html.twig' %}
+
+{% block title %}Conference Guestbook - {{ conference }}{% endblock %}
+
+{% block body %}
+    <h2>{{ conference }} Conference</h2>
+
+    {% if comments|length > 0 %}
+        {% for comment in comments %}
+            {% if comment.photofilename %}
+                <img src="{{ asset('uploads/photos/' ~ comment.photofilename) }}" />
+            {% endif %}
+
+            <h4>{{ comment.author }}</h4>
+            <small>
+                {{ comment.createdAt|format_datetime('medium', 'short') }}
+            </small>
+
+            <p>{{ comment.text }}</p>
+        {% endfor %}
+    {% else %}
+        <div>No comments have been posted yet for this conference.</div>
+    {% endif %}
+{% endblock %}
+```
+]
+
+---
+
+.left-column[
+### A. Easy Admin
+### B. Twig
+#### Utiliser Twig pour les templates
+#### Utiliser Twig dans un contrôleur
+#### Créer la page d'une conférence
+]
+.right-column[
+Dans ce template, nous utilisons le symbole `|` pour appeler les filtres Twig. Un filtre transforme une valeur. `comments|length` retourne le nombre de commentaires et `comment.createdAt|format_datetime('medium', 'short')` affiche la date dans un format lisible par l'internaute.
+
+Essayez d'afficher la "première" conférence en naviguant vers `/conference/1`, et constatez l'erreur suivante :
+
+.center[<img src="img/intl-twig-error.png" width="350px">]
+
+L'erreur vient du filtre `format_datetime`, qui ne fait pas partie du noyau de Twig. Le message d'erreur vous donne un indice sur le paquet à installer pour résoudre le problème :
+```sh
+symfony composer req "twig/intl-extra:^3"
+```
+Maintenant la page fonctionne correctement.
+]
+
+---
+
+.left-column[
+### A. Easy Admin
+### B. Twig
+#### Utiliser Twig pour les templates
+#### Utiliser Twig dans un contrôleur
+#### Créer la page d'une conférence
+#### Lier des pages entre elles
+]
+.right-column[
+La toute dernière étape pour terminer notre première version de l'interface est de rendre les pages de la conférence accessibles depuis la page d'accueil :
+```diff
+# templates/conference/index.html.twig
+
+     {% for conference in conferences %}
+         <h4>{{ conference }}</h4>
++        <p>
++            <a href="/conference/{{ conference.id }}">View</a>
++        </p>
+     {% endfor %}
+ {% endblock %}
+
+```
+Mais coder un chemin en dur est une mauvaise idée pour plusieurs raisons. La raison principale est que si vous transformez le chemin (de /conference/{id} en /conferences/{id} par exemple), tous les liens doivent être mis à jour manuellement.
+
+Utilisez plutôt la fonction Twig path() avec le nom de la route :
+```diff
+# templates/conference/index.html.twig
+
+         <p>
+-            <a href="/conference/{{ conference.id }}">View</a>
++            <a href="{{ path('conference', { id: conference.id }) }}">View</a>
+         </p>
+     {% endfor %}
+```
+La fonction path() génère le chemin d'accès vers une page à l'aide du nom de la route. Les valeurs des paramètres dynamiques de la route sont transmises sous la forme d'un objet Twig.
+
+]
+
+---
+
+.left-column[
+### A. Easy Admin
+### B. Twig
+#### Utiliser Twig pour les templates
+#### Utiliser Twig dans un contrôleur
+#### Créer la page d'une conférence
+#### Lier des pages entre elles
+#### Paginer les commentaires
+]
+.right-column[
+Avec des milliers de personnes présentes, on peut s'attendre à un nombre important de commentaires. Si nous les affichons tous sur une seule page, elle deviendra rapidement énorme.
+
+Créez une méthode getCommentPaginator() dans CommentRepository. Cette méthode renvoie un Paginator de commentaires basé sur une conférence et un décalage (où commencer) :
+```diff
+# src/Repository/CommentRepository.php
++use App\Entity\Conference;
++use Doctrine\ORM\Tools\Pagination\Paginator;
+...
+
+ class CommentRepository extends ServiceEntityRepository
+ {
++    public const PAGINATOR_PER_PAGE = 2;
++
+...
+
++    public function getCommentPaginator(Conference $conference, int $offset): Paginator
++    {
++        $query = $this->createQueryBuilder('c')
++            ->andWhere('c.conference = :conference')
++            ->setParameter('conference', $conference)
++            ->orderBy('c.createdAt', 'DESC')
++            ->setMaxResults(self::PAGINATOR_PER_PAGE)
++            ->setFirstResult($offset)
++            ->getQuery()
++        ;
++
++        return new Paginator($query);
++    }
+```
+]
+
+---
+
+.left-column[
+### A. Easy Admin
+### B. Twig
+#### Utiliser Twig pour les templates
+#### Utiliser Twig dans un contrôleur
+#### Créer la page d'une conférence
+#### Lier des pages entre elles
+#### Paginer les commentaires
+]
+.right-column[
+Nous avons fixé le nombre maximum de commentaires par page à 2 pour faciliter les tests.
+
+Pour gérer la pagination dans le template, transmettez à Twig le Doctrine Paginator au lieu de la Doctrine Collection :
+```diff
+# src/Controller/ConferenceController.php
+
++use Symfony\Component\HttpFoundation\Request;
+...
+
+-    public function show(Environment $twig, Conference $conference, CommentRepository $commentRepository): Response
++    public function show(Request $request, Environment $twig, Conference $conference, CommentRepository $commentRepository): Response
+     {
++        $offset = max(0, $request->query->getInt('offset', 0));
++        $paginator = $commentRepository->getCommentPaginator($conference, $offset);
++
+         return new Response($twig->render('conference/show.html.twig', [
+             'conference' => $conference,
+-            'comments' => $commentRepository->findBy(['conference' => $conference], ['createdAt' => 'DESC']),
++            'comments' => $paginator,
++            'previous' => $offset - CommentRepository::PAGINATOR_PER_PAGE,
++            'next' => min(count($paginator), $offset + CommentRepository::PAGINATOR_PER_PAGE),
+         ]));
+     }
+```
+Le contrôleur récupère la valeur du décalage (offset) depuis les paramètres de l'URL ($request->query) sous forme d'entier (getInt()). Par défaut, sa valeur sera 0 si le paramètre n'est pas défini.
+
+Les décalages précédent et suivant sont calculés sur la base de toutes les informations que nous avons reçues du paginateur.
+]
+
+---
+
+.left-column[
+### A. Easy Admin
+### B. Twig
+#### Utiliser Twig pour les templates
+#### Utiliser Twig dans un contrôleur
+#### Créer la page d'une conférence
+#### Lier des pages entre elles
+#### Paginer les commentaires
+]
+.right-column[
+Enfin, mettez à jour le template pour ajouter des liens vers les pages suivantes et précédentes :
+
+```diff
+# templates/conference/show.html.twig
+
+     {% if comments|length > 0 %}
++        <div>There are {{ comments|length }} comments.</div>
++
+...
+
+             <p>{{ comment.text }}</p>
+         {% endfor %}
++
++        {% if previous >= 0 %}
++            <a href="{{ path('conference', { id: conference.id, offset: previous }) }}">Previous</a>
++        {% endif %}
++        {% if next < comments|length %}
++            <a href="{{ path('conference', { id: conference.id, offset: next }) }}">Next</a>
++        {% endif %}
+     {% else %}
+```
+Vous devriez maintenant pouvoir naviguer dans les commentaires avec les liens "Previous" et "Next" :
+
+
+]
+
+---
+
+.left-column[
+### A. Easy Admin
+### B. Twig
+#### Utiliser Twig pour les templates
+#### Utiliser Twig dans un contrôleur
+#### Créer la page d'une conférence
+#### Lier des pages entre elles
+#### Paginer les commentaires
 ]
 .right-column[
   
