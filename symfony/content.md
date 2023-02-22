@@ -1731,19 +1731,792 @@ Vous avez peut-être remarqué que les deux méthodes présentes dans Conference
 +        ]);
      }
 ```
+
+> 📬 Commitez notre travail via `git commit -am "Twig"`
+]
+
+---
+class: center, middle, inverse
+# 5. Les évenements
+---
+
+.left-column[
+### A. Écouter les événements
+#### Ajouter un en-tête au site web
+]
+.right-column[
+Il manque une barre de navigation au layout actuel pour revenir à la page d'accueil ou pour passer d'une conférence à l'autre.
+#### Ajouter un en-tête au site web
+
+Tout ce qui doit être affiché sur toutes les pages web, comme un en-tête, doit faire partie du layout de base principal :
+
+```diff
+     <body>
++        <header>
++            <h1><a href="{{ path('homepage') }}">Guestbook</a></h1>
++            <ul>
++            {% for conference in conferences %}
++                <li><a href="{{ path('conference', { id: conference.id }) }}">{{ conference }}</a></li>
++            {% endfor %}
++            </ul>
++            <hr />
++        </header>
+         {% block body %}{% endblock %}
+     </body>
+```
+L'ajout de ce code au layout signifie que tous les templates qui l'étendent doivent définir une variable conferences, créée et transmise par leurs contrôleurs.
 ]
 
 ---
 
 .left-column[
-### A. Easy Admin
-### B. Twig
-#### Utiliser Twig pour les templates
-#### Utiliser Twig dans un contrôleur
-#### Créer la page d'une conférence
-#### Lier des pages entre elles
-#### Paginer les commentaires
+### A. Écouter les événements
+#### Ajouter un en-tête au site web
 ]
 .right-column[
+Comme nous n'avons que deux contrôleurs, vous pourriez procéder comme ceci (ne modifiez pas votre code car nous verrons très vite une meilleure façon de faire) :
+```diff
+# 
+     #[Route('/conference/{id}', name: 'conference')]
+-    public function show(Request $request, Conference $conference, CommentRepository $commentRepository): Response
++    public function show(Request $request, Conference $conference, CommentRepository $commentRepository, ConferenceRepository $conferenceRepository): Response
+     {
+         $offset = max(0, $request->query->getInt('offset', 0));
+         $paginator = $commentRepository->getCommentPaginator($conference, $offset);
+
+         return $this->render('conference/show.html.twig', [
++            'conferences' => $conferenceRepository->findAll(),
+            ...
+         ]);
+```
+Imaginez devoir mettre à jour des dizaines de contrôleurs. Et faire la même chose sur tous les nouveaux. Ce n'est pas très pratique. Il doit y avoir un meilleur moyen.
+
+Twig a la notion de variables globales. Une variable globale est disponible dans tous les templates générés. Vous pouvez les définir dans un fichier de configuration, mais cela ne fonctionne que pour les valeurs statiques. Pour ajouter toutes les conférences comme variable globale Twig, nous allons créer un listener.]
+
+---
+
+.left-column[
+### A. Écouter les événements
+#### Ajouter un en-tête au site web
+#### Découvrir les événements Symfony
+]
+.right-column[
+**Symfony intègre un composant Event Dispatcher.** Un dispatcher répartit certains événements à des moments précis que les listeners peuvent écouter. Les listeners sont des hooks dans le cœur du framework.
+
+Par exemple, certains événements vous permettent d'interagir avec le cycle de vie des requêtes HTTP. Pendant le traitement d'une requête, le dispatcher répartit les événements lorsqu'une requête a été créée, lorsqu'un contrôleur est sur le point d'être exécuté, lorsqu'une réponse est prête à être envoyée, ou lorsqu'une exception a été levée. Un listener peut écouter un ou plusieurs événements et exécuter une logique basée sur le contexte de l'événement.
+
+Les événements sont des points d'extension bien définis qui rendent le framework plus générique et extensible. De nombreux composants Symfony tels que Security, Messenger, Workflow ou Mailer les utilisent largement.
+
+Un autre exemple intégré d'événements et de listeners en action est le cycle de vie d'une commande : vous pouvez créer un listener pour exécuter du code avant n'importe quelle commande.
+
+Tout paquet ou bundle peut également déclencher ses propres événements pour rendre son code extensible.
+
+Pour éviter d'avoir un fichier de configuration qui décrit les événements qu'un listener veut écouter, créez un subscriber. Un subscriber est un listener avec une méthode statique `getSubscribedEvents()` qui retourne sa configuration. Ceci permet aux subscribers d'être enregistrés automatiquement dans le dispatcher Symfony.
+
+
+]
+---
+
+.left-column[
+### A. Écouter les événements
+#### Ajouter un en-tête au site web
+#### Découvrir les événements Symfony
+#### Implémenter un subscriber
+]
+.right-column[
+Vous connaissez la chanson par cœur maintenant, utilisez le Maker Bundle pour générer un subscriber :
+```sh
+symfony console make:subscriber TwigEventSubscriber
+```
+
+La commande vous demande quel événement vous voulez écouter. Choisissez l'événement `Symfony\Component\HttpKernel\Event\ControllerEvent` qui est envoyé juste avant l'appel d'un contrôleur. C'est le meilleur moment pour injecter la variable globale conferences afin que Twig y ait accès lorsque le contrôleur générera le template. Mettez votre subscriber à jour comme suit :
+```diff
+ class TwigEventSubscriber implements EventSubscriberInterface
+ {
+
++    public function __construct(
++        private Environment $twig, 
++        private ConferenceRepository $conferenceRepository
++    ) { }
++
+     public function onControllerEvent(ControllerEvent $event): void
+     {
+-        // ...
++        $this->twig->addGlobal('conferences', $this->conferenceRepository->findAll());
+     }
+```
+
+Maintenant, vous pouvez ajouter autant de contrôleurs que vous le souhaitez : la variable `conferences` sera toujours disponible dans Twig.
   
+> .info[🗒 Nous parlerons d'une alternative bien plus performante dans une prochaine étape.]
+]
+---
+
+.left-column[
+### A. Écouter les événements
+#### Ajouter un en-tête au site web
+#### Découvrir les événements Symfony
+#### Implémenter un subscriber
+#### Trier les conférences par année et par ville
+]
+.right-column[
+  Le tri de la liste des conférences par année peut faciliter la navigation. Nous pourrions créer notre propre méthode pour récupérer et trier toutes les conférences, mais nous allons plutôt remplacer l'implémentation par défaut de la méthode findAll(), afin que le tri s'applique partout :
+
+```diff
++    public function findAll(): array
++    {
++        return $this->findBy([], ['year' => 'ASC', 'city' => 'ASC']);
++    }
++
+     public function save(Conference $entity, bool $flush = false): void
+     {
+         $this->getEntityManager()->persist($entity);
+```
+À la fin de cette étape, le site web devrait ressembler à ceci :
+
+.center[<img src="img/header.png" alt="header" width="350px" />]
+
+  > 📬 Commitez notre travail via `git commit -am "Écouter les événements"`
+]
+---
+
+.left-column[
+### A. Écouter les événements
+### B. Gérer le cycle de vie des objets Doctrine
+#### Définir des lifecycle callbacks
+]
+.right-column[
+Lors de la création d'un nouveau commentaire, ce serait bien si la date createdAt était automatiquement définie à la date et à l'heure courantes.
+
+Doctrine a différentes façons de manipuler les objets et leurs propriétés pendant leur cycle de vie (avant la création de la ligne dans la base de données, après la mise à jour de la ligne, etc.).
+
+Lorsque le comportement n'a besoin d'aucun service et ne doit être appliqué qu'à un seul type d'entité, définissez un callback dans la classe entité :
+
+```diff
+ #[ORM\Entity(repositoryClass: CommentRepository::class)]
++#[ORM\HasLifecycleCallbacks]
+ class Comment
+ {
+     #[ORM\Id]
+@@ -91,6 +92,12 @@ class Comment
+         return $this;
+     }
+
++    #[ORM\PrePersist]
++    public function setCreatedAtValue()
++    {
++        $this->createdAt = new \DateTimeImmutable();
++    }
++
+     public function getConference(): ?Conference
+```
+
+L'événement `ORM\PrePersist` est déclenché lorsque l'objet est enregistré dans la base de données pour la toute première fois. Lorsque cela se produit, la méthode `setCreatedAtValue()` est appelée et la date et l'heure courantes sont utilisées pour la valeur de la propriété createdAt.
+]
+---
+
+.left-column[
+### A. Écouter les événements
+### B. Gérer le cycle de vie des objets Doctrine
+#### Définir des lifecycle callbacks
+#### Ajouter des slugs aux conférences
+]
+.right-column[
+Les URLs des conférences n'ont pas de sens : /conference/1. Plus important encore, ils dépendent d'un détail d'implémentation (la clé primaire de la base de données est révélée).
+
+Pourquoi ne pas plutôt utiliser des URLs telles que /conference/paris-2020 ? Ce serait plus joli. paris-2020, c'est ce que l'on appelle le slug de la conférence.
+
+Ajoutez une nouvelle propriété slug pour les conférences (une chaîne non nulle de 255 caractères) :
+```sh
+symfony console make:entity Conference
+```
+
+Créez un fichier de migration pour ajouter la nouvelle colonne et Et exécutez cette nouvelle migration.
+
+❗ Vous avez une erreur ? C'était prévu. Pourquoi ? Parce que nous avons demandé que le slug ne soit pas null, et que les entrées existantes dans la base de données de la conférence obtiendront une valeur null lorsque la migration sera exécutée. Corrigeons cela en ajustant la migration.
+```diff
+     public function up(Schema $schema): void
+     {
+         // this up() migration is auto-generated, please modify it to your needs
+-        $this->addSql('ALTER TABLE conference ADD slug VARCHAR(255) NOT NULL');
++        $this->addSql('ALTER TABLE conference ADD slug VARCHAR(255)');
++        $this->addSql("UPDATE conference SET slug=CONCAT(LOWER(city), '-', year)");
++        $this->addSql('ALTER TABLE conference ALTER COLUMN slug SET NOT NULL');
+     }
+```
+
+L'astuce ici est d'ajouter la colonne et de lui permettre d'être null, puis de définir une valeur non null pour le slug, et enfin, de changer la colonne de slug pour ne plus permettre null.
+
+La migration devrait fonctionner maintenant.
+]
+---
+
+.left-column[
+### A. Écouter les événements
+### B. Gérer le cycle de vie des objets Doctrine
+#### Définir des lifecycle callbacks
+#### Ajouter des slugs aux conférences
+]
+.right-column[
+Étant donné que l'application utilisera bientôt les slugs pour trouver chaque conférence, ajustons l'entité Conference pour s'assurer que les valeurs des slugs soient uniques dans la base de données :
+
+```diff
++use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+ #[ORM\Entity(repositoryClass: ConferenceRepository::class)]
++#[UniqueEntity('slug')]
+ class Conference
+ {
+     #[ORM\Id]
+
+@@ ...
+
+     #[ORM\OneToMany(mappedBy: 'conference', targetEntity: Comment::class, orphanRemoval: true)]
+     private Collection $comments;
+
+-    #[ORM\Column(length: 255)]
++    #[ORM\Column(type: 'string', length: 255, unique: true)]
+     private ?string $slug = null;
+```
+
+💃 Comme vous l'aurez deviné, nous devons exécuter la danse de la migration
+
+
+]
+---
+
+.left-column[
+### A. Écouter les événements
+### B. Gérer le cycle de vie des objets Doctrine
+#### Définir des lifecycle callbacks
+#### Ajouter des slugs aux conférences
+#### Générer des slugs
+]
+.right-column[
+Générer un *slug* qui se lit bien dans une URL (où tout ce qui n'est pas des caractères **ASCII** doit être encodé) est une tâche difficile, surtout pour les langues autres que l'anglais. Comment convertir é en e par exemple ?
+
+Au lieu de réinventer la roue, utilisons le composant *Symfony String*, qui facilite la manipulation des chaînes et fournit un slugger.
+
+Dans la classe Conference, ajoutez une méthode `computeSlug()`, qui calcule le slug en fonction des données de la conférence :
+
+```diff
++use Symfony\Component\String\Slugger\SluggerInterface;
+
+ #[ORM\Entity(repositoryClass: ConferenceRepository::class)]
+ #[UniqueEntity('slug')]
+
+@@ ...
+
+
++    public function computeSlug(SluggerInterface $slugger)
++    {
++        if (!$this->slug || '-' === $this->slug) {
++            $this->slug = (string) $slugger->slug((string) $this)->lower();
++        }
++    }
++
+     public function getCity(): ?string
+```
+
+La méthode `computeSlug()` ne calcule un slug que lorsque le slug courant est vide ou défini à la valeur spéciale -. Pourquoi avons-nous besoin de cette valeur particulière - ? Parce que lors de l'ajout d'une conférence dans l'interface d'administration, le slug est nécessaire. Nous avons donc besoin d'une valeur non vide qui indique à l'application que nous voulons que le slug soit généré automatiquement.
+]
+---
+
+.left-column[
+### A. Écouter les événements
+### B. Gérer le cycle de vie des objets Doctrine
+#### Définir des lifecycle callbacks
+#### Ajouter des slugs aux conférences
+#### Définir un lifecycle callback complexe
+]
+.right-column[
+Comme pour la propriété createdAt, la propriété slug doit être définie automatiquement à chaque fois que la conférence est mise à jour en appelant la méthode `computeSlug()`.
+
+Mais comme cette méthode dépend d'une implémentation de `SluggerInterface`, nous ne pouvons pas ajouter un événement `prePersist` comme avant (nous n'avons pas la possibilité d'injecter le slugger).
+
+Créez plutôt un listener d'entité Doctrine :
+```php
+# src/EntityListener/ConferenceEntityListener.php 
+namespace App\EntityListener;
+
+use App\Entity\Conference;
+use Doctrine\ORM\Event\LifecycleEventArgs;
+use Symfony\Component\String\Slugger\SluggerInterface;
+
+class ConferenceEntityListener
+{
+    public function __construct(private SluggerInterface $slugger) { }
+
+    public function prePersist(Conference $conference, LifecycleEventArgs $event)
+    {
+        $conference->computeSlug($this->slugger);
+    }
+
+    public function preUpdate(Conference $conference, LifecycleEventArgs $event)
+    {
+        $conference->computeSlug($this->slugger);
+    }
+}
+```
+
+Notez que le slug est modifié lorsqu'une nouvelle conférence est créée (`prePersist()`) et lorsqu'elle est mise à jour (`preUpdate()`).
+]
+---
+
+.left-column[
+### A. Écouter les événements
+### B. Gérer le cycle de vie des objets Doctrine
+#### Définir des lifecycle callbacks
+#### Ajouter des slugs aux conférences
+#### Définir un lifecycle callback complexe
+#### Configurer un service dans le conteneur
+]
+.right-column[
+Jusqu'à présent, nous n'avons pas parlé d'un élément clé de Symfony, *le conteneur d'injection de dépendance*. Le conteneur est responsable de la gestion des services : leur création, et leur injection en cas de besoin.
+
+Un service est un objet "global" qui fournit des fonctionnalités (par exemple un mailer, un logger, un slugger, etc.) contrairement aux objets de données (par exemple les instances d'entités Doctrine).
+
+Vous interagissez rarement directement avec le conteneur car il injecte automatiquement des objets de service quand vous en avez besoin : par exemple, le conteneur injecte les objets en arguments du contrôleur lorsque vous les typez.
+
+Si vous vous demandez comment le listener d'événement a été initialisé à l'étape précédente, vous avez maintenant la réponse : le conteneur. Lorsqu'une classe implémente des interfaces spécifiques, le conteneur sait que la classe doit être initialisée d'une certaine manière.
+
+Dans ce cas précis, puisque notre classe n'implémente aucune interface et n'étend aucune autre classe, Symfony ne peux pas la configurer automatiquement. Utilisons un attribut pour l'aider :
+```diff
++use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
++use Doctrine\ORM\Events;
+
++#[AsEntityListener(event: Events::prePersist, entity: Conference::class)]
++#[AsEntityListener(event: Events::preUpdate, entity: Conference::class)]
+ class ConferenceEntityListener
+ {
+```
+> ❗ Ne confondez pas les listeners d'événements Doctrine et ceux de Symfony. Même s'ils se ressemblent beaucoup, ils n'utilisent pas la même infrastructure en interne.
+]
+---
+
+.left-column[
+### A. Écouter les événements
+### B. Gérer le cycle de vie des objets Doctrine
+#### Définir des lifecycle callbacks
+#### Ajouter des slugs aux conférences
+#### Définir un lifecycle callback complexe
+#### Configurer un service dans le conteneur
+#### Utiliser des slugs dans l'application
+]
+.right-column[
+Essayez d'ajouter d'autres conférences dans l'interface d'administration et changez la ville ou l'année d'une conférence existante ; le slug ne sera pas mis à jour sauf si vous utilisez la valeur spéciale -.
+
+La dernière modification consiste à mettre à jour les contrôleurs et les modèles pour utiliser le slug de la conférence pour les routes, au lieu de son id :
+```diff
+# src/Controller/ConferenceController.php
+-    #[Route('/conference/{id}', name: 'conference')]
++    #[Route('/conference/{slug}', name: 'conference')]
+     public function show(Request $request, Conference $conference, CommentRepository $commentRepository): Response
+
+# templates/base.html.twig
+             {% for conference in conferences %}
+-                <li><a href="{{ path('conference', { id: conference.id }) }}">{{ conference }}</a></li>
++                <li><a href="{{ path('conference', { slug: conference.slug }) }}">{{ conference }}</a></li>
+             {% endfor %}
+
+# templates/conference/index.html.twig  
+         <p>
+-            <a href="{{ path('conference', { id: conference.id }) }}">View</a>
++            <a href="{{ path('conference', { slug: conference.slug }) }}">View</a>
+         </p>
+
+# templates/conference/show.html.twig
+         {% if previous >= 0 %}
+-            <a href="{{ path('conference', { id: conference.id, offset: previous }) }}">Previous</a>
++            <a href="{{ path('conference', { slug: conference.slug, offset: previous }) }}">Previous</a>
+         {% endif %}
+         {% if next < comments|length %}
+-            <a href="{{ path('conference', { id: conference.id, offset: next }) }}">Next</a>
++            <a href="{{ path('conference', { slug: conference.slug, offset: next }) }}">Next</a>
+         {% endif %}
+```
+]
+---
+
+.left-column[
+### A. Écouter les événements
+### B. Gérer le cycle de vie des objets Doctrine
+#### Définir des lifecycle callbacks
+#### Ajouter des slugs aux conférences
+#### Définir un lifecycle callback complexe
+#### Configurer un service dans le conteneur
+#### Utiliser des slugs dans l'application
+]
+.right-column[
+L'accès à la page d'une conférence devrait maintenant se faire grâce à son slug :
+
+.center[<img src="img/slug.png" alt="Slug" width="350px">]
+
+  > 📬 Commitez notre travail via `git commit -am "Gérer le cycle de vie des objets Doctrine"`
+]
+---
+class: center, middle, inverse
+# 5. Les formulaires
+---
+
+.left-column[
+  <br/>
+
+#### Générer un form type
+]
+.right-column[
+Il est temps de permettre aux personnes présentes de donner leur avis sur les conférences. Elles feront part de leurs commentaires au moyen d'un formulaire HTML.
+
+Utilisez le Maker Bundle pour générer une classe de formulaire :
+
+```sh
+symfony console make:form CommentFormType Comment
+```
+
+La classe `App\Form\CommentFormType` à été généré et définit un formulaire pour l'entité `App\Entity\Comment`
+
+Un form type décrit les champs de formulaire liés à un modèle. Il effectue la conversion des données entre les données soumises et les propriétés de la classe de modèle. Par défaut, Symfony utilise les métadonnées de l'entité `Comment`, comme les métadonnées Doctrine, pour deviner la configuration de chaque champ. Par exemple, le champ `text` se présente sous la forme d'un `textarea` parce qu'il utilise une colonne plus grande dans la base de données.
+]
+---
+
+.left-column[
+  <br/>
+
+#### Générer un form type
+#### Afficher un formulaire
+]
+.right-column[
+  Pour afficher le formulaire, créez-le dans le contrôleur et transmettez-le au template :
+
+```diff
++use App\Entity\Comment;
+ use App\Entity\Conference;
++use App\Form\CommentFormType;
+
+@@ ...
+
+     #[Route('/conference/{slug}', name: 'conference')]
+     public function show(Request $request, Conference $conference, CommentRepository $commentRepository): Response
+     {
++        $comment = new Comment();
++        $form = $this->createForm(CommentFormType::class, $comment);
++
+
+@@ ...
+
+             'previous' => $offset - CommentRepository::PAGINATOR_PER_PAGE,
+             'next' => min(count($paginator), $offset + CommentRepository::PAGINATOR_PER_PAGE),
++            'comment_form' => $form,
+```
+
+Vous ne devriez jamais instancier directement le form type. Utilisez plutôt la méthode createForm(). Cette méthode fait partie d'AbstractController et facilite la création de formulaires.
+
+Lorsque vous transmettez un formulaire à un template, utilisez createView() pour convertir les données dans un format adapté aux templates.
+]
+---
+
+.left-column[
+  <br/>
+
+#### Générer un form type
+#### Afficher un formulaire
+]
+.right-column[
+L'affichage du formulaire dans le template peut se faire via la fonction Twig form :
+```diff
+# templates/conference/show.html.twig
+     {% endif %}
++
++    <h2>Add your own feedback</h2>
++
++    {{ form(comment_form) }}
+ {% endblock %}
+```
+
+Lorsque vous rafraîchissez la page d'une conférence dans le navigateur, notez que chaque champ de formulaire affiche la balise HTML appropriée (le type de données est défini à partir du modèle) :
+
+.center[<img src="img/form.png" width="300px">]
+
+La fonction `form()` génère le formulaire HTML en fonction de toutes les informations définies dans le form type. Elle ajoute également `enctype=multipart/form-data` à la balise `<form> `comme l'exige le champ d'upload de fichier. De plus, elle se charge d'afficher les messages d'erreur lorsque la soumission comporte des erreurs. Tout peut être personnalisé en remplaçant les templates par défaut, mais nous n'en aurons pas besoin pour ce projet.
+]
+---
+
+.left-column[
+  <br/>
+
+#### Générer un form type
+#### Afficher un formulaire
+#### Personnaliser un form type
+]
+.right-column[
+Même si les champs de formulaire sont configurés en fonction de leur modèle associé, vous pouvez personnaliser la configuration par défaut directement dans la classe de form type :
+
+```diff
+ class CommentFormType extends AbstractType
+ {
+     public function buildForm(FormBuilderInterface $builder, array $options): void
+     {
+         $builder
+-            ->add('author')
++            ->add('author', null, [
++                'label' => 'Your name',
++            ])
+             ->add('text')
+-            ->add('email')
+-            ->add('createdAt')
+-            ->add('photoFilename')
+-            ->add('conference')
++            ->add('email', EmailType::class)
++            ->add('photo', FileType::class, [
++                'required' => false,
++                'mapped' => false,
++                'constraints' => [
++                    new Image(['maxSize' => '1024k'])
++                ],
++            ])
++            ->add('submit', SubmitType::class)
+         ;
+```
+Notez que nous avons ajouté un bouton submit (qui nous permet de continuer à utiliser simplement {{ form(comment_form) }} dans le template).
+
+
+]
+---
+
+.left-column[
+  <br/>
+
+#### Générer un form type
+#### Afficher un formulaire
+#### Personnaliser un form type
+]
+.right-column[
+Certains champs ne peuvent pas être auto-configurés, comme par exemple photoFilename. L'entité Comment n'a besoin d'enregistrer que le nom du fichier photo, mais le formulaire doit s'occuper de l'upload du fichier lui-même. Pour traiter ce cas, nous avons ajouté un champ appelé photo qui est un champ non mapped : il ne sera associé à aucune propriété de Comment. Nous le gérerons manuellement pour implémenter une logique spécifique (comme l'upload de la photo sur le disque).
+
+Comme exemple de personnalisation, nous avons également modifié le libellé par défaut de certains champs.
+
+.center[<img src="img/form-customized.png" width="400px">]
+]
+---
+
+.left-column[
+  <br/>
+
+#### Générer un form type
+#### Afficher un formulaire
+#### Personnaliser un form type
+#### Valider des modèles
+]
+.right-column[
+Le formulaire utilise le type de champ email pour l'email du commentaire et définit la plupart des champs en required. Notez qu'il contient également un champ _token caché pour nous protéger des attaques CSRF.
+
+Mais si la soumission du formulaire contourne la validation HTML (en utilisant un client HTTP comme cURL, qui n'applique pas ces règles de validation), des données invalides peuvent atteindre le serveur.
+
+Nous devons également ajouter certaines contraintes de validation à l'entité Comment :
+```diff
+ use Doctrine\ORM\Mapping as ORM;
++use Symfony\Component\Validator\Constraints as Assert;
+
+@@ ....
+
++    #[Assert\NotBlank]
+     private ?string $author = null;
+
+     #[ORM\Column(type: Types::TEXT)]
++    #[Assert\NotBlank]
+     private ?string $text = null;
+
+     #[ORM\Column(length: 255)]
++    #[Assert\NotBlank]
++    #[Assert\Email]
+     private ?string $email = null;
+```
+]
+---
+
+.left-column[
+  <br/>
+
+#### Générer un form type
+#### Afficher un formulaire
+#### Personnaliser un form type
+#### Valider des modèles
+#### Gérer un formulaire
+]
+.right-column[
+Le code que nous avons écrit jusqu'à présent est suffisant pour afficher le formulaire.
+
+Nous devrions maintenant nous occuper de la soumission du formulaire et de la persistance de ses informations dans la base de données depuis le contrôleur :
+
+```diff
+ class ConferenceController extends AbstractController
+ {
++    public function __construct(EntityManagerInterface $entityManager) { }
+
+@@ ...
+
+         $form = $this->createForm(CommentFormType::class, $comment);
++        $form->handleRequest($request);
++        if ($form->isSubmitted() && $form->isValid()) {
++            $comment->setConference($conference);
++
++            $this->entityManager->persist($comment);
++            $this->entityManager->flush();
++
++            return $this->redirectToRoute('conference', ['slug' => $conference->getSlug()]);
++        }
+
+```
+Lorsque le formulaire est soumis, l'objet Comment est mis à jour en fonction des données soumises.
+
+La conférence doit être la même que celle de l'URL (nous l'avons supprimée du formulaire).
+
+Si le formulaire n'est pas valide, nous affichons la page, mais le formulaire contiendra maintenant les valeurs soumises et les messages d'erreur afin qu'ils puissent être affichés à l'internaute.
+
+Essayez le formulaire. Il devrait fonctionner correctement et les données devraient être stockées dans la base de données (vérifiez-les dans l'interface d'administration). Il y a cependant un problème : les photos. Elles ne fonctionnent pas puisque nous ne les avons pas encore traitées dans le contrôleur.
+]
+---
+
+.left-column[
+  <br/>
+
+#### Générer un form type
+#### Afficher un formulaire
+#### Personnaliser un form type
+#### Valider des modèles
+#### Gérer un formulaire
+#### Uploader des fichiers
+]
+.right-column[
+Les photos uploadées doivent être stockées sur le disque local, à un endroit accessible par un navigateur afin que nous puissions les afficher sur la page d'une conférence. Nous les stockerons dans le dossier public/uploads/photos :
+
+Comme nous ne souhaitons pas mettre le répertoire en dur dans le code, nous devons trouver un moyen de le stocker de façon globale. Le conteneur Symfony est capable de stocker des paramètres (parameters) en plus des services pour permettre de les configurer :
+```diff
+# config/services.yaml
+ parameters:
++    photo_dir: "%kernel.project_dir%/public/uploads/photos"
+```
+Nous avons déjà vu comment les services sont automatiquement injectés dans les arguments des constructeurs. Pour les paramètres du conteneur, nous pouvons les injecter explicitement en utilisant l'attribut `Autowire`.
+
+Maintenant, nous avons tout ce qu'il nous faut pour implémenter la logique nécessaire au stockage du fichier soumis sous sa destination finale :
+
+```diff
+# src/Controller/ConferenceController.php
+-    public function show(Request $request, Conference $conference, CommentRepository $commentRepository): Response
+-    {
++    public function show(
++        Request $request,
++        Conference $conference,
++        CommentRepository $commentRepository,
++        #[Autowire('%photo_dir%')] string $photoDir,
++    ): Response {
+```
+
+]
+---
+
+.left-column[
+  <br/>
+
+#### Générer un form type
+#### Afficher un formulaire
+#### Personnaliser un form type
+#### Valider des modèles
+#### Gérer un formulaire
+#### Uploader des fichiers
+]
+.right-column[
+```diff
+# src/Controller/ConferenceController.php
+
+         if ($form->isSubmitted() && $form->isValid()) {
+             $comment->setConference($conference);
+
++            if ($photo = $form['photo']->getData()) {
++                $filename = bin2hex(random_bytes(6)).'.'.$photo->guessExtension();
++                try {
++                    $photo->move($photoDir, $filename);
++                } catch (FileException $e) {
++                    // unable to upload the photo, give up
++                }
++                $comment->setPhotoFilename($filename);
++            }
+
+             $this->entityManager->persist($comment);
+             $this->entityManager->flush();
+```
+
+Pour gérer les uploads de photos, nous créons un nom aléatoire pour le fichier. Ensuite, nous déplaçons le fichier uploadé à son emplacement final (le répertoire photo). Enfin, nous stockons le nom du fichier dans l'objet Comment.
+
+Essayez d'uploader un fichier PDF au lieu d'une photo. Vous devriez voir les messages d'erreur en action. Le design est encore assez laid, mais ne vous inquiétez pas, tout deviendra beau en quelques étapes lorsque nous travaillerons dessus. Pour les formulaires, nous allons changer une ligne de configuration pour styliser tous leurs éléments.
+]
+---
+
+.left-column[
+  <br/>
+
+#### Générer un form type
+#### Afficher un formulaire
+#### Personnaliser un form type
+#### Valider des modèles
+#### Gérer un formulaire
+#### Uploader des fichiers
+#### Déboguer des formulaires
+]
+.right-column[
+Lorsqu'un formulaire est soumis et que quelque chose ne fonctionne pas correctement, utilisez le panneau "Form" du Symfony Profiler. Il vous donne des informations sur le formulaire, toutes ses options, les données soumises et comment elles sont converties en interne. Si le formulaire contient des erreurs, elles seront également répertoriées.
+
+Le workflow classique d'un formulaire est le suivant :
+
+* Le formulaire est affiché sur une page ;
+* L'internaute soumet le formulaire via une requête POST ;
+* Le serveur redirige l'internaute, soit vers une autre page, soit vers la même page.
+
+.pull-left[
+Mais comment pouvez-vous accéder au profileur pour une requête de soumission réussie ? Étant donné que la page est immédiatement redirigée, nous ne voyons jamais la barre d'outils de débogage Web pour la requête POST. 
+
+Pas de problème : sur la page redirigée, survolez la partie verte "200" à gauche. Vous devriez voir la redirection "302" avec un lien vers le profileur (entre parenthèses).
+]
+.pull-right[
+  .center[
+    <img src="img/form-profiler.png" height="370px" />
+  ]
+]
+]
+---
+
+.left-column[
+  <br/>
+
+#### Générer un form type
+#### Afficher un formulaire
+#### Personnaliser un form type
+#### Valider des modèles
+#### Gérer un formulaire
+#### Uploader des fichiers
+#### Déboguer des formulaires
+#### Afficher les photos uploadées dans l'interface d'admin
+]
+.right-column[
+L'interface d'administration affiche actuellement le nom du fichier photo, mais nous voulons voir la vraie photo :
+```diff
+
+```
+]
+---
+
+.left-column[
+  <br/>
+
+#### Générer un form type
+#### Afficher un formulaire
+#### Personnaliser un form type
+#### Valider des modèles
+#### Gérer un formulaire
+#### Uploader des fichiers
+#### Déboguer des formulaires
+#### Afficher les photos uploadées dans l'interface d'admin
+]
+.right-column[
+
 ]
