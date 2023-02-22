@@ -41,9 +41,9 @@ h1, h2, h3, h4 {
   background-image: linear-gradient( 
     180deg,
     rgb(0, 0, 230),
-    blue 45px,
-    white 30px,
-    white 60px
+    blue 40px,
+    white 25px,
+    white 55px
   ), url("ri7.png");
 }
 .remark-slide-content li { font-size: 0.9em; }
