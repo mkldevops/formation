@@ -287,7 +287,6 @@ docker run hello-world
 ```
 La commande docker run crée un nouveau conteneur à partir de l'image `hello-world` et exécute la commande par défaut de l'image. Dans ce cas, la commande par défaut de l'image hello-world affiche un message de bienvenue.
 
-
 ]
 
 ---
@@ -301,21 +300,174 @@ La commande docker run crée un nouveau conteneur à partir de l'image `hello-wo
 
 Docker dispose de nombreuses commandes pour travailler avec des conteneurs, des images et des volumes. Voici quelques-unes des commandes les plus courantes :
 
-* **docker run :** Cette commande crée un nouveau conteneur à partir d'une image Docker.
+* **`docker run` :** Cette commande crée un nouveau conteneur à partir d'une image Docker.
 
-* docker ps : Cette commande affiche une liste des conteneurs en cours d'exécution.
+* **`docker ps`** : Cette commande affiche une liste des conteneurs en cours d'exécution.
 
-* docker images : Cette commande affiche une liste des images Docker disponibles sur votre machine.
+* **`docker images` :** Cette commande affiche une liste des images Docker disponibles sur votre machine.
 
-* docker stop : Cette commande arrête un ou plusieurs conteneurs en cours d'exécution.
+* **`docker stop` :** Cette commande arrête un ou plusieurs conteneurs en cours d'exécution.
 
-* docker rm : Cette commande supprime un ou plusieurs conteneurs.
+* **`docker rm` :** Cette commande supprime un ou plusieurs conteneurs.
 
-* docker rmi : Cette commande supprime une ou plusieurs images Docker.
+* **`docker rmi` :** Cette commande supprime une ou plusieurs images Docker.
 
-* docker build : Cette commande crée une nouvelle image Docker à partir d'un fichier Dockerfile.
+* **`docker build` :** Cette commande crée une nouvelle image Docker à partir d'un fichier Dockerfile.
+
+* **`docker exec` :** Cette commande exécute une commande dans un conteneur en cours d'exécution.
+
+* **`docker pull` :** Cette commande télécharge une image Docker depuis un registre Docker.
+
+* **`docker push` :** Cette commande envoie une image Docker vers un registre Docker.
+
+]
+
+---
+
+.left-column[
+<br />
+#### Lancer votre premier conteneur
+#### Utiliser les commandes de base de Docker
+#### Utiliser les commandes de base de Docker
+#### Créer une image Docker personnalisée
+]
+.right-column[
+Il est souvent nécessaire de créer une image Docker personnalisée pour vos projets. Pour créer une image Docker personnalisée, vous devez créer un fichier `Dockerfile` qui contient les instructions pour la création de l'image.
+
+Voici un exemple de fichier `Dockerfile` qui crée une image Docker pour une application `Node.js` :
+```sh
+FROM php:alpine
+WORKDIR /app
+COPY . .
+CMD [ "php", "-S", "0.0.0.0:8080" ]
+EXPOSE 8080
+```
+
+Ce fichier `Dockerfile` utilise la dernière image de base `php:alpine` (8.2)  pour créer une image qui copie les fichiers de l'application PHP dans le conteneur, expose le port `8080` et définit la commande par défaut pour lancer le serveur web intégré de PHP.
+
+Pour créer l'image Docker à partir du fichier Dockerfile, utilisez la commande suivante :
+
+```sh
+docker build -t mon-image .
+```
+
+La commande docker build crée une nouvelle image Docker à partir du fichier Dockerfile. L'option -t permet de donner un nom à l'image. Dans ce cas, le nom de l'image est mon-image.
+
+]
+
+---
+
+.left-column[
+<br />
+#### Lancer votre premier conteneur
+#### Utiliser les commandes de base de Docker
+#### Utiliser les commandes de base de Docker
+#### Créer une image Docker personnalisée
+#### Partager une image sur Docker Hub
+]
+.right-column[
+Docker Hub (https://hub.docker.com) est un registre d'images Docker qui permet de stocker et de partager des images Docker avec d'autres utilisateurs. Pour partager une image sur Docker Hub, vous devez d'abord créer un compte sur Docker Hub.
+
+Une fois que vous avez créé un compte sur Docker Hub, vous pouvez vous connecter à votre compte en utilisant la commande suivante :
+```sh
+docker login
+``` 
+La commande docker login vous demande votre nom d'utilisateur et votre mot de passe pour Docker Hub. Si vous avez entré les informations de connexion correctement, vous devriez être connecté à Docker Hub.
+
+Pour partager une image sur Docker Hub, vous devez d'abord taguer l'image avec le nom de votre compte Docker Hub. Pour cela, utilisez la commande suivante :
+```sh
+docker tag mon-image mon-compte-docker-hub/mon-image
+```
+
+Cette commande ajoute un nouveau tag à l'image mon-image avec le nom de votre compte Docker Hub. Par exemple, si votre nom d'utilisateur Docker Hub est `mon-utilisateur`, le nouveau tag sera `mon-utilisateur/mon-image`.
+
+Ensuite, vous pouvez pousser l'image vers Docker Hub en utilisant la commande suivante :
+```sh
+docker push mon-compte-docker-hub/mon-image
+```
+
+La commande docker push pousse l'image taguée vers Docker Hub. Une fois que l'image est poussée sur Docker Hub, vous pouvez la partager avec d'autres utilisateurs.
+
+]
+
+---
+
+.left-column[
+<br />
+#### Lancer votre premier conteneur
+#### Utiliser les commandes de base de Docker
+#### Utiliser les commandes de base de Docker
+#### Créer une image Docker personnalisée
+#### Partager une image sur Docker Hub
+#### .red[🚧 TP]
+]
+.right-column[
+L'objectif de ce TP est de vous familiariser avec Docker en créant et en gérant des conteneurs Docker.
+
+- **Étape 1 : Installation et configuration de Docker**<br />
+Assurez-vous que Docker est installé et configuré correctement sur votre machine.
+- **Étape 2 : Lancer un premier conteneur**<br />
+Lancez un conteneur Docker à partir de l'image hello-world. Vérifiez que le conteneur a été lancé correctement.
+- **Étape 3 : Les commandes de base de Docker**<br />
+Utilisez les commandes de base de Docker pour lister les images et les conteneurs Docker présents sur votre machine.
+- **Étape 4 : Créer une image Docker personnalisée**<br />
+Créez une image Docker personnalisée à partir de l'image php:alpine. Cette image doit contenir un script PHP simple qui affiche "Hello World" dans le navigateur.
+- **Étape 5 : Lancer un conteneur à partir de l'image personnalisée**<br />
+Lancez un conteneur à partir de l'image personnalisée que vous venez de créer. Vérifiez que le conteneur affiche "Hello World" dans votre navigateur.
+- **Étape 6 : Partager une image sur Docker Hub**<br />
+Créez un compte sur Docker Hub et partagez votre image personnalisée sur Docker Hub.
+- **Étape 7 : Utiliser Docker Compose**<br />
+Créez un fichier docker-compose.yml pour lancer deux conteneurs Docker : un conteneur pour votre image personnalisée et un conteneur pour la base de données MySQL. Les deux conteneurs doivent être en réseau et communiquer entre eux.
+- **Étape 8 : Tester les conteneurs**<br />
+Vérifiez que les deux conteneurs Docker sont lancés correctement et communiquent entre eux.
+
+
 ]
 
 
+---
+class: center, middle, inverse
+# 4. Docker compose
 
+---
+.left-column[
+<br />
+#### Présentation de Docker Compose
+]
+.right-column[
+**Docker Compose** est un outil open-source de Docker qui permet de décrire et de lancer des applications multi-conteneurs. Il facilite la gestion des différents conteneurs d'une application en les regroupant ensemble et en les lançant de manière cohérente.
 
+Docker Compose est un outil particulièrement utile pour les applications qui ont besoin de plusieurs conteneurs pour fonctionner, par exemple une application web qui nécessite un conteneur pour le serveur web et un autre conteneur pour la base de données.
+
+Avec Docker Compose, vous pouvez définir les différents conteneurs de votre application dans un fichier `docker-compose.yml`, qui décrit les images, les ports exposés, les variables d'environnement, etc. Ensuite, vous pouvez utiliser la commande docker-compose up pour lancer tous les conteneurs décrits dans le fichier `docker-compose.yml`.
+
+Docker Compose permet également de gérer la mise en réseau des différents conteneurs, en créant un réseau virtuel qui permet aux différents conteneurs de communiquer entre eux.
+
+🚀 En résumé, Docker Compose est un outil essentiel pour gérer des applications multi-conteneurs avec Docker. Il facilite la définition des différents conteneurs, leur mise en réseau et leur lancement de manière cohérente.
+.center[
+  <img src="img/docker-compose.jpeg" alt="Présentation de Docker Compose" width="300px" />
+]
+]
+---
+.left-column[
+<br />
+#### Présentation de Docker Compose
+#### Installation & Configuration
+]
+.right-column[
+
+#### Installation de Docker Compose
+Pour installer Docker Compose, vous pouvez vous rendre sur le site officiel de Docker et télécharger la dernière version de Docker Compose pour votre système d'exploitation. Une fois le téléchargement terminé, vous pouvez installer Docker Compose en suivant les instructions fournies.
+
+#### Configuration de Docker Compose
+La configuration de Docker Compose se fait principalement dans un fichier `docker-compose.yml` situé à la racine du projet. Ce fichier est utilisé par Docker Compose pour décrire les différents conteneurs de l'application, ainsi que les options de configuration associées.
+
+Le fichier `docker-compose.yml` est écrit en YAML, un format de données structuré facile à lire et à écrire. Dans ce fichier, vous pouvez définir plusieurs éléments :
+
+* **Les images des conteneurs :** vous pouvez spécifier les images Docker utilisées pour chaque conteneur, en précisant le nom de l'image et éventuellement la version.
+* **Les volumes :** vous pouvez configurer les volumes utilisés par les différents conteneurs pour stocker les données persistantes.
+* **Les variables d'environnement :** vous pouvez spécifier les variables d'environnement utilisées par les différents conteneurs pour configurer leur comportement.
+* **Les ports exposés :** vous pouvez préciser les ports exposés par les différents conteneurs pour permettre l'accès aux services qu'ils fournissent.
+* **Les liens entre les conteneurs :** vous pouvez configurer les liens entre les différents conteneurs pour qu'ils puissent communiquer entre eux.
+* **Les réseaux :** vous pouvez définir des réseaux virtuels pour vos conteneurs afin de les isoler les uns des autres.
+]
