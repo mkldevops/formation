@@ -8,27 +8,29 @@ class: center, middle, inverse
 
 class: middle
 .left-column[
-### Objectif
+### Introduction
 ]
 .right-column[
+#### Introduction
 
-  **La formation Symfony** est destinée aux développeurs qui souhaitent améliorer leurs compétences en matière de développement web. Elle vise à fournir aux participants une compréhension approfondie du framework Symfony, ainsi qu'à leur donner les connaissances et les compétences nécessaires pour créer des applications web de qualité supérieure.
+**Docker** est une technologie de conteneurisation qui permet de créer, de distribuer et d'exécuter des applications dans des conteneurs légers et portables. Cette technologie est devenue de plus en plus populaire ces dernières années, en raison de ses nombreux avantages pour les développeurs et les administrateurs système.
 
-### 🧗 
-Au cours de la formation, les participants apprendront comment utiliser les différents composants de Symfony pour construire des applications web robustes et évolutives. Ils découvriront également comment travailler avec les différents modèles de données, comment gérer les utilisateurs et les autorisations, et comment implémenter des fonctionnalités avancées telles que les formulaires, les validations, les routes, les contrôleurs, les vues, etc.
+L'utilisation de Docker permet de :
 
-### 🤝 
-En outre, la formation permettra aux participants de développer leur capacité à travailler en équipe, à communiquer avec d'autres développeurs et à gérer les défis du développement web. Les participants auront également l'opportunité de mettre en pratique leurs compétences en travaillant sur des projets concrets.
+* **Faciliter le déploiement d'applications :** les conteneurs Docker permettent de créer des environnements de développement et de production homogènes et portables, facilitant ainsi le déploiement de l'application sur différents serveurs.
 
-### 😎 
-En somme, la formation Symfony est une occasion unique pour les développeurs de développer leurs compétences en développement web et de se faire remarquer sur le marché du travail. Les participants auront les outils et les connaissances nécessaires pour construire des applications web performantes et pour atteindre leurs objectifs professionnels.
+* **Réduire les coûts et améliorer l'efficacité :** en utilisant Docker, les développeurs peuvent s'assurer que les applications fonctionnent de manière cohérente et prévisible, réduisant ainsi le temps passé à déboguer des erreurs. De plus, les conteneurs Docker sont plus légers que les machines virtuelles, ce qui permet d'économiser des ressources système.
+
+* **Améliorer la sécurité :** Docker utilise une architecture de sécurité qui permet de sécuriser les applications et les données sensibles en les isolant dans des conteneurs. Cette approche permet de réduire les risques de failles de sécurité et de compromission des données.
+
+Dans ce cours, nous allons nous concentrer sur l'utilisation de Docker pour le développement et le déploiement d'applications. Nous allons voir comment Docker permet de simplifier le processus de déploiement en créant des conteneurs légers et portables, et comment Docker Compose permet de gérer facilement les applications multi-conteneurs. Nous allons également explorer les principales commandes et fonctionnalités de Docker, afin que vous puissiez commencer à utiliser cette technologie dès aujourd'hui.
 ]
 
 ---
 
 class: middle
 .left-column[
-### Objectif
+### Introduction
 ### Au programme
 ]
 .right-column[
@@ -470,4 +472,109 @@ Le fichier `docker-compose.yml` est écrit en YAML, un format de données struct
 * **Les ports exposés :** vous pouvez préciser les ports exposés par les différents conteneurs pour permettre l'accès aux services qu'ils fournissent.
 * **Les liens entre les conteneurs :** vous pouvez configurer les liens entre les différents conteneurs pour qu'ils puissent communiquer entre eux.
 * **Les réseaux :** vous pouvez définir des réseaux virtuels pour vos conteneurs afin de les isoler les uns des autres.
+]
+---
+.left-column[
+<br />
+#### Présentation de Docker Compose
+#### Installation & Configuration
+#### Exemple d'utilisation de Docker Compose
+]
+.right-column[
+Voici un exemple d'utilisation de Docker Compose pour lancer une application composée d'un conteneur pour une application web et d'un conteneur pour une base de données MySQL :
+
+```yaml
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${PASSWORD:-password}
+    volumes:
+      - db_data:/var/lib/mysql
+```
+Dans cet exemple, le conteneur web est créé à partir du `Dockerfile` du répertoire courant, et expose le port `5000` de la machine hôte vers le port `5000` du conteneur. Le conteneur db est créé à partir de l'image MySQL 8.0 et définit la variable d'environnement `MYSQL_ROOT_PASSWORD` pour définir le mot de passe de l'utilisateur root de MySQL.
+
+#### Utilisation des variables d'environnement dans Docker Compose
+Docker Compose permet également d'utiliser des variables d'environnement pour définir les paramètres des conteneurs de votre application. Pour utiliser des variables d'environnement dans votre fichier `docker-compose.yml`, vous pouvez utiliser la syntaxe `${VAR}` pour référencer les variables d'environnement.
+]
+---
+.left-column[
+<br />
+#### Présentation de Docker Compose
+#### Installation & Configuration
+#### Exemple d'utilisation de Docker Compose
+#### Details des configurations docker-compose.yaml
+]
+.right-column[
+Voici quelques-unes des configurations les plus courantes que vous pouvez ajouter dans votre fichier docker-compose.yaml :
+
+* **`image`:** cette configuration permet de spécifier l'image Docker à utiliser pour un service donné. Si l'image n'est pas disponible localement, Docker Compose la téléchargera automatiquement depuis le Docker Hub.
+* **`build`:** cette configuration permet de construire une image personnalisée pour un service donné, à partir d'un Dockerfile. Elle peut inclure des options de construction telles que le contexte de construction et le chemin vers le fichier Dockerfile.
+* **`ports`:** cette configuration permet de spécifier les ports à exposer pour un service donné. Elle peut être utilisée pour rediriger les demandes de trafic réseau vers un conteneur Docker.
+* **`volumes`:** cette configuration permet de monter des volumes pour un service donné, ce qui permet de stocker des données persistantes en dehors du conteneur Docker.
+* **`environment`:** cette configuration permet de spécifier des variables d'environnement pour un service donné, qui peuvent être utilisées pour configurer l'application dans le conteneur Docker.
+* **`depends_on`:** cette configuration permet de spécifier les dépendances entre les différents services de votre application. Elle garantit que les services qui dépendent d'autres services sont lancés dans le bon ordre.
+
+Il est important de noter que le fichier docker-compose.yaml peut être versionné avec un système de contrôle de version (Git, SVN, etc.) pour faciliter la collaboration et le partage de code entre les membres de l'équipe de développement.
+]
+---
+.left-column[
+<br />
+#### Présentation de Docker Compose
+#### Installation & Configuration
+#### Exemple d'utilisation de Docker Compose
+#### Details des configurations docker-compose.yaml
+#### Lancer des conteneurs avec Docker Compose
+]
+.right-column[
+Pour lancer des conteneurs avec Docker Compose, vous devez d'abord créer un fichier `docker-compose.yaml` qui décrit les différents services de votre application. Une fois le fichier créé, vous pouvez utiliser la commande docker-compose up pour lancer tous les services de votre application en même temps.
+
+Par exemple, si vous avez un fichier `docker-compose.yaml` qui décrit deux services : un service de base de données MySQL et un service d'application PHP, vous pouvez lancer les deux services en même temps en utilisant la commande suivante :
+```sh
+docker-compose up
+```
+Cette commande lancera tous les services définis dans le fichier docker-compose.yaml et affichera les logs de chaque service dans la console.
+
+Si vous voulez lancer les services en arrière-plan, vous pouvez utiliser l'option -d ou --detach :
+```sh
+docker-compose up -d
+```
+Cette commande lancera tous les services définis dans le fichier docker-compose.yaml en arrière-plan, sans afficher les logs de chaque service dans la console.
+
+Vous pouvez également lancer un service spécifique en utilisant la commande docker-compose up avec le nom du service :
+```sh
+docker-compose up web
+```
+Cette commande lancera seulement le service spécifié dans le fichier docker-compose.yaml.
+]
+---
+.left-column[
+<br />
+#### Présentation de Docker Compose
+#### Installation & Configuration
+#### Exemple d'utilisation de Docker Compose
+#### Details des configurations docker-compose.yaml
+#### Lancer des conteneurs avec Docker Compose
+]
+.right-column[
+  Si vous voulez arrêter et supprimer tous les conteneurs lancés avec docker-compose up, vous pouvez utiliser la commande docker-compose down :
+```sh
+docker-compose down
+```
+Cette commande arrêtera et supprimera tous les conteneurs créés avec docker-compose up, ainsi que tous les réseaux et volumes Docker créés pour ces conteneurs.
+
+Enfin, si vous voulez arrêter les conteneurs sans les supprimer, vous pouvez utiliser la commande docker-compose stop :
+```sh
+docker-compose stop
+```
+Cette commande arrêtera tous les conteneurs lancés avec docker-compose up, mais les laissera en place pour que vous puissiez les relancer ultérieurement avec la commande docker-compose start.
+
+.center[
+  <img src="img/docker-compose-up.png" alt="Lancer des conteneurs avec Docker Compose" width="600" />
+]
 ]
