@@ -2351,7 +2351,7 @@ Nous devrions maintenant nous occuper de la soumission du formulaire et de la pe
 ```diff
  class ConferenceController extends AbstractController
  {
-+    public function __construct(EntityManagerInterface $entityManager) { }
++    public function __construct(private readonly EntityManagerInterface $entityManager) { }
 
 @@ ...
 
@@ -2689,7 +2689,8 @@ Un système de sécurité se compose de deux parties : l'authentification et l'a
 +        - { path: ^/admin, roles: ROLE_ADMIN }
 ```
 
-Les règles access_control limitent l'accès par des expressions régulières. Lorsqu'une personne connectée tente d'accéder à une URL qui commence par `/admin`, le système de sécurité vérifie qu'elle a bien le rôle `ROLE_ADMIN`.]
+Les règles access_control limitent l'accès par des expressions régulières. Lorsqu'une personne connectée tente d'accéder à une URL qui commence par `/admin`, le système de sécurité vérifie qu'elle a bien le rôle `ROLE_ADMIN`.
+]
 
 ---
 
@@ -2713,5 +2714,84 @@ Notez qu'EasyAdmin s'intègre automatiquement au système d'authentification de 
 .center[<img src="img/easy-admin-secured.png" width="300px">]
 
 > 🗒 Si vous voulez créer un système complet d'authentification par formulaire, jetez un coup d’œil à la commande make:registration-form.
-
 ]
+
+---
+
+.left-column[
+### A. Sécuriser l'interface d'admin
+### B. Empêcher le spam avec une API
+]
+.right-column[
+N'importe qui peut soumettre un commentaire, même des robots ou des spammeurs. Nous pourrions ajouter un "captcha" au formulaire pour nous protéger des robots, ou nous pouvons utiliser des API tierces.
+
+J'ai décidé d'utiliser le service gratuit [Akismet](https://akismet.com/) pour montrer comment appeler une API et comment faire un appel "vers l'extérieur".
+
+#### S'inscrire sur Akismet
+Créez un compte gratuit sur [akismet.com](https://akismet.com/) et récupérez la clé de l'API Akismet.
+
+#### Ajouter une dépendance au composant Symfony HTTPClient
+Au lieu d'utiliser une bibliothèque qui abstrait l'API d'Akismet, nous ferons directement tous les appels API. Faire nous-mêmes les appels HTTP est plus efficace (et nous permet de bénéficier de tous les outils de débogage de Symfony comme l'intégration avec le Symfony Profiler).
+
+#### Concevoir une classe de vérification de spam
+
+Créez une nouvelle classe dans src/ nommée SpamChecker pour contenir la logique d'appel à l'API d'Akismet et l'interprétation de ses réponses :
+]
+
+---
+
+.left-column[
+### A. Sécuriser l'interface d'admin
+### B. Empêcher le spam avec une API
+]
+.right-column[
+```php
+namespace App;
+
+use App\Entity\Comment;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+
+class SpamChecker
+{
+    private $endpoint;
+
+    public function __construct(private HttpClientInterface $client, string $akismetKey,) 
+    {
+        $this->endpoint = sprintf('https://%s.rest.akismet.com/1.1/comment-check', $akismetKey);
+    }
+
+    /**
+     * @return int Spam score: 0: not spam, 1: maybe spam, 2: blatant spam
+     */
+    public function getSpamScore(Comment $comment, array $context): int
+    {
+        $response = $this->client->request('POST', $this->endpoint, [
+            'body' => array_merge($context, [
+                'blog' => 'https://guestbook.example.com',
+                'comment_type' => 'comment',
+                'comment_author' => $comment->getAuthor(),
+                'comment_author_email' => $comment->getEmail(),
+                'comment_content' => $comment->getText(),
+                'comment_date_gmt' => $comment->getCreatedAt()->format('c'),
+                'blog_lang' => 'en',
+                'blog_charset' => 'UTF-8',
+                'is_test' => true,
+            ]),
+        ]);
+
+        $headers = $response->getHeaders();
+        if ('discard' === ($headers['x-akismet-pro-tip'][0] ?? '')) {
+            return 2;
+        }
+
+        $content = $response->getContent();
+        if (isset($headers['x-akismet-debug-help'][0])) {
+            throw new \RuntimeException(sprintf('Unable to check for spam: %s (%s).', $content, $headers['x-akismet-debug-help'][0]));
+        }
+
+        return 'true' === $content ? 1 : 0;
+    }
+}
+```
+]
+
