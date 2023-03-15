@@ -64,10 +64,13 @@ a, a > code {
   text-decoration: none;
 }
 code {
-  background: #e7e8e2;
-  border-radius: 5px;
+  background: #343434;
+  border-radius: 2px;
+  padding: 1px 4px;
+  color: #fff;
 }
-.remark-code, .remark-code-inline { font-family: 'Ubuntu Mono'; font-size: 0.8em; }
+.remark-code, .remark-code-inline, .remark-inline-code { font-family: 'Ubuntu Mono'; font-size: 0.7em; }
+.remark-inline-code { font-size: 0.8em; }
 .remark-code-line-highlighted     { background-color: #111306; }
 .pull-left {
   float: left;
