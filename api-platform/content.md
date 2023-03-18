@@ -52,10 +52,11 @@ class: middle, inverse, center
 class: middle
 L'introduction à **API Platform** vise à fournir une vue d'ensemble de l'outil, de ses fonctionnalités et de son écosystème.
 
-#### 1. Qu'est-ce que API Platform ?
+#### Qu'est-ce que API Platform ?
+
 API Platform est un **framework PHP open source basé sur Symfony**, qui permet de créer des API REST et des applications web modernes. Il offre une approche pragmatique pour créer des API web sécurisées, performantes et évolutives.
 
-#### 2. Les fonctionnalités d'API Platform
+#### Les fonctionnalités d'API Platform
 API Platform est livré avec une large gamme de fonctionnalités, y compris :
 
 * La génération automatique de la documentation Swagger et ReDoc pour votre API
@@ -610,7 +611,7 @@ curl -X GET  http://localhost:/api/books \
 
 class: inverse, center, middle
 
-# 6. Validation des données
+# 7. Validation des données
 
 ---
 
@@ -730,7 +731,7 @@ Ensuite, envoyez une requête `PUT` ou `PATCH` pour mettre à jour un utilisateu
 ---
 
 class: middle, center, inverse
-# 7. Relations entre les entités
+# 8. Relations entre les entités
 
 ---
 class: middle

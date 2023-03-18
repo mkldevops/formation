@@ -13,19 +13,20 @@ class: middle
 ]
 .pull-left[
 **Introduction**
-* Présentation de PHPUnit et de son intégration avec Symfony
-* Les différents types de tests en PHP
-* Les avantages des tests automatisés
+  * Qu'est-ce que le testing et pourquoi est-il important ?
+  * Présentation de PHPUnit et Symfony
+  * Types de tests : unitaires, d'intégration, fonctionnels et end-to-end (e2e)
 
 **Installation et configuration de l'environnement de développement**
-* Installation de Symfony
-* Configuration de l'environnement de développement
+  * Installation de Symfony
+  * Installation de PHPUnit via Composer
+  * Configuration de base de PHPUnit
 
 **Tests unitaires**
 * Qu'est-ce qu'un test unitaire ?
 * Écrire des tests unitaires avec PHPUnit
 * Les assertions de PHPUnit
-* Les mocks et les stubs pour isoler les tests
+* Utilisation de mocks et stubs pour isoler les dépendances
 
 **Tests d'intégration**
 * Qu'est-ce qu'un test d'intégration ?
@@ -61,23 +62,24 @@ class: middle, center, inverse
 ---
 class: middle
 
-Les tests automatisés sont une pratique importante dans le développement logiciel. Les tests automatisés aident les développeurs à détecter et corriger les erreurs plus tôt dans le processus de développement, réduisant ainsi les coûts et les risques liés aux erreurs de production.
+#### Qu'est-ce que le testing et pourquoi est-il important ?
 
-PHPUnit est un framework de test unitaire pour PHP. Il est largement utilisé dans la communauté PHP pour écrire des tests automatisés. PHPUnit a été créé par Sebastian Bergmann et est devenu un outil de référence pour écrire des tests en PHP.
+**Le testing, ou l'écriture de tests,** est un élément essentiel du développement logiciel qui vise à garantir la qualité et la fiabilité d'un programme. Il consiste à vérifier que le code fonctionne comme prévu et qu'il répond correctement aux différentes exigences et scénarios d'utilisation. Le testing est important pour plusieurs raisons :
 
-#### Présentation de PHPUnit et de son intégration avec Symfony:
+* Il permet de détecter et de **corriger les erreurs avant qu'elles n'affectent les utilisateurs finaux.**
 
-**Symfony est un framework PHP** open source qui fournit un ensemble de composants pour construire des applications Web robustes et évolutives. 
+* Il facilite la maintenance et l'évolution du code en **évitant les régressions et en documentant le comportement attendu.**
 
-**PHPUnit** est un framework de tests unitaires pour le langage PHP. Il permet de vérifier le bon fonctionnement des différentes parties d'une application et de s'assurer que les modifications n'entraînent pas d'effets indésirables. Utiliser PHPUnit avec Symfony présente plusieurs avantages :
+* Il favorise la collaboration entre les développeurs en **instaurant un environnement de confiance et en facilitant la révision du code.**
 
-* **Qualité du code :** les tests garantissent que le code fonctionne comme prévu, ce qui réduit les bugs et améliore la stabilité de l'application.
+* Il réduit les coûts à long terme en **minimisant les risques d'incidents et en améliorant la qualité** globale du logiciel.
 
-* **Facilité de maintenance :** les tests facilitent la compréhension du code, permettant ainsi une maintenance et une évolution plus aisées.
 
-* **Productivité accrue :** les tests automatisés réduisent le temps passé à tester manuellement l'application, ce qui permet aux développeurs de se concentrer sur l'écriture de nouvelles fonctionnalités.
+#### Présentation de PHPUnit et Symfony
 
-* **Intégration continue :** PHPUnit peut être intégré dans un processus d'intégration continue, facilitant ainsi la détection rapide des problèmes lors des mises à jour du code.
+**PHPUnit est un framework de testing pour PHP,** qui est largement utilisé pour écrire des tests automatisés pour les applications PHP. Il permet de créer des tests unitaires, d'intégration et fonctionnels pour les applications PHP et offre une variété d'outils et d'assertions pour vérifier le comportement du code.
+
+**Symfony**, quant à lui, est un framework de développement web PHP très populaire qui facilite la création et la maintenance d'applications web robustes et évolutives. Symfony est conçu pour être flexible et extensible, et intègre un certain nombre de composants réutilisables pour simplifier le développement. **Symfony et PHPUnit** fonctionnent bien ensemble et permettent de créer des tests pour les applications Symfony de manière simple et efficace.
 
 ---
 
@@ -95,14 +97,16 @@ Il existe différents types de tests en PHP, chacun ayant un objectif différent
 
 * **Les tests end-to-end:** Les tests end-to-end sont utilisés pour tester l'application dans son ensemble, en simulant des scénarios réels d'utilisation de l'application. Les tests end-to-end peuvent être utilisés pour s'assurer que l'application Symfony répond aux exigences de l'utilisateur final.
 
-#### Les avantages des tests automatisés:
+.pull-left[
+Chacun de ces types de tests joue un rôle important dans la garantie de la qualité et la fiabilité du logiciel. Ils contribuent à assurer que chaque composant fonctionne correctement et que l'application dans son ensemble répond aux attentes des utilisateurs et des parties prenantes.
 
-Les tests automatisés ont plusieurs avantages pour les développeurs:
-
-* Les tests automatisés aident les développeurs à détecter et corriger les erreurs plus tôt dans le processus de développement, réduisant ainsi les coûts et les risques liés aux erreurs de production.
-* Les tests automatisés améliorent la qualité du code en garantissant que chaque composant de l'application fonctionne correctement.
-* Les tests automatisés permettent de détecter les régressions, c'est-à-dire les erreurs introduites dans le code lors de modifications futures.
-* Les tests automatisés permettent aux développeurs de mieux comprendre leur code en écrivant des tests pour chaque composant de l'application.
+**En combinant ces différents types de tests,** les développeurs peuvent bâtir une stratégie de testing complète et efficace pour leur application.
+]
+.pull-right[
+.center[
+    <img src="img/phpunit-pyramid.png" alt="PHPUnit Pyramide" width="200" />
+]
+]
 
 ---
 class: middle, inverse, center
@@ -115,19 +119,17 @@ class: middle
 
 #### Installation de Symfony
 
-Pour commencer avec API Platform, il est nécessaire d'installer Symfony. Symfony est un framework PHP qui fournit un ensemble de composants pour construire des applications web modernes.
-1
-Durant cette formation nous allons utiliser Gitpod pour installer Symfony, il suffit d'utiliser le template suivant : https://github.com/mkl-devops-ri7/formation-symfony-template  
+Pour commencer la formation, il est nécessaire d'installer Symfony. Symfony est un framework PHP qui fournit un ensemble de composants pour construire des applications web modernes.
+
+Durant cette formation nous allons utiliser **Gitpod** pour installer Symfony, il suffit d'utiliser le template suivant : https://github.com/mkl-devops-ri7/formation-symfony-template  
 
 Suivons les étapes du `README.md` l'installation de symfony se fera automatiquement et lancera le projet sur le port `8080`.
 
-#### Configuration de l'environnement de développement
+**Configuration de l'environnement de développement**
 
 Une fois Symfony installé, il est recommandé de configurer l'environnement de développement. Il est possible de créer un fichier `.env.local` à la racine du projet pour stocker les variables d'environnement spécifiques au développement.
 
-Dans ce fichier, vous pouvez définir des paramètres tels que la configuration de la base de données, les informations d'identification de l'API, etc.
-
-Nous utiliserons Sqlite comme base de données lors de cette formation. Dans un nouveau fichier `.env.local` ajoutez-y le code suivant.
+Dans ce fichier, vous pouvez définir des paramètres tels que la configuration de la base de données. Nous utiliserons Sqlite comme base de données lors de cette formation. Ajoutez-y la configuration suivante :
 
 ```dotenv
 # .env.local
@@ -141,12 +143,13 @@ class: middle
 
 Une fois que Symfony est installé et configuré, connectez-vous au container via `make docker-sh`.
 
-Vous pouvez installer API Platform en utilisant **Composer**. API Platform est disponible sous forme de paquet Composer, qui peut être installé en utilisant la commande suivante :
+Vous pouvez installer PHPUnit en utilisant **Composer**. PHPUnit est disponible sous forme de paquet Composer, qui peut être installé en utilisant la commande suivante :
 
 ```bash
 symfony composer require tests
 ```
-Cette commande installera PHPUnit dans le répertoire "vendor" de votre projet et ajoutera également une entrée pour PHPUnit dans le fichier "composer.json" de votre projet.
+
+Cette commande installera PHPUnit dans le répertoire `vendor` de votre projet et ajoutera également une entrée pour PHPUnit dans le fichier `composer.json` de votre projet.
 
 Pour exécuter les tests unitaires avec PHPUnit, vous pouvez utiliser la commande suivante :
 
@@ -154,14 +157,54 @@ Pour exécuter les tests unitaires avec PHPUnit, vous pouvez utiliser la command
 symfony php bin/phpunit
 ```
 
-Cette commande exécutera tous les tests unitaires présents dans le répertoire "tests" de votre projet.
 
-Pour exécuter un test unitaire spécifique, vous pouvez utiliser la commande suivante :
+---
 
-```bash
-symfony php bin/phpunit tests/Controller/DefaultControllerTest.php
+class: middle
+
+####  Configuration de base de PHPUnit
+
+PHPUnit utilise un fichier de configuration XML pour déterminer comment exécuter les tests. Dans un projet Symfony, ce fichier se nomme généralement phpunit.xml.dist et se trouve à la racine du projet.  C'est le fichier de configuration principal pour PHPUnit. Il permet de définir les paramètres globaux, les répertoires de test et les options d'exécution pour les tests de votre projet. Voici quelques détails sur les éléments couramment utilisés dans ce fichier .
+
+.pull-left[
+* **`<phpunit>` :** L'élément racine du fichier de configuration. Il contient plusieurs attributs importants :
+  * `colors` : Active ou désactive l'affichage des couleurs dans la sortie du terminal (défaut : false).
+  * `bootstrap` : Spécifie le fichier PHP à inclure avant l'exécution des tests.
+* **`<testsuites>` :** Contient une ou plusieurs balises `<testsuite>`, chacune définissant un ensemble de tests. Chaque `testsuite` doit avoir un nom unique et peut inclure un ou plusieurs répertoires contenant les fichiers de test.
+* **`<coverage>` :** configure la couverture de code pour PHPUnit. Elle permet d'inclure ou d'exclure des fichiers ou des répertoires spécifiques lors du calcul de la couverture.
+* **`<php>` :** Contient des éléments de configuration spécifiques à PHP, tels que les options `ini` et les variables d'environnement (env et server). Par exemple, on peut définir le niveau de rapport d'erreur de PHP ou configurer l'environnement de l'application (`APP_ENV`) pour les tests.
+]
+.pull-right[
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         colors="true"
+         bootstrap="tests/bootstrap.php"
+>
+    <php>
+        <ini name="display_errors" value="1" />
+        <ini name="error_reporting" value="-1" />
+        <server name="APP_ENV" value="test" force="true" />
+        <server name="SHELL_VERBOSITY" value="-1" />
+        <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
+        <server name="SYMFONY_PHPUNIT_VERSION" value="9.5" />
+    </php>
+
+    <testsuites>
+        <testsuite name="Project Test Suite">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </coverage>
+</phpunit>
 ```
 
+]
 ---
 
 class: middle, center, inverse
@@ -171,21 +214,23 @@ class: middle, center, inverse
 ---
 class: middle
 
-Les tests unitaires sont utilisés pour tester les composants individuels d'une application, tels que les méthodes ou les classes. Les tests unitaires sont souvent considérés comme la base des tests automatisés, car ils sont utilisés pour tester chaque partie d'une application de manière isolée et indépendante.
 
-Les tests unitaires sont également rapides à exécuter et permettent aux développeurs de détecter les erreurs plus tôt dans le processus de développement.
-
-### Qu'est-ce qu'un test unitaire?
+#### Qu'est-ce qu'un test unitaire ?
 
 Un test unitaire est un test automatisé qui vérifie le comportement d'une méthode ou d'une classe spécifique dans une application. Un test unitaire est conçu pour tester une petite partie de code, appelée "unité", afin de garantir que cette unité fonctionne correctement. 
 
 Les tests unitaires doivent être écrits de manière à être indépendants des autres parties de l'application et doivent être facilement reproductibles.
 
 
+Les tests unitaires sont également rapides à exécuter et permettent aux développeurs de détecter les erreurs plus tôt dans le processus de développement.
+
+.center[
+    <img src="img/phpunit-pyramid.png" alt="PHPUnit Pyramide" width="300" />
+]
 ---
 class: middle
 
-### Écrire des tests unitaires avec PHPUnit:
+#### Écrire des tests unitaires avec PHPUnit
 
 PHPUnit fournit des outils pour écrire des tests unitaires en PHP. Les tests unitaires écrits avec PHPUnit sont généralement organisés en classes de test qui contiennent plusieurs méthodes de test. Chaque méthode de test est conçue pour tester une unité spécifique de code.
 
@@ -199,7 +244,7 @@ class MyTest extends TestCase
     public function testAddition()
     {
         $result = 1 + 2;
-        $this->assertEquals(3, $result);
+        static::assertEquals(3, $result);
     }
 }
 ```
@@ -209,7 +254,7 @@ Dans cet exemple, nous avons créé une classe de test `MyTest` qui hérite de l
 ---
 class: middle
 
-### Les assertions de PHPUnit:
+#### Les assertions de PHPUnit
 
 PHPUnit fournit plusieurs méthodes d'assertion pour tester le comportement du code dans les tests unitaires. Voici quelques exemples d'assertions couramment utilisées:
 
@@ -239,31 +284,307 @@ class BookTest extends TestCase
     {
         $book = new Book();
         $book->setId(1);
-        $this->assertEquals(1, $book->getId());
+        static::assertEquals(1, $book->getId());
     }
 
     public function testGetTitle()
     {
         $book = new Book();
         $book->setTitle('Le Petit Prince');
-        $this->assertEquals('Le Petit Prince', $book->getTitle());
+        static::assertEquals('Le Petit Prince', $book->getTitle());
     }
 
     public function testGetAuthor()
     {
         $book = new Book();
         $book->setAuthor('Antoine de Saint-Exupéry');
-        $this->assertEquals('Antoine de Saint-Exupéry', $book->getAuthor());
+        static::assertEquals('Antoine de Saint-Exupéry', $book->getAuthor());
+    }
+}
+```
+
+---
+class: middle
+
+#### Utilisation de mocks et stubs pour isoler les dépendances
+
+Lors des tests, il est souvent nécessaire d'isoler les dépendances pour éviter que des éléments externes, tels que les bases de données ou les services web, n'affectent les résultats des tests. **Les mocks et les stubs** sont des objets de substitution qui imitent le comportement des dépendances réelles, permettant ainsi de contrôler et de simuler les interactions entre les objets.
+
+##### Les mocks
+
+.pull-left[
+
+Considérez l'exemple suivant avec les classes `Book` et `Category` :
+
+```php
+class Category
+{
+    public function getName(): string
+    {
+        // Retourne le nom de la catégorie
+    }
+}
+
+class Book
+{
+    private $category;
+
+    public function __construct(Category $category)
+    {
+        $this->category = $category;
+    }
+
+    public function getCategoryName(): string
+    {
+        return $this->category->getName();
+    }
+}
+```
+]
+.pull-right[
+  Pour tester la classe Book, nous pouvons créer un mock de la classe Category à l'aide de PHPUnit :
+
+```php
+namespace App\Tests;
+
+use App\Book;
+use App\Category;
+use PHPUnit\Framework\TestCase;
+
+class BookTest extends TestCase
+{
+    public function testGetCategoryName()
+    {
+        // Crée un mock de la classe Category
+        $categoryMock = $this->createMock(Category::class);
+
+        // Configure le mock pour retourner 'Fiction' lors de l'appel à la méthode 'getName'
+        $categoryMock->method('getName')->willReturn('Fiction');
+
+        // Utilise le mock de Category lors de la création de l'instance de Book
+        $book = new Book($categoryMock);
+
+        // Teste si la méthode 'getCategoryName' retourne le nom de la catégorie défini par le mock
+        $this->assertEquals('Fiction', $book->getCategoryName());
+    }
+}
+```
+]
+
+---
+class: middle
+
+##### Les stubs
+
+Les stubs sont similaires aux mocks en ce sens qu'ils sont également utilisés pour remplacer des dépendances réelles par des objets de substitution. Cependant, les stubs sont généralement plus simples et se concentrent sur la fourniture de réponses prédéfinies aux appels de méthodes, sans se préoccuper du nombre ou de l'ordre des appels.
+
+Dans l'exemple précédent avec les classes `Book` et `Category`, nous pouvons également utiliser un stub pour remplacer la dépendance Category. Voici comment créer un stub avec PHPUnit en utilisant la méthode `getMockBuilder()`:
+
+.pull-left[
+```php
+namespace App\Tests;
+
+use App\Book;
+use App\Category;
+use PHPUnit\Framework\TestCase;
+
+class BookTest extends TestCase
+{
+  public function testGetCategoryName()
+  {
+    // Crée un stub de la classe Category
+    $categoryStub = $this->getMockBuilder(Category::class)
+                          ->setMethods(['getName'])
+                          ->getMock();
+
+    // Configure le stub pour retourner 'Fiction' lors de l'appel à la méthode 'getName'
+    $categoryStub->method('getName')->willReturn('Fiction');
+
+    // Utilise le stub de Category lors de la création de l'instance de Book
+    $book = new Book($categoryStub);
+
+    // Teste si la méthode 'getCategoryName' retourne le nom de la catégorie défini par le stub
+    $this->assertEquals('Fiction', $book->getCategoryName());
+  }
+}
+```
+]
+.pull-right[
+Dans cet exemple, nous utilisons `getMockBuilder()` pour créer un stub de la classe `Category`. Nous spécifions les méthodes à remplacer avec `setMethods()` et appelons `getMock()` pour générer le stub. Ensuite, nous configurons le stub pour retourner une valeur prédéfinie ('Fiction') lors de l'appel à la méthode `getName()`.
+
+Notez que, dans cet exemple, la différence entre un mock et un stub est minime, car PHPUnit utilise la même classe `MockObject` pour créer les deux. Cependant, la distinction conceptuelle entre les mocks et les stubs est importante: les mocks vérifient les interactions et les comportements, tandis que les stubs fournissent des réponses prédéfinies sans se préoccuper des détails des interactions.
+]
+
+---
+
+class: middle, center, inverse
+
+# Tests d'intégration
+
+---
+
+class: middle
+
+#### Qu'est-ce qu'un test d'intégration ?
+
+Les tests d'intégration visent à vérifier la bonne interaction entre plusieurs composants ou modules d'une application. Contrairement aux tests unitaires, qui se concentrent sur le fonctionnement individuel des composants, les tests d'intégration valident que l'ensemble des composants fonctionne correctement lorsqu'ils sont combinés.
+
+Les tests d'intégration sont généralement plus lents que les tests unitaires, car ils nécessitent de créer un environnement d'exécution complet pour l'application. Cependant, ils sont souvent plus efficaces pour détecter les problèmes de fonctionnement de l'application.
+
+.center[
+    <img src="img/phpunit-pyramid.png" alt="PHPUnit Pyramide" width="300" />
+]
+
+---
+
+class: middle
+
+#### Écrire des tests d'intégration avec PHPUnit et Symfony
+
+Les tests d'intégration sont souvent réalisés en utilisant le composant `KernelTestCase` de Symfony, qui permet de tester les interactions entre les différents composants de l'application sans passer par le client HTTP.
+
+Ce composant étend la classe `TestCase` de PHPUnit et offre des fonctionnalités supplémentaires pour tester les interactions entre les différentes parties de l'application, notamment les services et les bases de données.
+
+Imaginons que nous avons un service BookFormatter qui formate le titre et l'auteur d'un livre en une chaîne de caractères.
+
+```php
+namespace App\Service;
+
+use App\Entity\Book;
+
+class BookFormatter
+{
+    public function format(Book $book): string
+    {
+        return sprintf('%s by %s', $book->getTitle(), $book->getAuthor());
     }
 }
 ```
 
 ---
 
-### Les mocks et les stubs pour isoler les tests:
+class: middle
 
-Les mocks et les stubs sont utilisés pour isoler les tests unitaires de l'environnement de l'application et pour simuler le comportement de certaines parties de l'application. Les mocks sont utilisés pour remplacer des objets réels dans l'application, tandis que les stubs sont utilisés pour remplacer des méthodes ou des fonctions.
+.pull-left[
+Définissez le test d'intégration pour le service `BookFormatter` en utilisant `KernelTestCase` :
 
-PHPUnit fournit des outils pour créer des mocks et des stubs pour les tests unitaires. Les mocks et les stubs permettent aux développeurs de tester des parties spécifiques de l'application de manière isolée et de garantir que ces parties fonctionnent correctement.
+```php
+namespace App\Tests;
 
-En conclusion, les tests unitaires sont une pratique importante dans le développement logiciel et sont utilisés pour tester chaque partie de l'application de manière isolée et indépendante. PHPUnit fournit des outils pour écrire des tests unitaires en PHP, y compris des assertions et des outils pour isoler les tests avec des mocks et des stubs.
+use App\Entity\Book;
+use App\Service\BookFormatter;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+
+class BookFormatterTest extends KernelTestCase
+{
+    public function testFormatBookInfo()
+    {
+        // Initialise le noyau et le conteneur pour accéder aux services
+        self::bootKernel();
+        $container = self::$kernel->getContainer();
+
+        // Récupère le service BookFormatter
+        $bookFormatter = $container->get(BookFormatter::class);
+
+        // Crée un nouveau livre
+        $book = (new Book())
+          ->setTitle('Test Book')
+          ->setAuthor('John Doe');
+
+        // Formate les informations du livre
+        $formattedInfo = $bookFormatter->format($book);
+
+        // Vérifie si les informations du livre sont correctement formatées
+        static::assertEquals('Test Book by John Doe', $formattedInfo);
+    }
+}
+```
+]
+.pull-right[
+
+Dans cet exemple, nous utilisons la classe `KernelTestCase` pour initialiser le noyau et accéder au conteneur de services. Nous récupérons ensuite le service `BookFormatter` et créons un nouveau livre avec un titre et un auteur. Enfin, nous appelons la méthode `format()` pour formater les informations du livre et vérifions que la chaîne de caractères retournée est correctement formatée.
+
+Cet exemple illustre comment écrire un test d'intégration pour un service personnalisé en utilisant `KernelTestCase`, indépendamment de Doctrine ou d'autres services tiers.
+
+La classe `KernelTestCase` est idéale pour les tests d'intégration qui n'impliquent pas de requêtes HTTP et permet d'écrire des tests plus rapides et plus ciblés sur les interactions entre les composants de l'application.
+]
+
+---
+
+class: middle
+
+#### Utilisation de la base de données dans les tests
+
+Pour utiliser une base de données dans les tests d'intégration, il est recommandé de créer une base de données de test séparée afin de ne pas affecter les données de production. Dans le fichier `.env.test` de votre projet Symfony, modifiez la variable `DATABASE_URL` pour pointer vers votre base de données de test.
+
+```bash
+DATABASE_URL="sqlite:///%kernel.project_dir%/var/test.db"
+```
+
+---
+class: middle
+
+#### Utilisation de l'ORM Doctrine
+
+Lors de l'écriture de tests d'intégration avec Symfony, vous pouvez utiliser l'ORM Doctrine pour interagir avec la base de données de test. Voici un exemple de test d'intégration qui utilise Doctrine pour tester la récupération d'un livre par son identifiant :
+
+.pull-left[
+
+```php
+namespace App\Tests;
+
+use App\Entity\Book;
+use App\Repository\BookRepository;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+
+class BookRepositoryTest extends KernelTestCase
+{
+    public function testFindById()
+    {
+        self::bootKernel();
+        $container = self::$kernel->getContainer();
+
+        // Récupère le repository du livre
+        $bookRepository = $container->get(BookRepository::class);
+
+        $book = (new Book())
+          ->setTitle('Test Book')
+          ->setAuthor('John Doe');
+
+        $entityManager = $container->get(EntityManagerInterface::class);
+        $entityManager->persist($book);
+        $entityManager->flush();
+
+        // Recherche le livre par son identifiant
+        $foundBook = $bookRepository->find($book->getId());
+
+        // Vérifie si le livre récupéré correspond au livre créé
+        static::assertSame($book, $foundBook);
+    }
+}
+```
+]
+
+.pull-right[
+Dans cet exemple, nous utilisons la classe `KernelTestCase` pour initialiser le kernel et accéder aux services de l'application. Nous récupérons le repository de la classe `Book`, créons un nouveau livre et l'enregistrons dans la base de données de test. Enfin, nous recherchons le livre par son identifiant et vérifions que le livre récupéré correspond au livre créé.
+
+Ce test d'intégration illustre comment utiliser Symfony, PHPUnit et Doctrine pour tester les interactions entre les composants de l'application et la base de données.
+]
+
+---
+
+class: middle, center, inverse
+
+# Tests fonctionnels
+
+---
+
+class: middle
+
+#### Qu'est-ce qu'un test fonctionnel ?
+
+**Les tests fonctionnels** visent à vérifier le comportement de l'application du point de vue de l'utilisateur final. Ils se concentrent sur la manière dont les fonctionnalités sont présentées et utilisées, en évaluant l'interaction entre l'interface utilisateur, le code backend et les autres composants de l'application.
+
+Les tests fonctionnels simulent généralement des actions utilisateur, telles que la navigation, le remplissage de formulaires et la soumission de données.
+
+
