@@ -199,3 +199,7 @@ th {
 .left-column h2 {
   margin-top: 30px;
 }
+
+.hljs-monokai .hljs-deletion {
+  color: #eb4d4da1;
+}

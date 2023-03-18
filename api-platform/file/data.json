@@ -1,0 +1,33 @@
+{
+  "books": [
+    {
+      "title": "The Hitchhiker's Guide to the Galaxy",
+      "author": "Douglas Adams",
+      "year": "1979",
+      "category": "Science Fiction"
+    },
+    {
+      "title": "The Restaurant at the End of the Universe",
+      "author": "Douglas Adams",
+      "year": "1980",
+      "category": "Science Fiction"
+    },
+    {
+      "title": "Life, the Universe and Everything",
+      "author": "Douglas Adams",
+      "year": "1982",
+      "category": "Science Fiction"
+    }
+  ],
+  "categories": [
+    {
+      "name": "Science Fiction"
+    },
+    {
+      "name": "Fantasy"
+    },
+    {
+      "name": "Mystery"
+    }
+  ]
+}

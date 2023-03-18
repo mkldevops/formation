@@ -1,6 +1,7 @@
 name: inverse
 class: center, middle, inverse
-# Docker
+
+<img src="img/logo.webp" alt="Docker" width="400px" style="margin-bottom:3rem" />
 
 # .red[Conteneurisation]
 
