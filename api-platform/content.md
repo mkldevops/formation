@@ -105,7 +105,7 @@ class: middle
 #### Installation de Symfony
 
 Pour commencer avec API Platform, il est nécessaire d'installer Symfony. Symfony est un framework PHP qui fournit un ensemble de composants pour construire des applications web modernes.
-1
+
 Durant cette formation nous allons utiliser Gitpod pour installer Symfony, il suffit d'utiliser le template suivant : https://github.com/mkl-devops-ri7/formation-symfony-template  
 
 Suivons les étapes du `README.md`, l'installation de symfony se fera automatiquement et lancera le projet sur le port `8080`.

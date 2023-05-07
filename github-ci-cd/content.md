@@ -8,48 +8,659 @@ class: center, middle, inverse
 
 class: middle
 .center[
+
 ### Programme
+
 ]
 .pull-left[
+
 * **Introduction à GitHub Actions**
-  a. Présentation de GitHub Actions
-  b. Utilisation et avantages de l'automatisation dans le développement logiciel
-  c. Comparaison avec d'autres outils d'intégration continue/déploiement continu (CI/CD)
 
-Premiers pas avec GitHub Actions
-a. Création d'un dépôt GitHub
-b. Présentation de l'interface utilisateur de GitHub Actions
-c. Exploration des actions préconfigurées dans le Marketplace
+  * Présentation de GitHub Actions
+  * Utilisation et avantages de l'automatisation dans le développement logiciel
+  * Comparaison avec d'autres outils d'intégration continue/déploiement continu (CI/CD)
 
-Création d'un workflow simple
-a. Introduction aux fichiers YAML
-b. Création d'un fichier de workflow
-c. Configuration des événements déclencheurs (push, pull_request, etc.)
-d. Ajout des étapes du workflow (actions)
-e. Gestion des erreurs et débogage
+* **Premiers pas avec GitHub Actions**
 
-Utilisation des actions communautaires
-a. Recherche et sélection d'actions adaptées à vos besoins
-b. Intégration d'actions communautaires dans votre workflow
+  * Création d'un dépôt GitHub
+  * Présentation de l'interface utilisateur de GitHub Actions
+  * Exploration des actions préconfigurées dans le Marketplace
+
+* **Création d'un workflow simple**
+
+  * Introduction aux fichiers YAML
+  * Création d'un fichier de workflow
+  * Configuration des événements déclencheurs (push, pull_request, etc.)
+  * Ajout des étapes du workflow (actions)
+  * Gestion des erreurs et débogage
+
 ]
 .pull-right[
-Variables d'environnement et secrets
-a. Utilisation des variables d'environnement
-b. Création et gestion des secrets
-c. Utilisation des secrets dans les workflows
 
-Exemple pratique : Déploiement d'une application web
-a. Présentation du projet exemple
-b. Mise en place d'un workflow de CI/CD pour tester et déployer l'application
-c. Déploiement automatique de l'application sur une plateforme (Heroku, AWS, etc.)
+* **Utilisation des actions communautaires**
+  * Recherche et sélection d'actions adaptées à vos besoins
+  * Intégration d'actions communautaires dans votre workflow
+  * 🚧 .red[**Exercice de travaux pratiques**]
 
-Bonnes pratiques et astuces
-a. Gestion des branches et des Pull Requests
-b. Réutilisation des workflows
-c. Optimisation des performances des workflows
+* **Variables d'environnement et secrets**
 
-Conclusion et ressources supplémentaires
-a. Résumé des points clés abordés
-b. Ressources pour approfondir et se tenir informé des nouveautés
-c. Questions et réponses
+  * Utilisation des variables d'environnement
+  * Création et gestion des secrets
+  * Utilisation des secrets dans les workflows
+
+* **Exemple pratique : Déploiement d'une application web**
+
+  * Présentation du projet exemple
+  * Mise en place d'un workflow de CI/CD pour tester l'application
+  * Construire une image docker de l'application depuis le workflow
+  * Déploiement automatique de l'application sur une plateforme (Heroku, AWS, etc.)
+]
+
+---
+
+class: middle, inverse, center
+
+# Introduction à GitHub Actions
+
+---
+
+class: middle
+
+
+Bienvenue à cette formation sur l'introduction à GitHub Actions ! Dans cette formation, nous allons explorer ce qu'est GitHub Actions, son utilité et ses avantages pour l'automatisation dans le développement logiciel, ainsi que sa comparaison avec d'autres outils de CI/CD.
+
+### Présentation de GitHub Actions
+
+GitHub Actions est un outil d'automatisation intégré à GitHub qui vous permet de définir des workflows personnalisés pour votre projet. 
+
+Ces workflows sont des actions qui sont déclenchées par des événements tels que :
+
+  * La création de nouvelles pull requests
+  * la création ou la modification de problèmes 
+  * De commentaires sur des problèmes
+  * Même en réponse à des événements externes tels que des notifications provenant de services tiers.
+
+Les workflows peuvent être utilisés pour automatiser des tâches telles que :
+
+  * Les builds de projets (Java, docker, Javascript, ...)
+  * Les tests
+  * Le déploiement 
+  * Et bien plus encore.
+  
+Vous pouvez écrire des actions personnalisées pour accomplir des tâches spécifiques ou utiliser des actions préconstruites dans le marché GitHub Actions.
+
+---
+
+class: middle
+
+### Utilisation et avantages de l'automatisation dans le développement logiciel
+
+L'automatisation est devenue une partie intégrante du développement logiciel moderne. Elle peut aider à : 
+
+  * Accélérer le développement
+  * Réduire les erreurs humaines
+  * Améliorer la qualité du code.
+
+L'automatisation est particulièrement utile **pour les tâches répétitives** telles que la compilation, les tests, le déploiement et la vérification de la conformité.
+
+L'automatisation permet également aux développeurs de se concentrer sur des tâches à plus haute valeur ajoutée, telles que la création de nouvelles fonctionnalités, plutôt que de passer du temps à effectuer des tâches manuelles et fastidieuses.
+
+.center[
+  <image src="img/workflow.png" width="500" alt="Worflow" />
+]
+
+---
+
+class: middle
+
+### Comparaison avec d'autres outils d'intégration continue/déploiement continu (CI/CD)
+
+**GitHub Actions est un outil de CI/CD** relativement nouveau qui a été lancé en 2019. Il existe cependant de nombreux autres outils de CI/CD disponibles sur le marché, tels que Jenkins, Travis CI, CircleCI et GitLab CI/CD.
+
+🔹 La principale différence entre GitHub Actions et ces autres outils est qu'il est intégré directement dans GitHub, tandis que les autres outils nécessitent généralement une configuration séparée et un environnement de serveur dédié.
+
+🔹 De plus, GitHub Actions permet une grande flexibilité dans la définition de workflows et d'actions personnalisées. Les workflows peuvent être déclenchés par n'importe quel événement GitHub ou par des événements externes tels que des notifications de services tiers. Cela signifie que vous pouvez automatiser pratiquement n'importe quelle tâche liée à votre projet GitHub.
+
+🔹 Enfin, GitHub Actions propose un marché d'actions préconstruites qui peuvent être utilisées directement dans vos workflows, ce qui peut vous faire gagner du temps dans le développement de votre propre automatisation.
+
+#### 🔵 En conclusion
+
+GitHub Actions est un outil d'automatisation **puissant** et **flexible** qui peut aider les développeurs à accélérer leur développement, à **réduire les erreurs humaines** et à **améliorer la qualité du code.** En raison de son intégration directe dans GitHub et de sa grande flexibilité, GitHub Actions peut être un choix idéal pour les projets hébergés sur GitHub.
+
+
+---
+
+class: middle, inverse, center
+
+# Premiers pas avec GitHub Actions
+
+---
+
+class: middle
+
+Super, passons maintenant aux premiers pas avec GitHub Actions ! Dans cette partie de la formation, nous allons apprendre comment créer un dépôt GitHub, comment naviguer dans l'interface utilisateur de GitHub Actions et comment explorer les actions préconfigurées dans le Marketplace.
+
+### Création d'un dépôt GitHub
+
+Pour commencer à utiliser GitHub Actions, vous devez d'abord créer un dépôt GitHub. Si vous n'en avez pas déjà un, vous pouvez suivre les étapes suivantes pour en créer un :
+
+  1. Connectez-vous à [GitHub](https://github.com/) et rendez-vous sur le template [Formation symfony template](https://github.com/mkl-devops-ri7/formation-symfony-template)
+  2. Cliquez sur **"Use this template"**, puis **"Create a new Repository"**
+  3. Saisissez un nom pour votre dépôt et choisissez si vous voulez le rendre public ou privé.
+  4. Cliquez sur le bouton vert **"Create repository from template"** pour créer votre dépôt.
+
+Félicitations, vous venez de créer votre dépôt GitHub !
+
+
+.center[
+  <image src="img/github.webp" width="500" alt="WorflowGithub" />
+]
+
+---
+
+class: middle
+
+### Présentation de l'interface utilisateur de GitHub Actions
+
+Maintenant que vous avez créé votre dépôt GitHub, vous pouvez accéder à l'interface utilisateur de GitHub Actions en suivant les étapes suivantes :
+
+.center[
+  <image src="img/github-menu.png" width="500" alt="WorflowGithub" />
+]
+
+1. Vous pouvez voir tous **les workflows** que vous avez créés pour votre dépôt. Les workflows sont organisés par dossier et peuvent être déclenchés par différents événements.
+
+2. L'affichage des derniers lancements de workflows, avec des informations sur leur état et leur durée.
+
+3. Vous pouvez ajouter des nouveaux "Workflows", cette section vous permet aussi d'explorer les actions préconfigurées dans **le Marketplace.**
+
+---
+
+class: middle
+
+### Explorer les actions préconfigurées dans le Marketplace
+
+Le Marketplace de GitHub Actions contient des milliers d'actions préconfigurées que vous pouvez utiliser dans vos workflows. Vous pouvez les trouver en suivant ces étapes :
+
+.center[
+  <image src="img/marketplace.png" width="500" alt="Marketplace" />
+]
+
+Lorsque vous trouvez une action que vous souhaitez utiliser, vous pouvez cliquer sur son nom pour en savoir plus sur ses fonctionnalités et son utilisation. Vous pouvez également voir des exemples de code pour utiliser cette action dans vos workflows.
+
+---
+
+class: middle, inverse, center
+
+# Création d'un workflow simple
+
+---
+
+class: middle
+
+### Introduction aux fichiers YAML
+
+**Les workflows** dans **GitHub Actions** sont définis dans des **fichiers YAML**. YAML est un langage de configuration simple qui est souvent utilisé pour définir des structures de données. Dans GitHub Actions, les fichiers YAML sont utilisés pour définir les étapes à suivre lors de l'exécution d'un workflow.
+
+### Création d'un fichier de workflow
+
+Pour créer un fichier de workflow, vous devez créer un fichier nommé `nom_du_workflow.yml` dans le dossier **.github/workflows/** de votre dépôt GitHub. 
+
+Pour générer notre premier workflow sur Github Action, nommer notre fichier `main.yaml`.
+
+.center[
+  <image src="img/github-arbo-workflows.png" width="500" alt="github tree workflow" />
+]
+
+---
+
+class: middle
+
+Voici un exemple de contenu du fichier de workflow simple que nous pouvons utiliser depuis l'interface d'édition de fichiers de Github  :
+
+```yaml
+name: Mon premier workflow
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Exécuter une action
+        uses: actions/hello-world-docker-action@v1
+```
+
+Ce fichier de workflow définit un workflow nommé `"Mon premier workflow"`. Il est déclenché par les événements `push` et `pull_request` sur la branche `main`.
+
+Il y a une étape appelée `build` qui s'exécute sur un système d'exploitation `ubuntu-latest`. Cette étape utilise une action appelée `hello-world-docker-action` pour exécuter une commande.
+
+.center[
+  <image src="img/workflow-result.png" width="500" alt="github workflow result" />
+]
+
+---
+
+class: middle
+
+### Configuration des événements déclencheurs
+
+Les workflows sont déclenchés par des événements spécifiques tels que des pushs sur une branche ou des pull requests. Vous pouvez configurer les événements qui déclenchent un workflow en utilisant la clé on dans le fichier YAML du workflow.
+
+Voici un exemple de configuration pour déclencher un workflow sur un push sur la branche main :
+  
+  ```yaml
+  on:
+  push:
+    branches:
+      - main
+```
+
+Vous pouvez également configurer un workflow pour se déclencher sur plusieurs événements, comme un push et un pull request :
+
+```yaml
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+```
+
+---
+
+class: middle
+
+### Ajout des étapes du workflow (actions)
+
+Les workflows sont composés de différentes étapes qui sont exécutées dans un ordre spécifique. Dans GitHub Actions, les étapes sont appelées `actions`. Les actions peuvent être des scripts personnalisés, des tâches de compilation, des déploiements, etc. Vous pouvez utiliser des actions préconfigurées à partir du Marketplace de GitHub Actions, ou créer vos propres actions personnalisées.
+
+Voici un exemple de définition d'une action dans un fichier de workflow :
+
+```yaml
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    steps:
+      - name: Exécuter une action
+        uses: actions/hello-world-docker-action@v1
+      - name: Add new directory
+        run: mkdir new_directory
+      - name: List files
+        run: ls -al
+```
+
+Dans cet exemple, l'étape `build` contient trois actions.
+
+* La première action utilise une action préconfigurée pour afficher un Hello World
+* La deuxième action exécute une commande pour ajouter un dossier.
+* La troisième action exécute une commande pour lister les fichiers
+
+---
+
+class: middle
+
+### Gestion des erreurs et débogage
+
+Lorsque vous travaillez avec des workflows, il est important de savoir comment gérer les erreurs et les problèmes qui surviennent. GitHub Actions offre plusieurs fonctionnalités pour vous aider à gérer les erreurs et à déboguer vos workflows.
+
+#### Journal des actions
+
+Le journal des actions est un outil utile pour comprendre ce qui se passe pendant l'exécution de votre workflow. Vous pouvez accéder au journal des actions en cliquant sur l'onglet "Actions" dans votre dépôt GitHub.
+
+Le journal des actions vous montre les étapes que votre workflow a effectuées, ainsi que les résultats de chaque action. Vous pouvez également voir les messages de sortie et les erreurs de chaque action.
+
+#### Débogage des workflows
+
+Si vous rencontrez des erreurs ou des problèmes avec votre workflow, vous pouvez utiliser l'outil de débogage intégré de GitHub Actions. Cet outil vous permet d'exécuter votre workflow en mode débogage, ce qui vous permet de voir les résultats de chaque action et de déterminer où se trouve le problème.
+
+Pour activer le mode débogage, ajoutez simplement la clé debug à votre workflow :
+
+```yaml
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Exécuter une action
+        uses: actions/hello-world-docker-action@v1
+      with:
+        debug: true
+```
+
+---
+
+class: middle
+
+### Notifications par e-mail
+
+Si vous souhaitez être averti par e-mail en cas d'erreur dans votre workflow, vous pouvez configurer des notifications par e-mail. Vous pouvez configurer des notifications pour un utilisateur ou une organisation spécifique, et vous pouvez également personnaliser le contenu de l'e-mail.
+
+Pour configurer des notifications par e-mail, accédez aux paramètres de votre dépôt GitHub, puis cliquez sur "Notifications". Vous pouvez ensuite configurer les notifications en fonction de vos préférences.
+
+### En conclusion
+
+GitHub Actions est un outil puissant pour l'automatisation de vos workflows de développement. Avec GitHub Actions, vous pouvez 
+
+* Configurer des workflows personnalisés qui répondent à vos besoins spécifiques
+* Vous pouvez facilement déboguer les problèmes qui surviennent.
+* Les fonctionnalités de débogage et de journalisation intégrées de GitHub Actions sont particulièrement utiles pour comprendre ce qui se passe pendant l'exécution de votre workflow.
+
+---
+
+class: middle, inverse, center
+
+
+# Utilisation des actions communautaires
+---
+
+class: middle
+
+Une des principales caractéristiques de GitHub Actions est sa capacité à intégrer des actions communautaires dans vos workflows. Les actions communautaires sont des actions créées par la communauté GitHub et mises à disposition sur le Marketplace GitHub Actions.
+
+Voici les étapes pour utiliser des actions communautaires dans votre workflow :
+
+### Recherche et sélection d'actions adaptées à vos besoins
+
+Pour trouver des actions communautaires, accédez au [Marketplace GitHub Actions](https://github.com/marketplace?type=actions) et utilisez la barre de recherche pour trouver des actions qui répondent à vos besoins.
+
+Une fois que vous avez trouvé une action qui répond à vos besoins, cliquez sur son nom pour accéder à sa page de description. Vous pouvez y trouver des informations sur la façon d'utiliser l'action, ainsi que des exemples de workflows qui l'utilisent.
+
+### Intégrez l'action dans votre workflow
+
+Pour intégrer une action communautaire dans votre workflow, ajoutez simplement une étape à votre workflow qui utilise l'action. Vous pouvez copier et coller l'exemple de code fourni sur la page de description de l'action, puis le modifier en fonction de vos besoins.
+
+Nous identfions l'action "[Checkout](https://github.com/marketplace/actions/checkout)" commme exemple à intégrer, pour récupérer le code source de votre dépôt GitHub dans l'espace de travail du workflow.
+
+---
+
+class: middle
+
+Voici un workflow qui utilise l'action "Checkout" :
+
+```yaml
+name: Mon workflow
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Listing files
+        run: ls -al
+```
+
+Dans cet exemple,
+
+* La première étape utilise l'action "Checkout" pour récupérer le code source de votre dépôt GitHub.
+
+* La deuxième étape exécute simplement une commande "ls -al" pour afficher la liste des fichiers.
+
+---
+
+class: middle
+
+### 🚧 .red[Exercice de travaux pratiques]
+
+Créer un workflow pour cloner, installer les extensions PHP nécessaires et lancer un "composer install"
+
+Dans cet exercice, vous devrez créer un workflow GitHub Actions qui clonera un dépôt GitHub, installera les extensions PHP nécessaires et exécutera la commande "composer install".
+
+Voici les instructions pour l'exercice :
+
+* Créez un fichier de workflow dans le répertoire `.github/workflows/` de votre dépôt. Nommez le fichier `build.yml`.
+
+* Dans le fichier `build.yml`, définissez le nom du workflow et les événements déclencheurs. Vous pouvez choisir `push` ou `pull_request` selon vos préférences.
+
+* Ajoutez une étape qui utilise l'action **"Checkout"** pour cloner le dépôt GitHub dans votre workflow. Vous pouvez utiliser l'exemple de code fourni dans la documentation.
+
+* Ajoutez une étape qui utilise l'action "[shivammathur/setup-php](https://github.com/marketplace/actions/setup-php-action)" pour installer les extensions PHP nécessaires. 
+  * Cette action télécharge et installe les versions spécifiées de PHP (8.2) et des extensions PHP, et configure l'environnement pour qu'il utilise ces versions. 
+  * Vous pouvez spécifier les versions et les extensions PHP dont vous avez besoin dans le fichier de configuration de l'action.
+
+* Ajoutez une étape qui exécute la commande "composer install" pour installer les dépendances PHP de votre projet.
+
+* Vérifiez que votre workflow ne contient pas d'erreurs en le testant avec un commit ou une pull request.
+
+---
+
+class: middle, inverse, center
+
+# Variables d'environnement et secrets
+
+---
+
+class: middle
+
+GitHub Actions offre la possibilité d'utiliser des variables d'environnement et des secrets dans vos workflows pour stocker des informations sensibles ou des valeurs qui peuvent changer en fonction de l'environnement. Dans cette section, nous allons aborder l'utilisation des variables d'environnement, la création et la gestion des secrets, ainsi que l'utilisation des secrets dans les workflows.
+
+### Utilisation des variables d'environnement
+
+Les variables d'environnement sont des valeurs qui peuvent être stockées dans votre workflow et utilisées par les actions que vous exécutez. Vous pouvez définir des variables d'environnement dans votre fichier de workflow en utilisant la syntaxe suivante :
+
+```yaml
+env:
+  VARIABLE_NAME: value
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: display variable
+        run: echo ${{ env.VARIABLE_NAME }}
+```
+
+Vous pouvez ensuite utiliser la variable dans vos actions en utilisant la syntaxe `${{ env.VARIABLE_NAME }}`.
+
+---
+
+class: middle
+
+### Création et gestion des secrets
+
+**Les secrets sont des informations sensibles** telles que des clés d'API, des mots de passe ou des jetons d'accès. Les secrets sont stockés de manière sécurisée dans GitHub et ne peuvent être utilisés que dans des workflows autorisés.
+
+Pour créer un secret, allez dans les paramètres de votre dépôt et sélectionnez **"Secrets"**. Cliquez sur **"New secret"** pour ajouter un nouveau secret. Vous pouvez le nommer `SECRET_NAME` et donner une valeur à votre secret. Une fois créé, vous pouvez utiliser votre secret dans vos workflows.
+
+### Utilisation des secrets dans les workflows
+
+Pour utiliser un secret dans votre workflow, vous devez d'abord le référencer dans votre fichier de workflow. Vous pouvez le faire en utilisant la syntaxe suivante :
+
+```yaml
+steps:
+  - name: Use a Secret
+    env:
+      SUPER_SECRET: ${{ secrets.SECRET_NAME }}
+    run: echo $SUPER_SECRET
+
+```
+
+Dans cet exemple, nous avons créé une étape nommée **"Use a Secret"**. Nous avons ensuite défini une variable d'environnement nommée `SUPER_SECRET` qui utilise le secret que nous avons créé précédemment en utilisant la syntaxe `${{ secrets.SECRET_NAME }}`. Nous avons ensuite exécuté la commande `echo $SUPER_SECRET` pour afficher la valeur du secret.
+
+Vous pouvez utiliser des secrets dans n'importe quelle étape de votre workflow. N'oubliez pas de toujours garder les secrets en sécurité et de ne pas les partager avec des personnes non autorisées.
+
+---
+
+class: middle, inverse, center
+
+# Exemple pratique
+
+## Déploiement d'une application web
+
+---
+
+class: middle
+
+Dans cette section, nous allons mettre en pratique les connaissances acquises précédemment en créant un workflow de CI/CD pour tester et déployer une application web sur une plateforme de votre choix.
+
+### Présentation du projet exemple
+
+
+Notre exemple de projet est une application web développée en Symfony qui utilise une base de Sqlite. Le code source du projet est hébergé sur un dépôt GitHub. Notre objectif est de créer un workflow de CI/CD qui effectuera les tâches suivantes :
+
+* Cloner le code source du projet depuis le dépôt GitHub
+
+* Installer les dépendances PHP nécessaires à l'aide de Composer
+
+* Tester l'application à l'aide de PHPUnit
+
+* Déployer automatiquement l'application sur une plateforme cloud (Heroku, AWS, etc.) après les tests réussis
+
+---
+
+class: middle
+
+### Mise en place d'un workflow de CI/CD pour tester l'application
+
+.pull-left[
+  Voici un exemple de fichier de workflow YAML qui pourrait être utilisé pour notre exemple de projet :
+
+  ```yaml
+  name: CI/CD workflow
+
+  on:
+    push:
+      branches: [ main ]
+
+  jobs:
+    build:
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+
+        - name: Install dependencies
+          run: composer install
+
+        - name: Run tests
+          run: ./vendor/bin/phpunit
+  ```
+]
+.pull-right[
+  Dans ce fichier de workflow, nous avons défini un travail (**"job"**) nommé **"build"** qui sera déclenché lorsque des modifications sont poussées sur la branche **"main"**.
+  
+  Nous avons ensuite défini les étapes du travail qui cloneront le code source, installeront les dépendances PHP, exécuteront les tests avec PHPUnit.
+
+  .center[
+    <image src="img/github-workflow-1.png" width="500" alt="github workflow result" />
+  ]
+]
+
+
+---
+
+class: middle
+
+### Construire une image docker de l'application depuis le workflow Github
+
+Dans cette partie, nous allons explorer la possibilité de construire une image Docker de votre application à partir de votre workflow GitHub. Cela vous permettra de générer facilement des images prêtes à être déployées sur différentes plates-formes ou environnements.
+
+Voici les étapes pour construire une image Docker de votre application depuis votre workflow GitHub :
+
+.pull-left[
+
+* Assurez-vous d'avoir un fichier `Dockerfile` dans votre dépôt GitHub. Ce fichier contient les instructions nécessaires pour construire votre image Docker.
+* Dans votre fichier de workflow GitHub, ajoutez une étape qui utilise l'action `docker/login-action@v2`. Cette action permet le login vers [Docker Hub](https://hub.docker.com).
+* Et ajoutez une étape qui utilise l'action `docker/build-push-action`. Cette action simplifie la construction et le push de l'image Docker.
+
+Voici un exemple de code pour cette étape :
+
+```yaml
+- name: Login to Docker Hub
+  uses: docker/login-action@v2
+  with:
+    username: ${{ secrets.DOCKERHUB_USERNAME }}
+    password: ${{ secrets.DOCKERHUB_TOKEN }}
+- name: Build and push Docker image
+  uses: docker/build-push-action@v4
+  with:
+    context: .
+    push: true
+    tags: your-dockerhub-username/your-image-name:latest
+```
+
+]
+
+.pull-right[
+
+Dans cet exemple, l'action `docker/build-push-action` est utilisée pour construire et pousser l'image Docker. Assurez-vous de remplacer `your-dockerhub-username` et `your-image-name` par vos propres informations.
+
+* Cette étape utilise le contexte actuel `.` comme répertoire de construction pour l'image Docker. Assurez-vous que votre `Dockerfile` et les fichiers nécessaires sont présents dans ce répertoire.
+* Vous pouvez également spécifier des balises `tags` supplémentaires pour votre image Docker, par exemple pour marquer des versions spécifiques de votre application.
+* Assurez-vous que vous avez configuré les informations d'identification Docker dans vos secrets GitHub. Vous devrez ajouter les secrets `DOCKER_USERNAME` et `DOCKER_PASSWORD` avec vos informations d'identification [DockerHub](https://hub.docker.com).
+
+]
+
+---
+
+class: middle
+
+.pull-left[
+Une fois que vous avez ajouté cette étape à votre fichier de workflow, le processus de construction de l'image Docker sera déclenché à chaque fois que vous effectuez un push sur votre dépôt. L'image Docker sera construite et poussée vers le registre DockerHub.
+
+N'oubliez pas de personnaliser ces étapes en fonction de votre configuration Docker et des plateformes que vous utilisez pour le déploiement de votre application. Vous pouvez également ajouter d'autres étapes à votre workflow, telles que des tests supplémentaires ou des étapes de déploiement sur des plates-formes spécifiques.
+
+La construction d'une image Docker depuis votre workflow GitHub facilite le processus de déploiement de votre application dans des environnements conteneurisés et peut améliorer l'efficacité de votre pipeline de développement.
+
+Voici un example de mise en place de notre image :
+
+```sh
+docker pull your-dockerhub-username/your-image-name:latest
+docker rm -f your-image-name
+docker run -d -p "8080:80" -e APP_ENV=dev --name=your-image-name your-dockerhub-username/your-image-name:latest
+```
+
+
+]
+.pull-right[
+  .center[
+    <image src="img/github-workflow-2.png" width="500" alt="github workflow result" />
+  ]
+]
+
+---
+
+class: middle
+
+
+### Déploiement automatique de l'application sur une plateforme (Heroku, AWS, etc.)
+
+Dans cette partie, nous allons voir comment déployer automatiquement votre application sur la plateforme Heroku à partir de votre workflow GitHub en utilisant l'action "Deploy to Heroku" disponible sur le Marketplace GitHub.
+
+.pull-left[
+Voici les étapes pour configurer le déploiement automatique de votre application sur Heroku :
+
+Dans votre fichier de workflow, ajoutez une étape qui utilise l'action "[Deploy to Heroku](https://github.com/marketplace/actions/deploy-to-heroku)". Cette action simplifie le processus de déploiement de votre application sur Heroku.
+
+Voici un exemple de code pour cette étape :
+
+```yaml
+- name: Deploy to cloud platform
+  if: success()
+  uses: akhileshns/heroku-deploy@v3.12.13 # This is the action
+  with:
+    heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+    heroku_app_name: your-heroku-app-name #Must be unique in Heroku
+    heroku_email: your-email
+```
+
+.info[
+  Notez que pour déployer sur une plateforme cloud, vous devrez disposer d'un compte et d'une clé d'API valide pour cette plateforme. Dans l'exemple ci-dessus, nous avons utilisé Heroku comme plateforme cloud.
+]
+]
+
+.pull-right[
+Une fois que vous avez ajouté cette étape à votre fichier de workflow, le déploiement automatique de votre application sur Heroku sera déclenché à chaque fois que vous effectuez un push sur votre dépôt. L'action "[Deploy to Heroku](https://github.com/marketplace/actions/deploy-to-heroku)" s'occupera du déploiement de votre application.
+
+Assurez-vous de personnaliser ces étapes en fonction de votre configuration Heroku et de votre application spécifique. Vous pouvez également ajouter d'autres étapes à votre workflow pour exécuter des tests supplémentaires ou effectuer d'autres actions avant ou après le déploiement.
+
+Le déploiement automatique de votre application sur Heroku à partir de votre workflow GitHub vous permet de simplifier et d'automatiser le processus de déploiement, facilitant ainsi la livraison continue de votre application aux utilisateurs finaux.
 ]
