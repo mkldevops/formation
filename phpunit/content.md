@@ -13,44 +13,45 @@ class: middle
 ]
 .pull-left[
 **Introduction**
-  * Qu'est-ce que le testing et pourquoi est-il important ?
-  * Présentation de PHPUnit et Symfony
-  * Types de tests : unitaires, d'intégration, fonctionnels et end-to-end (e2e)
+
+* Qu'est-ce que le testing et pourquoi est-il important ?
+* Présentation de PHPUnit et Symfony
+* Types de tests : unitaires, d'intégration, fonctionnels et end-to-end (e2e)
 
 **Installation et configuration de l'environnement de développement**
-  * Installation de Symfony
-  * Installation de PHPUnit via Composer
-  * Configuration de base de PHPUnit
+
+* Installation de Symfony
+* Installation de PHPUnit via Composer
+* Configuration de base de PHPUnit
 
 **Tests unitaires**
+
 * Qu'est-ce qu'un test unitaire ?
 * Écrire des tests unitaires avec PHPUnit
 * Les assertions de PHPUnit
 * Utilisation de mocks et stubs pour isoler les dépendances
+]
+.pull-right[
 
 **Tests d'intégration**
+
 * Qu'est-ce qu'un test d'intégration ?
 * Écrire des tests d'intégration avec PHPUnit et Symfony
 * Utilisation de la base de données dans les tests
 * Utilisation de l'ORM Doctrine
-]
-.pull-right[
+
 **Tests fonctionnels**
+
 * Qu'est-ce qu'un test fonctionnel ?
-* Écrire des tests fonctionnels avec PHPUnit et Symfony
-* Utilisation du composant BrowserKit pour simuler des requêtes HTTP
+* Écrire des tests fonctionnels en utilisation du composant BrowserKit pour simuler des requêtes HTTP
 * Tester les formulaires
 
 **Tests end-to-end**
+
 * Qu'est-ce qu'un test end-to-end ?
 * Écrire des tests end-to-end avec PHPUnit et Symfony
 * Utilisation du composant Panther pour piloter un navigateur web
 * Tester une application en interaction avec un navigateur
-
-**Conclusion**
-* Les bonnes pratiques pour écrire des tests efficaces
-* Intégration des tests dans un processus d'intégration continue
-* Les outils et services pour gérer les tests dans un projet Symfony
 ]
 
 ---
@@ -251,6 +252,21 @@ class MyTest extends TestCase
 
 Dans cet exemple, nous avons créé une classe de test `MyTest` qui hérite de la classe de test de base de PHPUnit `TestCase`. La méthode de test `testAddition` teste l'addition de deux nombres et vérifie que le résultat est égal à 3 à l'aide de la méthode d'assertion `assertEquals`.
 
+Lancer les tests :
+
+```bash
+symfony php bin/phpunit
+
+PHPUnit 9.6.7 by Sebastian Bergmann and contributors.
+
+Testing 
+.                                                                   1 / 1 (100%)
+
+Time: 00:00.010, Memory: 6.00 MB
+
+OK (1 test, 1 assertion)
+```
+
 ---
 class: middle
 
@@ -258,15 +274,21 @@ class: middle
 
 PHPUnit fournit plusieurs méthodes d'assertion pour tester le comportement du code dans les tests unitaires. Voici quelques exemples d'assertions couramment utilisées:
 
-* `assertEquals()`: Vérifie que deux valeurs sont égales.
-* `assertTrue()`: Vérifie qu'une expression est vraie.
-* `assertFalse()`: Vérifie qu'une expression est fausse.
-* `assertInstanceOf()`: Vérifie qu'un objet est une instance d'une classe spécifique.
-* `assertNull()`: Vérifie qu'une valeur est nulle.
+* `assertEquals()` : Vérifie que deux valeurs sont égales.
+* `assertTrue()` : Vérifie qu'une expression est vraie.
+* `assertFalse()` : Vérifie qu'une expression est fausse.
+* `assertInstanceOf()` : Vérifie qu'un objet est une instance d'une classe spécifique.
+* `assertNull()` : Vérifie qu'une valeur est nulle.
 
-Supposons que nous avons une entité `Book` dans notre application Symfony avec les propriétés suivantes : `id`, `title`, `author` et `year`.
+Via la commande `symfony console make:entity book`, génère une nouvelle entité `Book` dans notre application Symfony avec les propriétés suivantes : 
 
-Nous pouvons écrire un test unitaire pour cette entité pour nous assurer que les méthodes `getId`, `getTitle`, `getAuthor` et `getYear` ̀fonctionnent correctement.
+* `title` *(string, 255, no)*
+* `author` *(string, 255, no)*
+* `year` *(string, 4, no)*
+
+Nous pouvons écrire un test unitaire pour cette entité pour nous assurer que les méthodes `getId`, `getTitle`, `getAuthor` et `getYear` fonctionnent correctement.
+
+La commade `symfony console make:test TestCase  BookTest` genère une class test template pour rediger vos tests.
 
 ---
 
@@ -303,35 +325,39 @@ class BookTest extends TestCase
 }
 ```
 
+Lancer les tests unitaires et verfiez le bon fonctionnement.
+
 ---
 class: middle
 
-#### Utilisation de mocks et stubs pour isoler les dépendances
+### Utilisation de mocks et stubs pour isoler les dépendances
 
 Lors des tests, il est souvent nécessaire d'isoler les dépendances pour éviter que des éléments externes, tels que les bases de données ou les services web, n'affectent les résultats des tests. **Les mocks et les stubs** sont des objets de substitution qui imitent le comportement des dépendances réelles, permettant ainsi de contrôler et de simuler les interactions entre les objets.
 
-##### Les mocks
+#### Les mocks
 
 .pull-left[
 
-Considérez l'exemple suivant avec les classes `Book` et `Category` :
+Considérez l'exemple suivant avec les classes `Book` et `Category` généré :
 
 ```php
 class Category
 {
-    public function getName(): string
+    ...
+
+    public function getName(): ?string
     {
-        // Retourne le nom de la catégorie
+        return $this->name;
     }
 }
 
 class Book
 {
-    private $category;
-
-    public function __construct(Category $category)
-    {
-        $this->category = $category;
+    public function __construct(
+        #[ORM\ManyToOne(inversedBy: 'books')]
+        #[ORM\JoinColumn(nullable: false)]
+        private ?Category $category = null
+    ) {
     }
 
     public function getCategoryName(): string
@@ -340,9 +366,10 @@ class Book
     }
 }
 ```
+
 ]
 .pull-right[
-  Pour tester la classe Book, nous pouvons créer un mock de la classe Category à l'aide de PHPUnit :
+  Pour tester la classe `Book`, nous pouvons créer un mock de la classe `Category` à l'aide de PHPUnit :
 
 ```php
 namespace App\Tests;
@@ -369,18 +396,20 @@ class BookTest extends TestCase
     }
 }
 ```
+
 ]
 
 ---
 class: middle
 
-##### Les stubs
+#### Les stubs
 
 Les stubs sont similaires aux mocks en ce sens qu'ils sont également utilisés pour remplacer des dépendances réelles par des objets de substitution. Cependant, les stubs sont généralement plus simples et se concentrent sur la fourniture de réponses prédéfinies aux appels de méthodes, sans se préoccuper du nombre ou de l'ordre des appels.
 
 Dans l'exemple précédent avec les classes `Book` et `Category`, nous pouvons également utiliser un stub pour remplacer la dépendance Category. Voici comment créer un stub avec PHPUnit en utilisant la méthode `getMockBuilder()`:
 
 .pull-left[
+
 ```php
 namespace App\Tests;
 
@@ -397,22 +426,26 @@ class BookTest extends TestCase
                           ->setMethods(['getName'])
                           ->getMock();
 
-    // Configure le stub pour retourner 'Fiction' lors de l'appel à la méthode 'getName'
+    // Configure le stub pour retourner 'Fiction'  lors de l'appel à la méthode 'getName'
     $categoryStub->method('getName')->willReturn('Fiction');
 
     // Utilise le stub de Category lors de la création de l'instance de Book
     $book = new Book($categoryStub);
 
-    // Teste si la méthode 'getCategoryName' retourne le nom de la catégorie défini par le stub
+    // Teste si la méthode 'getCategoryName' 
+    // retourne le nom de la catégorie défini par le stub
     $this->assertEquals('Fiction', $book->getCategoryName());
   }
 }
 ```
+
 ]
 .pull-right[
 Dans cet exemple, nous utilisons `getMockBuilder()` pour créer un stub de la classe `Category`. Nous spécifions les méthodes à remplacer avec `setMethods()` et appelons `getMock()` pour générer le stub. Ensuite, nous configurons le stub pour retourner une valeur prédéfinie ('Fiction') lors de l'appel à la méthode `getName()`.
 
+.info[
 Notez que, dans cet exemple, la différence entre un mock et un stub est minime, car PHPUnit utilise la même classe `MockObject` pour créer les deux. Cependant, la distinction conceptuelle entre les mocks et les stubs est importante: les mocks vérifient les interactions et les comportements, tandis que les stubs fournissent des réponses prédéfinies sans se préoccuper des détails des interactions.
+]
 ]
 
 ---
@@ -427,7 +460,7 @@ class: middle
 
 #### Qu'est-ce qu'un test d'intégration ?
 
-Les tests d'intégration visent à vérifier la bonne interaction entre plusieurs composants ou modules d'une application. Contrairement aux tests unitaires, qui se concentrent sur le fonctionnement individuel des composants, les tests d'intégration valident que l'ensemble des composants fonctionne correctement lorsqu'ils sont combinés.
+**Les tests d'intégration visent à vérifier la bonne interaction entre plusieurs composants ou modules d'une application**. Contrairement aux tests unitaires, qui se concentrent sur le fonctionnement individuel des composants, les tests d'intégration valident que l'ensemble des composants fonctionne correctement lorsqu'ils sont combinés.
 
 Les tests d'intégration sont généralement plus lents que les tests unitaires, car ils nécessitent de créer un environnement d'exécution complet pour l'application. Cependant, ils sont souvent plus efficaces pour détecter les problèmes de fonctionnement de l'application.
 
@@ -441,22 +474,36 @@ class: middle
 
 #### Écrire des tests d'intégration avec PHPUnit et Symfony
 
-Les tests d'intégration sont souvent réalisés en utilisant le composant `KernelTestCase` de Symfony, qui permet de tester les interactions entre les différents composants de l'application sans passer par le client HTTP.
+**Les tests d'intégration** sont souvent réalisés en utilisant le composant `KernelTestCase` de Symfony, qui permet de tester les **interactions entre les différents composants** de l'application **sans passer par le client HTTP**.
 
 Ce composant étend la classe `TestCase` de PHPUnit et offre des fonctionnalités supplémentaires pour tester les interactions entre les différentes parties de l'application, notamment les services et les bases de données.
 
-Imaginons que nous avons un service BookFormatter qui formate le titre et l'auteur d'un livre en une chaîne de caractères.
+Ajoutez un service `src/Service/BookFormatter` qui formate le titre et l'auteur d'un livre en une chaîne de caractères.
 
 ```php
 namespace App\Service;
 
 use App\Entity\Book;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
-class BookFormatter
+final readonly class BookFormatter
 {
+
+    public function __construct(
+        private SluggerInterface $slugger
+    ) {       
+    }
+
     public function format(Book $book): string
     {
-        return sprintf('%s by %s', $book->getTitle(), $book->getAuthor());
+        $text = sprintf(
+            '%s by %s (%s)',
+            $book->getTitle(),
+            $book->getAuthor(),
+            $book->getCategoryName()
+        ); 
+        
+        return $this->slugger->slug($text);
     }
 }
 ```
@@ -466,7 +513,9 @@ class BookFormatter
 class: middle
 
 .pull-left[
-Définissez le test d'intégration pour le service `BookFormatter` en utilisant `KernelTestCase` :
+Définissez le test d'intégration pour le service `BookFormatter` en utilisant `KernelTestCase`
+
+via `symfony console make:test KernelTestCase BookFormatterTest`
 
 ```php
 namespace App\Tests;
@@ -479,28 +528,38 @@ class BookFormatterTest extends KernelTestCase
 {
     public function testFormatBookInfo()
     {
-        // Initialise le noyau et le conteneur pour accéder aux services
-        self::bootKernel();
-        $container = self::$kernel->getContainer();
-
         // Récupère le service BookFormatter
-        $bookFormatter = $container->get(BookFormatter::class);
-
+        $bookFormatter = self::getContainer()->get(BookFormatter::class);
+        
         // Crée un nouveau livre
-        $book = (new Book())
+        $category = (new Category())->setName('Fiction');
+        $book = (new Book($category))
           ->setTitle('Test Book')
           ->setAuthor('John Doe');
-
+        
         // Formate les informations du livre
         $formattedInfo = $bookFormatter->format($book);
-
+        
         // Vérifie si les informations du livre sont correctement formatées
-        static::assertEquals('Test Book by John Doe', $formattedInfo);
+        static::assertEquals(
+            'Fiction-Test-Book-by-John-Doe', 
+            $formattedInfo
+        );
     }
 }
 ```
+
 ]
 .pull-right[
+
+.info[
+    ❗Vous pouvez avoir une erreur `ServiceNotFoundException` pour le résoudre déclaré `public` les services.
+
+    services:
+        # ...
+        App\:
+            public: true
+]
 
 Dans cet exemple, nous utilisons la classe `KernelTestCase` pour initialiser le noyau et accéder au conteneur de services. Nous récupérons ensuite le service `BookFormatter` et créons un nouveau livre avec un titre et un auteur. Enfin, nous appelons la méthode `format()` pour formater les informations du livre et vérifions que la chaîne de caractères retournée est correctement formatée.
 
@@ -515,18 +574,46 @@ class: middle
 
 #### Utilisation de la base de données dans les tests
 
-Pour utiliser une base de données dans les tests d'intégration, il est recommandé de créer une base de données de test séparée afin de ne pas affecter les données de production. Dans le fichier `.env.test` de votre projet Symfony, modifiez la variable `DATABASE_URL` pour pointer vers votre base de données de test.
+Pour utiliser une base de données dans les tests d'intégration, il est recommandé de créer une base de données de test séparée afin de ne pas affecter les données de production. Vous pouvez utiliser le bundle dama/doctrine-test-bundle pour faciliter la gestion de la base de données lors des tests. Voici comment procéder :
 
-```bash
-DATABASE_URL="sqlite:///%kernel.project_dir%/var/test.db"
-```
+1. **Installation du bundle dama/doctrine-test-bundle :**
+
+    ```bash
+    symfony composer require --dev dama/doctrine-test-bundle
+    ```
+
+    ```xml
+        <!-- et ajoutez l'extension sur la config phpunit.xml.dist -->
+        <extensions>
+            <!-- ... -->
+            <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
+        </extensions>
+    ```
+
+2. **Configuration de la base de données de test :**
+
+    Dans le fichier `.env.test` de votre projet Symfony, modifiez la variable `DATABASE_URL` pour pointer vers votre base de données de test.
+
+    ```dotenv
+    DATABASE_URL="sqlite:///%kernel.project_dir%/var/test.db"
+    ```
+
+3. **Génération du schéma de la base de données de test :**
+
+    Pour créer la structure de la base de données de test, exécutez la commande suivante :
+
+    ```bash
+    APP_ENV=test symfony console doctrine:schema:create
+    ```
+
+    Maintenant, vous pouvez utiliser cette base de données de test dans vos tests d'intégration. Le bundle `dama/doctrine-test-bundle` fournit des fonctionnalités supplémentaires pour faciliter la manipulation de la base de données lors des tests, telles que le chargement des jeux de données de test et le nettoyage de la base de données entre les tests.
 
 ---
 class: middle
 
 #### Utilisation de l'ORM Doctrine
 
-Lors de l'écriture de tests d'intégration avec Symfony, vous pouvez utiliser l'ORM Doctrine pour interagir avec la base de données de test. Voici un exemple de test d'intégration qui utilise Doctrine pour tester la récupération d'un livre par son identifiant :
+✍ Lors de l'écriture de tests d'intégration avec Symfony, vous pouvez utiliser l'ORM Doctrine pour interagir avec la base de données de test. Voici un exemple de test d'intégration qui utilise Doctrine pour tester la récupération d'un livre par son identifiant :
 
 .pull-left[
 
@@ -534,41 +621,50 @@ Lors de l'écriture de tests d'intégration avec Symfony, vous pouvez utiliser l
 namespace App\Tests;
 
 use App\Entity\Book;
+use App\Entity\Category;
 use App\Repository\BookRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class BookRepositoryTest extends KernelTestCase
 {
     public function testFindById()
     {
-        self::bootKernel();
-        $container = self::$kernel->getContainer();
-
-        // Récupère le repository du livre
-        $bookRepository = $container->get(BookRepository::class);
-
-        $book = (new Book())
+        $category = (new Category())->setName('Fiction');
+        $book = (new Book($category))
           ->setTitle('Test Book')
-          ->setAuthor('John Doe');
+          ->setAuthor('John Doe')
+          ->setYear('1987');
 
-        $entityManager = $container->get(EntityManagerInterface::class);
+        $entityManager = self::getContainer()
+            ->get(EntityManagerInterface::class);
+        
+        $entityManager->persist($category);
         $entityManager->persist($book);
         $entityManager->flush();
 
         // Recherche le livre par son identifiant
-        $foundBook = $bookRepository->find($book->getId());
-
+        $foundBook = $self::getContainer()
+            ->get(BookRepository::class)
+            ->find($book->getId());
+        
         // Vérifie si le livre récupéré correspond au livre créé
         static::assertSame($book, $foundBook);
     }
 }
 ```
+
 ]
 
 .pull-right[
+
+.center[
+    <img src="img/test-database.jpg" alt=""  width="400" />
+]
+
 Dans cet exemple, nous utilisons la classe `KernelTestCase` pour initialiser le kernel et accéder aux services de l'application. Nous récupérons le repository de la classe `Book`, créons un nouveau livre et l'enregistrons dans la base de données de test. Enfin, nous recherchons le livre par son identifiant et vérifions que le livre récupéré correspond au livre créé.
 
-Ce test d'intégration illustre comment utiliser Symfony, PHPUnit et Doctrine pour tester les interactions entre les composants de l'application et la base de données.
+Ce test d'intégration illustre comment utiliser **Symfony**, **PHPUnit** et **Doctrine** pour tester les interactions entre les composants de l'application et la base de données.
 ]
 
 ---
@@ -581,10 +677,307 @@ class: middle, center, inverse
 
 class: middle
 
-#### Qu'est-ce qu'un test fonctionnel ?
+**Les tests fonctionnels** sont une étape essentielle dans le processus de développement d'une application. Ils permettent de s'assurer que l'ensemble des fonctionnalités de l'application, qu'il s'agisse des **interactions entre les différentes pages**, **des flux de données** ou **des formulaires**, fonctionnent correctement.
 
-**Les tests fonctionnels** visent à vérifier le comportement de l'application du point de vue de l'utilisateur final. Ils se concentrent sur la manière dont les fonctionnalités sont présentées et utilisées, en évaluant l'interaction entre l'interface utilisateur, le code backend et les autres composants de l'application.
+Dans ce chapitre, nous allons découvrir ce qu'est un test fonctionnel et comment écrire des tests fonctionnels en utilisant PHPUnit et Symfony. Nous allons également explorer l'utilisation du composant `BrowserKit` pour simuler des requêtes HTTP, ce qui nous permettra de tester notre application de manière réaliste.
 
-Les tests fonctionnels simulent généralement des actions utilisateur, telles que la navigation, le remplissage de formulaires et la soumission de données.
+### Qu'est-ce qu'un test fonctionnel ?
+
+**Un test fonctionnel** est un type de test qui vise à vérifier le bon fonctionnement d'une fonctionnalité ou d'un ensemble de fonctionnalités d'une application. Contrairement aux tests unitaires qui se concentrent sur des parties spécifiques du code, les tests fonctionnels évaluent la façon dont différentes parties de l'application interagissent entre elles.
+
+L'objectif principal des tests fonctionnels est de valider le comportement de l'application du point de vue de l'utilisateur. Ils permettent de s'assurer que toutes les fonctionnalités sont accessibles, que les flux de données sont corrects et que les formulaires peuvent être remplis et soumis sans problème.
+
+.center[
+    <img src="img/test-functional.jpg" alt="Test functional" width="300" />
+]
+
+---
+
+class: middle
+
+### Écrire des tests fonctionnels en utilisation du composant BrowserKit pour simuler des requêtes HTTP
+
+**PHPUnit** est un framework de tests unitaires pour PHP. Il est largement utilisé dans l'écosystème **Symfony** pour écrire des tests de qualité. Cependant, PHPUnit peut également être utilisé pour écrire des tests fonctionnels.
+
+Symfony, quant à lui, offre un ensemble de composants et de fonctionnalités pour faciliter l'écriture de tests fonctionnels. Ces composants incluent notamment `BrowserKit`, qui permet de simuler des requêtes HTTP, et `DomCrawler`, qui facilite la manipulation des pages HTML.
+
+Dans ce chapitre, nous allons apprendre à configurer notre environnement de test, à écrire des tests fonctionnels à l'aide de PHPUnit et à utiliser les composants Symfony pour interagir avec notre application de manière programmatique.
+
+Le composant `BrowserKit` de Symfony est une bibliothèque qui nous permet de simuler des requêtes HTTP dans nos tests fonctionnels. Il offre une interface simple et expressive pour effectuer des requêtes `GET`, `POST`, `PUT`, `DELETE`, etc., et examiner les réponses du serveur.
+
+---
+
+class: middle
+
+.pull-left[
+Pour réaliser un test fonctionnel, nous avons besoin de disposer d'une route Symfony. Utilisez la commande Maker pour générer notre route Home.
+    
+```bash
+symfony console make:controller home
+```
+
+Cela va créer un contrôleur nommé HomeController avec une méthode par défaut.
+
+Ensuite, ajustez le code généré pour correspondre au code suivant :
+
+```php
+# src/Controller/HomeController
+
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+class HomeController extends AbstractController
+{
+    #[Route('/', name: 'app_home')]
+    public function index(): Response
+    {
+        return $this->render('home/index.html.twig');
+    }
+}
+```
+
+```twig
+{# templates/home/index.html #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Welcome to My App</h1>
+{% endblock %}
+```
+
+]
+
+.pull-right[
+Générez le code de base de notre test à l'aide de la commande suivante et ajustez-le :
+    
+```bash
+symfony console make:test WebTestCases HomeTest
+```
+
+Voici un exemple de test fonctionnel utilisant `BrowserKit` pour simuler une requête `GET` et vérifier la réponse :
+
+```php
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+class HomeTest extends WebTestCase
+{
+    public function testHomePage()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'Welcome to My App');
+    }
+}
+```
+
+Dans cet exemple, nous créons un client `BrowserKit` en utilisant la méthode `createClient()` fournie par `WebTestCase`.
+
+Ensuite, nous effectuons une requête GET à l'URL **'/'** et utilisons les méthodes d'assertion fournies par PHPUnit pour vérifier que la réponse est réussie et que la balise `h1` contient le texte **"Welcome to My App"**.
+
+Vous pouvez également ajouter d'autres assertions pour tester différents aspects de la réponse, tels que la présence d'éléments HTML spécifiques, le code de statut HTTP, les en-têtes de réponse, etc.
+]
 
 
+---
+
+class: middle
+
+### Tester les formulaires
+
+Les formulaires sont une partie importante de nombreuses applications, et il est crucial de les tester pour s'assurer qu'ils fonctionnent correctement. PHPUnit et Symfony offrent des fonctionnalités intégrées pour tester les formulaires dans vos tests fonctionnels.
+.pull-left[
+Symfony peut générer un formulaire automatiquement pour nous grâce à une commande. Générons donc un formulaire pour l'entité Category et ajoutons une nouvelle route `/category/new` pour afficher ce formulaire.
+
+
+```bash
+php bin/console make:form CategoryType Category
+php bin/console make:controller category
+```
+
+Modifiez `CategoryController` pour gérer la soumission du formulaire et l'insertion de la nouvelle catégorie en base de données :
+
+```php
+class CategoryController extends AbstractController
+{
+    #[Route('/category/new', name: 'app_category_new')]
+    public function new(EntityManagerInterface $entityManager): Response
+    {
+        $catgeory = new Category();
+        $form = $this->createForm(CategoryType::class, $catgeory)->add('Save', SubmitType::class);
+        
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($catgeory);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_home');
+        }
+
+        return $this->render('category/index.html.twig', ['form' => $form]);
+    }
+}
+```
+
+]
+
+.pull-right[
+
+Pour intégrer le formulaire généré depuis le contrôleur dans le template Twig associé, vous devez mettre à jour le fichier `templates/category/new.html.twig`. Voici un exemple de code pour vous guider :
+
+```twig
+{# templates/category/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>New Category</h1>
+
+    {{ form(form) }}
+{% endblock %}
+```
+
+]
+---
+
+class: middle
+
+.pull-left[
+Generez la classe test via :
+
+```bash
+symfony console make:test WebTestCase CategoryTest
+```
+
+Voici un exemple de test fonctionnel qui vérifie que le formulaire est accessible et qu'il peut être soumis avec succès :
+
+```php
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+class CategoryTest extends WebTestCase 
+{
+    public function testNewCategoryForm()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/category/new');
+
+        $this->assertResponseIsSuccessful();
+
+        $form = $crawler->selectButton('Save')->form();
+        $form['category[name]'] = $name = 'Category 1';
+        $client->submit($form);
+
+        $this->assertResponseRedirects('/');
+
+        $category = self::getContainer()
+            ->get(CategoryRepository::class)
+            ->findOneBy(['name' => $name]);
+
+        self::assertInstanceOf(Category::class, $category);
+    }
+}
+```
+
+]
+.pull-right[
+Le code ci-dessous va pour vérifier la fonctionnalité de création d'une nouvelle catégorie.
+
+Il simule une requête `GET` pour accéder à la page de création de catégorie, remplit le formulaire avec des données spécifiques, soumet le formulaire, puis vérifie la redirection et la sauvegarde de la nouvelle catégorie en base de données.
+
+Ce test permet de s'assurer que le formulaire de création de catégorie fonctionne correctement et que les données sont correctement enregistrées.
+
+Il est important de noter que ces exemples sont basés sur Symfony, mais les concepts de test fonctionnel et l'utilisation de PHPUnit restent les mêmes, quel que soit le framework PHP que vous utilisez.
+
+**En conclusion**, les tests fonctionnels sont essentiels pour garantir le bon fonctionnement de votre application dans son ensemble. En utilisant PHPUnit et les fonctionnalités offertes par Symfony, vous pouvez facilement écrire des tests fonctionnels pour vérifier les requêtes HTTP, tester les formulaires et bien plus encore. Ces tests vous permettront de détecter les erreurs et les problèmes potentiels, assurant ainsi la qualité et la fiabilité de votre application.
+]
+
+
+---
+
+class: middle, inverse, center
+
+# Tests end-to-end
+
+---
+
+class: middle
+
+### Qu'est-ce qu'un test end-to-end ?
+
+Les tests end-to-end, également connus sous le nom de tests de bout en bout, sont utilisés pour vérifier le bon fonctionnement d'une application dans son ensemble, en simulant le comportement d'un utilisateur réel. Ces tests permettent de vérifier les différentes fonctionnalités de l'application, de bout en bout, en testant les interactions avec les composants frontend, le backend et éventuellement la base de données.
+
+### Écrire des tests end-to-end avec PHPUnit et Symfony
+
+Nous pouvons utiliser le composant `Panther`. [Panther](https://symfony.com/components/Panther) est une bibliothèque qui permet de piloter un navigateur web réel (tel que **Chrome** ou **Firefox**) à partir de tests PHPUnit. Cela nous permet de simuler les actions d'un utilisateur sur l'application et de vérifier les résultats obtenus.
+
+Pour commencer à écrire des tests end-to-end, nous devons installer le composant **Panther**. Vous pouvez l'installer en utilisant Composer avec la commande suivante :
+
+```bash
+symfony composer require --dev symfony/panther
+
+# installation des drivers
+symfony composer require --dev dbrekelmans/bdi && vendor/bin/bdi detect drivers
+```
+
+décommentez l'extension panther dans le fichier `phpunit.xml.dist`
+    
+```xml
+<extensions>
+    ...
+    <extension class="Symfony\Component\Panther\ServerExtension" />
+</extensions>
+```
+
+---
+
+class: middle
+
+Une fois Panther installé, nous pouvons créer nos tests end-to-end en étendant la classe Symfony\Component\Panther\PantherTestCase fournie par Panther. Cette classe fournit des méthodes utiles pour piloter le navigateur et effectuer des assertions sur le contenu de la page.
+
+Par exemple, nous pouvons utiliser la méthode visit() pour charger une URL dans le navigateur, et ensuite utiliser des sélecteurs CSS ou XPath pour rechercher des éléments spécifiques sur la page et vérifier leur contenu ou leur état.
+
+.pull-left[
+
+Générez notre classe de test via Maker :
+
+```sh
+symfony console make:test PantherTestCase EndToEndTest
+```
+
+```php
+use Symfony\Component\Panther\PantherTestCase;
+
+class EndToEndTest extends PantherTestCase
+{
+    public function testNewCategoryForm()
+    {
+        $client = static::createPantherClient([
+            'external_base_uri' => $_SERVER['SYMFONY_PROJECT_DEFAULT_ROUTE_URL']
+        ]);
+        
+        $crawler = $client->request('GET', '/category/new');
+        $this->assertResponseIsSuccessful();
+        
+        $form = $crawler->selectButton('Save')->form();
+        $form['category[name]'] = $name = 'Category 1';
+        $client->submit($form);
+        
+        $this->assertResponseRedirects('/');
+        
+        $category = self::getContainer()
+            ->get(CategoryRepository::class)
+            ->findOneBy(['name' => $name]);
+        
+        self::assertInstanceOf(Category::class, $category);
+    }
+}
+```
+
+]
+.pull-right[
+**Conclusion**
+
+Ces tests **end-to-end** nous permettent de tester l'application dans un contexte plus réaliste, en simulant les actions d'un utilisateur réel dans un navigateur web. Cela nous aide à détecter d'éventuels problèmes d'intégration entre les différents composants de l'application et à garantir un bon fonctionnement global.
+]
