@@ -1,7 +1,7 @@
 name: inverse
 class: center, middle, inverse
 
-<img src="img/logo.webp" alt="Docker" width="400px" style="margin-bottom:3rem" />
+<img src="img/logo.webp" alt="Docker" width="390px" style="margin-bottom:3rem" />
 
 # .red[Conteneurisation]
 

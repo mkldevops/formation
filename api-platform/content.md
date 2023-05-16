@@ -490,7 +490,7 @@ Pour configurer le bundle, vous devez ajouter le code suivant dans le fichier `c
 
 ```yaml
 lexik_jwt_authentication:
-    secret_key: '%env(APP_SECRET)%'
+    secret_key: '%env(resolve:JWT_SECRET_KEY)%'
     public_key: '%env(resolve:JWT_PUBLIC_KEY)%'
     pass_phrase: '%env(JWT_PASSPHRASE)%'
     token_ttl: 86400
@@ -549,9 +549,6 @@ Pour configurer l'authentification avec token, vous devez ajouter le code suivan
 
 ```yaml
 security:
-    enable_authenticator_manager: true
-    # ...
-
     firewalls:
         login:
             pattern: ^/api/login
@@ -566,6 +563,8 @@ security:
             pattern:   ^/api
             stateless: true
             jwt: ~
+
+        ...
 
     access_control:
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
@@ -586,14 +585,13 @@ Ajoutons à notre application un utilsateur via la commande suivante :
 symfony console security:hash-password -n myPassword
 
 # ajoute l'utilisateur
-symfony console doctrine:query:sql \ 
-"insert into user (email, password, roles) values ('john@doe.com', '\$2y\$13\$PbnSuELtRM4rqLdgpjz6U.iAN6CWo5cG/AJsh/DtIH4Cs5HEjISsG', '[\"ROLE_ADMIN\"]');"
+symfony console doctrine:query:sql "insert into user (email, password, roles) values ('john@doe.com', '\$2y\$13\$PbnSuELtRM4rqLdgpjz6U.iAN6CWo5cG/AJsh/DtIH4Cs5HEjISsG', '[\"ROLE_ADMIN\"]');"
 ```
 
-Pour obtenir un token, vous devez envoyer une requête `POST` à l'URL `/api/login` avec les informations d'identification de l'utilisateur. Par exemple, si vous avez créé un utilisateur avec l'adresse e-mail
+Pour obtenir un token, vous devez envoyer une requête `POST` à l'URL `/api/login_check` avec les informations d'identification de l'utilisateur. Par exemple, si vous avez créé un utilisateur avec l'adresse e-mail
 
 ```bash
-curl -X POST -H "Content-Type: application/json" http://localhost:/api/login_check \
+curl -X POST -H "Content-Type: application/json" http://localhost/api/login_check \
  -d '{"email":"john@doe.com","password":"myPassword"}'  
   ```
 
@@ -602,7 +600,7 @@ Faites à nouveau une requête HTTP pour récuperer les livres, on aura une erre
 En `effet` il faudra à présent vous authentifier pour avoir accès au données de l'api. stockez le token obtenu dans une variable d'environnement `TOKEN`, puis lancer la requête suivante.
 
 ```bash
-curl -X GET  http://localhost:/api/books \
+curl -X GET  http://localhost/api/books \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer ${TOKEN}"
 ```
@@ -644,7 +642,7 @@ class Book
 }
 ``` 
 
-Dans cet exemple, nous avons ajouté les contraintes `NotBlank` et `Length` de la bibliothèque Symfony Validator à la propriété `$title` de l'entité `Book`. Cela signifie que le titre ne peut pas être vide et doit avoir une longueur minimale de 3 caractères. Nous avons également ajouté la contrainte `Length` à la propriété `$year`, ce qui signifie que l'année n'est pas obligatoire, mais si elle est défini elle devra avoir une longueur de 4 caractères.
+Dans cet exemple, nous avons ajouté les contraintes `NotBlank` et `Length` de la bibliothèque Symfony Validator à la propriété `$author` de l'entité `Book`. Cela signifie que le nom de l'auteur ne peut pas être vide et doit avoir une longueur minimale de 3 caractères. Nous avons également ajouté la contrainte `Length` à la propriété `$year`, ce qui signifie que l'année n'est pas obligatoire, mais si elle est défini elle devra avoir une longueur de 4 caractères.
 
 ---
 
@@ -731,12 +729,14 @@ Ensuite, envoyez une requête `PUT` ou `PATCH` pour mettre à jour un utilisateu
 ---
 
 class: middle, center, inverse
+
 # 8. Relations entre les entités
 
 ---
 class: middle
 
 Dans API Platform, vous pouvez définir des relations entre les différentes entités de votre API. Les relations peuvent être de différents types, tels que :
+
 * `OneToMany`
 * `ManyToOne`
 * `ManyToMany`
@@ -820,6 +820,7 @@ class Category
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Book::class, orphanRemoval: true)]
     private Collection $books;
 ```
+
 ]
 .pull-right[
 
@@ -836,6 +837,7 @@ Lors de la récupération d'une categorie à l'aide de l'API, la réponse JSON i
   "name": "Fiction"
 }
 ```
+
 ]
 ---
 
@@ -971,16 +973,16 @@ Pour tester l'API GraphQL, vous pouvez utiliser un client GraphQL tel que Graphi
 query {
   book(id: "/api/books/1") {
     id
-    _id
     title
     author
     category {
       name
     }
   }
+  categories {
+    name
+  }
 }
 ```
 
 Dans cet exemple, nous demandons à l'API de récupérer un livre avec l'identifiant 1. Nous demandons également les propriétés id, title et author, du livre, ainsi que le nom de la catégorie.
-
-> 
