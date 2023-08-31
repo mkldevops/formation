@@ -7,47 +7,87 @@ class: center, middle, inverse
 ---
 
 class: middle
-.left-column[
-### Objectif
+
+
+  .center[
+    ### **Maîtrisez le développement web de haut niveau <br /> avec la Formation Symfony**
+   ]
+  
+  **La formation Symfony** est destinée aux développeurs qui souhaitent améliorer leurs compétences en matière de développement web. Elle vise à fournir aux participants une compréhension approfondie du framework Symfony, ainsi qu'à leur donner **les connaissances** et **les compétences** nécessaires pour créer des applications web de qualité supérieure.
+
+.center[
+
+## 🧗
+
 ]
-.right-column[
 
-  **La formation Symfony** est destinée aux développeurs qui souhaitent améliorer leurs compétences en matière de développement web. Elle vise à fournir aux participants une compréhension approfondie du framework Symfony, ainsi qu'à leur donner les connaissances et les compétences nécessaires pour créer des applications web de qualité supérieure.
+Au cours de la formation, les participants apprendront comment utiliser les différents composants de Symfony pour construire des applications web robustes et évolutives. 
 
-### 🧗 
-Au cours de la formation, les participants apprendront comment utiliser les différents composants de Symfony pour construire des applications web robustes et évolutives. Ils découvriront également comment travailler avec les différents modèles de données, comment gérer les utilisateurs et les autorisations, et comment implémenter des fonctionnalités avancées telles que les formulaires, les validations, les routes, les contrôleurs, les vues, etc.
+Ils découvriront également comment travailler avec les différents modèles de données, comment gérer les utilisateurs et les autorisations, et comment implémenter des fonctionnalités avancées telles que :
 
-### 🤝 
-En outre, la formation permettra aux participants de développer leur capacité à travailler en équipe, à communiquer avec d'autres développeurs et à gérer les défis du développement web. Les participants auront également l'opportunité de mettre en pratique leurs compétences en travaillant sur des projets concrets.
+* Les formulaires
+* Les validations
+* Les routes
+* Les contrôleurs
+* Les vues
+* etc...
 
-### 😎 
-En somme, la formation Symfony est une occasion unique pour les développeurs de développer leurs compétences en développement web et de se faire remarquer sur le marché du travail. Les participants auront les outils et les connaissances nécessaires pour construire des applications web performantes et pour atteindre leurs objectifs professionnels.
+---
+class: middle
+
+.center[
+  ### **Élevez vos compétences en équipe, <br />domptez les défis du web et brillez sur le Marché ! 🤩**
+]
+
+En outre, la formation permettra aux participants de développer **leur capacité à travailler en équipe**, à **communiquer avec d'autres développeurs** et à **gérer les défis du développement web**. Les participants auront également l'opportunité de mettre en pratique leurs compétences en travaillant sur des projets concrets.
+
+.center[
+## 😎 
+]
+
+En somme, la formation Symfony est une occasion unique pour les développeurs de développer leurs compétences en développement web et de se faire remarquer sur le marché du travail.
+
+Les participants auront les outils et les connaissances nécessaires pour construire des applications web performantes et pour atteindre leurs objectifs professionnels.
+
+.center[
+  <img src="https://images.unsplash.com/photo-1612712191426-54db4d88cbec?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=200&q=80" alt="Découverte de symfony" />
 ]
 
 ---
 
 class: middle
-.left-column[
-### Objectif
-### Au programme
-]
-.right-column[
-#### **Installation de notre environnement**
-  - Gitpod / Codespace (github)
-  - Docker
-  - Un environement docker avec 
-      - PHP 8.2
-      - Composer
-      - Nodejs
-      - Symfony cli
+.center[
 
+## Au programme
+
+]
+
+.pull-left[
+#### **Installation de notre environnement**
+
+* Gitpod / Codespace (github)
+* Docker
+* Un environement docker avec :
+  * PHP 8.2
+  * Composer
+  * Nodejs
+  * Symfony cli
+]
+
+.pull-right[
 #### **Symfony 6**
-  - Nouveau projet symfony 6.2
-  - Postgresql
-  - Environnement de dev
-  - Entité, Controller, Event
-  - Messages
-  - Redis
+
+* Nouveau projet symfony 6.3
+* Base de données avec Postgresql
+* Interface web (Easy admin, Twig)
+* Environnement de dev
+* Entité, Controller, Event
+* Messages
+* Redisq
+]
+ 
+.center[
+  <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80&h=200" />
 ]
 
 ---
@@ -55,12 +95,13 @@ class: center, middle, inverse
 # 1. Environnement de travail
 ---
 
-.left-column[
-### Editeur en ligne
+class: middle
+.center[
+### **Editeur en ligne Gitpod**
 ]
-.right-column[
 
-### **Avantages de l'utilisation d'éditeurs de code en ligne pour la formation Symfony**
+.pull-left.mt-2[
+#### Avantages de l'utilisation d'éditeurs de code en ligne pour la formation Symfony
 * Accès depuis n'importe où, à tout moment
 * Interface utilisateur conviviale
 * Fonctionnalités de collaboration en temps réel
@@ -69,40 +110,47 @@ class: center, middle, inverse
 * Possibilité de se concentrer sur le développement des compétences
 * Accès aux mêmes outils et fonctionnalités pour tous les participants
 * Facilitation de la collaboration en équipe et du partage de connaissances
+]
+.pull-right.center.middle[
+  <img src="img/gitpod-tools.jpg" alt="Gitpod tools" width="450px" />
+]
 
 En utilisant des éditeurs de code en ligne pour la formation Symfony, vous bénéficierez d'une expérience plus souple et plus facile, tout en garantissant une expérience de développement uniforme pour tous les participants.
 
-### **Liens** 
-  * gitpod (https://gitpod.io/projects)
-  * codespace (https://github.com/codespaces)
+.center[
+  <a href="https://gitpod.io" target="_blank">
+    <img src="img/gitpod-logo.png" width="300" />
+    <br />Go to Gitpod
+  </a>
 ]
 
 ---
 
-.left-column[
-### Editeur en ligne
-### Mise en place
+class: middle
+
+.center[
+### **Mise en place**
+
 ]
-.right-column[
 #### **Utilisation d'éditeurs de code en ligne pour la formation Symfony**
 Pendant cette formation, nous privilégierons l'utilisation de Gitpod. Pour pouvoir en bénéficier, vous devrez disposer d'un nouveau dépôt Git existant (sur Github, Gitlab ou Bitbucket).
 
+* ⏩ **Créer un nouveau dépôt git**
+
 Gitpod embarque une image par défaut accessible à partir de https://hub.docker.com/r/gitpod/workspace-full. Toutefois, il est possible de personnaliser votre environnement de développement en configurant, par exemple, les extensions de PHP.
 
-Pour spécifier l'utilisation d'une image Docker à partir d'un fichier **Dockerfile**, il est nécessaire d'ajouter un fichier `.gitpod.yml` à la racine du projet avec le contenu suivant :
+Pour spécifier l'utilisation d'une image Docker à partir d'un fichier **Dockerfile**, il est nécessaire d'ajouter un fichier `.gitpod.yml` à la racine du projet git avec le contenu suivant :
 ```yml
 image:
     file: .gitpod.Dockerfile
 ```
-]
+
+* ⏩ **Ajouter le fichier `.gitpod` à votre nouveau projet git**
 
 ---
 
-.left-column[
-### Editeur en ligne
-### Mise en place
-]
-.right-column[
+class: middle
+
 Ensuite, il faut créer un fichier nommé `.gitpod.Dockerfile` à la racine du projet et y ajouter le contenu suivant :
 ```dockerfile
 FROM gitpod/workspace-full:latest
@@ -119,9 +167,12 @@ Ce fichier **Dockerfile** spécifie l'utilisation de l'image de base `gitpod/wor
 
 Puis, committez et poussez ces deux fichiers sur votre branche principale.
 
-Rendez-vous sur https://gitpod.io, puis sur l'onglet "Project", cliquez sur "New Project". Choisissez le répertoire git préalablement configuré.
+* ⏩ **Rendez-vous sur https://gitpod.io**
+* ⏩ **Puis sur l'onglet "Project", cliquez sur "New Project".**
+* ⏩ **Choisissez le répertoire git préalablement configuré.**
 
-Assurez-vous de suivre ces étapes pour vous préparer à utiliser l'éditeur de code en ligne pour la formation Symfony.
+.info[
+  Assurez-vous de suivre ces étapes pour vous préparer à utiliser l'éditeur de code en ligne pour la formation Symfony.
 ]
 
 ---
@@ -967,11 +1018,11 @@ symfony console doctrine:migrations:migrate
 
 ---
 class: center, middle, inverse
-# 4. Interface web
+# 5. Interface web
 ---
 
 .left-column[
-### A. Easy Admin
+ ### A. Easy Admin
 #### Installation
 ]
 .right-column[
@@ -994,6 +1045,8 @@ symfony composer req "admin:^4"
 
 ---
 
+class: middle
+
 .left-column[
 ### A. Easy Admin
 #### Installation
@@ -1001,21 +1054,39 @@ symfony composer req "admin:^4"
 ]
 .right-column[
 #### Configurer EasyAdmin
-🪄 EasyAdmin crée automatiquement une section d'administration pour votre application basée sur des contrôleurs spécifiques.
 
-Pour débuter avec EasyAdmin, commençons par générer un "tableau de bord d'administration" qui sera le point d'entrée principal pour gérer les données du site.
+Le bundle EasyAdmin crée automatiquement une section d'administration pour votre application basée sur des contrôleurs spécifiques.
+
+.center[
+  #🪄
+]
+
+Pour débuter avec EasyAdmin, commençons par générer un **"tableau de bord d'administration"** qui sera le point d'entrée principal pour gérer les données du site.
 ```sh
 symfony console make:admin:dashboard
 ```
 
 Avec les réponses par défaut, crée le contrôleur `src/Controller/Admin/DashboardController.php`
 
-Par convention, les contrôleurs d'administration sont stockés dans leur propre espace de nom `App\Controller\Admin`.
+.info[
+  🗒 Par convention, les contrôleurs d'administration sont stockés dans leur propre espace de nom `App\Controller\Admin`.
+]
+]
 
-Accédez à l'interface d'administration générée grâce à l'URL `/admin` telle que configurée par la méthode `index()` (vous pouvez modifier l'URL comme bon vous semble) :
+---
+
+class: middle
+.left-column[
+### A. Easy Admin
+#### Installation
+#### Configuration
+]
+.right-column[
+
+**Accédez à l'interface d'administration** générée grâce à l'URL `/admin` telle que configurée par la méthode `index()` (vous pouvez modifier l'URL comme bon vous semble) :
 
 .pull-left[
-<img src="img/easy-admin-empty.png" alt="Easy admin empty" width="330px">
+<img src="img/easy-admin-empty.png" alt="Easy admin empty" width="430px">
 ]
 .pull-right[
   #.center[🚀]
