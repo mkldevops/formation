@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Droid+Serif);
+@import url(https://fonts.googleapis.com/css?family=Lato);
 @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
 @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,700,400italic);
@@ -21,18 +22,20 @@
   * {
     animation : none !important;
     transition-property: none !important;
- }
+  }
 }
 
 
 body {
-  font-family: 'Tahoma';
+  font-family: 'Lato';
 }
+
 h1, h2, h3, h4, h5 {
   font-weight: 400;
   margin-bottom: 0;
   margin-top: 1rem;
 }
+
 
 h5 {
   font-weight: bold;
@@ -52,8 +55,8 @@ h5 {
 }
 .remark-slide-content li { font-size: 0.9em; }
 .remark-slide-content h1 { font-size: 2.9em; }
-.remark-slide-content h2 { font-size: 2.4em; }
-.remark-slide-content h3 { font-size: 1.5em; }
+.remark-slide-content h2 { font-size: 2.2em; }
+.remark-slide-content h3 { font-size: 1.5em;  color: #04347b; }
 .remark-slide-content h4 { font-size: 1.2em; font-weight: bold; }
 .remark-slide-content p { font-size: 0.9em; }
 .footnote {
@@ -141,9 +144,11 @@ code {
   height: 92%;
   float: left;
 }
+
 .left-column h2:last-of-type, .left-column h3:last-of-type, .left-column h4:last-child {
-    color: #000;
-  }
+  color: #000;
+}
+
 .right-column {
   width: 75%;
   float: right;

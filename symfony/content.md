@@ -58,7 +58,7 @@ Les participants auront les outils et les connaissances nécessaires pour constr
 class: middle
 .center[
 
-## Au programme
+### **Au programme**
 
 ]
 
@@ -176,50 +176,44 @@ Puis, committez et poussez ces deux fichiers sur votre branche principale.
 ]
 
 ---
-
-.left-column[
-### Editeur en ligne
-### Mise en place
-### Verification
+class: middle
+.center[
+  ### **Verification de l'environnement Gitpod**
 ]
-.right-column[
 #### **Préparation pour la formation**
 * Sur l'éditeur de code en ligne, certains logiciels sont déjà installés.
 * Vérifions que nous avons tous les outils nécessaires pour cette formation.
 
-Assurez-vous de vérifier les outils nécessaires avant de commencer la formation avec un éditeur de code en ligne.
+
+* ⏩ **Assurez-vous de vérifier les outils nécessaires avant de commencer la formation avec un éditeur de code en ligne.**
 
 | .red[software] | .red[command version] | .red[version] |
 |--|--|
 | **docker** | `docker --version` | +20.10 |
 | **docker compose** | `docker compose version` | +2.10 |
 | **php** | `php -version` | +8.1 |
-| **composer** | `composer --version` | +2.4 |
+| **composer** | `symfony composer --version` | +2.4 |
 | **node** | `node --version` | +16 |
 | **yarn** | `yarn --version` | +1.22 |
-]
+
 
 ---
 
-.left-column[
-### Editeur en ligne
-### Mise en place
-### Verification
-### Initialisation
+class: middle
+.center[
+  ### **Initialisation du projet avec Symfony**
 ]
-.right-column[
 
-### **Initialisation du projet avec Symfony**
 * Nous allons initialiser le projet avec le client Symfony.
-* Nous utiliserons la **version 6.2**, la dernière en date.
-* Nous utiliserons également **PHP 8.1+**.
+* Nous utiliserons la **version 6.3+**, la dernière en date.
+* Nous utiliserons également **PHP 8.2+**.
 
 Assurez-vous de suivre ces étapes pour initialiser correctement votre projet avec Symfony en utilisant les dernières versions disponibles.
 
 Lancer la commande suivante depuis le terminal, elle va permettre de cloner symfony-skeleton, lancer composer ...
 ❗ Assurez-vous que le repertoire en cours soit vide.
 ```sh
-symfony new --dir=guestbook --webapp --version=6.2
+symfony new --dir=guestbook --webapp --version=6.3
 cd guestbook
 rm -rf .git
 ```
@@ -231,15 +225,11 @@ Le binaire symfony fournit également un outil permettant de vérifier si votre 
 ```sh
 symfony book:check-requirements
 ```
-]
+
 
 ---
-
-.left-column[
-### Editeur en ligne
-### Mise en place
-### Verification
-### Initialisation
+class: middle
+.center[
 ### VsCode Extensions
 ]
 .right-column[
@@ -260,35 +250,37 @@ Liste des extensions
 class: center, middle, inverse
 # 2. En route vers symfony 6
 https://symfony.com/doc/current/the-fast-track/fr/index.html
+
+<img src="https://images.unsplash.com/photo-1623176035122-4e07bc19bab7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=200&q=80" />
 ---
 
-
-### .center[Présentation du projet]
+class: middle
+### .center[**Présentation du projet**]
 Nous devons trouver un projet sur lequel travailler. C'est un certain défi car nous devons choisir un projet assez vaste pour couvrir complètement Symfony, mais en même temps, il devrait être assez petit ; Afin que vous ne vous ennuyiez pas à implémenter des fonctionnalités similaires plusieurs fois.
 
 #### Description du projet
 Le projet a pour but d'obtenir un retour d'expérience sur les conférences : une liste des conférences sur la page d'accueil ainsi qu'une page pour chacune d'entre elles, pleine de commentaires sympathiques. Un commentaire est composé d'un petit texte et d'une photo, optionnelle, prise pendant la conférence.
 
-Le projet comprendra plusieurs applications : une application web traditionnelle avec une interface HTML, une API et une SPA pour les téléphones mobiles.
+Le projet comprendra plusieurs applications : 
+* **Une application web traditionnelle avec une interface HTML**
+* **une API**
+* **une SPA pour les téléphones mobiles.**
+
 #### La maîtrise s’acquiert par la pratique
 La maîtrise s’acquiert par la pratique. Point final. Lire un livre sur Symfony, c'est bien. Coder une application sur votre ordinateur tout en lisant un livre sur Symfony, c'est encore mieux. Cette formation est très spécial puisque tout a été fait pour que vous puissiez suivre et  coder.
 
-#### Récupérer le code source du projet
-Clonez [le dépôt du livre](https://github.com/the-fast-track/book-6.2-1) d'or quelque part sur votre machine :
-```sh
-symfony new --version=6.2-1 --book guestbook
-```
-
 ---
 
-.left-column[
-### A. Structure
+class: middle
+
+.center[
+### **Structure**
 ]
-.right-column[
 
-Comme Git est installé sur notre machine, `symfony new` nous a également créé un dépôt Git, dans lequel a été ajouté le tout premier commit.
 
+.left-column[
 Jetons un coup d'oeil à la structure des répertoires :
+
 ```
 ├── bin/
 ├── composer.json
@@ -300,132 +292,137 @@ Jetons un coup d'oeil à la structure des répertoires :
 ├── var/
 └── vendor/
 ```
-* Le répertoire **`bin/`** contient le principal point d'entrée de la ligne de commande : `console`. Vous l'utiliserez tout le temps.
-
-* Le répertoire **`config/`** est constitué d'un ensemble de fichiers de configuration sensibles, initialisés avec des valeurs par défaut. Un fichier par paquet. Vous les modifierez rarement : faire confiance aux valeurs par défaut est presque toujours une bonne idée.
-
-* Le répertoire **`public/`** est le répertoire racine du site web, et le script index.php est le point d'entrée principal de toutes les ressources HTTP dynamiques.
-
-]
----
-
-.left-column[
-### A. Structure
-
 ]
 .right-column[
-* Le répertoire **`src/`** héberge tout le code que vous allez écrire ; c'est ici que vous passerez la plupart de votre temps. Par défaut, toutes les classes de ce répertoire utilisent le namespace PHP App. C'est votre répertoire de travail, votre code, votre logique de domaine. Symfony n'a pas grand-chose à y faire.
+Comme Git est installé sur notre machine, `symfony new` nous a également créé un dépôt Git, dans lequel a été ajouté le tout premier commit.
 
-* Le répertoire **`var/`** contient les caches, les logs et les fichiers générés par l'application lors de son exécution. Vous pouvez le laisser tranquille. C'est le seul répertoire qui doit être en écriture en production.
 
-* Le répertoire **`vendor/`** contient tous les paquets installés par Composer, y compris Symfony lui-même. C'est notre arme secrète pour un maximum de productivité. Ne réinventons pas la roue. Vous profiterez des bibliothèques existantes pour vous faciliter le travail. Le répertoire est géré par Composer. N'y touchez jamais.
+* **`bin/`** contient le principal point d'entrée de la ligne de commande : `console`. Vous l'utiliserez tout le temps.
+
+* **`config/`** est constitué d'un ensemble de fichiers de configuration sensibles, initialisés avec des valeurs par défaut. Un fichier par paquet. Vous les modifierez rarement : faire confiance aux valeurs par défaut est presque toujours une bonne idée.
+
+* **`public/`** est le répertoire racine du site web, et le script index.php est le point d'entrée principal de toutes les ressources HTTP dynamiques.
+
+* **`src/`** héberge tout le code que vous allez écrire ; c'est ici que vous passerez la plupart de votre temps. Par défaut, toutes les classes de ce répertoire utilisent le namespace PHP App. C'est votre répertoire de travail, votre code, votre logique de domaine. Symfony n'a pas grand-chose à y faire.
+
+* **`var/`** contient les caches, les logs et les fichiers générés par l'application lors de son exécution. Vous pouvez le laisser tranquille. C'est le seul répertoire qui doit être en écriture en production.
+
+* **`vendor/`** contient tous les paquets installés par Composer, y compris Symfony lui-même. C'est notre arme secrète pour un maximum de productivité. Ne réinventons pas la roue. Vous profiterez des bibliothèques existantes pour vous faciliter le travail. Le répertoire est géré par Composer. N'y touchez jamais.
 
 C'est tout ce que vous avez besoin de savoir pour l'instant. 🏁
 
-> 📬 Commitez notre travail via `git commit .`
-
 ]
+
 
 ---
 
-.left-column[
-### A. Structure
-### B. Resources publique
+class: middle
+.center[
+  ### **Enregistrer notre travail**
 ]
-.right-column[
+
+Prenons l'habitude après chaque chapitre de commiter notre travail. Cela nous permettra de revenir en arrière si nous rencontrons des problèmes. 
+
+* ⏩ **Commitez notre travail via :**
+  ```sh
+  git add . 
+  git commit -m "Init structre"
+  ```
+
+
+.center[
+  <img src="https://images.unsplash.com/photo-1589995186011-a7b485edc4bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&h=200&q=80" />
+]
+
+
+---
+
+class: middle
+.center[
+### **Resources publique**
+]
+
 #### Créer des ressources publiques
-Tout ce qui se trouve dans le répertoire **`public/`** est accessible par un navigateur. Par exemple, si vous déplacez votre fichier GIF animé (nommez-le under-construction.gif) dans un nouveau répertoire `public/images/`, il sera alors disponible à une URL comme https://localhost/images/under-construction.gif.
+Tout ce qui se trouve dans le répertoire **`public/`** est accessible par un navigateur. 
+
+Par exemple, si vous déplacez votre fichier GIF animé (nommez-le under-construction.gif) dans un nouveau répertoire `public/images/`, il sera alors disponible à une URL comme https://localhost/images/under-construction.gif.
+
+.center[
+![Under Construction](http://clipartmag.com/images/website-under-construction-image-6.gif)
+]
 
 Téléchargez mon image GIF ici :
 ```sh
 mkdir public/images/
 php -r "copy('http://clipartmag.com/images/website-under-construction-image-6.gif', 'public/images/under-construction.gif');"
 ```
-]
 
 ---
-
-.left-column[
-### A. Structure
-### B. Resources publique
-### C. Serveur symfony
+class: middle
+.center[
+### **Lancer un serveur web local**
 ]
-.right-column[
-#### Lancer un serveur web local
-La commande symfony inclut un serveur web optimisé pour le développement. Comme vous vous en doutez, il marche très bien avec Symfony. Cependant, ne l'utilisez jamais en production.
 
-À partir du répertoire du projet, démarrez le serveur web en arrière-plan (option -d) :
+La commande symfony inclut un serveur web optimisé pour le développement. Comme vous vous en doutez, il marche très bien avec Symfony. Cependant, **ne l'utilisez jamais en production.**
+
+* ⏩ **À partir du répertoire du projet, démarrez le serveur web en arrière-plan (option `-d`)**
 ```sh
 symfony server:start -d
 ```
 
-depuis l'éditeur en ligne vous pouvez retrouver le lien de notre serveur lancé sur l'onglet `PORTS`. Choisissez le port 8000, un nouvel onglet s'ouvre affichant une page "welcome to symfony"
-> 🗒 Pour résoudre les problèmes, exécutez `symfony server:log` ; cette commande affiche les derniers logs de votre serveur web, de PHP et de votre application.
+Depuis l'éditeur en ligne **Gitpod** vous pouvez retrouver le lien de notre serveur lancé sur l'onglet **PORTS**. Choisissez le port **8000**, un nouvel onglet s'ouvre affichant une page **"welcome to symfony"**
 
-Naviguez vers `/images/under-construction.gif.` Pour percevoir notre image animé sur notre projet symfony.
+.pull-right[
+  .info[
+    🤖 Ce n'est qu'une page de remplissage, car nous n'avons toujours pas défini de page d'accueil. Même si la page par défaut qui vous accueille est belle, c'est une page d'erreur **`404`**.
+  ]
 
-> 📬 Commitez notre travail via `git commit .`
+  Naviguez vers `/images/under-construction.gif.` Pour percevoir notre image animé sur notre projet symfony.
+
+* ⏩ **📬 Commitez notre travail**
 ]
-
+.pull-left[
+  .center[![Debug page](img/debug-page.png)]
+]
 
 ---
 
-.left-column[
-### A. Structure
-### B. Resources publique
-### C. Serveur symfony
-### D. Diagnostiquer
+class: middle
+
+.center[
+  ### **Découvrir les outils de débogage de Symfony**
 ]
-.right-column[
+
 Mettre en place un projet, c'est aussi avoir les bons outils pour déboguer les problèmes. Fort heureusement, des assistants très utiles sont inclus avec le paquet webapp.
 
-#### Découvrir les outils de débogage de Symfony
-Pour commencer, le Symfony Profiler vous fait gagner un temps fou lorsque vous avez besoin de trouver l'origine d'un problème.
 
-Si vous regardez la page d'accueil
+Pour commencer, le **Symfony Profiler** vous fait gagner un temps fou lorsque vous avez besoin de trouver l'origine d'un problème. Si vous vous rendez sur la route `/_profiler` puis la première ligne avce le code **`404`**, vous obtenez le "vrai" message d'exception dans les logs du *Symfony Profiler*.
 
-.center[![Debug page](img/debug-page.png)]
-
-Ce n'est qu'une page de remplissage, car nous n'avons toujours pas défini de page d'accueil. Même si la page par défaut qui vous accueille est belle, c'est une page d'erreur **`404`**.
-]
-
----
-
-.left-column[
-### A. Structure
-### B. Resources publique
-### C. Serveur symfony
-### D. Diagnostiquer
-]
-.right-column[
-
-Si vous vous rendez sur la route `/_profiler` puis la première ligne avce le code **`404`**, vous obtenez le "vrai" message d'exception dans les logs du *Symfony Profiler*.
-
+.pull-left[
 .center[![Symfony profiler](img/symfony-profiler.png)]
-
-Les logs sont également très utiles dans les sessions de débogage. Symfony a une commande pratique pour consulter tous les logs (du serveur web, de PHP et de votre application) :
+]
+.pull-right[
+.info[
+> 🗒 Les logs sont également très utiles dans les sessions de débogage. Symfony a une commande pratique pour consulter tous les logs (du serveur web, de PHP et de votre application) :
 ```sh
 symfony server:log
 ```
 ]
+]
 
 ---
 
-.left-column[
-### A. Structure
-### B. Resources publique
-### C. Serveur symfony
-### D. Diagnostiquer
-### E. Les environemments
+class: middle
+.center[
+### **Les environemments**
 ]
-.right-column[
 
 #### Comprendre les environnements Symfony
-Comme le Symfony Profiler n'est utile que pendant le développement, nous voulons éviter qu'il soit installé en production. Par défaut, Symfony ne l'installe que pour les environnements de dev et de test.
+Comme le **Symfony Profiler** n'est utile que pendant le développement, nous voulons éviter qu'il soit installé en production. Par défaut, Symfony ne l'installe que pour les environnements de `dev` et de `test`.
 
 Symfony intègre une notion d'environnement. Par défaut, il y en a trois, mais vous pouvez en ajouter autant que vous le souhaitez : `dev`, `prod` et `test`. Tous les environnements partagent le même code, mais ils représentent des configurations différentes.
 
-Par exemple, tous les outils de débogage sont activés en environnement de `dev`. Dans celui de `prod`, l'application est optimisée pour la performance.
+**Par exemple:** tous les outils de débogage sont activés en environnement de `dev`. Dans celui de `prod`, l'application est optimisée pour la performance.
 
 Basculer d'un environnement à l'autre peut se faire en changeant la variable d'environnement `APP_ENV`.
 
@@ -435,18 +432,11 @@ Basculer d'un environnement à l'autre peut se faire en changeant la variable d'
 Essayez de modifier la valeur de la variable `APP_ENV` à "prod", redemarrez le serveur symfony, puis rendez-vous sur la page du profiler qui n'est disponible qu'en environnement de développement.
 
 Pour supprimer notre variable d'environnement, vous pouvez utiliser la commande `unset APP_ENV` dans un terminal
-]
 
 ---
 
-.left-column[
-### A. Structure
-### B. Resources publique
-### C. Serveur symfony
-### D. Diagnostiquer
-### E. Les environemments
-]
-.right-column[
+class: middle
+
 L'utilisation de variables d'environnement réelles est la meilleure façon de définir des valeurs comme `APP_ENV` en production. Mais sur les machines de développement, avoir à définir beaucoup de variables d'environnement peut s'avérer fastidieux. Définissez-les plutôt dans un fichier `.env.`
 
 Un fichier sensible `.env` a été généré automatiquement pour vous lorsque le projet a été créé :
@@ -458,20 +448,25 @@ APP_SECRET=76f040716bf0a94fa2409642b1883e55
 ```
 > 💡 N'importe quel paquet peut ajouter plus de variables d'environnement à ce fichier grâce à leur [recette utilisée par Symfony Flex](https://github.com/symfony/recipes).
 
-Le fichier .env est commité sur le dépôt Git et liste les valeurs par défaut de la production. Vous pouvez surcharger ces valeurs en créant un fichier .env.local. Ce fichier ne doit pas être commité : c'est pourquoi le fichier .gitignore l'ignore déjà.
+Le fichier .env est commité sur le dépôt Git et liste les valeurs par défaut de la production. Vous pouvez surcharger ces valeurs en créant un fichier `.env.local`. Ce fichier ne doit pas être commité : c'est pourquoi le fichier `.gitignore` l'ignore déjà.
 
-Ne stockez jamais des données secrètes ou sensibles dans ces fichiers. Nous verrons comment gérer ces données sensibles dans une autre étape.
+.info[
+  🚨 Ne stockez jamais des **données secrètes ou sensibles** dans ces fichiers. Nous verrons comment gérer ces données sensibles dans une autre étape.
 ]
 
 ---
 class: center, middle, inverse
 # 3. Notre première route
+.center[
+  <img src="https://images.unsplash.com/photo-1561220078-b3bdc2f75714?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200&q=80" />
+]
 ---
 
-.left-column[
-  ### A. Maker bundle
+class: middle
+.center[
+  ### **Maker bundle**
 ]
-.right-column[
+
 La page d'accueil est une ennuyeuse page d'erreur 404. Corrigeons cela.
 
 Lorsqu'une requête HTTP arrive au serveur, comme pour notre page d'accueil (http://localhost:8000/), **Symfony** essaie de trouver une route qui corresponde au chemin de la requête (`/` ici). Une route est le lien entre le chemin de la requête et un callable PHP, une fonction devant créer la réponse HTTP associée à cette requête.
@@ -487,17 +482,16 @@ La commande `list`, intégrée nativement à la console symfony, permet d'affich
 ```sh
 symfony console list make
 ```
-]
 
 ---
 
-.left-column[
-  ### A. Maker bundle
-  ### B. Générer un contrôleur
+class: middle
+.center[
+  ### **Générer un contrôleur**
 ]
-.right-column[
-#### Générer un contrôleur
-Créez votre premier Controller avec la commande `make:controller` :
+
+* ⏩ **Créez votre premier Controller avec la commande `make:controller`** :
+
 ```sh
 symfony console make:controller ConferenceController
 ```
@@ -523,18 +517,15 @@ class ConferenceController extends AbstractController
 }
 ```
 
-> 📬 Commitez notre travail via `git commit .`
-]
+* ⏩ **📬 Commitez notre travail**
 
 ---
 
-.left-column[
-  ### A. Maker bundle
-  ### B. Générer un contrôleur
-  ### C. Personnaliser la route
+class: middle
+.center[
+  ### **Personnaliser la route**
 ]
 
-.right-column[
 L'attribut `#[Route('/conference', name: 'conference')]` est ce qui fait de la méthode `index()` un contrôleur (la configuration est à côté du code qu'elle configure).
 
 Lorsque vous visitez la page `/conference` dans un navigateur, le contrôleur est exécuté et une réponse est renvoyée.
@@ -565,7 +556,6 @@ Le nom de la route (`name`) sera utile lorsque nous voudrons faire référence �
 +        EOF);
      }
 ```
-]
 
 ---
 
