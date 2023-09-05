@@ -530,8 +530,7 @@ L'attribut `#[Route('/conference', name: 'conference')]` est ce qui fait de la m
 
 Lorsque vous visitez la page `/conference` dans un navigateur, le contrôleur est exécuté et une réponse est renvoyée.
 
-
-Modifiez la route afin qu'elle corresponde à la page d'accueil (`/`) :
+* ⏩ **Modifiez la route afin qu'elle corresponde à la page d'accueil (`/`)**
 
 ```diff
 class ConferenceController extends AbstractController
@@ -542,7 +541,10 @@ class ConferenceController extends AbstractController
     {
 ```
 
-Le nom de la route (`name`) sera utile lorsque nous voudrons faire référence à la page d'accueil dans notre code. Au lieu de coder en dur le chemin `/`, nous utiliserons le nom de la route. À la place de la page par défaut, retournons une simple page HTML :
+Le nom de la route (`name`) sera utile lorsque nous voudrons faire référence à la page d'accueil dans notre code. Au lieu de coder en dur le chemin `/`, nous utiliserons le nom de la route.
+
+* ⏩ **À la place de la page par défaut, retournons une simple page HTML**
+
 ```diff
      public function index(): Response
      {
@@ -559,34 +561,30 @@ Le nom de la route (`name`) sera utile lorsque nous voudrons faire référence �
 
 ---
 
-.left-column[
-  ### A. Maker bundle
-  ### B. Générer un contrôleur
-  ### C. Personnaliser la route
+class: middle
+
+
+* ⏩ **Rafraîchissez le navigateur**
+
+.center[
+  ![Symfony Contrôleur](img/symfony-controleur.png)
 ]
 
-.right-column[
-Rafraîchissez le navigateur :
+La responsabilité principale d'un contrôleur est de retourner une réponse **HTTP** (classe `Response`) pour la requête.
 
-![Symfony Contrôleur](img/symfony-controleur.png)
-
-La responsabilité principale d'un contrôleur est de retourner une réponse **HTTP** (Response) pour la requête.
-
-> 📬 Commitez notre travail via `git commit .`
-]
+* ⏩ **📬 Commitez notre travail**
 
 ---
 
-.left-column[
-  ### A. Maker bundle
-  ### B. Générer un contrôleur
-  ### C. Personnaliser la route
-  ### D. Ajouter un easter egg
+class: middle
+
+.center[
+### **Ajouter un easter egg**
 ]
 
-.right-column[
-#### Ajouter un easter egg
-Pour montrer comment une réponse peut tirer parti de l'information contenue dans la requête, ajoutons un petit easter egg. Lorsqu'une requête vers la page d'accueil sera réalisée avec un paramètre d'URL comme `?hello=Fabien`, nous ajouterons du texte pour saluer la personne :
+Pour montrer comment une réponse peut tirer parti de l'information contenue dans la requête, ajoutons un petit easter egg.
+
+* ⏩ **Lorsqu'une requête vers la page d'accueil sera réalisée avec un paramètre d'URL comme `?hello=Fabien`, nous ajouterons du texte pour saluer la personne**
 
 ```diff
  namespace App\Controller;
@@ -613,23 +611,20 @@ Pour montrer comment une réponse peut tirer parti de l'information contenue dan
 +                <body>$greet<img src="/images/under-construction.gif" /></body>
              </html>
 ```
-]
 
 ---
 
-.left-column[
-  ### A. Maker bundle
-  ### B. Générer un contrôleur
-  ### C. Personnaliser la route
-  ### D. Ajouter un easter egg
+class: middle
+.center[
+  ### **Paramètre de route dynamique**
+
 ]
 
-.right-column[
 Symfony expose les données de la requête à travers un objet `Request`. Lorsque Symfony voit un argument de contrôleur avec ce typage précis, il sait automatiquement qu'il doit vous le passer. Nous pouvons l'utiliser pour récupérer le nom depuis le paramètre d'URL et ajouter un titre `<h1>`.
 
-Dans un navigateur, rendez-vous sur `/`, puis sur `/?hello=Fabien` pour constater la différence.
+* ⏩ **Dans un navigateur, rendez-vous sur `/`, puis sur `/?hello=Fabien` pour constater la différence.**
+* ⏩ **Nous aurions également pu inclure le nom directement dans l'URL :**
 
-Nous aurions également pu inclure le nom directement dans l'URL :
 ```diff
  class ConferenceController extends AbstractController
  {
@@ -647,24 +642,20 @@ Nous aurions également pu inclure le nom directement dans l'URL :
 
 La partie de la route {name} est un paramètre de route dynamique - il fonctionne comme un joker. Vous pouvez maintenant vous rendre sur `/hello` et sur `/hello/Fabien` dans un navigateur pour obtenir les mêmes résultats qu'auparavant. Vous pouvez récupérer la valeur du paramètre `{name}` en ajoutant un argument portant le même nom au contrôleur, donc $name.
 
-> ❗ Annulez les changements que nous venons juste de faire via `git checkout .`
+* ⏩ **Annulez les changements que nous venons juste de faire via `git checkout .`**
 
-]
 
 ---
 
-.left-column[
-  ### A. Maker bundle
-  ### B. Générer un contrôleur
-  ### C. Personnaliser la route
-  ### D. Ajouter un easter egg
-  ### E. Débogguer des variables
+class: middle
+.center[
+  ### **Débogguer des variables**
 ]
 
-.right-column[
-La fonction dump() est un utilitaire de déboggage très puissant. Elle est toujours disponible et vous permet de voir le contenu de variables complexes dans un format interactif.
 
-Modifiez temporairement le fichier src/Controller/ConferenceController.php pour afficher le contenu de l'objet Request :
+La fonction `dump()` est un utilitaire de déboggage très puissant. Elle est toujours disponible et vous permet de voir le contenu de variables complexes dans un format interactif.
+
+Modifiez temporairement le fichier `src/Controller/ConferenceController.php` pour afficher le contenu de l'objet Request :
 
 ```diff
  use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -687,37 +678,52 @@ Modifiez temporairement le fichier src/Controller/ConferenceController.php pour 
 ```
 Quand vous rafraichissez la page, une icône "cible" apparait dans la barre de déboggage; elle vous permet d'inspecter le dump. Cliquez dessus pour accéder à une page dédiée rendant la navigation plus simple.
 
-> ❗ Annulez les changements que nous venons juste de faire via `git checkout .`
-
-]
+* ⏩ **Annulez les changements que nous venons juste de faire via `git checkout .`**
 
 ---
 class: center, middle, inverse
 # 4. Gestion des données
 ---
 
-.left-column[
-  ### A. Base de données
-  #### PostgreSQL
+class: middle
+.center[
+  ### **Base de données PostgreSQL**
 ]
 
-.right-column[
-  Le site web du livre d'or de la conférence permet de recueillir des commentaires pendant les conférences. Nous avons besoin de stocker ces commentaires dans un stockage persistant.
+  Le site web du livre d'or de la conférence permet de recueillir des **commentaires** pendant les **conférences**. Nous avons besoin de stocker ces commentaires dans un stockage persistant.
 
-Un commentaire est mieux décrit par une structure de données fixe : un nom, un email, le texte du commentaire et une photo facultative. Ce type de données se stocke facilement dans un moteur de base de données relationnelle traditionnel.
+Un commentaire est mieux décrit par une structure de données fixe :
 
-PostgreSQL est le moteur de base de données que nous allons utiliser.
-#### Ajouter PostgreSQL à Docker Compose
-Sur notre machine locale, nous avons décidé d'utiliser Docker pour gérer nos services. Le fichier docker-compose.yaml généré contient déjà PostgreSQL en tant que service :
+* Un nom
+* Un email
+* Le texte du commentaire
+* Et une photo facultative
+
+Ce type de données se stocke facilement dans un moteur de base de données relationnelle traditionnel.
+
+.center[
+**🚀 PostgreSQL** est le moteur de base de données que nous allons utiliser.
+
+<img src="img/postgresql-logo.png" width="100" alt="PostgreSQL" />
+
+]
+
+---
+class: middle
+.center[
+  ### **Installer PostgreSQL**
+]
+
+Sur notre machine locale, nous avons décidé d'utiliser **Docker** pour gérer nos services. Le fichier `docker-compose.yaml` généré contient déjà **PostgreSQL** en tant que service :
 
 ```yml
 ###> doctrine/doctrine-bundle ###
 database:
-    image: postgres:${POSTGRES_VERSION:-14}-alpine
+    image: postgres:${POSTGRES_VERSION:-15}-alpine
     environment:
         POSTGRES_DB: ${POSTGRES_DB:-app}
         # You should definitely change the password in production
-        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ChangeMe}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
         POSTGRES_USER: ${POSTGRES_USER:-app}
 volumes:
     - db-data:/var/lib/postgresql/data:rw
@@ -726,16 +732,7 @@ volumes:
 ###< doctrine/doctrine-bundle ###
 ```
 
-]
 
----
-
-.left-column[
-  ### A. Base de données
-  #### PostgreSQL
-]
-
-.right-column[
 Un serveur **PostgreSQL** sera alors installé et certaines variables d'environnement, qui contrôlent le nom de la base de données et ses identifiants, seront configurées. Les valeurs n'ont pas vraiment d'importance.
 
 Nous exposons également le port PostgreSQL (`5432`) du conteneur à l'hôte local (`docker-compose.override.yml`). Cela nous aidera à accéder à la base de données à partir de notre machine :
@@ -746,78 +743,68 @@ database:
     - "5432"
 ###< doctrine/doctrine-bundle ###
 ```
-
-> 💡 L'extension `pdo_pgsql` a déjà dû être installée précédemment lors de l'installation de PHP.
-
-]
-
 ---
 
-.left-column[
-  ### A. Base de données
-  #### PostgreSQL
-  #### Docker compose
+class: middle
+.center[
+  ### **Lancer notre base de données via Docker compose**
 ]
 
-.right-column[
-Lancez Docker Compose en arrière-plan (-d) :
+* ⏩ **Lancez Docker Compose en arrière-plan avec l'option `-d`**
 ```sh
 docker compose up -d
 ```
-Attendez un peu pour laisser démarrer la base de données, puis vérifiez que tout fonctionne bien :
+
+* ⏩ **Attendez un peu pour laisser démarrer la base de données, puis vérifiez que tout fonctionne bien**
 ```sh
 docker compose ps
 ```
 
-S'il n'y a pas de conteneurs en cours d'exécution ou si la colonne State n'indique pas Up, vérifiez les logs de Docker Compose :
-```sh
-docker compose logs database
-```
-
+.info[
+  ❗ S'il n'y a pas de conteneurs en cours d'exécution ou si la colonne State n'indique pas Up, vérifiez les logs de **Docker Compose** :
+  ```sh
+  docker compose logs database
+  ```
 ]
 
 ---
 
-.left-column[
-  ### A. Base de données
-  #### PostgreSQL
-  #### Docker compose
-  #### Accéder à la base de données
+class: middle
+.center[
+  ### **Accéder à la base de données**
 ]
 
-.right-column[
-L'utilitaire en ligne de commande `psql` peut parfois s'avérer utile. Mais vous devez vous rappelez des informations d'identification et du nom de la base de données. Encore moins évident, vous devez aussi connaître le port local sur lequel la base de données tourne sur l'hôte. Docker choisit un port aléatoire pour que vous puissiez travailler sur plus d'un projet en utilisant PostgreSQL en même temps (le port local fait partie de la sortie de `docker-compose ps`).
+L'utilitaire en ligne de commande `psql` peut parfois s'avérer utile. Mais vous devez vous rappelez des informations d'identification et du nom de la base de données. Encore moins évident, vous devez aussi connaître le port local sur lequel la base de données tourne sur l'hôte. Docker choisit un port aléatoire pour que vous puissiez travailler sur plus d'un projet en utilisant **PostgreSQL** en même temps (le port local fait partie de la sortie de `docker-compose ps`).
 
 Si vous utilisez `psql` avec la commande `symfony`, vous n'avez pas besoin de vous souvenir de quoi que ce soit.
 
 La commande symfony détecte automatiquement les services Docker en cours d'exécution pour le projet et expose les variables d'environnement dont `psql` a besoin pour se connecter à la base de données.
 
-Grâce à ces conventions, accéder à la base de données avec symfony run est beaucoup plus facile :
+* ⏩ **Grâce à ces conventions, accéder à la base de données avec `symfony run` est beaucoup plus facile**
 ```sh
 symfony run psql
 ```
 
-> 💡 Ou via un `docker compose exec` sur le container `database`
->```sh
-> docker compose exec database psql app app
-> ```
-
-Documentation postgresql
-* structure : https://www.postgresql.org/docs/13/tutorial-accessdb.html
-* table & requêtes : https://www.postgresql.org/docs/13/tutorial-table.html
+ 💡 Ou via un `docker compose exec` sur le container `database`
+```sh
+ docker compose exec database psql app app
+```
+.info[
+  Documentation PostgreSQL
+  * structure : https://www.postgresql.org/docs/13/tutorial-accessdb.html
+  * table & requêtes : https://www.postgresql.org/docs/13/tutorial-table.html
 ]
 
 ---
 
-.left-column[
-  ### A. Base de données
-  #### PostgreSQL
-  #### Docker compose
-  #### Accéder à la base de données
-  #### Exposer des variables d'environnement
+class: middle
+
+.center[
+  ### **Exposer des variables d'environnement**
 ]
-.right-column[
-#### Exposer des variables d'environnement
+
+Entre les variables d'environnement définies dans le fichier `.env` et celles définies dans le fichier `docker-compose.yaml`, il y a beaucoup de variables d'environnement disponibles. Les mêmes nom de variables d'environnement peuvent être définis dans plusieurs fichiers, mais les valeurs définies dans les fichiers `docker-compose.yaml` ont la priorité sur celles définies dans `.env`.
+
 Pour afficher toutes les variables d'environnement exposées:
 * affiche toutes les variables (server, .env, docker, ...)
 ```bash
@@ -827,68 +814,69 @@ symfony var:export --debug --multiline
 ```sh
 symfony console debug:dotenv
 ```
-]
+
 
 ---
 
-.left-column[
-  ### A. Base de données
-  ### B. Doctrine ORM
-  #### Configurer Doctrine ORM
+class: middle
+.center[
+  ### **Configurer Doctrine ORM**
 ]
-.right-column[
-Pour interagir avec la base de données depuis PHP, nous allons nous appuyer sur [**Doctrine**](https://www.doctrine-project.org/), un ensemble de bibliothèques qui nous aide à gérer les bases de données : Doctrine DBAL (une couche d'abstraction de la base de données), **Doctrine** ORM (une librairie pour manipuler le contenu de notre base de données en utilisant des objets PHP), et Doctrine Migrations.
 
-#### Configurer Doctrine ORM
+Pour interagir avec la base de données depuis PHP, nous allons nous appuyer sur [**Doctrine**](https://www.doctrine-project.org/), un ensemble de bibliothèques qui nous aide à gérer les bases de données : 
+* **Doctrine DBAL** (une couche d'abstraction de la base de données)
+* **Doctrine** ORM (une librairie pour manipuler le contenu de notre base de données en utilisant des objets PHP)
+* Et **Doctrine Migrations**.
+
 Comment est-ce que Doctrine est au courant de notre connexion à la base de données ? La recette de Doctrine a ajouté un fichier de configuration qui contrôle son comportement : `config/packages/doctrine.yaml`. Le paramètre principal est le `DSN` de la base de données, une chaîne contenant toutes les informations sur la connexion : identifiants, hôte, port, etc. Par défaut, Doctrine recherche une variable d'environnement `DATABASE_URL`.
 
 Presque tous les paquets installés sont configurés dans le répertoire `config/packages/`. Les valeurs par défaut ont été choisies avec soin pour fonctionner avec la plupart des applications.
 
-#### Comprendre les conventions des variables d'environnement de Symfony
+---
+
+class: middle
+.center[
+### **Comprendre les conventions des variables d'environnement de Symfony**
+]
+
 Vous pouvez définir la variable `DATABASE_URL` manuellement dans le fichier `.env` ou `.env.local`. En fait, grâce à la recette du paquet, vous verrez un exemple de variable `DATABASE_URL` dans votre fichier `.env`. Mais comme le port exposé par Docker vers PostgreSQL peut changer, c'est assez lourd. Il y a une meilleure solution.
 
 Au lieu de coder en dur la variable `DATABASE_URL` dans un fichier, nous pouvons préfixer toutes les commandes avec symfony. Ceci détectera les services exécutés par Docker (lorsque le tunnel est ouvert) et définira automatiquement la variable d'environnement.
 
 Docker Compose fonctionne parfaitement avec Symfony grâce à ces variables d'environnement.
-]
 
 ---
+class: middle
 
-.left-column[
-  ### A. Base de données
-  ### B. Doctrine ORM
-  #### Configurer Doctrine ORM
-]
-.right-column[
-Vérifiez toutes les variables d'environnement exposées en exécutant symfony var:export :
+* ⏩ **Vérifiez toutes les variables d'environnement exposées en exécutant `symfony var:export`**
 
 ```sh
 symfony var:export
 DATABASE_URL=postgres://main:main@127.0.0.1:32781/main?sslmode=disable&charset=utf8
 # ...
 ```
+
 Vous rappelez-vous du nom du service database utilisé dans les configurations Docker ? Les noms des services sont utilisés comme préfixes pour définir des variables d'environnement telles que `DATABASE_URL`. Si vos services sont nommés selon les conventions Symfony, aucune autre configuration n'est nécessaire.
 
-#### Modifier la valeur par défaut de DATABASE_URL dans le fichier .env
-Nous allons quand même changer le fichier .env pour initialiser la variable DATABASE_URL pour l'utilisation de PostgreSQL :
+#### Modifier la valeur par défaut de DATABASE_URL dans le fichier `.env`
+Nous allons quand même changer le fichier .env pour initialiser la variable `DATABASE_URL` pour l'utilisation de PostgreSQL :
+
 ```diff
  # DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=8&charset=utf8mb4"
--DATABASE_URL="postgresql://app:!ChangeMe!@127.0.0.1:5432/app?serverVersion=14&charset=utf8"
-+DATABASE_URL="postgresql://127.0.0.1:5432/db?serverVersion=14&charset=utf8"
+-DATABASE_URL="postgresql://app:!ChangeMe!@127.0.0.1:5432/app?serverVersion=15&charset=utf8"
++DATABASE_URL="postgresql://127.0.0.1:5432/db?serverVersion=15&charset=utf8"
  ###< doctrine/doctrine-bundle ###
 ```
+
 Pourquoi l'information doit-elle être dupliquée à deux endroits différents ? Parce que sur certaines plates-formes de Cloud, au moment de la compilation, l'URL de la base de données n'est peut-être pas encore connue mais Doctrine a besoin de connaître le moteur de la base de données pour initialiser sa configuration. Ainsi, l'hôte, le pseudo et le mot de passe n'ont pas vraiment d'importance.
-]
 
 ---
 
-.left-column[
-  ### A. Base de données
-  ### B. Doctrine ORM
-  #### Configurer Doctrine ORM
-  #### Créer des classes d'entités
+class: middle
+.center[
+  ### **Générer la classe d'entité "Conférence"**
 ]
-.right-column[
+
 Une conférence peut être décrite en quelques propriétés :
 
 * La ville où la conférence est organisée ;
@@ -897,10 +885,11 @@ Une conférence peut être décrite en quelques propriétés :
 
 Le **Maker Bundle** peut nous aider à générer une classe (une classe `Entity`) qui représente une conférence.
 
-Il est maintenant temps de générer l'entité `Conference` :
+* ⏩ **Il est maintenant temps de générer l'entité `Conference`**
 ```sh
 symfony console make:entity Conference
 ```
+
 Cette commande est interactive : elle vous guidera dans le processus d'ajout de tous les champs dont vous avez besoin. Utilisez les réponses suivantes (la plupart d'entre elles sont les valeurs par défaut, vous pouvez donc appuyer sur la touche "Entrée" pour les utiliser) :
 * `city`, `string`, `255`, `no` ;
 * `year`, `string`, `4`, `no` ;
@@ -910,17 +899,14 @@ La classe Conference a été stockée sous le namespace `App\Entity\.`
 
 La commande a également généré une classe de repository Doctrine : `App\Repository\ConferenceRepository.`
 
-]
-
 ---
 
-.left-column[
-  ### A. Base de données
-  ### B. Doctrine ORM
-  #### Configurer Doctrine ORM
-  #### Créer des classes d'entités
+class: middle
+.center[
+  ### **Générer la classe d'entités "Comment"**
 ]
-.right-column[
+
+
 Notez que la classe elle-même est une classe PHP sans aucune référence à Doctrine. Les attributs sont utilisés pour ajouter des métadonnées utiles à Doctrine afin de mapper la classe à sa table associée dans la base de données.
 
 Doctrine a ajouté un attribut `id` pour stocker la clé primaire de la ligne dans la table de la base de données. Cette clé `(ORM\Id())` est générée automatiquement `(ORM\GeneratedValue())` avec une stratégie qui dépend du moteur de base de données.
@@ -936,23 +922,19 @@ Entrez les réponses suivantes :
 * `text`, `text`, `no` ;
 * `email`, `string`, `255`, `no` ;
 * `createdAt`, `datetime_immutable`, `no`.
-]
+
 
 ---
 
-.left-column[
-  ### A. Base de données
-  ### B. Doctrine ORM
-  #### Configurer Doctrine ORM
-  #### Créer des classes d'entités
-  #### Lier les entités
+class: middle
+.center[
+   ### **Lier les entités**
 ]
-.right-column[
-  
-#### Lier les entités
-Les deux entités, `Conference` et `Comment`, devraient être liées l'une à l'autre. Une conférence peut avoir zéro commentaire ou plus, ce qui s'appelle une relation one-to-many.
+
+Les deux entités, `Conference` et `Comment`, devraient être liées l'une à l'autre. **Une conférence peut avoir zéro commentaire ou plus**, ce qui s'appelle une relation `one-to-many`.
 
 Utilisez à nouveau la commande `make:entity` pour ajouter cette relation à la classe `Conference` :
+
 ```sh
 symfony console make:entity Conference
 ```
@@ -963,36 +945,46 @@ Entrez les responses suivantes:
 
 Tout ce dont vous avez besoin pour gérer la relation a été généré pour vous. Une fois généré, le code devient le vôtre ; n'hésitez pas à le personnaliser comme vous le souhaitez.
 
-#### Ajouter d'autres propriétés
-Je viens de réaliser que nous avons oublié d'ajouter une propriété sur l'entité Comment : une photo de la conférence peut être jointe afin d'illustrer un retour d'expérience.
+---
 
-Exécutez à nouveau make:entity et ajoutez une propriété/colonne photoFilename de type string. Mais, comme l'ajout d'une photo est facultatif, permettez-lui d'être null :
+class: middle
+.center[
+  ### **Ajouter d'autres propriétés**
+]
+
+Je viens de réaliser que nous avons oublié d'ajouter une propriété sur l'entité `Comment` :
+* Une photo de la conférence peut être jointe afin d'illustrer un retour d'expérience.
+
+.center[
+  <img src="https://images.unsplash.com/photo-1464160551369-33c49e545109?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" />
+]
+
+Allons modifier la classe `Comment` pour ajouter cette propriété.
+
+* ⏩ **Exécutez à nouveau `make:entity` et ajoutez une propriété/colonne `photoFilename` de type `string`.**
+
+Mais, comme l'ajout d'une photo est facultatif, permettez-lui d'être null :
 ```sh
 symfony console make:entity Comment
 ```
-]
+
 
 ---
 
-.left-column[
-  ### A. Base de données
-  ### B. Doctrine ORM
-  #### Configurer Doctrine ORM
-  #### Créer des classes d'entités
-  #### Lier les entités
-  #### Migration
+class: middle
+.center[
+### **Migrer la base de données**
 ]
-.right-column[
-# Migrer la base de données
+
 La structure du projet est maintenant entièrement décrite par les deux classes générées.
 
 Ensuite, nous devons créer les tables de base de données liées à ces entités PHP.
 
-Doctrine Migrations est la solution idéale pour cela. Le paquet a déjà été installé dans le cadre de la dépendance orm.
+**Doctrine Migrations** est la solution idéale pour cela. Le paquet a déjà été installé dans le cadre de la dépendance `orm`.
 
-Une migration est une classe qui décrit les changements nécessaires pour mettre à jour un schéma de base de données, de son état actuel vers le nouveau, en fonction des attributs de l'entité. Comme la base de données est vide pour l'instant, la migration devrait consister en la création de deux tables.
+**Une migration** est une classe qui décrit les changements nécessaires pour mettre à jour un schéma de base de données, de son état actuel vers le nouveau, en fonction des attributs de l'entité. Comme la base de données est vide pour l'instant, la migration devrait consister en la création de deux tables.
 
-Voyons ce que Doctrine génère :
+* ⏩ **Générez la migration pour créer les tables de base de données**
 ```sh
 symfony console make:migration
 ```
@@ -1000,11 +992,10 @@ symfony console make:migration
 Notez le nom du fichier généré (du genre `migrations/Version20191019083640.php`)
 
 #### Mettre à jour la base de données locale
-Vous pouvez maintenant exécuter la migration générée pour mettre à jour le schéma de la base de données locale :
+* ⏩ **Vous pouvez maintenant exécuter la migration générée pour mettre à jour le schéma de la base de données locale**
 ```sh
 symfony console doctrine:migrations:migrate
 ```
-]
 
 ---
 class: center, middle, inverse
