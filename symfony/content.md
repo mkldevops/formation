@@ -157,7 +157,7 @@ FROM gitpod/workspace-full:latest
 
 RUN sudo apt update
 RUN sudo apt install -y apt-utils apt-transport-https postgresql postgresql-contrib
-RUN sudo install-packages php-intl php-redis php-amqp php-pdo_pgsql
+RUN sudo install-packages php-intl php-redis php-amqp php-pgsql
 
 RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | sudo -E bash
 RUN sudo apt install symfony-cli
@@ -377,8 +377,9 @@ Depuis l'éditeur en ligne **Gitpod** vous pouvez retrouver le lien de notre ser
     🤖 Ce n'est qu'une page de remplissage, car nous n'avons toujours pas défini de page d'accueil. Même si la page par défaut qui vous accueille est belle, c'est une page d'erreur **`404`**.
   ]
 
-  Naviguez vers `/images/under-construction.gif.` Pour percevoir notre image animé sur notre projet symfony.
+* ⏩ **Naviguez vers `/images/under-construction.gif.` Pour percevoir notre image animé sur notre projet symfony.**
 
+  *Le repertoire `public/` est le répertoire racine du site web, et le script `index.php` est le point d'entrée principal de toutes les ressources HTTP dynamiques.*
 * ⏩ **📬 Commitez notre travail**
 ]
 .pull-left[
@@ -681,6 +682,48 @@ Quand vous rafraichissez la page, une icône "cible" apparait dans la barre de d
 * ⏩ **Annulez les changements que nous venons juste de faire via `git checkout .`**
 
 ---
+
+class: middle
+.center[
+  ### **.red[Travaux pratique]**
+]
+
+**Objectif :** Créer un contrôleur qui gère une liste fictive de produits avec `/products` et permet aussi de récupérer des détails au format json sur un produit spécifique en utilisant des routes dynamiques `/product/{id}`.
+
+```php
+$products = [
+  [
+    'id' => 1,
+    'name' => 'Iphone 13',
+    'price' => 999.99,
+    'description' => 'Apple iPhone 13 Pro 256 Go Bleu Pacifique',
+    'category' => 'smartphone',
+  ],
+  [
+    'id' => 2,
+    'name' => 'Samsung Galaxy S21',
+    'price' => 899.99,
+    'description' => 'Samsung Galaxy S21 5G 128 Go Double SIM Noir Phantom',
+    'category' => 'smartphone',
+  ],
+  [
+    'id' => 3,
+    'name' => 'Huawei P40',
+    'price' => 799.99,
+    'description' => 'Huawei P40 Pro 5G 256 Go Double SIM Noir',
+    'category' => 'smartphone',
+  ],
+  [
+    'id' => 4,
+    'name' => 'MacBook Pro',
+    'price' => 1299.99,
+    'description' => 'Apple MacBook Pro 13" 256 Go SSD 8 Go RAM Intel Core i5 quadricœur à 1,4 GHz Argent',
+    'category' => 'laptop',
+  ]
+]
+```
+
+---
 class: center, middle, inverse
 # 4. Gestion des données
 ---
@@ -847,6 +890,9 @@ Docker Compose fonctionne parfaitement avec Symfony grâce à ces variables d'en
 
 ---
 class: middle
+.center[
+  ### **Configurer l'url de la base de données**
+]
 
 * ⏩ **Vérifiez toutes les variables d'environnement exposées en exécutant `symfony var:export`**
 
@@ -858,8 +904,7 @@ DATABASE_URL=postgres://main:main@127.0.0.1:32781/main?sslmode=disable&charset=u
 
 Vous rappelez-vous du nom du service database utilisé dans les configurations Docker ? Les noms des services sont utilisés comme préfixes pour définir des variables d'environnement telles que `DATABASE_URL`. Si vos services sont nommés selon les conventions Symfony, aucune autre configuration n'est nécessaire.
 
-#### Modifier la valeur par défaut de DATABASE_URL dans le fichier `.env`
-Nous allons quand même changer le fichier .env pour initialiser la variable `DATABASE_URL` pour l'utilisation de PostgreSQL :
+* ⏩ **Nous allons quand même changer le fichier `.env` pour initialiser la variable `DATABASE_URL` pour l'utilisation de PostgreSQL**
 
 ```diff
  # DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=8&charset=utf8mb4"
@@ -889,15 +934,16 @@ Le **Maker Bundle** peut nous aider à générer une classe (une classe `Entity`
 ```sh
 symfony console make:entity Conference
 ```
+.info[
+  🤖 Cette commande est interactive : elle vous guidera dans le processus d'ajout de tous les champs dont vous avez besoin.
+]
 
-Cette commande est interactive : elle vous guidera dans le processus d'ajout de tous les champs dont vous avez besoin. Utilisez les réponses suivantes (la plupart d'entre elles sont les valeurs par défaut, vous pouvez donc appuyer sur la touche "Entrée" pour les utiliser) :
+Utilisez les réponses suivantes (la plupart d'entre elles sont les valeurs par défaut, vous pouvez donc appuyer sur la touche "Entrée" pour les utiliser) :
 * `city`, `string`, `255`, `no` ;
 * `year`, `string`, `4`, `no` ;
 * `isInternational`, `boolean`, `no`.
 
-La classe Conference a été stockée sous le namespace `App\Entity\.`
-
-La commande a également généré une classe de repository Doctrine : `App\Repository\ConferenceRepository.`
+La classe `Conference` a été stockée sous le namespace `App\Entity\.` La commande a également généré une classe de repository Doctrine : `App\Repository\ConferenceRepository.`
 
 ---
 
@@ -941,7 +987,9 @@ symfony console make:entity Conference
 Entrez les responses suivantes:
 * `comments`, `OneToMany`, `Comment`, `conference`, `no`, `yes`
 
-> 💡 Si vous entrez `?` comme réponse pour le type, vous obtiendrez tous les types pris en charge
+.info[
+  💡 Si vous entrez `?` comme réponse pour le type, vous obtiendrez tous les types pris en charge
+]
 
 Tout ce dont vous avez besoin pour gérer la relation a été généré pour vous. Une fois généré, le code devient le vôtre ; n'hésitez pas à le personnaliser comme vous le souhaitez.
 
@@ -968,7 +1016,6 @@ Mais, comme l'ajout d'une photo est facultatif, permettez-lui d'être null :
 symfony console make:entity Comment
 ```
 
-
 ---
 
 class: middle
@@ -989,7 +1036,7 @@ Ensuite, nous devons créer les tables de base de données liées à ces entité
 symfony console make:migration
 ```
 
-Notez le nom du fichier généré (du genre `migrations/Version20191019083640.php`)
+Notez le nom du fichier généré, du genre `migrations/Version20191019083640.php`
 
 #### Mettre à jour la base de données locale
 * ⏩ **Vous pouvez maintenant exécuter la migration générée pour mettre à jour le schéma de la base de données locale**
@@ -998,43 +1045,61 @@ symfony console doctrine:migrations:migrate
 ```
 
 ---
+class: middle
+.center[
+  ### **.red[Travaux pratique]**
+]
+
+**Objectif :** 
+* ⏩ **Créer une entité `Product` et `Category` en vous basant sur les données du précédent TP.**
+* ⏩ **Puis générer la migration et mettre à jour la base de données.**
+---
 class: center, middle, inverse
 # 5. Interface web
 ---
 
-.left-column[
- ### A. Easy Admin
-#### Installation
+class: middle
+.center[
+ ### **Easy Admin**
 ]
-.right-column[
-### Configurer une interface d'administration
+
 L'ajout des prochaines conférences à la base de données est le travail des admins du projet. Une interface d'administration est une section protégée du site web où les admins du projet peuvent gérer les données du site web, modérer les commentaires, et plus encore.
 
-Comment pouvons-nous le créer aussi rapidement ? En utilisant un bundle capable de générer une interface d'administration basée sur la structure du projet. EasyAdmin convient parfaitement.
-#### Installer des dépendances supplémentaires
-Même si le package webapp a ajouté automatiquement de nombreux packages utiles, pour des fonctionnalités plus spécifiques, nous devons ajouter d'autres dépendances ? Avec Composer. En plus des paquets « standards » de Composer, nous travaillerons avec deux types de paquets « spéciaux » :
+Comment pouvons-nous le créer aussi rapidement ? En utilisant un bundle capable de générer une interface d'administration basée sur la structure du projet. **EasyAdmin** convient parfaitement.
 
-* *Composants Symfony* : Paquets qui implémentent les fonctionnalités de base et les abstractions de bas niveau dont la plupart des applications ont besoin (routage, console, client HTTP, mailer, cache, etc.) ;
-* *Bundles Symfony* : Paquets qui ajoutent des fonctionnalités de haut niveau ou fournissent des intégrations avec des bibliothèques tierces (les bundles sont principalement créés par la communauté).
-
-Ajoutez EasyAdmin comme dépendance du projet :
-```sh
-symfony composer req "admin:^4"
-```
-`admin` est un alias pour le paquet `easycorp/easyadmin-bundle`. Les alias ne sont pas une fonctionnalité interne à Composer, mais un concept fourni par Symfony pour vous faciliter la vie
+.center[
+  <img src="img/easy-admin-symfony.webp" width="400" alt="Easy Admin" />
 ]
 
 ---
 
 class: middle
-
-.left-column[
-### A. Easy Admin
-#### Installation
-#### Configuration
+.center[
+  ### **Installer Easy Admin**
 ]
-.right-column[
-#### Configurer EasyAdmin
+
+Même si le package `webapp` a ajouté automatiquement de nombreux packages utiles, pour des fonctionnalités plus spécifiques, nous devons ajouter d'autres dépendances ? Avec Composer. En plus des paquets « standards » de Composer, nous travaillerons avec deux types de paquets « spéciaux » :
+
+* *Composants Symfony* : Paquets qui implémentent les fonctionnalités de base et les abstractions de bas niveau dont la plupart des applications ont besoin (routage, console, client HTTP, mailer, cache, etc.) ;
+* *Bundles Symfony* : Paquets qui ajoutent des fonctionnalités de haut niveau ou fournissent des intégrations avec des bibliothèques tierces (les bundles sont principalement créés par la communauté).
+
+Ajoutez `EasyAdmin` comme dépendance du projet :
+```sh
+symfony composer req "admin:^4"
+```
+
+.info[
+💡 `admin` est un alias pour le paquet `easycorp/easyadmin-bundle`. Les alias ne sont pas une fonctionnalité interne à Composer, mais un concept fourni par Symfony pour vous faciliter la vie
+]
+
+
+---
+
+class: middle
+
+.center[
+### **Configurer EasyAdmin**
+]
 
 Le bundle EasyAdmin crée automatiquement une section d'administration pour votre application basée sur des contrôleurs spécifiques.
 
@@ -1042,7 +1107,10 @@ Le bundle EasyAdmin crée automatiquement une section d'administration pour votr
   #🪄
 ]
 
-Pour débuter avec EasyAdmin, commençons par générer un **"tableau de bord d'administration"** qui sera le point d'entrée principal pour gérer les données du site.
+Pour débuter avec EasyAdmin
+
+* ⏩ **commençons par générer un "tableau de bord d'administration" qui sera le point d'entrée principal pour gérer les données du site.**
+
 ```sh
 symfony console make:admin:dashboard
 ```
@@ -1052,17 +1120,14 @@ Avec les réponses par défaut, crée le contrôleur `src/Controller/Admin/Dashb
 .info[
   🗒 Par convention, les contrôleurs d'administration sont stockés dans leur propre espace de nom `App\Controller\Admin`.
 ]
-]
 
 ---
 
 class: middle
-.left-column[
-### A. Easy Admin
-#### Installation
-#### Configuration
+
+.center[
+### **Configurer EasyAdmin**
 ]
-.right-column[
 
 **Accédez à l'interface d'administration** générée grâce à l'URL `/admin` telle que configurée par la méthode `index()` (vous pouvez modifier l'URL comme bon vous semble) :
 
@@ -1073,45 +1138,41 @@ class: middle
   #.center[🚀]
 Boom ! Nous avons une belle interface d'administration, prête à être adaptée à nos besoins.
 ]
-]
+
 
 ---
 
-.left-column[
-### A. Easy Admin
-#### Installation
-#### Configuration
-#### Génerer un CRUD
+class: middle
+.center[
+### **Génerer un CRUD**
 ]
-.right-column[
+
 L'étape suivante consiste à créer des contrôleurs pour gérer les conférences et les commentaires.
 
-Dans le contrôleur du tableau de bord, vous avez peut-être remarqué la méthode `configureMenuItems()` qui contient un commentaire à propos de l'ajout de liens aux "CRUDs". "CRUD" est un acronyme pour "Create, Read, Update and Delete", les quatre opérations de base que vous allez effectuer sur une entité. C'est exactement ce que nous voulons que notre page d'administration fasse pour nous. EasyAdmin facilite encore plus les choses en prenant en charge les fonctionnalités de filtre et de recherche.
+Dans le contrôleur du tableau de bord, vous avez peut-être remarqué la méthode `configureMenuItems()` qui contient un commentaire à propos de l'ajout de liens aux "CRUDs".
+
+**"CRUD"** est un acronyme pour **"Create, Read, Update and Delete"**, les quatre opérations de base que vous allez effectuer sur une entité. C'est exactement ce que nous voulons que notre page d'administration fasse pour nous. EasyAdmin facilite encore plus les choses en prenant en charge les fonctionnalités de filtre et de recherche.
 
 Générons un `CRUD` pour les conférences :
 ```sh
 symfony console make:admin:crud
 ```
-Sélectionnez 1 pour créer une interface d'administration pour les conférences et utiliser les valeurs par défaut pour les autres questions. Le fichier suivant devrait être généré :
+Sélectionnez `App\Entity\Conference` pour créer une interface d'administration pour les conférences et utiliser les valeurs par défaut pour les autres questions. Le fichier suivant devrait être généré :
 `src/Controller/Admin/ConferenceCrudController.php`
 Faites la même chose pour les commentaires :
 
 ```sh
 symfony console make:admin:crud
 ```
-]
+
 
 ---
-
-.left-column[
-### A. Easy Admin
-#### Installation
-#### Configuration
-#### Génerer un CRUD
-#### Lier un CRUD au Dashboard
+class: middle
+.center[
+### **Lier un CRUD au Dashboard**
 ]
-.right-column[
-La dernière étape consiste à relier les CRUDs d'administration des conférences et des commentaires au tableau de bord:
+
+La dernière étape consiste à relier les CRUDs d'administration des **conférences** et des **commentaires** au **tableau de bord**:
 ```diff
 # src/Controller/Admin/DashboardController.php
  namespace App\Controller\Admin;
@@ -1130,23 +1191,22 @@ La dernière étape consiste à relier les CRUDs d'administration des conférenc
 +        yield MenuItem::linkToCrud('Comments', 'fas fa-comments', Comment::class);
     }
 ```
+
 Nous avons surchargé la méthode `configureMenuItems()` pour ajouter les éléments de menu avec les icônes adéquates pour les conférences et les commentaires, et pour ajouter un lien de retour vers la page d'accueil du site.
 
 EasyAdmin expose une API pour faciliter les liaisons avec les CRUDs des entités via la méthode `MenuItem::linkToRoute()`.
 
-]
 
 ---
-
-.left-column[
-### A. Easy Admin
-#### Installation
-#### Configuration
-#### Génerer un CRUD
-#### Lier un CRUD au Dashboard
+class: middle
+.center[
+### **Configurer le tableau de bord**
 ]
-.right-column[
-Le tableau de bord principal est vide pour le moment. C'est ici que vous pouvez afficher certaines statistiques, ou n'importe quelle information pertinente. Comme nous n'avons rien d'important à y afficher, redirigeons cette page vers la liste des conférences :
+
+Le tableau de bord principal est vide pour le moment. C'est ici que vous pouvez afficher certaines statistiques, ou n'importe quelle information pertinente.
+
+* ⏩ **Comme nous n'avons rien d'important à y afficher, redirigeons cette page vers la liste des conférences :**
+
 ```diff
 # src/Controller/Admin/DashboardController.php
  use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -1162,23 +1222,19 @@ Le tableau de bord principal est vide pour le moment. C'est ici que vous pouvez 
 +
 +        return $this->redirect($url);
 ```
-]
+
 
 ---
-
-.left-column[
-### A. Easy Admin
-#### Installation
-#### Configuration
-#### Génerer un CRUD
-#### Lier un CRUD au 
-#### Des entités Stringable
+class: middle
+.center[
+### **Des entités Stringable**
 ]
-.right-column[
+
 Quand nous affichons les relations entre les entités (la conférence liée à un commentaire), EasyAdmin essaie d'utiliser la représentation textuelle de la conférence. Par défaut, il s'appuie sur une convention qui utilise le nom de l'entité et la clé primaire (par exemple `Conference #1`) si l'entité ne définit pas la méthode "magique" `__toString()`. Pour rendre l'affichage plus parlant, ajoutez cette méthode sur la classe `Conference`.
 
-La méthode __toString() fait partie du contrat de l'interface Stringable. Nous devons l'implémenter pour respecter le contrat sur nos entités.
+* ⏩ **La méthode `__toString()` fait partie du contrat de l'interface `\Stringable`. Nous devons l'implémenter pour respecter le contrat sur nos entités.**
 
+.pull-left[
 ```diff
 # src/Entity/Conference.php
 
@@ -1195,23 +1251,9 @@ La méthode __toString() fait partie du contrat de l'interface Stringable. Nous 
      public function getId(): ?int
      {
 ```
-
 ]
-
----
-
-.left-column[
-### A. Easy Admin
-#### Installation
-#### Configuration
-#### Génerer un CRUD
-#### Lier un CRUD au 
-#### Des entités Stringable
-]
-.right-column[
-Faites de même pour la classe `Comment` :
-
-```diff
+.pull-right[
+  ```diff
 # src/Entity/Comment.php
 
 - class Comment
@@ -1227,24 +1269,26 @@ Faites de même pour la classe `Comment` :
      public function getId(): ?int
      {
 ```
-Vous pouvez maintenant ajouter/modifier/supprimer des conférences directement depuis l'interface d'administration. Jouez avec et ajoutez au moins une conférence.
-
-Ajoutez quelques commentaires sans photos. Réglez la date manuellement pour l'instant ; nous remplirons la colonne createdAt automatiquement dans une étape ultérieure.
 ]
+
+
+Vous pouvez maintenant **ajouter/modifier/supprimer** des conférences directement depuis l'interface d'administration.
+
+* ⏩ **Jouez avec et ajoutez au moins une conférence.**
+
+* ⏩ **Ajoutez quelques commentaires sans photos. Réglez la date manuellement pour l'instant ; nous remplirons la colonne createdAt automatiquement dans une étape ultérieure.**
+
 
 ---
-
-.left-column[
-### A. Easy Admin
-#### Installation
-#### Configuration
-#### Génerer un CRUD
-#### Lier un CRUD au 
-#### Des entités Stringable
-#### Personnaliser EasyAdmin
+class: middle
+.center[
+### **Personnaliser EasyAdmin**
 ]
-.right-column[
-L'interface d'administration par défaut fonctionne bien, mais elle peut être personnalisée de plusieurs façons pour améliorer son utilisation. Faisons quelques changements simples pour montrer quelques possibilités :
+
+L'interface d'administration par défaut fonctionne bien, mais elle peut être personnalisée de plusieurs façons pour améliorer son utilisation. 
+
+* ⏩ **Faisons quelques changements simples pour montrer quelques possibilités, comme la recherche, le tri et le filtrage des données.**
+
 ```diff
 # src/Controller/Admin/CommentCrudController.php
 
@@ -1270,7 +1314,7 @@ L'interface d'administration par défaut fonctionne bien, mais elle peut être p
 +    }
 +
 ```
-]
+
 
 ---
 
