@@ -329,11 +329,9 @@ Prenons l'habitude après chaque chapitre de commiter notre travail. Cela nous p
   git commit -m "Init structre"
   ```
 
-
 .center[
   <img src="https://images.unsplash.com/photo-1589995186011-a7b485edc4bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&h=200&q=80" />
 ]
-
 
 ---
 
@@ -351,7 +349,7 @@ Par exemple, si vous déplacez votre fichier GIF animé (nommez-le under-constru
 ![Under Construction](http://clipartmag.com/images/website-under-construction-image-6.gif)
 ]
 
-Téléchargez mon image GIF ici :
+* ⏩ **Téléchargez l'image GIF animée dans le répertoire `public/images/`**
 ```sh
 mkdir public/images/
 php -r "copy('http://clipartmag.com/images/website-under-construction-image-6.gif', 'public/images/under-construction.gif');"
@@ -396,7 +394,6 @@ class: middle
 
 Mettre en place un projet, c'est aussi avoir les bons outils pour déboguer les problèmes. Fort heureusement, des assistants très utiles sont inclus avec le paquet webapp.
 
-
 Pour commencer, le **Symfony Profiler** vous fait gagner un temps fou lorsque vous avez besoin de trouver l'origine d'un problème. Si vous vous rendez sur la route `/_profiler` puis la première ligne avce le code **`404`**, vous obtenez le "vrai" message d'exception dans les logs du *Symfony Profiler*.
 
 .pull-left[
@@ -425,14 +422,14 @@ Symfony intègre une notion d'environnement. Par défaut, il y en a trois, mais 
 
 **Par exemple:** tous les outils de débogage sont activés en environnement de `dev`. Dans celui de `prod`, l'application est optimisée pour la performance.
 
-Basculer d'un environnement à l'autre peut se faire en changeant la variable d'environnement `APP_ENV`.
+* ⏩ **Basculer d'un environnement à l'autre peut se faire en changeant la variable d'environnement `APP_ENV`.**
 
 #### Gérer la configuration des environnements
 `APP_ENV` peut être défini en utilisant des variables d'environnement "réelles" depuis votre terminal : `export APP_ENV=dev`
 
-Essayez de modifier la valeur de la variable `APP_ENV` à "prod", redemarrez le serveur symfony, puis rendez-vous sur la page du profiler qui n'est disponible qu'en environnement de développement.
+* ⏩ **Essayez de modifier la valeur de la variable `APP_ENV` à "prod", redemarrez le serveur symfony, puis rendez-vous sur la page du profiler qui n'est disponible qu'en environnement de développement.**
 
-Pour supprimer notre variable d'environnement, vous pouvez utiliser la commande `unset APP_ENV` dans un terminal
+* ⏩ **Pour supprimer notre variable d'environnement, vous pouvez utiliser la commande `unset APP_ENV` dans un terminal**
 
 ---
 
@@ -866,14 +863,28 @@ class: middle
   ### **Configurer Doctrine ORM**
 ]
 
-Pour interagir avec la base de données depuis PHP, nous allons nous appuyer sur [**Doctrine**](https://www.doctrine-project.org/), un ensemble de bibliothèques qui nous aide à gérer les bases de données : 
+Pour interagir avec la base de données depuis PHP, nous allons nous appuyer sur [**Doctrine**](https://www.doctrine-project.org/), un ensemble de bibliothèques qui nous aide à gérer les bases de données :
+
+.pull-left[
 * **Doctrine DBAL** (une couche d'abstraction de la base de données)
-* **Doctrine** ORM (une librairie pour manipuler le contenu de notre base de données en utilisant des objets PHP)
+* **Doctrine ORM** (une librairie pour manipuler le contenu de notre base de données en utilisant des objets PHP)
 * Et **Doctrine Migrations**.
+]
+.pull-right[
+  .center[
+  <img src="img/doctrine-logo.png" width="200" alt="Doctrine ORM" />
+]
+]
 
-Comment est-ce que Doctrine est au courant de notre connexion à la base de données ? La recette de Doctrine a ajouté un fichier de configuration qui contrôle son comportement : `config/packages/doctrine.yaml`. Le paramètre principal est le `DSN` de la base de données, une chaîne contenant toutes les informations sur la connexion : identifiants, hôte, port, etc. Par défaut, Doctrine recherche une variable d'environnement `DATABASE_URL`.
+Comment est-ce que Doctrine est au courant de notre connexion à la base de données ? 
 
-Presque tous les paquets installés sont configurés dans le répertoire `config/packages/`. Les valeurs par défaut ont été choisies avec soin pour fonctionner avec la plupart des applications.
+La recette de Doctrine a ajouté un fichier de configuration qui contrôle son comportement : `config/packages/doctrine.yaml`. 
+
+Le paramètre principal est le `DSN` de la base de données, une chaîne contenant toutes les informations sur la connexion : identifiants, hôte, port, etc. Par défaut, Doctrine recherche une variable d'environnement `DATABASE_URL`.
+
+.info[
+  🔧 Presque tous les paquets installés sont configurés dans le répertoire `config/packages/`. Les valeurs par défaut ont été choisies avec soin pour fonctionner avec la plupart des applications.
+]
 
 ---
 
@@ -1053,9 +1064,10 @@ class: middle
 **Objectif :** 
 * ⏩ **Créer une entité `Product` et `Category` en vous basant sur les données du précédent TP.**
 * ⏩ **Puis générer la migration et mettre à jour la base de données.**
+
 ---
 class: center, middle, inverse
-# 5. Interface web
+# 5. Interface d'administration
 ---
 
 class: middle
@@ -1172,7 +1184,7 @@ class: middle
 ### **Lier un CRUD au Dashboard**
 ]
 
-La dernière étape consiste à relier les CRUDs d'administration des **conférences** et des **commentaires** au **tableau de bord**:
+* ⏩ **La dernière étape consiste à relier les CRUDs d'administration des **conférences** et des **commentaires** au **tableau de bord**:
 ```diff
 # src/Controller/Admin/DashboardController.php
  namespace App\Controller\Admin;
@@ -1318,16 +1330,13 @@ L'interface d'administration par défaut fonctionne bien, mais elle peut être p
 
 ---
 
-.left-column[
-### A. Easy Admin
-#### Installation
-#### Configuration
-#### Génerer un CRUD
-#### Lier un CRUD au 
-#### Des entités Stringable
-#### Personnaliser EasyAdmin
+class: middle
+.center[
+### **Personnaliser les champs d'un CRUD**
 ]
-.right-column[
+
+.pull-left[
+
 ```diff
 # src/Controller/Admin/CommentCrudController.php
 
@@ -1342,17 +1351,17 @@ L'interface d'administration par défaut fonctionne bien, mais elle peut être p
 +        yield TextField::new('author');
 +        yield EmailField::new('email');
 +        yield TextareaField::new('text')
-+            ->hideOnIndex()
-+        ;
++            ->hideOnIndex();
 +        yield TextField::new('photoFilename')
-+            ->onlyOnIndex()
-+        ;
++            ->onlyOnIndex();
+
++        $createdAt = DateTimeField::new('createdAt')
++            ->setFormTypeOptions([
++                'html5' => true,
++                'years' => range(date('Y'), date('Y') + 5),
++                'widget' => 'single_text',
++            ]);
 +
-+        $createdAt = DateTimeField::new('createdAt')->setFormTypeOptions([
-+            'html5' => true,
-+            'years' => range(date('Y'), date('Y') + 5),
-+            'widget' => 'single_text',
-+        ]);
 +        if (Crud::PAGE_EDIT === $pageName) {
 +            yield $createdAt->setFormTypeOption('disabled', true);
 +        } else {
@@ -1362,52 +1371,65 @@ L'interface d'administration par défaut fonctionne bien, mais elle peut être p
 -    */
 ```
 ]
+.pull-right[
+  Pour personnaliser la section `Commentaire`:
+  * ⏩ **lister les champs de manière explicite dans la méthode `configureFields()` nous permet de les ordonner comme nous le souhaitons. Certains champs bénéficient d'une configuration supplémentaire, comme masquer le champ texte sur la page d'index.**
+
+  Les méthodes `configureFilters()` définissent quels filtres apparaissent au dessus du champ de recherche.
+]
 
 ---
-
-.left-column[
-### A. Easy Admin
-#### Installation
-#### Configuration
-#### Génerer un CRUD
-#### Lier un CRUD au 
-#### Des entités Stringable
-#### Personnaliser EasyAdmin
+class: middle
+.center[
+### **Tester l'interface d'administration**
 ]
-.right-column[
-  Pour personnaliser la section `Commentaire`, lister les champs de manière explicite dans la méthode `configureFields()` nous permet de les ordonner comme nous le souhaitons. Certains champs bénéficient d'une configuration supplémentaire, comme masquer le champ texte sur la page d'index.
 
-Les méthodes `configureFilters()` définissent quels filtres apparaissent au dessus du champ de recherche.
-
-.center[<img src="img/easy-admin-filter.png" alt="Easy admin filter" width="350px" />]
+.center[<img src="img/easy-admin-filter.png" alt="Easy admin filter" width="450px" />]
 
 Ces personnalisations ne sont qu'une petite introduction aux possibilités offertes par EasyAdmin.
 
-Jouez avec l'interface d'administration, filtrez les commentaires par conférence, ou recherchez des commentaires par email par exemple. Le seul problème, c'est que n'importe qui peut accéder à cette interface. Ne vous inquiétez pas, nous la sécuriserons dans une prochaine étape.
-]
+  * ⏩ **Jouez avec l'interface d'administration, filtrez les commentaires par conférence, ou recherchez des commentaires par email par exemple.**
+
+Le seul problème, c'est que n'importe qui peut accéder à cette interface. Ne vous inquiétez pas, nous la sécuriserons dans une prochaine étape.
 
 ---
-
-.left-column[
-### A. Easy Admin
-### B. Twig
-#### Utiliser Twig pour les templates
+class: middle
+.center[
+  ### **.red[Travaux pratique]**
 ]
-.right-column[
+
+**Objectif :**
+* ⏩ **Ajouter un CRUD pour l'entité `Product` et `Category`**
+
+* ⏩ **Personnaliser les champs et les filtres pour les deux CRUDs**
+
+
+---
+class: center, middle, inverse
+# 6. Interface web TWIG
+.center[
+  <img src="img/twig-logo.png" width="500" alt="Twig" />
+]
+---
+
+class: middle
+.center[
+### **🎋 Utiliser Twig pour les templates**
+]
+
 Tout est maintenant en place pour créer la première version de l'interface du site. On ne la fera pas jolie pour le moment, seulement fonctionnelle.
 
 Vous vous souvenez de l'échappement de caractères que nous avons dû faire dans le contrôleur, pour l'easter egg, afin d'éviter les problèmes de sécurité ? Nous n'utiliserons pas PHP pour nos templates pour cette raison. À la place, nous utiliserons **Twig**. En plus de gérer l'échappement de caractères, Twig apporte de nombreuses fonctionnalités intéressantes, comme l'héritage des modèles.
 
-#### Utiliser Twig pour les templates
 Toutes les pages du site Web suivront le même modèle de mise en page, la même structure HTML de base. Lors de l'installation de Twig, un répertoire `templates/` a été créé automatiquement, ainsi qu'un exemple de structure de base dans `base.html.twig`.
 
-```html
+```twig
 <!DOCTYPE html>
 <html>
     <head>
         ...
-        {%block 'stylesheets' %}{{ encore_entry_link_tags('app') }}{% endblock %}
-        {%block 'javascripts' %}{{ encore_entry_script_tags('app') }}{% endblock %}
+        {% block 'stylesheets' %}{{ encore_entry_link_tags('app') }}{% endblock %}
+        {% block 'javascripts' %}{{ encore_entry_script_tags('app') }}{% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}
@@ -1415,17 +1437,16 @@ Toutes les pages du site Web suivront le même modèle de mise en page, la même
 </html>
 ```
 Un modèle peut définir des `blocks`. Un `block` est un emplacement où les *templates enfants*, qui *étendent* le modèle, ajoutent leur contenu.
-]
+
 
 ---
-
-.left-column[
-### A. Easy Admin
-### B. Twig
-#### Utiliser Twig pour les templates
+class: middle
+.center[
+### **Notre premier template Twig**
 ]
-.right-column[
-Créons un template pour la page d'accueil du projet dans `templates/conference/index.html.twig`.
+
+* ⏩ **Créons un template pour la page d'accueil du projet dans `templates/conference/index.html.twig`.**
+
 ```twig
 {% extends 'base.html.twig' %}
 
@@ -1439,23 +1460,22 @@ Créons un template pour la page d'accueil du projet dans `templates/conference/
     {% endfor %}
 {% endblock %}
 ```
+
 Le template *étend* (ou `extends`) `base.html.twig` et redéfinit les blocs `title` et `body`.
 
 La notation `{% %}` dans un template indique des actions et des éléments de structure.
 
 La notation `{{ }}` est utilisée pour afficher quelque chose. `{{ conference }}` affiche la représentation de la conférence (le résultat de l'appel à la méthode `__toString` de l'objet `Conference`).
-]
 
 ---
 
-.left-column[
-### A. Easy Admin
-### B. Twig
-#### Utiliser Twig pour les templates
-#### Utiliser Twig dans un contrôleur
+class: middle
+.center[
+### **Utiliser Twig dans un contrôleur**
 ]
-.right-column[
-Mettez à jour le contrôleur pour générer le contenu du template Twig :
+
+* ⏩ **Mettez à jour le contrôleur pour générer le contenu du template Twig**
+
 ```diff
 # src/Controller/ConferenceController.php
 
@@ -1480,19 +1500,10 @@ Mettez à jour le contrôleur pour générer le contenu du template Twig :
 ```
 Il se passe beaucoup de choses ici.
 
-
-
-]
-
 ---
 
-.left-column[
-### A. Easy Admin
-### B. Twig
-#### Utiliser Twig pour les templates
-#### Utiliser Twig dans un contrôleur
-]
-.right-column[
+class: middle
+
 Pour pouvoir générer le contenu du template, nous avons besoin de l'objet `Environment` de Twig (le point d'entrée principal de Twig). 
 
 > 👀 Notez que nous demandons l'instance Twig en spécifiant son type dans la méthode du contrôleur. Symfony est assez intelligent pour savoir comment injecter le bon objet. 
@@ -1502,7 +1513,7 @@ Pour pouvoir générer le contenu du template, nous avons besoin de l'objet `Env
 Dans le code du contrôleur, la méthode `render()` génère le rendu du template et lui passe un tableau de variables. Nous passons la liste des objets `Conference` dans une variable `conferences`.
 
 Un contrôleur est une classe PHP standard. Nous n'avons même pas besoin d'étendre la classe `AbstractController` si nous voulons être explicites sur nos dépendances. Vous pouvez donc supprimer l'héritage (mais ne le faites pas, car nous utiliserons les raccourcis qu'il fournit dans les prochaines étapes).
-]
+
 
 ---
 
