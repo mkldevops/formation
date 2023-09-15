@@ -1184,25 +1184,25 @@ class: middle
 ### **Lier un CRUD au Dashboard**
 ]
 
-* ⏩ **La dernière étape consiste à relier les CRUDs d'administration des **conférences** et des **commentaires** au **tableau de bord**:
-```diff
-# src/Controller/Admin/DashboardController.php
- namespace App\Controller\Admin;
+* ⏩ **La dernière étape consiste à relier les CRUDs d'administration des *conférences* et des *commentaires* au tableau de bord**:
+  ```diff
+  # src/Controller/Admin/DashboardController.php
+  namespace App\Controller\Admin;
 
-+use App\Entity\Comment;
-+use App\Entity\Conference;
- use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
+  +use App\Entity\Comment;
+  +use App\Entity\Conference;
+  use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 
-@@ ...
-    public function configureMenuItems(): iterable
-    {
--        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
--        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
-+        yield MenuItem::linktoRoute('Back to the website', 'fas fa-home', 'homepage');
-+        yield MenuItem::linkToCrud('Conferences', 'fas fa-map-marker-alt', Conference::class);
-+        yield MenuItem::linkToCrud('Comments', 'fas fa-comments', Comment::class);
-    }
-```
+  @@ ...
+      public function configureMenuItems(): iterable
+      {
+  -        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+  -        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
+  +        yield MenuItem::linktoRoute('Back to the website', 'fas fa-home', 'homepage');
+  +        yield MenuItem::linkToCrud('Conferences', 'fas fa-map-marker-alt', Conference::class);
+  +        yield MenuItem::linkToCrud('Comments', 'fas fa-comments', Comment::class);
+      }
+  ```
 
 Nous avons surchargé la méthode `configureMenuItems()` pour ajouter les éléments de menu avec les icônes adéquates pour les conférences et les commentaires, et pour ajouter un lien de retour vers la page d'accueil du site.
 
@@ -1327,7 +1327,6 @@ L'interface d'administration par défaut fonctionne bien, mais elle peut être p
 +
 ```
 
-
 ---
 
 class: middle
@@ -1401,8 +1400,13 @@ class: middle
 **Objectif :**
 * ⏩ **Ajouter un CRUD pour l'entité `Product` et `Category`**
 
-* ⏩ **Personnaliser les champs et les filtres pour les deux CRUDs**
+* ⏩ **Personnaliser les champs pour les deux CRUDs**
 
+* ⏩ **Personnaliser les filtres pour les deux CRUDs**
+
+* ⏩ **Ajouter quelques produits et catégories afin de tester nos crud**
+
+* ⏩ **Ajouter un lien depuis notre page d'accueil vers l'interface d'administration**
 
 ---
 class: center, middle, inverse
@@ -1503,359 +1507,354 @@ Il se passe beaucoup de choses ici.
 ---
 
 class: middle
+.center[
+  <img src="https://em-content.zobj.net/source/telegram/358/thinking-face_1f914.webp" width="80" alt="Twig" />
+]
+* 
+  ```php
+  public function index(Environment $twig, ...): Response
+  ```
 
-Pour pouvoir générer le contenu du template, nous avons besoin de l'objet `Environment` de Twig (le point d'entrée principal de Twig). 
+  Pour pouvoir générer le contenu du template, nous avons besoin de l'objet `Environment` de Twig (le point d'entrée principal de Twig). 
 
-> 👀 Notez que nous demandons l'instance Twig en spécifiant son type dans la méthode du contrôleur. Symfony est assez intelligent pour savoir comment injecter le bon objet. 
+  👀 Notez que nous demandons l'instance Twig en spécifiant son type dans la méthode du contrôleur. Symfony est assez intelligent pour savoir comment injecter le bon objet. 
 
-> Nous avons également besoin du *repository* des conférences pour récupérer toutes les conférences depuis la base de données.
+* 
+  ```php
+  public function index(..., ConferenceRepository $conferenceRepository): Response
+  ```
+  Nous avons également besoin du *repository* des conférences pour récupérer toutes les conférences depuis la base de données.
 
-Dans le code du contrôleur, la méthode `render()` génère le rendu du template et lui passe un tableau de variables. Nous passons la liste des objets `Conference` dans une variable `conferences`.
+* 
+  ```php
+  return new Response($twig->render('conference/index.html.twig', [
+      'conferences' => $conferenceRepository->findAll(),
+  ]));
+  ```
 
-Un contrôleur est une classe PHP standard. Nous n'avons même pas besoin d'étendre la classe `AbstractController` si nous voulons être explicites sur nos dépendances. Vous pouvez donc supprimer l'héritage (mais ne le faites pas, car nous utiliserons les raccourcis qu'il fournit dans les prochaines étapes).
+  Dans le code du contrôleur, la méthode `render()` génère le rendu du template et lui passe un tableau de variables. Nous passons la liste des objets `Conference` dans une variable `conferences`.
+
+* 
+  ```php
+   class ConferenceController extends AbstractController
+  ```
+
+  Un contrôleur est une classe PHP standard. Nous n'avons même pas besoin d'étendre la classe `AbstractController` si nous voulons être explicites sur nos dépendances. Vous pouvez donc supprimer l'héritage (mais ne le faites pas, car nous utiliserons les raccourcis qu'il fournit dans les prochaines étapes).
 
 
 ---
 
-.left-column[
-### A. Easy Admin
-### B. Twig
-#### Utiliser Twig pour les templates
-#### Utiliser Twig dans un contrôleur
-#### Créer la page d'une conférence
+class: middle
+.center[
+### **Créer la page d'une conférence**
 ]
-.right-column[
+
 Chaque conférence devrait avoir une page dédiée à l'affichage de ses commentaires. L'ajout d'une nouvelle page consiste à ajouter un contrôleur, à définir une route et à créer le template correspondant.
 
-Ajoutez une méthode show() dans le fichier `src/Controller/ConferenceController.php` :
-```diff
-+use App\Entity\Conference;
-+use App\Repository\CommentRepository;
- use App\Repository\ConferenceRepository;
+* ⏩ **Ajoutez une méthode `show()` dans le fichier `src/Controller/ConferenceController.php`**
 
-@@ ...
-     }
+  ```diff
+  +use App\Entity\Conference;
+  +use App\Repository\CommentRepository;
+  use App\Repository\ConferenceRepository;
 
-+
-+    #[Route('/conference/{id}', name: 'conference')]
-+    public function show(Environment $twig, Conference $conference, CommentRepository $commentRepository): Response
-+    {
-+        return new Response($twig->render('conference/show.html.twig', [
-+            'conference' => $conference,
-+            'comments' => $commentRepository->findBy(['conference' => $conference], ['createdAt' => 'DESC']),
-+        ]));
-+    }
-```
-Cette méthode a un comportement particulier que nous n'avons pas encore vu. Nous demandons qu'une instance de `Conference` soit injectée dans la méthode. Mais il y en a peut-être beaucoup dans la base de données. Symfony est capable de déterminer celle que vous voulez en se basant sur l'`{id}` passé dans le chemin de la requête (`id` étant la clé primaire de la table `conference` dans la base de données).
-]
+  @@ ...
+      }
+
+  +
+  +    #[Route('/conference/{id}', name: 'conference')]
+  +    public function show(Environment $twig, Conference $conference, CommentRepository $commentRepository): Response
+  +    {
+  +        return new Response($twig->render('conference/show.html.twig', [
+  +            'conference' => $conference,
+  +            'comments' => $commentRepository->findBy(['conference' => $conference], ['createdAt' => 'DESC']),
+  +        ]));
+  +    }
+  ```
+
+Cette méthode a un comportement particulier que nous n'avons pas encore vu. **Nous demandons qu'une instance** de `Conference` soit injectée dans la méthode. Mais il y en a peut-être beaucoup dans la base de données. 
+  > <span style="font-size: 3rem">🦸</span> Symfony est capable de déterminer celle que vous voulez en se basant sur l'`{id}` passé dans le chemin de la requête (`id` étant la clé primaire de la table `conference` dans la base de données).
+
 
 ---
 
-.left-column[
-### A. Easy Admin
-### B. Twig
-#### Utiliser Twig pour les templates
-#### Utiliser Twig dans un contrôleur
-#### Créer la page d'une conférence
+class: middle
+.center[
+### **Template de la page d'une conférence**
 ]
-.right-column[
+
 La récupération des commentaires associés à la conférence peut se faire via la méthode `findBy()`, qui prend un critère comme premier argument.
 
-La dernière étape consiste à créer le fichier `templates/conference/show.html.twig` :
-```twig
-{% extends 'base.html.twig' %}
+* ⏩ **La dernière étape consiste à créer le fichier `templates/conference/show.html.twig`**
+  ```twig
+  {% extends 'base.html.twig' %}
 
-{% block title %}Conference Guestbook - {{ conference }}{% endblock %}
+  {% block title %}Conference Guestbook - {{ conference }}{% endblock %}
 
-{% block body %}
-    <h2>{{ conference }} Conference</h2>
+  {% block body %}
+      <h2>{{ conference }} Conference</h2>
 
-    {% if comments|length > 0 %}
-        {% for comment in comments %}
-            {% if comment.photofilename %}
-                <img src="{{ asset('uploads/photos/' ~ comment.photofilename) }}" />
-            {% endif %}
+      {% if comments|length > 0 %}
+          {% for comment in comments %}
+              {% if comment.photofilename %}
+                  <img src="{{ asset('uploads/photos/' ~ comment.photofilename) }}" />
+              {% endif %}
 
-            <h4>{{ comment.author }}</h4>
-            <small>
-                {{ comment.createdAt|format_datetime('medium', 'short') }}
-            </small>
+              <h4>{{ comment.author }}</h4>
+              <small>{{ comment.createdAt|format_datetime('medium', 'short') }}</small>
 
-            <p>{{ comment.text }}</p>
-        {% endfor %}
-    {% else %}
-        <div>No comments have been posted yet for this conference.</div>
-    {% endif %}
-{% endblock %}
-```
-]
+              <p>{{ comment.text }}</p>
+          {% endfor %}
+      {% else %}
+          <div>No comments have been posted yet for this conference.</div>
+      {% endif %}
+  {% endblock %}
+  ```
 
+Dans ce template, nous utilisons le symbole `|` pour appeler les filtres Twig. Un filtre transforme une valeur. `comments|length` retourne le nombre de commentaires et `comment.createdAt|format_datetime('medium', 'short')` affiche la date dans un format lisible par l'internaute.
 ---
 
-.left-column[
-### A. Easy Admin
-### B. Twig
-#### Utiliser Twig pour les templates
-#### Utiliser Twig dans un contrôleur
-#### Créer la page d'une conférence
+class: middle
+.center[
+### **Installer le composant twig intl**
 ]
-.right-column[
-Dans ce template, nous utilisons le symbole `|` pour appeler les filtres Twig. Un filtre transforme une valeur. `comments|length` retourne le nombre de commentaires et `comment.createdAt|format_datetime('medium', 'short')` affiche la date dans un format lisible par l'internaute.
 
 Essayez d'afficher la "première" conférence en naviguant vers `/conference/1`, et constatez l'erreur suivante :
 
 .center[<img src="img/intl-twig-error.png" width="350px">]
 
 L'erreur vient du filtre `format_datetime`, qui ne fait pas partie du noyau de Twig. Le message d'erreur vous donne un indice sur le paquet à installer pour résoudre le problème :
-```sh
-symfony composer req "twig/intl-extra:^3"
-```
+
+* ⏩ **Installez le paquet `twig/intl-extra` et rechargez la page.**
+  ```sh
+  symfony composer req "twig/intl-extra:^3"
+  ```
+
 Maintenant la page fonctionne correctement.
-]
 
 ---
 
-.left-column[
-### A. Easy Admin
-### B. Twig
-#### Utiliser Twig pour les templates
-#### Utiliser Twig dans un contrôleur
-#### Créer la page d'une conférence
-#### Lier des pages entre elles
+class: middle
+.center[
+### **Lier des pages entre elles**
 ]
-.right-column[
-La toute dernière étape pour terminer notre première version de l'interface est de rendre les pages de la conférence accessibles depuis la page d'accueil :
-```diff
-# templates/conference/index.html.twig
 
-     {% for conference in conferences %}
-         <h4>{{ conference }}</h4>
-+        <p>
-+            <a href="/conference/{{ conference.id }}">View</a>
-+        </p>
-     {% endfor %}
- {% endblock %}
+La toute dernière étape pour terminer notre première version de l'interface est:
+* ⏩ **De rendre les pages de la conférence accessibles depuis la page d'accueil**
+  ```diff
+  # templates/conference/index.html.twig
 
-```
-Mais coder un chemin en dur est une mauvaise idée pour plusieurs raisons. La raison principale est que si vous transformez le chemin (de /conference/{id} en /conferences/{id} par exemple), tous les liens doivent être mis à jour manuellement.
+      {% for conference in conferences %}
+          <h4>{{ conference }}</h4>
+  +        <p>
+  +            <a href="/conference/{{ conference.id }}">View</a>
+  +        </p>
+      {% endfor %}
+  {% endblock %}
+  ```
 
-Utilisez plutôt la fonction Twig path() avec le nom de la route :
-```diff
-# templates/conference/index.html.twig
+Mais coder un chemin en dur est une mauvaise idée pour plusieurs raisons. La raison principale est que si vous transformez le chemin (de `/conference/{id}` en `/conferences/{id}` par exemple), tous les liens doivent être mis à jour manuellement.
 
-         <p>
--            <a href="/conference/{{ conference.id }}">View</a>
-+            <a href="{{ path('conference', { id: conference.id }) }}">View</a>
-         </p>
-     {% endfor %}
-```
-La fonction path() génère le chemin d'accès vers une page à l'aide du nom de la route. Les valeurs des paramètres dynamiques de la route sont transmises sous la forme d'un objet Twig.
+* ⏩ **Utilisez plutôt la fonction Twig `path()` avec le nom de la route**
+  ```diff
+  # templates/conference/index.html.twig
+          <p>
+  -            <a href="/conference/{{ conference.id }}">View</a>
+  +            <a href="{{ path('conference', { id: conference.id }) }}">View</a>
+          </p>
+      {% endfor %}
+  ```
 
-]
+La fonction `path()` génère le chemin d'accès vers une page à l'aide du nom de la route. Les valeurs des paramètres dynamiques de la route sont transmises sous la forme d'un objet Twig.
+
 
 ---
 
-.left-column[
-### A. Easy Admin
-### B. Twig
-#### Utiliser Twig pour les templates
-#### Utiliser Twig dans un contrôleur
-#### Créer la page d'une conférence
-#### Lier des pages entre elles
-#### Paginer les commentaires
+class: middle
+.center[
+### **Paginer les commentaires**
 ]
-.right-column[
+
 Avec des milliers de personnes présentes, on peut s'attendre à un nombre important de commentaires. Si nous les affichons tous sur une seule page, elle deviendra rapidement énorme.
 
-Créez une méthode getCommentPaginator() dans CommentRepository. Cette méthode renvoie un Paginator de commentaires basé sur une conférence et un décalage (où commencer) :
-```diff
-# src/Repository/CommentRepository.php
-+use App\Entity\Conference;
-+use Doctrine\ORM\Tools\Pagination\Paginator;
-...
+* ⏩ **Créez une méthode `getCommentPaginator()` dans `CommentRepository`. Cette méthode renvoie un `Paginator` de commentaires basé sur une conférence et un décalage (où commencer)**
+  ```diff
+  # src/Repository/CommentRepository.php
+  +use App\Entity\Conference;
+  +use Doctrine\ORM\Tools\Pagination\Paginator;
+  ...
 
- class CommentRepository extends ServiceEntityRepository
- {
-+    public const PAGINATOR_PER_PAGE = 2;
-+
-...
+  class CommentRepository extends ServiceEntityRepository
+  {
+  +    public const PAGINATOR_PER_PAGE = 2;
+  ...
 
-+    public function getCommentPaginator(Conference $conference, int $offset): Paginator
-+    {
-+        $query = $this->createQueryBuilder('c')
-+            ->andWhere('c.conference = :conference')
-+            ->setParameter('conference', $conference)
-+            ->orderBy('c.createdAt', 'DESC')
-+            ->setMaxResults(self::PAGINATOR_PER_PAGE)
-+            ->setFirstResult($offset)
-+            ->getQuery()
-+        ;
-+
-+        return new Paginator($query);
-+    }
-```
+  +    public function getCommentPaginator(Conference $conference, int $offset): Paginator
+  +    {
+  +        $query = $this->createQueryBuilder('c')
+  +            ->andWhere('c.conference = :conference')
+  +            ->setParameter('conference', $conference)
+  +            ->orderBy('c.createdAt', 'DESC')
+  +            ->setMaxResults(self::PAGINATOR_PER_PAGE)
+  +            ->setFirstResult($offset)
+  +            ->getQuery()
+  +        ;
+  +
+  +        return new Paginator($query);
+  +    }
+  ```
+
+.center[
+  <img src="https://em-content.zobj.net/source/telegram/358/open-book_1f4d6.webp" width="60px" alt="Paginator" />
 ]
 
 ---
 
-.left-column[
-### A. Easy Admin
-### B. Twig
-#### Utiliser Twig pour les templates
-#### Utiliser Twig dans un contrôleur
-#### Créer la page d'une conférence
-#### Lier des pages entre elles
-#### Paginer les commentaires
+class: middle
+.center[
+### **Transmettre le Paginator à Twig**
 ]
-.right-column[
+
 Nous avons fixé le nombre maximum de commentaires par page à 2 pour faciliter les tests.
 
-Pour gérer la pagination dans le template, transmettez à Twig le Doctrine Paginator au lieu de la Doctrine Collection :
-```diff
-# src/Controller/ConferenceController.php
+* ⏩ **Pour gérer la pagination dans le template, transmettez à Twig le Doctrine Paginator au lieu de la Doctrine Collection**
+  ```diff
+  # src/Controller/ConferenceController.php
 
-+use Symfony\Component\HttpFoundation\Request;
-...
+  +use Symfony\Component\HttpFoundation\Request;
+  ...
 
--    public function show(Environment $twig, Conference $conference, CommentRepository $commentRepository): Response
-+    public function show(Request $request, Environment $twig, Conference $conference, CommentRepository $commentRepository): Response
-     {
-+        $offset = max(0, $request->query->getInt('offset', 0));
-+        $paginator = $commentRepository->getCommentPaginator($conference, $offset);
-+
-         return new Response($twig->render('conference/show.html.twig', [
-             'conference' => $conference,
--            'comments' => $commentRepository->findBy(['conference' => $conference], ['createdAt' => 'DESC']),
-+            'comments' => $paginator,
-+            'previous' => $offset - CommentRepository::PAGINATOR_PER_PAGE,
-+            'next' => min(count($paginator), $offset + CommentRepository::PAGINATOR_PER_PAGE),
-         ]));
-     }
-```
+  -    public function show(Environment $twig, Conference $conference, CommentRepository $commentRepository): Response
+  +    public function show(Request $request, Environment $twig, Conference $conference, CommentRepository $commentRepository): Response
+      {
+  +        $offset = max(0, $request->query->getInt('offset', 0));
+  +        $paginator = $commentRepository->getCommentPaginator($conference, $offset);
+  +
+          return new Response($twig->render('conference/show.html.twig', [
+              'conference' => $conference,
+  -            'comments' => $commentRepository->findBy(['conference' => $conference], ['createdAt' => 'DESC']),
+  +            'comments' => $paginator,
+  +            'previous' => $offset - CommentRepository::PAGINATOR_PER_PAGE,
+  +            'next' => min(count($paginator), $offset + CommentRepository::PAGINATOR_PER_PAGE),
+          ]));
+      }
+  ```
+
 Le contrôleur récupère la valeur du décalage (offset) depuis les paramètres de l'URL ($request->query) sous forme d'entier (getInt()). Par défaut, sa valeur sera 0 si le paramètre n'est pas défini.
-]
 
 ---
 
-.left-column[
-### A. Easy Admin
-### B. Twig
-#### Utiliser Twig pour les templates
-#### Utiliser Twig dans un contrôleur
-#### Créer la page d'une conférence
-#### Lier des pages entre elles
-#### Paginer les commentaires
+class: middle
+.center[
+### **Gerer la pagination dans Twig**
 ]
-.right-column[
+
 Les décalages précédent et suivant sont calculés sur la base de toutes les informations que nous avons reçues du paginateur.
 
-Enfin, mettez à jour le template pour ajouter des liens vers les pages suivantes et précédentes :
-
-```diff
-# templates/conference/show.html.twig
-
-     {% if comments|length > 0 %}
-+        <div>There are {{ comments|length }} comments.</div>
-+
-...
-
-             <p>{{ comment.text }}</p>
-         {% endfor %}
-+
-+        {% if previous >= 0 %}
-+            <a href="{{ path('conference', { id: conference.id, offset: previous }) }}">Previous</a>
-+        {% endif %}
-+        {% if next < comments|length %}
-+            <a href="{{ path('conference', { id: conference.id, offset: next }) }}">Next</a>
-+        {% endif %}
-     {% else %}
-```
-Vous devriez maintenant pouvoir naviguer dans les commentaires avec les liens "Previous" et "Next" :
-]
-
----
-
-.left-column[
-### A. Easy Admin
-### B. Twig
-#### Utiliser Twig pour les templates
-#### Utiliser Twig dans un contrôleur
-#### Créer la page d'une conférence
-#### Lier des pages entre elles
-#### Paginer les commentaires
-#### Optimiser le contrôleur
-]
-.right-column[
-Vous avez peut-être remarqué que les deux méthodes présentes dans ConferenceController prennent un environnement Twig comme argument. Au lieu de l'injecter dans chaque méthode, appelons la méthode render() de la classe parente :
-
-```diff
--use Twig\Environment;
-
- class ConferenceController extends AbstractController
- {
-     #[Route('/', name: 'homepage')]
--    public function index(Environment $twig, ConferenceRepository $conferenceRepository): Response
-+    public function index(ConferenceRepository $conferenceRepository): Response
-     {
--        return new Response($twig->render('conference/index.html.twig', [
-+        return $this->render('conference/index.html.twig', [
-             'conferences' => $conferenceRepository->findAll(),
--        ]));
-+        ]);
-     }
-```
-]
-
----
-
-.left-column[
-### A. Easy Admin
-### B. Twig
-#### Utiliser Twig pour les templates
-#### Utiliser Twig dans un contrôleur
-#### Créer la page d'une conférence
-#### Lier des pages entre elles
-#### Paginer les commentaires
-#### Optimiser le contrôleur
-]
-.right-column[
+* ⏩ **Enfin, mettez à jour le template pour ajouter des liens vers les pages suivantes et précédentes**
   ```diff
+  # templates/conference/show.html.twig
 
-     #[Route('/conference/{id}', name: 'conference')]
--    public function show(Request $request, Environment $twig, Conference $conference, CommentRepository $commentRepository): Response
-+    public function show(Request $request, Conference $conference, CommentRepository $commentRepository): Response
-     {
-         $offset = max(0, $request->query->getInt('offset', 0));
-         $paginator = $commentRepository->getCommentPaginator($conference, $offset);
+      {% if comments|length > 0 %}
+  +        <div>There are {{ comments|length }} comments.</div>
+  ...
 
--        return new Response($twig->render('conference/show.html.twig', [
-+        return $this->render('conference/show.html.twig', [
-             'conference' => $conference,
-             'comments' => $paginator,
-             'previous' => $offset - CommentRepository::PAGINATOR_PER_PAGE,
-             'next' => min(count($paginator), $offset + CommentRepository::PAGINATOR_PER_PAGE),
--        ]));
-+        ]);
-     }
-```
+              <p>{{ comment.text }}</p>
+          {% endfor %}
+  +
+  +        {% if previous >= 0 %}
+  +            <a href="{{ path('conference', { id: conference.id, offset: previous }) }}">Previous</a>
+  +        {% endif %}
+  +        {% if next < comments|length %}
+  +            <a href="{{ path('conference', { id: conference.id, offset: next }) }}">Next</a>
+  +        {% endif %}
+      {% else %}
+  ```
 
-> 📬 Commitez notre travail via `git commit -am "Twig"`
+Vous devriez maintenant pouvoir naviguer dans les commentaires avec les liens **"Previous"** et **"Next"** :
+
+---
+
+class: middle
+.center[
+### **Optimiser le contrôleur**
 ]
+
+Vous avez peut-être remarqué que les deux méthodes présentes dans `ConferenceController` prennent un environnement Twig comme argument.
+
+* ⏩ **Au lieu de l'injecter dans chaque méthode, appelons la méthode `render()` de la classe parente**
+  ```diff
+  -use Twig\Environment;
+
+  class ConferenceController extends AbstractController
+  {
+      #[Route('/', name: 'homepage')]
+  -    public function index(Environment $twig, ConferenceRepository $conferenceRepository): Response
+  +    public function index(ConferenceRepository $conferenceRepository): Response
+      {
+  -        return new Response($twig->render('conference/index.html.twig', [
+  +        return $this->render('conference/index.html.twig', [
+              'conferences' => $conferenceRepository->findAll(),
+  -        ]));
+  +        ]);
+      }
+  ```
+---
+class: middle
+.center[
+### **Optimiser le contrôleur**
+]
+
+* ⏩ **Optimisons également la méthode `show()`**
+  ```diff
+      #[Route('/conference/{id}', name: 'conference')]
+  -    public function show(Request $request, Environment $twig, Conference $conference, CommentRepository $commentRepository): Response
+  +    public function show(Request $request, Conference $conference, CommentRepository $commentRepository): Response
+      {
+          $offset = max(0, $request->query->getInt('offset', 0));
+          $paginator = $commentRepository->getCommentPaginator($conference, $offset);
+
+  -        return new Response($twig->render('conference/show.html.twig', [
+  +        return $this->render('conference/show.html.twig', [
+              'conference' => $conference,
+              'comments' => $paginator,
+              'previous' => $offset - CommentRepository::PAGINATOR_PER_PAGE,
+              'next' => min(count($paginator), $offset + CommentRepository::PAGINATOR_PER_PAGE),
+  -        ]));
+  +        ]);
+      }
+  ```
+
+* ⏩ **📬 Commitez notre travail via `git commit -am "Twig"`**
+
+---
+
+class: middle
+.center[
+### **.red[Travaux pratique]**
+]
+
+**Objectif :**
+* ⏩ **Modifier la route `/produits` pour renvoyer la liste des produits depuis la base de données**
+* ⏩ **Créer un template pour la page d'accueil des produits**
+* ⏩ **Créer un template pour la page d'un produit**
 
 ---
 class: center, middle, inverse
 # 5. Les évenements
 ---
 
-.left-column[
-### A. Écouter les événements
-#### Ajouter un en-tête au site web
+class: middle
+.center[
+### **Écouter les événements**
 ]
-.right-column[
+
 Il manque une barre de navigation au layout actuel pour revenir à la page d'accueil ou pour passer d'une conférence à l'autre.
 #### Ajouter un en-tête au site web
 
 Tout ce qui doit être affiché sur toutes les pages web, comme un en-tête, doit faire partie du layout de base principal :
+
+* ⏩ **Ajoutez un en-tête au layout de base `templates/base.html.twig`**
 
 ```diff
      <body>
@@ -1871,17 +1870,17 @@ Tout ce qui doit être affiché sur toutes les pages web, comme un en-tête, doi
          {% block body %}{% endblock %}
      </body>
 ```
+
 L'ajout de ce code au layout signifie que tous les templates qui l'étendent doivent définir une variable conferences, créée et transmise par leurs contrôleurs.
-]
+
 
 ---
-
-.left-column[
-### A. Écouter les événements
-#### Ajouter un en-tête au site web
+class: middle
+.center[
+### **Transmettre des variables à tous les templates**
 ]
-.right-column[
-Comme nous n'avons que deux contrôleurs, vous pourriez procéder comme ceci (ne modifiez pas votre code car nous verrons très vite une meilleure façon de faire) :
+
+Comme nous n'avons que deux contrôleurs, vous pourriez procéder comme ceci **(ne modifiez pas votre code car nous verrons très vite une meilleure façon de faire)** :
 ```diff
 # 
      #[Route('/conference/{id}', name: 'conference')]
@@ -1896,47 +1895,94 @@ Comme nous n'avons que deux contrôleurs, vous pourriez procéder comme ceci (ne
             ...
          ]);
 ```
-Imaginez devoir mettre à jour des dizaines de contrôleurs. Et faire la même chose sur tous les nouveaux. Ce n'est pas très pratique. Il doit y avoir un meilleur moyen.
+🤔 Imaginez devoir mettre à jour des dizaines de contrôleurs. Et faire la même chose sur tous les nouveaux. Ce n'est pas très pratique. Il doit y avoir un meilleur moyen.
 
-Twig a la notion de variables globales. Une variable globale est disponible dans tous les templates générés. Vous pouvez les définir dans un fichier de configuration, mais cela ne fonctionne que pour les valeurs statiques. Pour ajouter toutes les conférences comme variable globale Twig, nous allons créer un listener.]
+**Twig a la notion de variables globales**. Une variable globale est disponible dans tous les templates générés. Vous pouvez les définir dans un fichier de configuration, mais cela ne fonctionne que pour les valeurs statiques. Pour ajouter toutes les conférences comme variable globale Twig, nous allons créer un **"listener"**.
+.center[
+<img src="https://em-content.zobj.net/source/telegram/358/ear_1f442.webp" width=50 />
+]
+
+
+---
+class: middle
+.center[
+### **Découvrir les événements Symfony**
+]
+
+**Symfony intègre un composant Event Dispatcher.**
+
+- 👉 **Un dispatcher** répartit certains événements à des moments précis que les listeners peuvent écouter.
+
+- 👉 **Les listeners** sont des hooks dans le cœur du framework.
+
+.pull-left[
+**Par exemple:**
+
+Certains événements vous permettent d'interagir avec le **cycle de vie des requêtes HTTP**. Pendant le traitement d'une requête, le dispatcher répartit les événements :
+
+* Lorsqu'une requête a été créée,
+* Lorsqu'un contrôleur est sur le point d'être exécuté
+* Lorsqu'une réponse est prête à être envoyée
+* Ou lorsqu'une exception a été levée.
+
+.info[
+  ☝ Un listener peut écouter un ou plusieurs événements et exécuter une logique basée sur le contexte de l'événement.
+]
+]
+
+.pull-right[
+  .center[
+  <img src="img/symfony-event-cycle.jpg" width=500 />
+  ]
+]
 
 ---
 
-.left-column[
-### A. Écouter les événements
-#### Ajouter un en-tête au site web
-#### Découvrir les événements Symfony
+class: middle
+.center[
+  ### **Les événements dans Symfony**
 ]
-.right-column[
-**Symfony intègre un composant Event Dispatcher.** Un dispatcher répartit certains événements à des moments précis que les listeners peuvent écouter. Les listeners sont des hooks dans le cœur du framework.
-
-Par exemple, certains événements vous permettent d'interagir avec le cycle de vie des requêtes HTTP. Pendant le traitement d'une requête, le dispatcher répartit les événements lorsqu'une requête a été créée, lorsqu'un contrôleur est sur le point d'être exécuté, lorsqu'une réponse est prête à être envoyée, ou lorsqu'une exception a été levée. Un listener peut écouter un ou plusieurs événements et exécuter une logique basée sur le contexte de l'événement.
 
 Les événements sont des points d'extension bien définis qui rendent le framework plus générique et extensible. De nombreux composants Symfony tels que Security, Messenger, Workflow ou Mailer les utilisent largement.
 
-Un autre exemple intégré d'événements et de listeners en action est le cycle de vie d'une commande : vous pouvez créer un listener pour exécuter du code avant n'importe quelle commande.
+**Un autre exemple intégré d'événements et de listeners en action est le cycle de vie d'une commande :** 
+* 👉  Vous pouvez créer un listener pour exécuter du code avant n'importe quelle commande.
 
 Tout paquet ou bundle peut également déclencher ses propres événements pour rendre son code extensible.
 
-Pour éviter d'avoir un fichier de configuration qui décrit les événements qu'un listener veut écouter, créez un subscriber. Un subscriber est un listener avec une méthode statique `getSubscribedEvents()` qui retourne sa configuration. Ceci permet aux subscribers d'être enregistrés automatiquement dans le dispatcher Symfony.
-
-
+.center[
+  <img src="https://images.unsplash.com/photo-1526739178209-77cd6c6bcf4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&h=230&q=80" />
 ]
+
 ---
-
-.left-column[
-### A. Écouter les événements
-#### Ajouter un en-tête au site web
-#### Découvrir les événements Symfony
-#### Implémenter un subscriber
+class: middle
+.center[
+### **Implémenter un subscriber**
 ]
-.right-column[
-Vous connaissez la chanson par cœur maintenant, utilisez le Maker Bundle pour générer un subscriber :
+
+Pour éviter d'avoir un fichier de configuration qui décrit les événements qu'un listener veut écouter, créez un subscriber.
+
+**Un subscriber est un listener** avec une méthode statique `getSubscribedEvents()` qui retourne sa configuration. Ceci permet aux subscribers d'être enregistrés automatiquement dans le **dispatcher Symfony**.
+
+* ⏩ **Vous connaissez la chanson par cœur maintenant, utilisez le Maker Bundle pour générer un subscriber :**
 ```sh
 symfony console make:subscriber TwigEventSubscriber
 ```
 
-La commande vous demande quel événement vous voulez écouter. Choisissez l'événement `Symfony\Component\HttpKernel\Event\ControllerEvent` qui est envoyé juste avant l'appel d'un contrôleur. C'est le meilleur moment pour injecter la variable globale conferences afin que Twig y ait accès lorsque le contrôleur générera le template. Mettez votre subscriber à jour comme suit :
+La commande vous demande quel événement vous voulez écouter.
+
+* ⏩ **Choisissez l'événement `Symfony\Component\HttpKernel\Event\ControllerEvent` qui est envoyé juste avant l'appel d'un contrôleur.**
+
+C'est le meilleur moment pour injecter la variable globale conferences afin que Twig y ait accès lorsque le contrôleur générera le template.
+
+---
+class: middle
+.center[
+### **Personnaliser le subscriber généré**
+]
+
+* ⏩ **Mettez votre subscriber à jour comme suit :**
+
 ```diff
  class TwigEventSubscriber implements EventSubscriberInterface
  {
@@ -1956,18 +2002,16 @@ La commande vous demande quel événement vous voulez écouter. Choisissez l'év
 Maintenant, vous pouvez ajouter autant de contrôleurs que vous le souhaitez : la variable `conferences` sera toujours disponible dans Twig.
   
 > .info[🗒 Nous parlerons d'une alternative bien plus performante dans une prochaine étape.]
-]
----
 
-.left-column[
-### A. Écouter les événements
-#### Ajouter un en-tête au site web
-#### Découvrir les événements Symfony
-#### Implémenter un subscriber
-#### Trier les conférences par année et par ville
+---
+class: middle
+.center[
+### **Trier les conférences par année et par ville**
 ]
-.right-column[
-  Le tri de la liste des conférences par année peut faciliter la navigation. Nous pourrions créer notre propre méthode pour récupérer et trier toutes les conférences, mais nous allons plutôt remplacer l'implémentation par défaut de la méthode findAll(), afin que le tri s'applique partout :
+
+  Le tri de la liste des conférences par année peut faciliter la navigation. Nous pourrions créer notre propre méthode pour récupérer et trier toutes les conférences.
+  
+  * ⏩ **Mais nous allons plutôt remplacer l'implémentation par défaut de la méthode findAll(), afin que le tri s'applique partout :**
 
 ```diff
 +    public function findAll(): array
@@ -1976,23 +2020,20 @@ Maintenant, vous pouvez ajouter autant de contrôleurs que vous le souhaitez : l
 +    }
 +
      public function save(Conference $entity, bool $flush = false): void
-     {
-         $this->getEntityManager()->persist($entity);
 ```
 À la fin de cette étape, le site web devrait ressembler à ceci :
 
-.center[<img src="img/header.png" alt="header" width="350px" />]
+.center[<img src="img/header.png" alt="header" width="340px" />]
 
-  > 📬 Commitez notre travail via `git commit -am "Écouter les événements"`
-]
+* ⏩ **Commitez notre travail via `git commit -am "Écouter les événements"`**
+
 ---
 
-.left-column[
-### A. Écouter les événements
-### B. Gérer le cycle de vie des objets Doctrine
-#### Définir des lifecycle callbacks
+class: middle
+.center[
+### **Définir des lifecycle callbacks**
 ]
-.right-column[
+
 Lors de la création d'un nouveau commentaire, ce serait bien si la date createdAt était automatiquement définie à la date et à l'heure courantes.
 
 Doctrine a différentes façons de manipuler les objets et leurs propriétés pendant leur cycle de vie (avant la création de la ligne dans la base de données, après la mise à jour de la ligne, etc.).
@@ -2019,7 +2060,7 @@ Lorsque le comportement n'a besoin d'aucun service et ne doit être appliqué qu
 ```
 
 L'événement `ORM\PrePersist` est déclenché lorsque l'objet est enregistré dans la base de données pour la toute première fois. Lorsque cela se produit, la méthode `setCreatedAtValue()` est appelée et la date et l'heure courantes sont utilisées pour la valeur de la propriété createdAt.
-]
+
 ---
 
 .left-column[
