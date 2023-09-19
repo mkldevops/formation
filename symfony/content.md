@@ -564,13 +564,17 @@ class: middle
 
 * ⏩ **Rafraîchissez le navigateur**
 
+Nous avons maintenant une page d'accueil qui affiche une image animée. Nous avons également une route nommée `homepage` qui correspond à cette page. Nous utiliserons ce nom pour faire référence à cette page dans notre code.
+
 .center[
   ![Symfony Contrôleur](img/symfony-controleur.png)
 ]
 
-La responsabilité principale d'un contrôleur est de retourner une réponse **HTTP** (classe `Response`) pour la requête.
+.info[
+💡 La responsabilité principale d'un contrôleur est de retourner une réponse **HTTP** (classe `Response`) pour la requête (class `Request`).
+]
 
-* ⏩ **📬 Commitez notre travail**
+* ⏩ **Commitez notre travail `git add . && git commit -m "First controller"`**
 
 ---
 
@@ -621,6 +625,7 @@ class: middle
 Symfony expose les données de la requête à travers un objet `Request`. Lorsque Symfony voit un argument de contrôleur avec ce typage précis, il sait automatiquement qu'il doit vous le passer. Nous pouvons l'utiliser pour récupérer le nom depuis le paramètre d'URL et ajouter un titre `<h1>`.
 
 * ⏩ **Dans un navigateur, rendez-vous sur `/`, puis sur `/?hello=Fabien` pour constater la différence.**
+
 * ⏩ **Nous aurions également pu inclure le nom directement dans l'URL :**
 
 ```diff
@@ -638,18 +643,16 @@ Symfony expose les données de la requête à travers un objet `Request`. Lorsqu
          }
 ```
 
-La partie de la route {name} est un paramètre de route dynamique - il fonctionne comme un joker. Vous pouvez maintenant vous rendre sur `/hello` et sur `/hello/Fabien` dans un navigateur pour obtenir les mêmes résultats qu'auparavant. Vous pouvez récupérer la valeur du paramètre `{name}` en ajoutant un argument portant le même nom au contrôleur, donc $name.
+La partie de la route `{name}` est un paramètre de route dynamique - il fonctionne comme un joker. Vous pouvez maintenant vous rendre sur `/hello` et sur `/hello/Fabien` dans un navigateur pour obtenir les mêmes résultats qu'auparavant. Vous pouvez récupérer la valeur du paramètre `{name}` en ajoutant un argument portant le même nom au contrôleur, donc $name.
 
 * ⏩ **Annulez les changements que nous venons juste de faire via `git checkout .`**
-
 
 ---
 
 class: middle
 .center[
-  ### **Débogguer des variables**
+### **Débogguer des variables**
 ]
-
 
 La fonction `dump()` est un utilitaire de déboggage très puissant. Elle est toujours disponible et vous permet de voir le contenu de variables complexes dans un format interactif.
 
@@ -685,7 +688,7 @@ class: middle
   ### **.red[Travaux pratique]**
 ]
 
-**Objectif :** Créer un contrôleur qui gère une liste fictive de produits avec `/products` et permet aussi de récupérer des détails au format json sur un produit spécifique en utilisant des routes dynamiques `/product/{id}`.
+**Objectif :** Créer un contrôleur qui gère une liste fictive de produits avec `/products` et permet aussi de récupérer des détails au format json (sans template twig) sur un produit spécifique en utilisant des routes dynamiques `/product/{id}`.
 
 ```php
 $products = [
@@ -876,9 +879,9 @@ Pour interagir avec la base de données depuis PHP, nous allons nous appuyer sur
 ]
 ]
 
-Comment est-ce que Doctrine est au courant de notre connexion à la base de données ? 
+> 🤔 Comment est-ce que Doctrine est au courant de notre connexion à la base de données ? 
 
-La recette de Doctrine a ajouté un fichier de configuration qui contrôle son comportement : `config/packages/doctrine.yaml`. 
+👉 La recette de Doctrine (recipes au moment de l'installation du paquet) a ajouté un fichier de configuration qui contrôle son comportement : `config/packages/doctrine.yaml`.
 
 Le paramètre principal est le `DSN` de la base de données, une chaîne contenant toutes les informations sur la connexion : identifiants, hôte, port, etc. Par défaut, Doctrine recherche une variable d'environnement `DATABASE_URL`.
 
@@ -893,11 +896,13 @@ class: middle
 ### **Comprendre les conventions des variables d'environnement de Symfony**
 ]
 
-Vous pouvez définir la variable `DATABASE_URL` manuellement dans le fichier `.env` ou `.env.local`. En fait, grâce à la recette du paquet, vous verrez un exemple de variable `DATABASE_URL` dans votre fichier `.env`. Mais comme le port exposé par Docker vers PostgreSQL peut changer, c'est assez lourd. Il y a une meilleure solution.
+> 👉 Vous pouvez définir la variable `DATABASE_URL` manuellement dans le fichier `.env` ou `.env.local`. 
+
+Mais grâce à la recette du paquet, vous verrez un exemple de variable `DATABASE_URL` dans votre fichier `.env`. Mais comme le port exposé par Docker vers PostgreSQL peut changer, c'est assez lourd. Il y a une meilleure solution.
 
 Au lieu de coder en dur la variable `DATABASE_URL` dans un fichier, nous pouvons préfixer toutes les commandes avec symfony. Ceci détectera les services exécutés par Docker (lorsque le tunnel est ouvert) et définira automatiquement la variable d'environnement.
 
-Docker Compose fonctionne parfaitement avec Symfony grâce à ces variables d'environnement.
+> 🪄 Docker Compose fonctionne parfaitement avec Symfony grâce à ces variables d'environnement.
 
 ---
 class: middle
@@ -924,7 +929,8 @@ Vous rappelez-vous du nom du service database utilisé dans les configurations D
  ###< doctrine/doctrine-bundle ###
 ```
 
-Pourquoi l'information doit-elle être dupliquée à deux endroits différents ? Parce que sur certaines plates-formes de Cloud, au moment de la compilation, l'URL de la base de données n'est peut-être pas encore connue mais Doctrine a besoin de connaître le moteur de la base de données pour initialiser sa configuration. Ainsi, l'hôte, le pseudo et le mot de passe n'ont pas vraiment d'importance.
+🤔 Pourquoi l'information doit-elle être dupliquée à deux endroits différents ?
+> 👉 Parce que sur certaines plates-formes de Cloud, au moment de la compilation, l'URL de la base de données n'est peut-être pas encore connue mais Doctrine a besoin de connaître le moteur de la base de données pour initialiser sa configuration. Ainsi, l'hôte, le pseudo et le mot de passe n'ont pas vraiment d'importance.
 
 ---
 
@@ -963,23 +969,21 @@ class: middle
   ### **Générer la classe d'entités "Comment"**
 ]
 
-
 Notez que la classe elle-même est une classe PHP sans aucune référence à Doctrine. Les attributs sont utilisés pour ajouter des métadonnées utiles à Doctrine afin de mapper la classe à sa table associée dans la base de données.
 
 Doctrine a ajouté un attribut `id` pour stocker la clé primaire de la ligne dans la table de la base de données. Cette clé `(ORM\Id())` est générée automatiquement `(ORM\GeneratedValue())` avec une stratégie qui dépend du moteur de base de données.
 
-Maintenant, générez une classe d'entité pour les commentaires de la conférence :
+* ⏩ **Maintenant, générez une classe d'entité pour les commentaires de la conférence :**
 ```sh
 symfony console make:entity Comment
 ```
 
-Entrez les réponses suivantes :
+* ⏩ **Entrez les réponses suivantes :**
 
-* `author`, `string`, `255`, `no` ;
-* `text`, `text`, `no` ;
-* `email`, `string`, `255`, `no` ;
-* `createdAt`, `datetime_immutable`, `no`.
-
+  * `author`, `string`, `255`, `no` ;
+  * `text`, `text`, `no` ;
+  * `email`, `string`, `255`, `no` ;
+  * `createdAt`, `datetime_immutable`, `no`.
 
 ---
 
@@ -990,17 +994,19 @@ class: middle
 
 Les deux entités, `Conference` et `Comment`, devraient être liées l'une à l'autre. **Une conférence peut avoir zéro commentaire ou plus**, ce qui s'appelle une relation `one-to-many`.
 
-Utilisez à nouveau la commande `make:entity` pour ajouter cette relation à la classe `Conference` :
+* ⏩ **Utilisez à nouveau la commande `make:entity` pour ajouter cette relation à la classe `Conference` :**
 
 ```sh
 symfony console make:entity Conference
 ```
-Entrez les responses suivantes:
+* ⏩ **Entrez les responses suivantes :**
 * `comments`, `OneToMany`, `Comment`, `conference`, `no`, `yes`
 
 .info[
   💡 Si vous entrez `?` comme réponse pour le type, vous obtiendrez tous les types pris en charge
 ]
+
+Les entités ont été mis à jour et sont maintenant liées l'une à l'autre.
 
 Tout ce dont vous avez besoin pour gérer la relation a été généré pour vous. Une fois généré, le code devient le vôtre ; n'hésitez pas à le personnaliser comme vous le souhaitez.
 
@@ -1960,11 +1966,18 @@ class: middle
 ### **Implémenter un subscriber**
 ]
 
-Pour éviter d'avoir un fichier de configuration qui décrit les événements qu'un listener veut écouter, créez un subscriber.
+Pour éviter d'avoir un fichier de configuration (`service.yaml`) qui décrit les événements qu'un listener veut écouter, utilisons plutôt un subscriber.
 
 **Un subscriber est un listener** avec une méthode statique `getSubscribedEvents()` qui retourne sa configuration. Ceci permet aux subscribers d'être enregistrés automatiquement dans le **dispatcher Symfony**.
 
-* ⏩ **Vous connaissez la chanson par cœur maintenant, utilisez le Maker Bundle pour générer un subscriber :**
+Résumons donc la différence entre un **listener** et un **subscriber** :
+
+* 👉 **Un listener est une classe avec une méthode publique qui écoute un événement spécifique.**
+* 👉 **Un subscriber est une classe avec une méthode statique qui retourne la configuration de tous les événements qu'il écoute.**
+
+Vous connaissez la chanson par cœur maintenant
+
+* ⏩ **Utilisez le Maker Bundle pour générer un subscriber :**
 ```sh
 symfony console make:subscriber TwigEventSubscriber
 ```
@@ -2011,7 +2024,7 @@ class: middle
 
   Le tri de la liste des conférences par année peut faciliter la navigation. Nous pourrions créer notre propre méthode pour récupérer et trier toutes les conférences.
   
-  * ⏩ **Mais nous allons plutôt remplacer l'implémentation par défaut de la méthode findAll(), afin que le tri s'applique partout :**
+  * ⏩ **Mais nous allons plutôt remplacer l'implémentation par défaut de la méthode `findAll()`, afin que le tri s'applique partout :**
 
 ```diff
 +    public function findAll(): array
@@ -2034,21 +2047,20 @@ class: middle
 ### **Définir des lifecycle callbacks**
 ]
 
-Lors de la création d'un nouveau commentaire, ce serait bien si la date createdAt était automatiquement définie à la date et à l'heure courantes.
+Lors de la création d'un nouveau commentaire, ce serait bien si la date `createdAt` était automatiquement définie à la date et à l'heure courantes.
 
 Doctrine a différentes façons de manipuler les objets et leurs propriétés pendant leur cycle de vie (avant la création de la ligne dans la base de données, après la mise à jour de la ligne, etc.).
 
-Lorsque le comportement n'a besoin d'aucun service et ne doit être appliqué qu'à un seul type d'entité, définissez un callback dans la classe entité :
+Lorsque le comportement n'a besoin d'aucun service et ne doit être appliqué qu'à un seul type d'entité.
+
+* ⏩ **Définissez un callback dans la classe entité :**
 
 ```diff
  #[ORM\Entity(repositoryClass: CommentRepository::class)]
 +#[ORM\HasLifecycleCallbacks]
  class Comment
  {
-     #[ORM\Id]
-@@ -91,6 +92,12 @@ class Comment
-         return $this;
-     }
+@@ -91,8 +92,12 @@ class Comment
 
 +    #[ORM\PrePersist]
 +    public function setCreatedAtValue()
@@ -2059,29 +2071,42 @@ Lorsque le comportement n'a besoin d'aucun service et ne doit être appliqué qu
      public function getConference(): ?Conference
 ```
 
-L'événement `ORM\PrePersist` est déclenché lorsque l'objet est enregistré dans la base de données pour la toute première fois. Lorsque cela se produit, la méthode `setCreatedAtValue()` est appelée et la date et l'heure courantes sont utilisées pour la valeur de la propriété createdAt.
+L'événement `ORM\PrePersist` est déclenché lorsque l'objet est enregistré dans la base de données pour la toute première fois. Lorsque cela se produit, la méthode `setCreatedAtValue()` est appelée et la date et l'heure courantes sont utilisées pour la valeur de la propriété `createdAt`.
+
+* ⏩ **Ajoutez un commentaire depuis l'interface d'administration et vérifiez que la date est correcte.**
 
 ---
 
-.left-column[
-### A. Écouter les événements
-### B. Gérer le cycle de vie des objets Doctrine
-#### Définir des lifecycle callbacks
-#### Ajouter des slugs aux conférences
+class: middle
+.center[
+### **Ajouter des slugs aux conférences**
 ]
-.right-column[
-Les URLs des conférences n'ont pas de sens : /conference/1. Plus important encore, ils dépendent d'un détail d'implémentation (la clé primaire de la base de données est révélée).
 
-Pourquoi ne pas plutôt utiliser des URLs telles que /conference/paris-2020 ? Ce serait plus joli. paris-2020, c'est ce que l'on appelle le slug de la conférence.
+Les URLs des conférences n'ont pas de sens : `/conference/1`. Plus important encore, ils dépendent d'un détail d'implémentation 
 
-Ajoutez une nouvelle propriété slug pour les conférences (une chaîne non nulle de 255 caractères) :
+.center[**"😱 la clé primaire de la base de données est révélée 😱"**]
+
+Pourquoi ne pas plutôt utiliser des URLs telles que `/conference/paris-2020` ? Ce serait plus joli. `paris-2020`, c'est ce que l'on appelle le slug de la conférence.
+
+* ⏩ **Ajoutez une nouvelle propriété `slug` pour les conférences (une chaîne non nulle de 255 caractères) :**
 ```sh
 symfony console make:entity Conference
 ```
+La commande vous demande le nom de la propriété. Entrez `slug` et choisissez `string` comme type.
 
-Créez un fichier de migration pour ajouter la nouvelle colonne et Et exécutez cette nouvelle migration.
+---
 
-❗ Vous avez une erreur ? C'était prévu. Pourquoi ? Parce que nous avons demandé que le slug ne soit pas null, et que les entrées existantes dans la base de données de la conférence obtiendront une valeur null lorsque la migration sera exécutée. Corrigeons cela en ajustant la migration.
+class: middle
+.center[
+### **Applicons la migration**
+]
+
+* ⏩ **Créez un fichier de migration pour ajouter la nouvelle colonne et Et exécutez cette nouvelle migration.**
+
+❗ Vous avez une erreur ? C'était prévu. Pourquoi ? 
+
+👉 Parce que nous avons demandé que le `slug` ne soit pas `null`, et que les entrées existantes dans la base de données de la conférence obtiendront une valeur `null` lorsque la migration sera exécutée. Corrigeons cela en ajustant la migration.
+
 ```diff
      public function up(Schema $schema): void
      {
@@ -2093,20 +2118,22 @@ Créez un fichier de migration pour ajouter la nouvelle colonne et Et exécutez 
      }
 ```
 
-L'astuce ici est d'ajouter la colonne et de lui permettre d'être null, puis de définir une valeur non null pour le slug, et enfin, de changer la colonne de slug pour ne plus permettre null.
+L'astuce ici est d'ajouter la colonne et de lui permettre d'être `null`, puis de définir une valeur non `null` pour le `slug`, et enfin, de changer la colonne de `slug` pour ne plus permettre `null`.
 
 La migration devrait fonctionner maintenant.
-]
+* ⏩ ** Exécutez la migration**
+
+
 ---
 
-.left-column[
-### A. Écouter les événements
-### B. Gérer le cycle de vie des objets Doctrine
-#### Définir des lifecycle callbacks
-#### Ajouter des slugs aux conférences
+class: middle
+.center[
+### **Assurer l'unicité des slugs**
 ]
-.right-column[
-Étant donné que l'application utilisera bientôt les slugs pour trouver chaque conférence, ajustons l'entité Conference pour s'assurer que les valeurs des slugs soient uniques dans la base de données :
+
+Étant donné que l'application utilisera bientôt les slugs pour trouver chaque conférence, ajustons l'entité `Conference` pour s'assurer que les valeurs des slugs soient uniques dans la base de données :
+
+* ⏩ **Ajoutez une contrainte d'unicité sur la propriété `slug` de la classe `Conference` :**
 
 ```diff
 +use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -2129,32 +2156,27 @@ La migration devrait fonctionner maintenant.
 
 💃 Comme vous l'aurez deviné, nous devons exécuter la danse de la migration
 
+* ⏩ **Créez une nouvelle migration et exécutez-la.**
 
-]
 ---
 
-.left-column[
-### A. Écouter les événements
-### B. Gérer le cycle de vie des objets Doctrine
-#### Définir des lifecycle callbacks
-#### Ajouter des slugs aux conférences
-#### Générer des slugs
+class: middle
+.center[
+### **Générer des slugs**
 ]
-.right-column[
-Générer un *slug* qui se lit bien dans une URL (où tout ce qui n'est pas des caractères **ASCII** doit être encodé) est une tâche difficile, surtout pour les langues autres que l'anglais. Comment convertir é en e par exemple ?
 
-Au lieu de réinventer la roue, utilisons le composant *Symfony String*, qui facilite la manipulation des chaînes et fournit un slugger.
+Générer un ***slug*** qui se lit bien dans une URL (où tout ce qui n'est pas des caractères **ASCII** doit être encodé) est une tâche difficile, surtout pour les langues autres que l'anglais. Comment convertir é en e par exemple ?
 
-Dans la classe Conference, ajoutez une méthode `computeSlug()`, qui calcule le slug en fonction des données de la conférence :
+Au lieu de réinventer la roue, utilisons le composant ***Symfony String***, qui facilite la manipulation des chaînes et fournit **un slugger**.
+
+* ⏩ **Dans la classe Conference, ajoutez une méthode `computeSlug()`, qui calcule le slug en fonction des données de la conférence :**
 
 ```diff
 +use Symfony\Component\String\Slugger\SluggerInterface;
 
  #[ORM\Entity(repositoryClass: ConferenceRepository::class)]
- #[UniqueEntity('slug')]
 
 @@ ...
-
 
 +    public function computeSlug(SluggerInterface $slugger)
 +    {
@@ -2166,25 +2188,26 @@ Dans la classe Conference, ajoutez une méthode `computeSlug()`, qui calcule le 
      public function getCity(): ?string
 ```
 
-La méthode `computeSlug()` ne calcule un slug que lorsque le slug courant est vide ou défini à la valeur spéciale -. Pourquoi avons-nous besoin de cette valeur particulière - ? Parce que lors de l'ajout d'une conférence dans l'interface d'administration, le slug est nécessaire. Nous avons donc besoin d'une valeur non vide qui indique à l'application que nous voulons que le slug soit généré automatiquement.
-]
+La méthode `computeSlug()` ne calcule un slug que lorsque le slug courant est vide ou défini à la valeur spéciale. 
+
+🤔 **Pourquoi avons-nous besoin de cette valeur particulière ?**
+
+👉 Parce que lors de l'ajout d'une conférence dans l'interface d'administration, le slug est nécessaire. Nous avons donc besoin d'une valeur non vide qui indique à l'application que nous voulons que le slug soit généré automatiquement.
+
 ---
 
-.left-column[
-### A. Écouter les événements
-### B. Gérer le cycle de vie des objets Doctrine
-#### Définir des lifecycle callbacks
-#### Ajouter des slugs aux conférences
-#### Définir un lifecycle callback complexe
+class: middle
+.center[
+### **Définir un lifecycle callback complexe**
 ]
-.right-column[
+
 Comme pour la propriété createdAt, la propriété slug doit être définie automatiquement à chaque fois que la conférence est mise à jour en appelant la méthode `computeSlug()`.
 
 Mais comme cette méthode dépend d'une implémentation de `SluggerInterface`, nous ne pouvons pas ajouter un événement `prePersist` comme avant (nous n'avons pas la possibilité d'injecter le slugger).
 
-Créez plutôt un listener d'entité Doctrine :
+* ⏩ **Créez plutôt une classe de listener d'entité Doctrine `src/EntityListener/ConferenceEntityListener.php`**
+
 ```php
-# src/EntityListener/ConferenceEntityListener.php 
 namespace App\EntityListener;
 
 use App\Entity\Conference;
@@ -2195,40 +2218,59 @@ class ConferenceEntityListener
 {
     public function __construct(private SluggerInterface $slugger) { }
 
-    public function prePersist(Conference $conference, LifecycleEventArgs $event)
-    {
-        $conference->computeSlug($this->slugger);
-    }
-
-    public function preUpdate(Conference $conference, LifecycleEventArgs $event)
+    public function __invoke(Conference $conference, LifecycleEventArgs $event)
     {
         $conference->computeSlug($this->slugger);
     }
 }
 ```
 
-Notez que le slug est modifié lorsqu'une nouvelle conférence est créée (`prePersist()`) et lorsqu'elle est mise à jour (`preUpdate()`).
-]
+Notez que le slug est modifié lorsqu'une nouvelle conférence est créée et lorsqu'elle est mise à jour.
+
 ---
 
-.left-column[
-### A. Écouter les événements
-### B. Gérer le cycle de vie des objets Doctrine
-#### Définir des lifecycle callbacks
-#### Ajouter des slugs aux conférences
-#### Définir un lifecycle callback complexe
-#### Configurer un service dans le conteneur
+class: middle
+.center[
+### **Le conteneur d'injection de dépendance**
 ]
-.right-column[
-Jusqu'à présent, nous n'avons pas parlé d'un élément clé de Symfony, *le conteneur d'injection de dépendance*. Le conteneur est responsable de la gestion des services : leur création, et leur injection en cas de besoin.
 
-Un service est un objet "global" qui fournit des fonctionnalités (par exemple un mailer, un logger, un slugger, etc.) contrairement aux objets de données (par exemple les instances d'entités Doctrine).
+🤔 Jusqu'à présent, nous n'avons pas parlé d'un élément clé de Symfony, ***"le conteneur d'injection de dépendance"***. 
+* 👉 **Le conteneur est responsable de la gestion des services : leur création, et leur injection en cas de besoin.**
 
-Vous interagissez rarement directement avec le conteneur car il injecte automatiquement des objets de service quand vous en avez besoin : par exemple, le conteneur injecte les objets en arguments du contrôleur lorsque vous les typez.
+* 👉 **Un service** est un objet **"global"** qui fournit des fonctionnalités (par exemple un **mailer**, un **logger**, un **slugger**, etc.) contrairement aux objets de données (par exemple les instances d'entités Doctrine `App\Entity`).
 
-Si vous vous demandez comment le listener d'événement a été initialisé à l'étape précédente, vous avez maintenant la réponse : le conteneur. Lorsqu'une classe implémente des interfaces spécifiques, le conteneur sait que la classe doit être initialisée d'une certaine manière.
+* 👉 Vous interagissez rarement directement avec le conteneur car **il injecte automatiquement des objets de service** quand vous en avez besoin.
 
-Dans ce cas précis, puisque notre classe n'implémente aucune interface et n'étend aucune autre classe, Symfony ne peux pas la configurer automatiquement. Utilisons un attribut pour l'aider :
+**Par exemple**, le conteneur injecte les objets en arguments du contrôleur lorsque vous les typez, comme nous l'avons fait avec `Environment` et `ConferenceRepository` dans la méthode `index()` du contrôleur `ConferenceController`.
+
+```php
+class ConferenceController extends AbstractController
+{
+    #[Route('/', name: 'homepage')]
+    public function index(ConferenceRepository $conferenceRepository): Response
+    {
+        // ...
+    }
+}
+```
+
+---
+
+class: middle
+.center[
+### **Configurer un service dans le conteneur**
+]
+
+🤔 Si vous vous demandez comment le listener d'événement a été initialisé à l'étape précédente, vous avez maintenant la réponse :
+
+.center[**"le conteneur"**.]
+
+Lorsqu'une classe implémente des **interfaces spécifiques**, ⇒ le conteneur sait que la classe doit être initialisée d'une certaine manière.
+
+Dans ce cas précis, puisque notre classe `ConferenceEntityListener` n'implémente aucune interface et n'étend d'aucune autre classe, Symfony ne peux pas la configurer automatiquement.
+
+* ⏩ **Utilisons un attribut pour l'aider :**
+
 ```diff
 +use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
 +use Doctrine\ORM\Events;
@@ -2238,23 +2280,26 @@ Dans ce cas précis, puisque notre classe n'implémente aucune interface et n'é
  class ConferenceEntityListener
  {
 ```
-> ❗ Ne confondez pas les listeners d'événements Doctrine et ceux de Symfony. Même s'ils se ressemblent beaucoup, ils n'utilisent pas la même infrastructure en interne.
+
+L'attribut `AsEntityListener` indique au conteneur que la classe `ConferenceEntityListener` doit être initialisée comme un listener d'événement pour les événements `prePersist` et `preUpdate` de l'entité `Conference`.
+
+.info[
+❗ Ne confondez pas les ** listeners d'événements Doctrine** et **ceux de Symfony**. Même s'ils se ressemblent beaucoup, ils n'utilisent pas la même infrastructure en interne.
 ]
+
 ---
 
-.left-column[
-### A. Écouter les événements
-### B. Gérer le cycle de vie des objets Doctrine
-#### Définir des lifecycle callbacks
-#### Ajouter des slugs aux conférences
-#### Définir un lifecycle callback complexe
-#### Configurer un service dans le conteneur
-#### Utiliser des slugs dans l'application
+class: middle
+.center[
+### **Utiliser des slugs dans l'application**
 ]
-.right-column[
-Essayez d'ajouter d'autres conférences dans l'interface d'administration et changez la ville ou l'année d'une conférence existante ; le slug ne sera pas mis à jour sauf si vous utilisez la valeur spéciale -.
 
-La dernière modification consiste à mettre à jour les contrôleurs et les modèles pour utiliser le slug de la conférence pour les routes, au lieu de son id :
+* ⏩ **Essayez d'ajouter d'autres conférences dans l'interface d'administration et changez la ville ou l'année d'une conférence existante.**
+  
+  Le slug ne sera pas mis à jour sauf si vous utilisez la valeur spéciale "-"
+
+* ⏩ **La dernière modification consiste à mettre à jour les contrôleurs et les modèles pour utiliser le slug de la conférence pour les routes, au lieu de son id :**
+
 ```diff
 # src/Controller/ConferenceController.php
 -    #[Route('/conference/{id}', name: 'conference')]
@@ -2283,39 +2328,53 @@ La dernière modification consiste à mettre à jour les contrôleurs et les mod
 +            <a href="{{ path('conference', { slug: conference.slug, offset: next }) }}">Next</a>
          {% endif %}
 ```
-]
+
 ---
 
-.left-column[
-### A. Écouter les événements
-### B. Gérer le cycle de vie des objets Doctrine
-#### Définir des lifecycle callbacks
-#### Ajouter des slugs aux conférences
-#### Définir un lifecycle callback complexe
-#### Configurer un service dans le conteneur
-#### Utiliser des slugs dans l'application
+class: middle
+.center[
+### **Naviguer avec les slugs**
 ]
-.right-column[
-L'accès à la page d'une conférence devrait maintenant se faire grâce à son slug :
 
-.center[<img src="img/slug.png" alt="Slug" width="350px">]
+L'accès à la page d'une conférence devrait maintenant se faire grâce à son slug : `/conference/paris-2020`.
 
-  > 📬 Commitez notre travail via `git commit -am "Gérer le cycle de vie des objets Doctrine"`
+.center[<img src="img/slug.png" alt="Slug" width="400px">]
+
+
+* ⏩ **📬 Commitez notre travail via `git commit -am "Gérer le cycle de vie des objets Doctrine"`**
+
+---
+class: middle
+.center[
+### **.red[Travaux pratique]**
 ]
+
+**1. Faire le Quizz : Symfony Part 5**
+
+**2. Objectif :**
+
+* ⏩ **Ajouter une propriété createdAt et updatedAt à toutes les entités**
+
+* ⏩ **Ajouter un listener pour mettre à jour les propriété updatedAt et createdAt**
+
+  * A savoir que la propriété updatedAt doit être mise à jour à chaque modification de l'entité
+  * La propriété createdAt doit être mise à jour à la création de l'entité
+
+* ⏩ **Bonus utilisez le trait pour factoriser le code**
+
+
 ---
 class: center, middle, inverse
-# 5. Les formulaires
+# 6. Les formulaires
 ---
-
-.left-column[
-  <br/>
-
-#### Générer un form type
+class: middle
+.center[
+### **Générer un form type**
 ]
-.right-column[
+
 Il est temps de permettre aux personnes présentes de donner leur avis sur les conférences. Elles feront part de leurs commentaires au moyen d'un formulaire HTML.
 
-Utilisez le Maker Bundle pour générer une classe de formulaire :
+* ⏩ **Utilisez le Maker Bundle pour générer une classe de formulaire :**
 
 ```sh
 symfony console make:form CommentFormType Comment
@@ -2323,18 +2382,22 @@ symfony console make:form CommentFormType Comment
 
 La classe `App\Form\CommentFormType` à été généré et définit un formulaire pour l'entité `App\Entity\Comment`
 
-Un form type décrit les champs de formulaire liés à un modèle. Il effectue la conversion des données entre les données soumises et les propriétés de la classe de modèle. Par défaut, Symfony utilise les métadonnées de l'entité `Comment`, comme les métadonnées Doctrine, pour deviner la configuration de chaque champ. Par exemple, le champ `text` se présente sous la forme d'un `textarea` parce qu'il utilise une colonne plus grande dans la base de données.
-]
+**Un form type** décrit les champs de formulaire liés à un modèle. Il effectue la conversion des données entre les données soumises et les propriétés de la classe de modèle. 
+
+Par défaut, Symfony utilise les métadonnées de l'entité `Comment`, comme les métadonnées Doctrine, pour deviner la configuration de chaque champ, avec `data_class` défini sur `Comment::class` dans la méthode `configureOptions()`. Mais nous pourrions utiliser un modèle différent si nous le souhaitions.
+
+
+**Par exemple**, le champ `text` se présente sous la forme d'un `textarea` parce qu'il utilise une colonne plus grande dans la base de données. En effet on lui a défini le type de column doctrine `Types::TEXT` dans l'entité `Comment`.
+
+
 ---
 
-.left-column[
-  <br/>
-
-#### Générer un form type
-#### Afficher un formulaire
+class: middle
+.center[
+### **Transmettre le formulaire au template**
 ]
-.right-column[
-  Pour afficher le formulaire, créez-le dans le contrôleur et transmettez-le au template :
+
+* ⏩ **Pour afficher le formulaire, créez-le dans le contrôleur et transmettez-le au template :**
 
 ```diff
 +use App\Entity\Comment;
@@ -2352,27 +2415,28 @@ Un form type décrit les champs de formulaire liés à un modèle. Il effectue l
 
 @@ ...
 
-             'previous' => $offset - CommentRepository::PAGINATOR_PER_PAGE,
              'next' => min(count($paginator), $offset + CommentRepository::PAGINATOR_PER_PAGE),
 +            'comment_form' => $form,
 ```
 
-Vous ne devriez jamais instancier directement le form type. Utilisez plutôt la méthode createForm(). Cette méthode fait partie d'AbstractController et facilite la création de formulaires.
+Vous ne devriez jamais instancier directement le form type.
 
-Lorsque vous transmettez un formulaire à un template, utilisez createView() pour convertir les données dans un format adapté aux templates.
+* 👉 Utilisez plutôt la méthode `createForm()`. Cette méthode fait partie d'`AbstractController` et facilite la création de formulaires.
+
+.info[
+🪄 Pour transmettre le formulaire au template, nous l'ajoutons à la liste des variables transmises au template. Il n'est plus nécessaire d'utiliser la méthode `createView()` pour obtenir l'objet form adapté au template.
 ]
+
 ---
 
-.left-column[
-  <br/>
-
-#### Générer un form type
-#### Afficher un formulaire
+class: middle
+.center[
+### **Afficher un formulaire**
 ]
-.right-column[
-L'affichage du formulaire dans le template peut se faire via la fonction Twig form :
+
+* ⏩ **L'affichage du formulaire dans le template peut se faire via la fonction Twig `form` dans le template `templates/conference/show.html.twig`:** 
+
 ```diff
-# templates/conference/show.html.twig
      {% endif %}
 +
 +    <h2>Add your own feedback</h2>
@@ -2380,24 +2444,28 @@ L'affichage du formulaire dans le template peut se faire via la fonction Twig fo
 +    {{ form(comment_form) }}
  {% endblock %}
 ```
-
+.pull-left[
 Lorsque vous rafraîchissez la page d'une conférence dans le navigateur, notez que chaque champ de formulaire affiche la balise HTML appropriée (le type de données est défini à partir du modèle) :
 
-.center[<img src="img/form.png" width="300px">]
-
 La fonction `form()` génère le formulaire HTML en fonction de toutes les informations définies dans le form type. Elle ajoute également `enctype=multipart/form-data` à la balise `<form> `comme l'exige le champ d'upload de fichier. De plus, elle se charge d'afficher les messages d'erreur lorsque la soumission comporte des erreurs. Tout peut être personnalisé en remplaçant les templates par défaut, mais nous n'en aurons pas besoin pour ce projet.
+
 ]
+.pull-right[
+.center[
+  <img src="img/form.png" width="600px">
+]
+]
+
 ---
 
-.left-column[
-  <br/>
-
-#### Générer un form type
-#### Afficher un formulaire
-#### Personnaliser un form type
+class: middle
+.center[
+### **Personnaliser un form type**
 ]
-.right-column[
+
 Même si les champs de formulaire sont configurés en fonction de leur modèle associé, vous pouvez personnaliser la configuration par défaut directement dans la classe de form type :
+
+* ⏩ **Modifiez la classe `CommentFormType` pour personnaliser certains champs :**
 
 ```diff
  class CommentFormType extends AbstractType
@@ -2425,42 +2493,41 @@ Même si les champs de formulaire sont configurés en fonction de leur modèle a
 +            ->add('submit', SubmitType::class)
          ;
 ```
-Notez que nous avons ajouté un bouton submit (qui nous permet de continuer à utiliser simplement {{ form(comment_form) }} dans le template).
 
+Notez que nous avons ajouté un bouton `submit` (qui nous permet de continuer à utiliser simplement `{{ form(comment_form) }}` dans le template).
 
-]
 ---
 
-.left-column[
-  <br/>
-
-#### Générer un form type
-#### Afficher un formulaire
-#### Personnaliser un form type
+class: middle
+.center[
+### **Gerer les champs non mappés**
 ]
-.right-column[
-Certains champs ne peuvent pas être auto-configurés, comme par exemple photoFilename. L'entité Comment n'a besoin d'enregistrer que le nom du fichier photo, mais le formulaire doit s'occuper de l'upload du fichier lui-même. Pour traiter ce cas, nous avons ajouté un champ appelé photo qui est un champ non mapped : il ne sera associé à aucune propriété de Comment. Nous le gérerons manuellement pour implémenter une logique spécifique (comme l'upload de la photo sur le disque).
 
-Comme exemple de personnalisation, nous avons également modifié le libellé par défaut de certains champs.
+Certains champs ne peuvent pas être auto-configurés, comme par exemple `photoFilename`. 
+* 👉 L'entité `Comment` n'a besoin d'enregistrer que le nom du fichier photo, **mais le formulaire doit s'occuper de l'upload du fichier lui-même**. 
+
+Pour traiter ce cas, nous avons ajouté un champ appelé `photo` qui est un champ **"non mapped"** : il ne sera associé à aucune propriété de `Comment`. Nous le gérerons manuellement pour implémenter une logique spécifique (comme l'upload de la photo sur le disque).
+
+* ⏩ **Rafraîchissez la page d'une conférence dans le navigateur, et vous verrez que le formulaire a été mis à jour :**
 
 .center[<img src="img/form-customized.png" width="400px">]
-]
+
+Comme autre exemple de personnalisation, nous avons également modifié le libellé par défaut de certains champs.
+
+
 ---
 
-.left-column[
-  <br/>
-
-#### Générer un form type
-#### Afficher un formulaire
-#### Personnaliser un form type
-#### Valider des modèles
+class: middle
+.center[
+### **Valider des modèles**
 ]
-.right-column[
-Le formulaire utilise le type de champ email pour l'email du commentaire et définit la plupart des champs en required. Notez qu'il contient également un champ _token caché pour nous protéger des attaques CSRF.
 
-Mais si la soumission du formulaire contourne la validation HTML (en utilisant un client HTTP comme cURL, qui n'applique pas ces règles de validation), des données invalides peuvent atteindre le serveur.
+👮 Pour verifier que les données soumises sont valides, le formulaire utilise le type de champ `email` pour l'email du commentaire et définit la plupart des champs en `required`. Notez qu'il contient également un champ `_token` caché pour nous protéger des attaques `CSRF`.
 
-Nous devons également ajouter certaines contraintes de validation à l'entité Comment :
+🥷 Mais si la soumission du formulaire contourne la validation HTML (en utilisant un client HTTP comme cURL, qui n'applique pas ces règles de validation), des données invalides peuvent atteindre le serveur. 😱
+
+* ⏩ **Pour éviter cela, nous devons ajouter des contraintes de validation à l'entité `Comment` :**
+
 ```diff
  use Doctrine\ORM\Mapping as ORM;
 +use Symfony\Component\Validator\Constraints as Assert;
@@ -2479,22 +2546,21 @@ Nous devons également ajouter certaines contraintes de validation à l'entité 
 +    #[Assert\Email]
      private ?string $email = null;
 ```
-]
+
+Nous utilisons ici les **contraintes de validation de Symfony** pour définir les règles de validation. Par exemple, le champ `author` ne doit pas être vide, le champ `email` doit être une adresse email valide, etc.
+
 ---
 
-.left-column[
-  <br/>
-
-#### Générer un form type
-#### Afficher un formulaire
-#### Personnaliser un form type
-#### Valider des modèles
-#### Gérer un formulaire
+class: middle
+.center[
+### **Gérer la soumission d'un formulaire**
 ]
-.right-column[
-Le code que nous avons écrit jusqu'à présent est suffisant pour afficher le formulaire.
+
+Le code que nous avons écrit jusqu'à présent est suffisant pour afficher le formulaire et ses messages d'erreur.
 
 Nous devrions maintenant nous occuper de la soumission du formulaire et de la persistance de ses informations dans la base de données depuis le contrôleur :
+
+* ⏩ **Modifiez la méthode `show()` du contrôleur pour gérer la soumission du formulaire :**
 
 ```diff
  class ConferenceController extends AbstractController
@@ -2513,40 +2579,60 @@ Nous devrions maintenant nous occuper de la soumission du formulaire et de la pe
 +
 +            return $this->redirectToRoute('conference', ['slug' => $conference->getSlug()]);
 +        }
-
 ```
-Lorsque le formulaire est soumis, l'objet Comment est mis à jour en fonction des données soumises.
 
-La conférence doit être la même que celle de l'URL (nous l'avons supprimée du formulaire).
-
-Si le formulaire n'est pas valide, nous affichons la page, mais le formulaire contiendra maintenant les valeurs soumises et les messages d'erreur afin qu'ils puissent être affichés à l'internaute.
-
-Essayez le formulaire. Il devrait fonctionner correctement et les données devraient être stockées dans la base de données (vérifiez-les dans l'interface d'administration). Il y a cependant un problème : les photos. Elles ne fonctionnent pas puisque nous ne les avons pas encore traitées dans le contrôleur.
-]
 ---
 
-.left-column[
-  <br/>
-
-#### Générer un form type
-#### Afficher un formulaire
-#### Personnaliser un form type
-#### Valider des modèles
-#### Gérer un formulaire
-#### Uploader des fichiers
+class: middle
+.center[
+### **Essayer le formulaire**
 ]
-.right-column[
-Les photos uploadées doivent être stockées sur le disque local, à un endroit accessible par un navigateur afin que nous puissions les afficher sur la page d'une conférence. Nous les stockerons dans le dossier public/uploads/photos :
 
-Comme nous ne souhaitons pas mettre le répertoire en dur dans le code, nous devons trouver un moyen de le stocker de façon globale. Le conteneur Symfony est capable de stocker des paramètres (parameters) en plus des services pour permettre de les configurer :
+Faisons un récapitulatif de ce que nous avons fait jusqu'à présent :
+
+* Lorsque le formulaire est soumis, l'objet `Comment` est mis à jour en fonction des données soumises. Puis redirection vers la conférence qui doit être la même que celle de l'URL (nous l'avons supprimée du formulaire).
+
+* Si le formulaire n'est pas valide, nous affichons la page, mais le formulaire contiendra maintenant les valeurs soumises et les messages d'erreur afin qu'ils puissent être affichés à l'internaute.
+
+* ⏩ **Essayez le formulaire.**
+  
+  * ✅ Il devrait fonctionner correctement et les données devraient être stockées dans la base de données (vérifiez-les dans l'interface d'administration). 
+  
+  * 🚨 Il y a cependant un problème : les photos. Elles ne fonctionnent pas puisque nous ne les avons pas encore traitées dans le contrôleur. Choses que nous allons faire dans la prochaine étape.
+
+---
+
+class: middle
+.center[
+### **Définition du chemin de stockage des photos**
+]
+
+Les photos uploadées doivent **être stockées sur le disque local**, à un endroit accessible par un navigateur afin que nous puissions les afficher sur la page d'une conférence. 
+
+> 👉 Nous les stockerons dans le dossier `public/uploads/photos` :
+
+Comme nous ne souhaitons pas mettre le répertoire en dur dans le code, nous devons trouver un moyen de le stocker de façon globale. **Le conteneur Symfony** est capable de stocker des paramètres (`parameters`) en plus des services pour permettre de les configurer :
+
+* ⏩ **Ajoutez un paramètre `photo_dir` dans le fichier `config/services.yaml` :**
+
 ```diff
 # config/services.yaml
  parameters:
 +    photo_dir: "%kernel.project_dir%/public/uploads/photos"
 ```
+
+---
+
+class: middle
+.center[
+  ### **Utiliser le chemin dans le contrôleur**
+]
+
 Nous avons déjà vu comment les services sont automatiquement injectés dans les arguments des constructeurs. Pour les paramètres du conteneur, nous pouvons les injecter explicitement en utilisant l'attribut `Autowire`.
 
-Maintenant, nous avons tout ce qu'il nous faut pour implémenter la logique nécessaire au stockage du fichier soumis sous sa destination finale :
+Maintenant, nous avons tout ce qu'il nous faut pour implémenter la logique nécessaire au stockage du fichier soumis sous sa destination finale.
+
+* ⏩ **Modifiez la signature de méthode `show()` du contrôleur pour récupérer le paramètre `photo_dir` :**
 
 ```diff
 # src/Controller/ConferenceController.php
@@ -2560,20 +2646,15 @@ Maintenant, nous avons tout ce qu'il nous faut pour implémenter la logique néc
 +    ): Response {
 ```
 
-]
 ---
 
-.left-column[
-  <br/>
-
-#### Générer un form type
-#### Afficher un formulaire
-#### Personnaliser un form type
-#### Valider des modèles
-#### Gérer un formulaire
-#### Uploader des fichiers
+class: middle
+.center[
+### **Gérer l'uploader des fichiers**
 ]
-.right-column[
+
+* ⏩ **Modifiez la méthode `show()` du contrôleur pour gérer l'upload de la photo :**
+
 ```diff
 # src/Controller/ConferenceController.php
 
@@ -2594,66 +2675,55 @@ Maintenant, nous avons tout ce qu'il nous faut pour implémenter la logique néc
              $this->entityManager->flush();
 ```
 
-Pour gérer les uploads de photos, nous créons un nom aléatoire pour le fichier. Ensuite, nous déplaçons le fichier uploadé à son emplacement final (le répertoire photo). Enfin, nous stockons le nom du fichier dans l'objet Comment.
+* Pour gérer les uploads de photos, nous créons un nom aléatoire pour le fichier.
+* Ensuite, nous déplaçons le fichier uploadé à son emplacement final (le répertoire photo).
+* Enfin, nous stockons le nom du fichier dans l'objet Comment.
 
-Essayez d'uploader un fichier PDF au lieu d'une photo. Vous devriez voir les messages d'erreur en action. Le design est encore assez laid, mais ne vous inquiétez pas, tout deviendra beau en quelques étapes lorsque nous travaillerons dessus. Pour les formulaires, nous allons changer une ligne de configuration pour styliser tous leurs éléments.
-]
+Notre code est maintenant capable de gérer les uploads de photos.
+
+* ⏩ **Essayez d'uploader un fichier PDF au lieu d'une photo.**
+> ❌ Vous devriez voir les messages d'erreur en action. Déboguons-les dans la prochaine étape.
+
 ---
 
-.left-column[
-  <br/>
-
-#### Générer un form type
-#### Afficher un formulaire
-#### Personnaliser un form type
-#### Valider des modèles
-#### Gérer un formulaire
-#### Uploader des fichiers
-#### Déboguer des formulaires
+class: middle
+.center[
+### **Déboguer des formulaires**
 ]
-.right-column[
-Lorsqu'un formulaire est soumis et que quelque chose ne fonctionne pas correctement, utilisez le panneau "Form" du Symfony Profiler. Il vous donne des informations sur le formulaire, toutes ses options, les données soumises et comment elles sont converties en interne. Si le formulaire contient des erreurs, elles seront également répertoriées.
 
+Lorsqu'un formulaire est soumis et que quelque chose ne fonctionne pas correctement, utilisez le panneau **"Form" du Symfony Profiler**. Il vous donne des informations sur le formulaire, toutes ses options, les données soumises et comment elles sont converties en interne. Si le formulaire contient des erreurs, elles seront également répertoriées.
+
+.pull-left[
 Le workflow classique d'un formulaire est le suivant :
 
 * Le formulaire est affiché sur une page ;
-* L'internaute soumet le formulaire via une requête POST ;
+* L'internaute soumet le formulaire via une requête `POST` ;
 * Le serveur redirige l'internaute, soit vers une autre page, soit vers la même page.
 
-.pull-left[
-Mais comment pouvez-vous accéder au profileur pour une requête de soumission réussie ? Étant donné que la page est immédiatement redirigée, nous ne voyons jamais la barre d'outils de débogage Web pour la requête POST. 
+Mais comment pouvez-vous accéder au profileur pour une requête de soumission réussie ? Étant donné que la page est immédiatement redirigée, nous ne voyons jamais la barre d'outils de débogage Web pour la requête `POST`. 
 
-Pas de problème : sur la page redirigée, survolez la partie verte "200" à gauche. Vous devriez voir la redirection "302" avec un lien vers le profileur (entre parenthèses).
+Pas de problème : sur la page redirigée, survolez la partie verte `"200"` à gauche. Vous devriez voir la redirection `"302"` avec un lien vers le profileur (entre parenthèses).
 ]
 .pull-right[
   .center[
     <img src="img/form-profiler.png" height="370px" />
   ]
 ]
-]
+
 ---
 
-.left-column[
-  <br/>
-
-#### Générer un form type
-#### Afficher un formulaire
-#### Personnaliser un form type
-#### Valider des modèles
-#### Gérer un formulaire
-#### Uploader des fichiers
-#### Déboguer des formulaires
-#### Afficher les photos uploadées dans l'interface d'admin
+class: middle
+.center[
+### **Afficher les photos uploadées dans l'interface d'admin**
 ]
-.right-column[
-#### Afficher les photos uploadées dans l'interface d'admin
 
 L'interface d'administration affiche actuellement le nom du fichier photo, mais nous voulons voir la vraie photo :
+
+* ⏩ **Modifiez la classe `CommentCrudController` pour afficher la photo :**
+
 ```diff
-# src/Controller/Admin/CommentCrudController.php
- use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
-+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
  use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
++use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 
  @@ ...
 
@@ -2661,71 +2731,89 @@ L'interface d'administration affiche actuellement le nom du fichier photo, mais 
 +        yield ImageField::new('photoFilename')
 +            ->setBasePath('/uploads/photos')
 +            ->setLabel('Photo')
-             ->onlyOnIndex()
-         ;
+             ->onlyOnIndex();
 ```
 #### Exclure les photos uploadées de Git
-Ne commitez pas encore ! Nous ne voulons pas stocker les images uploadées dans le dépôt Git. Ajoutez le dossier /public/uploads au fichier .gitignore :
-```diff
-# .gitignore
+.red[**Ne commitez pas encore !**] Nous ne voulons pas stocker les images uploadées dans le dépôt Git. Ajoutez le dossier `/public/uploads` au fichier `.gitignore` :
 
+* ⏩ **Ajoutez `/public/uploads` au fichier `.gitignore` :**
+
+```diff
 +/public/uploads
 
  ###> symfony/framework-bundle ###
 ```
 
-> 📬 Commitez notre travail via `git commit -am "Formulaire"`
-]
+* ⏩ **📬 Commitez notre travail via `git commit -am "Formulaire"`**
 
 ---
 class: center, middle, inverse
-# 6. Sécurité
+# 7. Sécurité
+
+.center[
+  <img src="https://images.unsplash.com/photo-1584433144760-1946bb52e9a4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" />
+]
 ---
 
-.left-column[
-### A. Sécuriser l'interface d'admin
-#### Définir une entité User
+class: middle
+.center[
+### **Sécuriser l'interface d'admin**
 ]
-.right-column[
-L'interface d'administration ne doit être accessible que par des personnes autorisées. La sécurisation de cette zone du site peut se faire à l'aide du composant Symfony Security.
 
-#### Définir une entité User
+👮 L'interface d'administration ne doit être accessible que par des personnes autorisées. La sécurisation de cette zone du site peut se faire à l'aide du composant **Symfony Security**.
+
 Même si les internautes ne pourront pas créer leur propre compte sur le site, nous allons créer un système d'authentification entièrement fonctionnel pour l'admin. Nous n'aurons donc qu'un seul `User`, l'admin du site.
 
-La première étape consiste à définir une entité `User`. Pour éviter toute confusion, nommons-la plutôt Admin.
+> 👉 La première étape consiste à définir une entité `User`. Pour éviter toute confusion, nommons-la plutôt `Admin`.
 
-Pour utiliser l'entité *Admin* dans le système d'authentification de Symfony, celle-ci doit respecter certaines exigences spécifiques. Par exemple, elle a besoin d'une propriété password.
+Pour utiliser l'entité `Admin` dans le système d'authentification de Symfony, celle-ci doit respecter certaines exigences spécifiques. Par exemple, elle a besoin d'une propriété `password`.
 
-Utilisez la commande dédiée make:user pour créer l'entité Admin au lieu de la commande traditionnelle `make:entity` :
+.center[<img src="https://em-content.zobj.net/source/telegram/358/locked-with-key_1f510.webp" width="200px">]
 
-```sh
-symfony console make:user Admin
-```
-
-Répondez aux questions qui vous sont posées : nous voulons utiliser Doctrine pour stocker nos users (yes), utiliser username pour le nom d'affichage unique des admins et chaque admin aura un mot de passe (yes).
-
-La classe générée contient des méthodes comme `getRoles()`, `eraseCredentials()` et d'autres qui sont nécessaires au système d'authentification de Symfony.
-
-Si vous voulez ajouter d'autres propriétés à l'entité Admin, exécutez `make:entity`.
+---
+class: middle
+.center[
+### **Définir une entité User**
 ]
+
+* ⏩ **Utilisez la commande dédiée `make:user` pour créer l'entité `Admin` au lieu de la commande traditionnelle `make:entity`**
+
+  ```sh
+  symfony console make:user Admin
+  ```
+
+* ⏩ **Répondez aux questions qui vous sont posées :**
+  * Nous voulons utiliser Doctrine pour stocker nos users (`yes`)
+  * Utiliser `username` pour le nom d'affichage unique des admins
+  * Et chaque admin aura un mot de passe (`yes`).
+
+La commande a généré une classe `App\Entity\Admin` avec les propriétés `username` et `password`. Elle contient des aussi des méthodes comme `getRoles()`, `eraseCredentials()` et d'autres qui sont nécessaires au système d'authentification de Symfony.
+
+.info[
+  💡 Si vous voulez ajouter d'autres propriétés à l'entité Admin, exécutez `make:entity`.
+]
+
+* ⏩ **Implementer l'interface `\Stringable` dans l'entité `Admin` et ajouter notre nouvelle entité à Easyadmin :**
+
+  ```diff
+  - class Admin implements UserInterface, PasswordAuthenticatedUserInterface
+  + class Admin implements UserInterface, PasswordAuthenticatedUserInterface, \Stringable
+  {
+    @@...
+  +    public function __toString(): string
+  +    {
+  +        return $this->username;
+  +    }
+  ```
+
 ---
 
-.left-column[
-### A. Sécuriser l'interface d'admin
-#### Définir une entité User
+class: middle
+.center[
+### **Configuration de la sécurité**
 ]
-.right-column[
-Ajoutons une méthode `__toString()` et implementons `\Stringable` comme EasyAdmin les aime :
-```diff
-# src/Entity/Admin.php
 
-+    public function __toString(): string
-+    {
-+        return $this->username;
-+    }
-```
-
-En plus de générer l'entité Admin, la commande a également mis à jour la configuration de sécurité pour connecter l'entité au système d'authentification :
+En plus de générer l'entité `Admin`, la commande `make:user` a également mis à jour la configuration de sécurité pour connecter l'entité au système d'authentification :
 ```diff
 # config/packages/security.yaml
 
@@ -2741,27 +2829,35 @@ En plus de générer l'entité Admin, la commande a également mis à jour la co
 -            provider: users_in_memory
 +            provider: app_user_provider
 ```
-Nous laissons Symfony choisir le meilleur algorithme possible pour hacher les mots de passe (il évoluera avec le temps).
+🤖 Nous laissons Symfony choisir le meilleur algorithme possible pour hacher les mots de passe (il évoluera avec le temps).
 
-Il est temps de générer une migration et de migrer la base de données :
-]
+```yaml
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+```
+
+* ⏩ **Il est temps de générer une migration et de migrer la base de données :**
+
 ---
-
-.left-column[
-### A. Sécuriser l'interface d'admin
-#### Définir une entité User
-#### Générer un mot de passe pour l'admin
+class: middle
+.center[
+### **Générer un mot de passe pour l'admin**
 ]
-.right-column[
-Nous ne développerons pas de système dédié pour créer des comptes d'administration. Encore une fois, nous n'aurons qu'un seul admin. Le login sera admin et nous devons générer le hash du mot de passe.
 
-Sélectionnez `App\Entity\Admin` et choisissez ce que vous voulez comme mot de passe et exécutez la commande suivante pour générer le hash du mot de passe :
+Nous ne développerons pas de système dédié pour créer des comptes d'administration. Encore une fois, nous **n'aurons qu'un seul admin**. Le login sera admin et nous devons générer le hash du mot de passe.
+
+* ⏩ **Lancer la commande `security:hash-password` pour générer le hash du mot de passe**
 
 ```sh
 symfony console security:hash-password
 ```
+* Sélectionnez `App\Entity\Admin`
+* Choisissez ce que vous voulez comme mot de passe
 
-Insérez l'admin grâce à une requête SQL :
+> ❗Notez le hash généré, nous en aurons besoin pour insérer l'admin dans la base de données.
+
+
+* ⏩ **Insérez l'admin grâce à une requête SQL :**
 ```sh
 symfony run psql -c "INSERT INTO admin (id, username, roles, password) \
   VALUES (nextval('admin_id_seq'), 'admin', '[\"ROLE_ADMIN\"]', \
@@ -2769,29 +2865,33 @@ symfony run psql -c "INSERT INTO admin (id, username, roles, password) \
 ```
 
 > ❗Notez l'échappement du caractère `$` dans le mot de passe ; échappez tous les caractères qui en ont besoin !
-]
+
 ---
 
-.left-column[
-### A. Sécuriser l'interface d'admin
-#### Définir une entité User
-#### Générer un mot de passe pour l'admin
-#### Configurer le système d'authentification
+class: middle
+.center[
+### **Configurer le système d'authentification**
 ]
-.right-column[
+
 Maintenant que nous avons un admin, nous pouvons sécuriser l'interface d'administration. Symfony accepte plusieurs stratégies d'authentification. Utilisons un classique système d'authentification par formulaire.
 
-Exécutez la commande make:auth pour mettre à jour la configuration de sécurité, générer un template pour la connexion et créer une classe d'authentification (authenticator) :
+* ⏩ **Exécutez la commande `make:auth`**
+  * pour mettre à jour la configuration de sécurité
+  * générer un template pour la connexion 
+  * créer une classe d'authentification (`Authenticator`) :
+
 ```sh
 symfony console make:auth
 ```
 
-Sélectionnez 1 pour générer une classe d'authentification pour le formulaire de connexion, nommez la classe d'authentification `AppAuthenticator`, le contrôleur `SecurityController` et créez une URL `/logout` (yes).
+**La commande vous pose quelques questions :**
+* Sélectionnez 1 pour générer une classe d'authentification pour le formulaire de connexion
+* Nommez la classe d'authentification `AppAuthenticator`
+* Le contrôleur `SecurityController` 
+* Créez une URL `/logout` (yes).
 
-La commande a mis à jour la configuration de sécurité pour lier les classes générées :
+La commande a mis à jour la configuration de sécurité `config/packages/security.yaml` pour lier les classes générées :
 ```diff
-# config/packages/security.yaml
-
          main:
              lazy: true
              provider: app_user_provider
@@ -2802,21 +2902,15 @@ La commande a mis à jour la configuration de sécurité pour lier les classes g
 +                # target: app_any_route
 ```
 
-
-]
-
 ---
 
-.left-column[
-### A. Sécuriser l'interface d'admin
-#### Définir une entité User
-#### Générer un mot de passe pour l'admin
-#### Configurer le système d'authentification
-#### Ajouter les règles de contrôle d'accès
+class: middle
+.center[
+### **Ajouter les règles de contrôle d'accès**
 ]
-.right-column[
-  
-Comme l'indique la sortie de la commande, nous devons personnaliser la route dans la méthode `onAuthenticationSuccess()` pour rediriger l'admin lorsqu'il a réussi à se connecter :
+
+Comme l'indique la sortie de la commande `make:auth`.
+* ⏩ **Nous devons personnaliser la route dans la méthode `onAuthenticationSuccess()` pour rediriger l'admin lorsqu'il a réussi à se connecter :**
 
 ```diff
 # src/Security/AppAuthenticator.php
@@ -2826,8 +2920,10 @@ Comme l'indique la sortie de la commande, nous devons personnaliser la route dan
 -        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
 +        return new RedirectResponse($this->urlGenerator->generate('admin'));
 ```
-#### Ajouter les règles de contrôle d'accès
-Un système de sécurité se compose de deux parties : l'authentification et l'autorisation. Lors de la création de l'admin, nous lui avons donné le rôle `ROLE_ADMIN`. Limitons la section `/admin` aux seules personnes ayant ce rôle en ajoutant une règle à `access_control` :
+
+Un système de sécurité se compose de deux parties : l'authentification et l'autorisation. Lors de la création de l'admin, nous lui avons donné le rôle `ROLE_ADMIN`. 
+
+* ⏩ **Limitons la section `/admin` aux seules personnes ayant ce rôle en ajoutant une règle à `access_control` :**
 
 ```diff
 # config/packages/security.yaml
@@ -2838,108 +2934,189 @@ Un système de sécurité se compose de deux parties : l'authentification et l'a
 ```
 
 Les règles access_control limitent l'accès par des expressions régulières. Lorsqu'une personne connectée tente d'accéder à une URL qui commence par `/admin`, le système de sécurité vérifie qu'elle a bien le rôle `ROLE_ADMIN`.
-]
 
 ---
 
-.left-column[
-### A. Sécuriser l'interface d'admin
-#### Définir une entité User
-#### Générer un mot de passe pour l'admin
-#### Configurer le système d'authentification
-#### Ajouter les règles de contrôle d'accès
-#### S'authentifier avec le formulaire de connexion
+class: middle
+.center[
+### **S'authentifier avec le formulaire de connexion**
 ]
-.right-column[
+
+.pull-left[
 Si vous essayez d'accéder à l'interface d'administration, vous devriez maintenant être redirigé vers la page de connexion et être invité à entrer un identifiant et un mot de passe :
 
-.center[<img src="img/easy-admin-login.png" width="300px">]
+* ⏩ **Connectez-vous en utilisant `admin` et le mot de passe que vous avez choisi précédemment.**
+  
+  Si vous avez copié exactement ma requête SQL, le mot de passe est `admin`.
 
-Connectez-vous en utilisant `admin` et le mot de passe que vous avez choisi précédemment. Si vous avez copié exactement ma requête SQL, le mot de passe est `admin`.
+.info[
+  💡Notez qu'EasyAdmin s'intègre automatiquement au système d'authentification de Symfony :
+]
 
-Notez qu'EasyAdmin s'intègre automatiquement au système d'authentification de Symfony :
+> 🗒 Si vous voulez créer un système complet d'authentification par formulaire, jetez un coup d’œil à la commande `make:registration-form`.
+]
+.pull-right[
+  .center[<img src="img/easy-admin-login.png" width="450px">]
 
-.center[<img src="img/easy-admin-secured.png" width="300px">]
-
-> 🗒 Si vous voulez créer un système complet d'authentification par formulaire, jetez un coup d’œil à la commande make:registration-form.
+  .center[<img src="img/easy-admin-secured.png" width="450px">]
 ]
 
 ---
 
-.left-column[
-### A. Sécuriser l'interface d'admin
-### B. Empêcher le spam avec une API
+class: middle, center, inverse
+
+# 8. Symfony HttpClient
+
+---
+
+class: middle
+.center[
+### **Empêcher le spam avec une API**
 ]
-.right-column[
+
 N'importe qui peut soumettre un commentaire, même des robots ou des spammeurs. Nous pourrions ajouter un "captcha" au formulaire pour nous protéger des robots, ou nous pouvons utiliser des API tierces.
 
 J'ai décidé d'utiliser le service gratuit [Akismet](https://akismet.com/) pour montrer comment appeler une API et comment faire un appel "vers l'extérieur".
 
-#### S'inscrire sur Akismet
-Créez un compte gratuit sur [akismet.com](https://akismet.com/) et récupérez la clé de l'API Akismet.
+* ⏩ **Créez un compte gratuit sur [akismet.com](https://akismet.com/) et récupérez la clé de l'API Akismet.**
 
-#### Ajouter une dépendance au composant Symfony HTTPClient
-Au lieu d'utiliser une bibliothèque qui abstrait l'API d'Akismet, nous ferons directement tous les appels API. Faire nous-mêmes les appels HTTP est plus efficace (et nous permet de bénéficier de tous les outils de débogage de Symfony comme l'intégration avec le Symfony Profiler).
+Au lieu d'utiliser une bibliothèque qui abstrait l'API d'Akismet, nous ferons directement tous les appels API avec Symfony/HttpClient. Faire nous-mêmes les appels HTTP est plus efficace (et nous permet de bénéficier de tous les outils de débogage de Symfony comme l'intégration avec le Symfony Profiler).
 
-#### Concevoir une classe de vérification de spam
+Nous allons concevoir une classe de vérification de spam.
 
-Créez une nouvelle classe dans src/ nommée SpamChecker pour contenir la logique d'appel à l'API d'Akismet et l'interprétation de ses réponses :
-]
+* ⏩ **Créez une nouvelle classe dans `src/` nommée `SpamChecker` pour contenir la logique d'appel à l'API d'Akismet et l'interprétation de ses réponses**
+
+* ⏩ **Définissez la propriété `$endpoint` pour stocker l'URL de l'API Akismet**
+
+* ⏩ **Définissez le constructeur pour injecter l'URL de l'API Akismet et le client HTTP**
+
+```php
+public function __construct(
+  private readonly HttpClientInterface $client,
+  #[Autowire('%env(string:AKISMET_KEY)%')]
+  string $akismetKey
+) {
+  $this->endpoint = sprintf('https://%s.rest.akismet.com/1.1/comment-check', $akismetKey);
+}
+```
+
+
 
 ---
 
-.left-column[
-### A. Sécuriser l'interface d'admin
-### B. Empêcher le spam avec une API
+class: middle
+.center[
+### **Empêcher le spam avec une API**
 ]
-.right-column[
-```php
-namespace App;
 
-use App\Entity\Comment;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
+* ⏩ **Ajoutez une méthode `getSpamScore()` pour vérifier si un commentaire est du spam :**
 
-class SpamChecker
-{
-    private $endpoint;
+  ```php
+      /**
+       * @return int Spam score: 0: not spam, 1: maybe spam, 2: blatant spam
+       */
+      public function getSpamScore(Comment $comment, array $context): int
+      {
+          $response = $this->client->request('POST', $this->endpoint, [
+              'body' => array_merge($context, [
+                  'blog' => 'https://guestbook.example.com',
+                  'comment_type' => 'comment',
+                  'comment_author' => $comment->getAuthor(),
+                  'comment_author_email' => $comment->getEmail(),
+                  'comment_content' => $comment->getText(),
+                  'comment_date_gmt' => $comment->getCreatedAt()->format('c'),
+                  'blog_lang' => 'en',
+                  'blog_charset' => 'UTF-8',
+                  'is_test' => true,
+              ]),
+          ]);
 
-    public function __construct(private HttpClientInterface $client, string $akismetKey,) 
-    {
-        $this->endpoint = sprintf('https://%s.rest.akismet.com/1.1/comment-check', $akismetKey);
-    }
+          $headers = $response->getHeaders();
+          if ('discard' === ($headers['x-akismet-pro-tip'][0] ?? '')) {
+              return 2;
+          }
 
-    /**
-     * @return int Spam score: 0: not spam, 1: maybe spam, 2: blatant spam
-     */
-    public function getSpamScore(Comment $comment, array $context): int
-    {
-        $response = $this->client->request('POST', $this->endpoint, [
-            'body' => array_merge($context, [
-                'blog' => 'https://guestbook.example.com',
-                'comment_type' => 'comment',
-                'comment_author' => $comment->getAuthor(),
-                'comment_author_email' => $comment->getEmail(),
-                'comment_content' => $comment->getText(),
-                'comment_date_gmt' => $comment->getCreatedAt()->format('c'),
-                'blog_lang' => 'en',
-                'blog_charset' => 'UTF-8',
-                'is_test' => true,
-            ]),
-        ]);
+          $content = $response->getContent();
+          if (isset($headers['x-akismet-debug-help'][0])) {
+              throw new \RuntimeException(sprintf('Unable to check for spam: %s (%s).', $content, $headers['x-akismet-debug-help'][0]));
+          }
 
-        $headers = $response->getHeaders();
-        if ('discard' === ($headers['x-akismet-pro-tip'][0] ?? '')) {
-            return 2;
-        }
+          return 'true' === $content ? 1 : 0;
+      }
+  ```
 
-        $content = $response->getContent();
-        if (isset($headers['x-akismet-debug-help'][0])) {
-            throw new \RuntimeException(sprintf('Unable to check for spam: %s (%s).', $content, $headers['x-akismet-debug-help'][0]));
-        }
+La méthode `getSpamScore()` retourne 3 valeurs en fonction de la réponse de l'appel à l'API :
+  * `2` : si le commentaire est un "spam flagrant" ;
+  * `1` : si le commentaire pourrait être du spam ;
+  * `0` : si le commentaire n'est pas du spam (ham).
 
-        return 'true' === $content ? 1 : 0;
-    }
-}
+
+---
+
+class: middle
+.center[
+### **Identifier le spam dans les commentaires**
+]
+
+Une façon simple de vérifier la présence de spam lorsqu'un nouveau commentaire est soumis est d'appeler le vérificateur de spam avant de stocker les données dans la base de données :
+
+* ⏩ **Modifiez la méthode `show()` du contrôleur pour appeler le vérificateur de spam :**
+
+```diff
+         Request $request,
+         Conference $conference,
+         CommentRepository $commentRepository,
++        SpamChecker $spamChecker,
+         #[Autowire('%photo_dir%')] string $photoDir,
+     ): Response {
+         $comment = new Comment();
+@@ ...
+             $this->entityManager->persist($comment);
++
++            $context = [
++                'user_ip' => $request->getClientIp(),
++                'user_agent' => $request->headers->get('user-agent'),
++                'referrer' => $request->headers->get('referer'),
++                'permalink' => $request->getUri(),
++            ];
++            if (2 === $spamChecker->getSpamScore($comment, $context)) {
++                throw new \RuntimeException('Blatant spam, go away!');
++            }
++
+             $this->entityManager->flush();
 ```
+* ⏩ **Essayez de soumettre un commentaire avec le mot "spam" dans le texte.**
+
+  * ✅ Le commentaire est stocké dans la base de données.
+  * 🚨 Mais il n'est pas affiché sur la page de la conférence. Nous devons mettre à jour le contrôleur pour filtrer les commentaires marqués comme spam.
+
+---
+
+class: middle, center, inverse
+
+# 9. Les tests
+
+---
+
+class: middle
+.center[
+  ### **Écrire des tests unitaires**
 ]
 
+Comme nous commençons à ajouter de plus en plus de fonctionnalités dans l'application, c'est probablement le bon moment pour parler des tests.
+
+Symfony s'appuie sur PHPUnit pour les tests unitaires. 
+* ⏩ **Installons-le :**
+  
+  ```sh
+  symfony composer req phpunit --dev
+  ```
+
+SpamChecker est la première classe pour laquelle nous allons écrire des tests. 
+* ⏩ **Générez un test unitaire :**
+    
+    ```sh
+    symfony console make:test TestCase SpamCheckerTest
+    ```
+
+Tester le `SpamChecker` est un défi car nous ne voulons certainement pas utiliser l'API Akismet. Nous allons mocker l'API.
