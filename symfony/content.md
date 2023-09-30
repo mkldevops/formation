@@ -3484,10 +3484,19 @@ class: middle
   ### **Recharger les données de test**
 ]
 
-Si vous effectuez les tests une deuxième fois, ils devraient échouer. Comme il y a maintenant plus de commentaires dans la base de données, l'assertion qui vérifie le nombre de commentaires est erronée. Nous devons réinitialiser l'état de la base de données entre chaque exécution, en rechargeant les données de test avant chacune d'elles :
+* ⏩ **Si vous effectuez les tests une deuxième fois, ils devraient échouer.**
+
+.center[
+<img src="https://em-content.zobj.net/source/telegram/358/firecracker_1f9e8.webp" width="40px" />
+]
+
+🤔 Comme il y a maintenant plus de commentaires dans la base de données, l'assertion qui vérifie le nombre de commentaires est erronée.
+
+* ⏩ **Nous devons réinitialiser l'état de la base de données entre chaque exécution, en rechargeant les données de test avant chacune d'elles :**
 
 ```
 symfony console doctrine:fixtures:load --env=test
+
 symfony php bin/phpunit tests/Controller/ConferenceControllerTest.php
 ```
 
@@ -3498,29 +3507,33 @@ class: middle
   ### **Automatiser votre workflow avec un Makefile**
 ]
 
-Il est assez pénible d'avoir à se souvenir d'une séquence de commandes pour exécuter les tests. Cela devrait au moins être documenté, même si cette documentation ne devrait être consultée qu'en dernier recours. Et si on automatisait plutôt les opérations récurrentes ? Cela servirait aussi de documentation rapidement accessible aux autres, et rendrait le développement plus facile et plus productif.
+<img src="https://em-content.zobj.net/source/telegram/358/pouting-face_1f621.webp" width="24px" /> Il est assez pénible d'avoir à se souvenir d'une séquence de commandes pour exécuter les tests. Cela devrait au moins être documenté, même si cette documentation ne devrait être consultée qu'en dernier recours. 
 
-L'utilisation d'un Makefile est une façon d'automatiser les commandes :
-```sh
-# Makefile
-SHELL := /bin/bash
+👉 Et si on automatisait plutôt les opérations récurrentes ? Cela servirait aussi de documentation rapidement accessible aux autres, et rendrait le développement plus facile et plus productif.
 
-tests:
-	symfony console doctrine:database:drop --force --env=test || true
-	symfony console doctrine:database:create --env=test
-	symfony console doctrine:migrations:migrate -n --env=test
-	symfony console doctrine:fixtures:load -n --env=test
-	symfony php bin/phpunit $(MAKECMDGOALS)
-.PHONY: tests
-```
+* ⏩ **L'utilisation d'un Makefile est une façon d'automatiser les commandes :**
 
-.info [
-  Dans une règle Makefile, l'indentation doit être une seule tabulation et non des espaces.
+  ```sh
+  # Makefile
+  SHELL := /bin/bash
+
+  tests:
+      symfony console doctrine:database:drop --force --env=test || true
+      symfony console doctrine:database:create --env=test
+      symfony console doctrine:migrations:migrate -n --env=test
+      symfony console doctrine:fixtures:load -n --env=test
+      symfony php bin/phpunit $(MAKECMDGOALS)
+  
+  .PHONY: tests
+  ```
+
+.info[
+  Dans une règle `Makefile`, l'indentation doit être une seule tabulation et non des espaces.
 ]
 
-Notez l'option -n sur la commande Doctrine ; c'est une option standard sur les commandes Symfony qui les rend non interactives.
+Notez l'option `-n` sur la commande Doctrine ; c'est une option standard sur les commandes Symfony qui les rend non interactives.
 
-Chaque fois que vous voulez exécuter les tests, utilisez make tests :
+* ⏩ **Chaque fois que vous voulez exécuter les tests, utilisez make tests :**
 ```sh
 make tests
 ```
@@ -3532,6 +3545,459 @@ class: middle
   ### **Réinitialiser la base de données après chaque test**
 ]
 
-Réinitialiser la base de données après chaque test c'est bien, mais avoir des tests vraiment indépendants c'est encore mieux. Nous ne voulons pas qu'un test s'appuie sur les résultats des précédents. Le changement de l'ordre des tests ne devrait pas changer le résultat. Comme nous allons le découvrir maintenant, ce n'est pas le cas pour le moment.
+Réinitialiser la base de données après chaque test c'est bien, mais avoir des tests vraiment indépendants c'est encore mieux. 🚀🚀
 
-Déplacez le test testConferencePage après testCommentSubmission :
+Nous ne voulons pas qu'un test s'appuie sur les résultats des précédents. Le changement de l'ordre des tests ne devrait pas changer le résultat. Comme nous allons le découvrir maintenant, ce n'est pas le cas pour le moment.
+
+* ⏩ **Déplacez le test `testConferencePage` après `testCommentSubmission` :**
+
+> Les tests échouent maintenant. Le test `testCommentSubmission` ne peut pas trouver la conférence car elle a été supprimée par le test `testConferencePage`.
+
+* ⏩ **Pour résoudre ce problème, nous devons réinitialiser la base de données après chaque test en installant le composant `DoctrineTestBundle` :**
+  
+  ```sh
+  symfony composer req "dama/doctrine-test-bundle:^7" --dev
+  ```
+
+  .info[
+    Vous devrez confirmer l'application de la recette (car il ne s'agit pas d'un bundle "officiellement" supporté) :
+  ]
+
+Et voilà. Toute modification apportée pendant les tests est automatiquement annulée à la fin de chaque test.
+
+* ⏩ **Les tests devraient passer à nouveau :**
+    
+    ```sh
+    make tests
+    ```
+
+---
+
+class: middle
+.center[
+  ### **Choisir le bon type de test**
+]
+
+Nous avons créé trois type de tests jusqu'à maintenant. Bien que nous n'ayons utilisé le bundle maker que pour générer des tests unitaires, nous aurions tout aussi bien pu l'utiliser pour générer les classes des autres tests :
+
+```sh
+symfony console make:test WebTestCase Controller\\ConferenceController
+
+symfony console make:test PantherTestCase Controller\\ConferenceController
+```
+
+Le bundle maker supporte la génération des types de tests suivants en fonction de la manière dont vous voulez tester votre application :
+
+* `TestCase`: Tests PHPUnit basiques ;
+
+* `KernelTestCase` : Tests basiques ayant accès aux services Symfony ;
+
+* `WebTestCase` : Pour exécuter des scénarios à la manière d'un navigateur, mais sans exécution du code JavaScript ;
+
+* `ApiTestCase` : Pour jouer des scénarios orientés API ;
+
+* `PantherTestCase` : Pour jouer des scénarios e2e, en utilisant un vrai navigateur ou client HTTP et un vrai serveur web.
+
+---
+
+class: middle, center, inverse
+
+# 10. Faire de l'asynchrone
+
+---
+
+class: middle
+.center[
+  ### **Marquer les commentaires**
+]
+
+Vérifier la présence de spam pendant le traitement de la soumission du formulaire peut entraîner certains problèmes. Si l'API d'Akismet devient lente, notre site web sera également lent pour les internautes. Mais pire encore, si nous atteignons le délai d'attente maximal ou si l'API d'Akismet n'est pas disponible, nous pourrions perdre des commentaires.
+
+Idéalement, nous devrions stocker les données soumises, sans les publier, et renvoyer une réponse immédiatement. La vérification du spam pourra être faite par la suite.
+
+Nous avons besoin d'introduire un état (`state`) pour les commentaires : `submitted`, `spam` et `published`.
+
+* ⏩ **Ajoutez la propriété state à la classe Comment :**
+  ```sh
+  symfony console make:entity Comment
+  ```
+
+* ⏩ **Nous devrions également nous assurer que, par défaut, le paramètre `state` est initialisé avec la valeur `submitted` :**
+  ```diff
+      private ?string $photoFilename = null;
+
+  -    #[ORM\Column(length: 255)]
+  -    private ?string $state = null;
+  +    #[ORM\Column(length: 255, options: ['default' => 'submitted'])]
+  +    private ?string $state = 'submitted';
+  ```
+
+---
+class: middle
+.center[
+  ### **Migration de la base de données**
+]
+
+* ⏩ **Créez une migration de base de données :**
+  ```sh
+  symfony console make:migration
+  ```
+
+* ⏩ **Modifiez la migration pour mettre à jour tous les commentaires existants comme étant published par défaut :**
+  ```diff
+           $this->addSql('ALTER TABLE comment ADD state VARCHAR(255) DEFAULT \'submitted\' NOT NULL');
+  +        $this->addSql("UPDATE comment SET state='published'");
+    }
+  ```
+
+* ⏩ **Exécutez la migration :**
+  ```sh
+  symfony console doctrine:migrations:migrate
+  ```
+
+---
+class: middle
+.center[
+  ### **Mis à jour de notre code**
+]
+
+* ⏩ **Modifiez la logique d'affichage pour éviter que des commentaires non publiés n'apparaissent sur le site :**
+  ```diff
+  # src/Repository/CommentRepository.php
+
+            $query = $this->createQueryBuilder('c')
+              ->andWhere('c.conference = :conference')
+  +            ->andWhere('c.state = :state')
+              ->setParameter('conference', $conference)
+  +            ->setParameter('state', 'published')
+  ```
+
+* ⏩ **Modifiez la configuration d'EasyAdmin pour voir l'état du commentaire :**
+  ```diff
+  # src/Controller/Admin/CommentCrudController.php
+              ->setLabel('Photo')
+              ->onlyOnIndex()
+          ;
+  +        yield TextField::new('state');
+  ```
+
+* ⏩ **N'oubliez pas de modifier les tests en renseignant le state dans les fixtures :**
+  ```diff
+          $comment1->setText('This was a great conference.');
+  +        $comment1->setState('published');
+          $manager->persist($comment1);
+
+  +        $comment2 = new Comment();
+  +        $comment2->setConference($amsterdam);
+  +        $comment2->setAuthor('Lucas');
+  +        $comment2->setEmail('lucas@example.com');
+  +        $comment2->setText('I think this one is going to be moderated.');
+  +        $manager->persist($comment2);
+```
+
+---
+class: middle
+.center[
+  ### **Mis à jour de notre code**
+]
+
+* ⏩ **Pour les tests du contrôleur `tests/Controller/ConferenceControllerTest.php`, simulez la validation :**
+  ```diff
+  +use App\Repository\CommentRepository;
+  +use Doctrine\ORM\EntityManagerInterface;
+  use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+  class ConferenceControllerTest extends WebTestCase
+  @@ -22,10 +24,16 @@ class ConferenceControllerTest extends WebTestCase
+          $client->submitForm('Submit', [
+              'comment_form[author]' => 'Fabien',
+              'comment_form[text]' => 'Some feedback from an automated functional test',
+  -            'comment_form[email]' => 'me@automat.ed',
+  +            'comment_form[email]' => $email = 'me@automat.ed',
+              'comment_form[photo]' => dirname(__DIR__, 2).'/public/images/under-construction.gif',
+          ]);
+          $this->assertResponseRedirects();
+  +
+  +        // simulate comment validation
+  +        $comment = self::getContainer()->get(CommentRepository::class)->findOneByEmail($email);
+  +        $comment->setState('published');
+  +        self::getContainer()->get(EntityManagerInterface::class)->flush();
+  ```
+
+
+À partir d'un test PHPUnit, vous pouvez obtenir n'importe quel service depuis le conteneur grâce à self::getContainer()->get() ; il donne également accès aux services non publics.
+
+---
+class: middle
+.center[
+  ### **Comprendre Messenger**
+]
+
+La gestion du code asynchrone avec Symfony est faite par le composant Messenger :
+
+* ⏩ **Installez le composant Messenger :**
+  ```sh
+  symfony composer req messenger
+  ```
+
+**Lorsqu'une action doit être exécutée de manière asynchrone**, envoyez un message à **un messenger bus**. Le bus stocke le message dans une file d'attente **et rend immédiatement la main** pour permettre au flux des opérations de reprendre aussi vite que possible.
+
+**Un consumer** s'exécute continuellement en arrière-plan pour lire les nouveaux messages dans la file d'attente et exécuter la logique associée. Le consumer peut s'exécuter sur le même serveur que l'application web, ou sur un serveur séparé.
+
+C'est très similaire à la façon dont les requêtes HTTP sont traitées, **sauf que nous n'avons pas de réponse.**
+
+.center[
+<img src="img/asynchrone.jpg" width="450px" />
+]
+
+---
+
+class: middle
+.center[
+  ### **Coder un gestionnaire de messages**
+]
+
+Un message est une classe de données (data object), qui ne doit contenir aucune logique. Il sera sérialisé pour être stocké dans une file d'attente, donc ne stockez que des données "simples" et sérialisables.
+
+* ⏩ **Créez la classe `src/Message/CommentMessage` :**
+  ```php
+  namespace App\Message;
+
+  class CommentMessage
+  {
+      public function __construct(
+          private int $id,
+          private array $context = [],
+      ) {
+      }
+
+      public function getId(): int
+      {
+          return $this->id;
+      }
+
+      public function getContext(): array
+      {
+          return $this->context;
+      }
+  }
+  ```
+
+Dans le monde de Messenger, nous n'avons pas de contrôleurs, mais des gestionnaires de messages.
+
+---
+
+class: middle
+
+* ⏩ **Sous un nouveau namespace `App\MessageHandler`, créez une classe `CommentMessageHandler` qui saura comment gérer les messages `CommentMessage` :**
+  ```php
+  namespace App\MessageHandler;
+
+  use App\Message\CommentMessage;
+  use App\Repository\CommentRepository;
+  use App\SpamChecker;
+  use Doctrine\ORM\EntityManagerInterface;
+  use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+
+  #[AsMessageHandler]
+  class CommentMessageHandler
+  {
+      public function __construct(
+          private EntityManagerInterface $entityManager,
+          private SpamChecker $spamChecker,
+          private CommentRepository $commentRepository,
+      ) {
+      }
+
+      public function __invoke(CommentMessage $message)
+      {
+          $comment = $this->commentRepository->find($message->getId());
+          if (null === $comment) {
+              return;
+          }
+
+          $comment->setState('published');
+          if (2 === $this->spamChecker->getSpamScore($comment, $message->getContext())) {
+              $comment->setState('spam');
+          }
+
+          $this->entityManager->flush();
+      }
+  }
+  ```
+
+`AsMessageHandler` aide Symfony à enregistrer et à configurer automatiquement la classe en tant que gestionnaire Messenger. Par convention, la logique d'un gestionnaire réside dans une méthode appelée `__invoke()`. Le type `CommentMessage` précisé en tant qu'argument unique de cette méthode indique à Messenger quelle classe elle va gérer.
+
+---
+
+class: middle
+
+* ⏩ **Modifiez le contrôleur `src/Controller/ConferenceController.php` pour utiliser le nouveau système :**
+  ```diff
+  use App\Repository\ConferenceRepository;
+  +use App\Message\CommentMessage;
+  -use App\SpamChecker;
+  +use Symfony\Component\Messenger\MessageBusInterface;
+
+  @@ ...
+      public function __construct(
+          private EntityManagerInterface $entityManager,
+  +     private MessageBusInterface $bus,
+      ) {
+      }
+
+  @@ ...
+          CommentRepository $commentRepository,
+  -     SpamChecker $spamChecker,
+          #[Autowire('%photo_dir%')] string $photoDir,
+      ): Response {
+  @@ ...
+
+              $this->entityManager->persist($comment);
+  +         $this->entityManager->flush();
+  @@ ...
+                
+  -            if (2 === $spamChecker->getSpamScore($comment, $context)) {
+  -                throw new \RuntimeException('Blatant spam, go away!');
+  -            }
+  -
+  -            $this->entityManager->flush();
+  +            $this->bus->dispatch(new CommentMessage($comment->getId(), $context));
+
+  ```
+
+Au lieu de dépendre du `SpamChecker`, nous envoyons maintenant un message dans le **bus**. Le gestionnaire décide alors ce qu'il en fait.
+
+Nous avons fait quelque chose que nous n'avions pas prévu. Nous avons découplé notre contrôleur du vérificateur de spam, et déplacé la logique vers une nouvelle classe, le gestionnaire. C'est un cas d'utilisation parfait pour le bus.
+* ⏩ **Testez le code, il fonctionne.**
+  > Tout se fait encore de manière synchrone, mais le code est probablement déjà "mieux".
+
+---
+
+class: middle
+.center[
+  ### **Faire vraiment de l'asynchrone**
+]
+
+Par défaut, les gestionnaires sont appelés de manière synchrone. Pour les rendre asynchrone, vous devez :
+* ⏩ **configurer explicitement la file d'attente à utiliser pour chaque gestionnaire dans le fichier de configuration `config/packages/messenger.yaml` :**
+  ```diff
+              Symfony\Component\Notifier\Message\SmsMessage: async
+
+              # Route your messages to the transports
+  -         # 'App\Message\YourMessage': async
+  +         App\Message\CommentMessage: async
+  ```
+
+La configuration indique au bus d'envoyer les instances de `App\Message\CommentMessage` à la file d'attente `async`, qui est définie par un DSN (`MESSENGER_TRANSPORT_DSN`), qui pointe vers Doctrine tel que défini dans le fichier `.env`. En clair, nous utilisons PostgreSQL comme file d'attente pour nos messages.
+
+.info[
+  💡 En coulisses, Symfony utilise le système pub/sub intégré, performant, dimensionnable (`LISTEN`/`NOTIFY`). Vous pouvez aussi lire le chapitre sur RabbitMQ si vous voulez l'utiliser à la place de PostgreSQL comme gestionnaire de messages.
+]
+
+---
+
+class: middle
+.center[
+  ### **Consommer des messages**
+]
+
+Si vous essayez de soumettre un nouveau commentaire, le vérificateur de spam ne sera plus appelé. Ajoutez un appel à la fonction `error_log()` dans la méthode `getSpamScore()` pour le confirmer. Au lieu d'avoir un nouveau commentaire, un message est en attente dans la file d'attente, prêt à être consommé par d'autres processus.
+
+Comme vous pouvez l'imaginer, Symfony est livré avec une commande pour consommer les messages.
+* ⏩ **Exécutez-la maintenant :**
+  ```sh
+  symfony console messenger:consume async -vv
+  ```
+
+Cette commande devrait immédiatement consommer le message envoyé pour le commentaire soumis :
+  
+```sh
+  [OK] Consuming messages from transports "async".
+
+ // The worker will automatically exit once it has received a stop signal via the messenger:stop-workers command.
+
+ // Quit the worker with CONTROL-C.
+
+11:30:20 INFO      [messenger] Received message App\Message\CommentMessage ["message" => App\Message\CommentMessage^ { …},"class" => "App\Message\CommentMessage"]
+11:30:20 INFO      [http_client] Request: "POST https://80cea32be1f6.rest.akismet.com/1.1/comment-check"
+11:30:20 INFO      [http_client] Response: "200 https://80cea32be1f6.rest.akismet.com/1.1/comment-check"
+11:30:20 INFO      [messenger] Message App\Message\CommentMessage handled by App\MessageHandler\CommentMessageHandler::__invoke ["message" => App\Message\CommentMessage^ { …},"class" => "App\Message\CommentMessage","handler" => "App\MessageHandler\CommentMessageHandler::__invoke"]
+11:30:20 INFO      [messenger] App\Message\CommentMessage was handled successfully (acknowledging to transport). ["message" => App\Message\CommentMessage^ { …},"class" => "App\Message\CommentMessage"]
+```
+
+L'activité du consumer de messages est enregistrée dans les logs, mais vous pouvez avoir un affichage instantané dans la console en passant l'option `-vv`. Vous devriez même voir l'appel vers l'API d'Akismet.
+
+* ⏩ **Pour arrêter le consumer, appuyez sur `Ctrl+C`.**
+
+---
+
+class: middle
+.center[
+  ### **Lancer des workers en arrière-plan**
+]
+
+Au lieu de lancer le consumer à chaque fois que nous publions un commentaire et de l'arrêter immédiatement après, nous voulons l'exécuter en continu sans avoir trop de fenêtres ou d'onglets du terminal ouverts.
+
+La commande `symfony` peut gérer des commandes en tâche de fond ou des workers en utilisant l'option daemon (`-d`) sur la commande `run`.
+
+* ⏩ **Exécutez à nouveau le consumer du message, mais en tâche de fond :**
+  ```sh
+  symfony run -d --watch=config,src,templates,vendor symfony console messenger:consume async
+  ```
+
+  .info[
+    💡 L'option `--watch` indique à Symfony que la commande doit être redémarrée chaque fois qu'il y a un changement dans un des fichiers des répertoires `config/`, `vendor/`, `src/` ou `templates/`.
+  ]
+
+Si le consumer cesse de fonctionner pour une raison quelconque (limite de mémoire, bogue, etc.), il sera redémarré automatiquement. Et s'il tombe en panne trop rapidement, la commande symfony s'arrêtera.
+
+Les logs sont diffusés en continu par la commande symfony `server:log`, en même temps que ceux de PHP, du serveur web et de l'application.
+
+* ⏩ **Utilisez la commande `server:status` pour lister tous les workers en arrière-plan gérés pour le projet en cours :**  
+  ```sh
+  symfony server:status
+
+  Web server listening on https://127.0.0.1:8000
+      Command symfony console messenger:consume async running with PID 15774 (watching config/, src/, templates/)
+  ```
+
+* ⏩ **Pour arrêter un worker, arrêtez le serveur web ou tuez le PID (identifiant du processus) donné par la commande `server:status`** : `kill 15774`
+
+---
+
+class: middle
+.center[
+  ### **Renvoyer des messages ayant échoué**
+]
+
+Que faire si Akismet est en panne alors qu'un message est en train d'être consommé ? Il n'y a aucun impact pour les personnes qui soumettent des commentaires, mais le message est perdu et le spam n'est pas vérifié.
+
+Messenger dispose d'un mécanisme de relance lorsqu'une exception se produit lors du traitement d'un message, configuré sur le transport `async` dans le fichier `config/packages/messenger.yaml` :
+
+```yaml
+framework:
+    messenger:
+        failure_transport: failed
+
+        transports:
+            # https://symfony.com/doc/current/messenger.html#transport-configuration
+            async:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    use_notify: true
+                    check_delayed_interval: 60000
+                retry_strategy:
+                    max_retries: 3
+                    multiplier: 2
+            failed: 'doctrine://default?queue_name=failed'
+            # sync: 'sync://'
+```
+
+Si un problème survient lors de la manipulation d'un message, le consumer réessaiera 3 fois avant d'abandonner. Mais au lieu de jeter le message, il le stockera indéfiniment dans la file d'attente `failed`, qui utilise une autre table de la base de données.
+
+* ⏩ **Inspectez les messages ayant échoué et relancez-les à l'aide des commandes suivantes :**
+  ```sh
+  symfony console messenger:failed:show
+  symfony console messenger:failed:retry
+  ```
