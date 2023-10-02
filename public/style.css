@@ -212,3 +212,7 @@ th {
 .hljs-monokai .hljs-deletion {
   color: #eb4d4da1;
 }
+
+.clearfix {
+  clear: both;
+}

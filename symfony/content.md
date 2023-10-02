@@ -804,7 +804,7 @@ docker compose ps
 ```
 
 .info[
-  ❗ S'il n'y a pas de conteneurs en cours d'exécution ou si la colonne State n'indique pas Up, vérifiez les logs de **Docker Compose** :
+  ❗ S'il n'y a pas de conteneurs en cours d'exécution ou si la colonne `STATUS` n'indique pas `Up`, vérifiez les logs de **Docker Compose** :
   ```sh
   docker compose logs database
   ```
@@ -817,25 +817,26 @@ class: middle
   ### **Accéder à la base de données**
 ]
 
-L'utilitaire en ligne de commande `psql` peut parfois s'avérer utile. Mais vous devez vous rappelez des informations d'identification et du nom de la base de données. Encore moins évident, vous devez aussi connaître le port local sur lequel la base de données tourne sur l'hôte. Docker choisit un port aléatoire pour que vous puissiez travailler sur plus d'un projet en utilisant **PostgreSQL** en même temps (le port local fait partie de la sortie de `docker-compose ps`).
+L'utilitaire en ligne de commande `psql` peut parfois s'avérer utile. 🤔 Mais vous devez vous rappelez des informations d'identification et du nom de la base de données. Encore moins évident, vous devez aussi connaître le port local sur lequel la base de données tourne sur l'hôte. Docker choisit un port aléatoire pour que vous puissiez travailler sur plus d'un projet en utilisant **PostgreSQL** en même temps (le port local fait partie de la sortie de `docker-compose ps`).
 
-Si vous utilisez `psql` avec la commande `symfony`, vous n'avez pas besoin de vous souvenir de quoi que ce soit.
+👉 Si vous utilisez `psql` avec la commande `symfony`, vous n'avez pas besoin de vous souvenir de quoi que ce soit.
 
-La commande symfony détecte automatiquement les services Docker en cours d'exécution pour le projet et expose les variables d'environnement dont `psql` a besoin pour se connecter à la base de données.
+La commande `symfony` détecte automatiquement les services Docker en cours d'exécution pour le projet et expose les variables d'environnement dont `psql` a besoin pour se connecter à la base de données.
 
 * ⏩ **Grâce à ces conventions, accéder à la base de données avec `symfony run` est beaucoup plus facile**
 ```sh
 symfony run psql
 ```
 
- 💡 Ou via un `docker compose exec` sur le container `database`
+* ⏩ **Ou via un `docker compose exec` sur le container `database`**
 ```sh
  docker compose exec database psql app app
 ```
+
 .info[
-  Documentation PostgreSQL
-  * structure : https://www.postgresql.org/docs/13/tutorial-accessdb.html
-  * table & requêtes : https://www.postgresql.org/docs/13/tutorial-table.html
+🗒 Documentation PostgreSQL
+* structure : https://www.postgresql.org/docs/13/tutorial-accessdb.html
+* table & requêtes : https://www.postgresql.org/docs/13/tutorial-table.html
 ]
 
 ---
@@ -846,7 +847,9 @@ class: middle
   ### **Exposer des variables d'environnement**
 ]
 
-Entre les variables d'environnement définies dans le fichier `.env` et celles définies dans le fichier `docker-compose.yaml`, il y a beaucoup de variables d'environnement disponibles. Les mêmes nom de variables d'environnement peuvent être définis dans plusieurs fichiers, mais les valeurs définies dans les fichiers `docker-compose.yaml` ont la priorité sur celles définies dans `.env`.
+Entre les variables d'environnement définies dans le fichier `.env` et celles définies dans le fichier `docker-compose.yaml`, il y a beaucoup de variables d'environnement disponibles. <img src="https://em-content.zobj.net/source/telegram/358/face-with-spiral-eyes_1f635-200d-1f4ab.webp" width="20" alt="Confused" />
+
+Les mêmes nom de variables d'environnement peuvent être définis dans plusieurs fichiers, **mais les valeurs définies dans les fichiers `docker-compose.yaml` ont la priorité** sur celles définies dans `.env`.
 
 Pour afficher toutes les variables d'environnement exposées:
 * affiche toutes les variables (server, .env, docker, ...)
@@ -875,20 +878,19 @@ Pour interagir avec la base de données depuis PHP, nous allons nous appuyer sur
 ]
 .pull-right[
   .center[
-  <img src="img/doctrine-logo.png" width="200" alt="Doctrine ORM" />
+  <img src="img/doctrine-logo.png" width="250" alt="Doctrine ORM" />
 ]
 ]
 
-> 🤔 Comment est-ce que Doctrine est au courant de notre connexion à la base de données ? 
+> Comment est-ce que Doctrine est au courant de notre connexion à la base de données ? 🤔
 
-👉 La recette de Doctrine (recipes au moment de l'installation du paquet) a ajouté un fichier de configuration qui contrôle son comportement : `config/packages/doctrine.yaml`.
+👉 La recette de Doctrine *(recipes au moment de l'installation du paquet)* a ajouté un fichier de configuration qui contrôle son comportement : `config/packages/doctrine.yaml`.
 
 Le paramètre principal est le `DSN` de la base de données, une chaîne contenant toutes les informations sur la connexion : identifiants, hôte, port, etc. Par défaut, Doctrine recherche une variable d'environnement `DATABASE_URL`.
 
 .info[
   🔧 Presque tous les paquets installés sont configurés dans le répertoire `config/packages/`. Les valeurs par défaut ont été choisies avec soin pour fonctionner avec la plupart des applications.
 ]
-
 ---
 
 class: middle
@@ -900,7 +902,7 @@ class: middle
 
 Mais grâce à la recette du paquet, vous verrez un exemple de variable `DATABASE_URL` dans votre fichier `.env`. Mais comme le port exposé par Docker vers PostgreSQL peut changer, c'est assez lourd. Il y a une meilleure solution.
 
-Au lieu de coder en dur la variable `DATABASE_URL` dans un fichier, nous pouvons préfixer toutes les commandes avec symfony. Ceci détectera les services exécutés par Docker (lorsque le tunnel est ouvert) et définira automatiquement la variable d'environnement.
+Au lieu de coder en dur la variable `DATABASE_URL` dans un fichier, nous pouvons préfixer toutes les commandes avec `symfony`. Ceci détectera les services exécutés par Docker (lorsque le tunnel est ouvert) et définira automatiquement la variable d'environnement.
 
 > 🪄 Docker Compose fonctionne parfaitement avec Symfony grâce à ces variables d'environnement.
 
@@ -910,24 +912,25 @@ class: middle
   ### **Configurer l'url de la base de données**
 ]
 
-* ⏩ **Vérifiez toutes les variables d'environnement exposées en exécutant `symfony var:export`**
+* ⏩ **Vérifiez toutes les variables d'environnement exposées en exécutant :**
+  ```sh
+  symfony var:export --multiline
+  
+  #...
+  export DATABASE_URL=postgres://app:!ChangeMe!@127.0.0.1:32768/app?sslmode=disable&charset=utf8
+  # ...
+  ```
 
-```sh
-symfony var:export
-DATABASE_URL=postgres://main:main@127.0.0.1:32781/main?sslmode=disable&charset=utf8
-# ...
-```
-
-Vous rappelez-vous du nom du service database utilisé dans les configurations Docker ? Les noms des services sont utilisés comme préfixes pour définir des variables d'environnement telles que `DATABASE_URL`. Si vos services sont nommés selon les conventions Symfony, aucune autre configuration n'est nécessaire.
+Vous rappelez-vous du nom du service `database` utilisé dans les configurations Docker `docker-compose.yml` ? Les noms des services sont utilisés comme préfixes pour définir des variables d'environnement telles que `DATABASE_URL`. Si vos services sont nommés selon les conventions Symfony, aucune autre configuration n'est nécessaire.
 
 * ⏩ **Nous allons quand même changer le fichier `.env` pour initialiser la variable `DATABASE_URL` pour l'utilisation de PostgreSQL**
 
-```diff
- # DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=8&charset=utf8mb4"
--DATABASE_URL="postgresql://app:!ChangeMe!@127.0.0.1:5432/app?serverVersion=15&charset=utf8"
-+DATABASE_URL="postgresql://127.0.0.1:5432/db?serverVersion=15&charset=utf8"
- ###< doctrine/doctrine-bundle ###
-```
+  ```diff
+  # DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=8&charset=utf8mb4"
+  -DATABASE_URL="postgresql://app:!ChangeMe!@127.0.0.1:5432/app?serverVersion=15&charset=utf8"
+  +DATABASE_URL="postgresql://127.0.0.1:5432/db?serverVersion=15&charset=utf8"
+  ###< doctrine/doctrine-bundle ###
+  ```
 
 🤔 Pourquoi l'information doit-elle être dupliquée à deux endroits différents ?
 > 👉 Parce que sur certaines plates-formes de Cloud, au moment de la compilation, l'URL de la base de données n'est peut-être pas encore connue mais Doctrine a besoin de connaître le moteur de la base de données pour initialiser sa configuration. Ainsi, l'hôte, le pseudo et le mot de passe n'ont pas vraiment d'importance.
@@ -939,7 +942,7 @@ class: middle
   ### **Générer la classe d'entité "Conférence"**
 ]
 
-Une conférence peut être décrite en quelques propriétés :
+**Une conférence** peut être décrite en quelques propriétés :
 
 * La ville où la conférence est organisée ;
 * L'année de la conférence ;
@@ -1068,8 +1071,14 @@ class: middle
 ]
 
 **Objectif :** 
+
 * ⏩ **Créer une entité `Product` et `Category` en vous basant sur les données du précédent TP.**
-* ⏩ **Puis générer la migration et mettre à jour la base de données.**
+
+* ⏩ **Ajouter une relation `ManyToOne` entre `Product` et `Category`**
+
+* ⏩ **Générer la migration et mettre à jour la base de données.**
+
+* ⏩ **Bonus: Ajouter des données de test dans la base de données via la console `psql`**
 
 ---
 class: center, middle, inverse
@@ -1101,10 +1110,10 @@ Même si le package `webapp` a ajouté automatiquement de nombreux packages util
 * *Composants Symfony* : Paquets qui implémentent les fonctionnalités de base et les abstractions de bas niveau dont la plupart des applications ont besoin (routage, console, client HTTP, mailer, cache, etc.) ;
 * *Bundles Symfony* : Paquets qui ajoutent des fonctionnalités de haut niveau ou fournissent des intégrations avec des bibliothèques tierces (les bundles sont principalement créés par la communauté).
 
-Ajoutez `EasyAdmin` comme dépendance du projet :
-```sh
-symfony composer req "admin:^4"
-```
+* ⏩ **Ajoutez `EasyAdmin` comme dépendance du projet :**
+  ```sh
+  symfony composer req "admin:^4"
+  ```
 
 .info[
 💡 `admin` est un alias pour le paquet `easycorp/easyadmin-bundle`. Les alias ne sont pas une fonctionnalité interne à Composer, mais un concept fourni par Symfony pour vous faciliter la vie
@@ -1128,10 +1137,9 @@ Le bundle EasyAdmin crée automatiquement une section d'administration pour votr
 Pour débuter avec EasyAdmin
 
 * ⏩ **commençons par générer un "tableau de bord d'administration" qui sera le point d'entrée principal pour gérer les données du site.**
-
-```sh
-symfony console make:admin:dashboard
-```
+  ```sh
+  symfony console make:admin:dashboard
+  ```
 
 Avec les réponses par défaut, crée le contrôleur `src/Controller/Admin/DashboardController.php`
 
@@ -1171,17 +1179,19 @@ Dans le contrôleur du tableau de bord, vous avez peut-être remarqué la métho
 
 **"CRUD"** est un acronyme pour **"Create, Read, Update and Delete"**, les quatre opérations de base que vous allez effectuer sur une entité. C'est exactement ce que nous voulons que notre page d'administration fasse pour nous. EasyAdmin facilite encore plus les choses en prenant en charge les fonctionnalités de filtre et de recherche.
 
-Générons un `CRUD` pour les conférences :
-```sh
-symfony console make:admin:crud
-```
-Sélectionnez `App\Entity\Conference` pour créer une interface d'administration pour les conférences et utiliser les valeurs par défaut pour les autres questions. Le fichier suivant devrait être généré :
-`src/Controller/Admin/ConferenceCrudController.php`
-Faites la même chose pour les commentaires :
+* ⏩ **Générons un `CRUD` pour les conférences :**
+  ```sh
+  symfony console make:admin:crud
+  ```
 
-```sh
-symfony console make:admin:crud
-```
+  Sélectionnez `App\Entity\Conference` pour créer une interface d'administration pour les conférences et utiliser les valeurs par défaut pour les autres questions. Le fichier suivant devrait être généré :
+  `src/Controller/Admin/ConferenceCrudController.php`
+
+* ⏩ **Faites la même chose pour les commentaires :**
+
+  ```sh
+  symfony console make:admin:crud
+  ```
 
 
 ---
@@ -1241,6 +1251,8 @@ Le tableau de bord principal est vide pour le moment. C'est ici que vous pouvez 
 +        return $this->redirect($url);
 ```
 
+* ⏩ **Rafraîchissez la page d'administration `/admin` pour voir le résultat.**
+
 
 ---
 class: middle
@@ -1294,8 +1306,10 @@ Vous pouvez maintenant **ajouter/modifier/supprimer** des conférences directeme
 
 * ⏩ **Jouez avec et ajoutez au moins une conférence.**
 
-* ⏩ **Ajoutez quelques commentaires sans photos. Réglez la date manuellement pour l'instant ; nous remplirons la colonne createdAt automatiquement dans une étape ultérieure.**
-
+  .info[
+    Notez qu'il ne sera pas possible d'ajouter de commentaires pour l'instant. Car certains champs sont obligatoires et ne sont pas affichés dans le formulaire.
+    Nous allons y remédier dans la prochaine étape.
+  ]
 
 ---
 class: middle
@@ -1307,31 +1321,35 @@ L'interface d'administration par défaut fonctionne bien, mais elle peut être p
 
 * ⏩ **Faisons quelques changements simples pour montrer quelques possibilités, comme la recherche, le tri et le filtrage des données.**
 
-```diff
-# src/Controller/Admin/CommentCrudController.php
+  ```diff
+  # src/Controller/Admin/CommentCrudController.php
 
-         return Comment::class;
-     }
+          return Comment::class;
+      }
 
--    /*
-+    public function configureCrud(Crud $crud): Crud
-+    {
-+        return $crud
-+            ->setEntityLabelInSingular('Conference Comment')
-+            ->setEntityLabelInPlural('Conference Comments')
-+            ->setSearchFields(['author', 'text', 'email'])
-+            ->setDefaultSort(['createdAt' => 'DESC'])
-+        ;
-+    }
-+
-+    public function configureFilters(Filters $filters): Filters
-+    {
-+        return $filters
-+            ->add(EntityFilter::new('conference'))
-+        ;
-+    }
-+
-```
+  -    /*
+  +    public function configureCrud(Crud $crud): Crud
+  +    {
+  +        return $crud
+  +            ->setEntityLabelInSingular('Conference Comment')
+  +            ->setEntityLabelInPlural('Conference Comments')
+  +            ->setSearchFields(['author', 'text', 'email'])
+  +            ->setDefaultSort(['createdAt' => 'DESC'])
+  +        ;
+  +    }
+  +
+  +    public function configureFilters(Filters $filters): Filters
+  +    {
+  +        return $filters
+  +            ->add(EntityFilter::new('conference'))
+  +        ;
+  +    }
+  +
+  ```
+
+  🔹 La méthode `configureCrud()` permet de personnaliser le CRUD. Ici, nous avons changé le nom de l'entité, ajouté des champs de recherche, et défini un tri par défaut.
+
+  🔹 La méthode `configureFilters()` permet de personnaliser les filtres et  définissent quels filtres apparaissent au dessus du champ de recherche. Ici, nous avons ajouté un filtre pour la conférence.
 
 ---
 
@@ -1340,11 +1358,9 @@ class: middle
 ### **Personnaliser les champs d'un CRUD**
 ]
 
-.pull-left[
+.pull-right[
 
 ```diff
-# src/Controller/Admin/CommentCrudController.php
-
      public function configureFields(string $pageName): iterable
      {
 -        return [
@@ -1376,11 +1392,11 @@ class: middle
 -    */
 ```
 ]
-.pull-right[
-  Pour personnaliser la section `Commentaire`:
-  * ⏩ **lister les champs de manière explicite dans la méthode `configureFields()` nous permet de les ordonner comme nous le souhaitons. Certains champs bénéficient d'une configuration supplémentaire, comme masquer le champ texte sur la page d'index.**
+.pull-left[
+  Pour personnaliser notre CRUD `src/Controller/Admin/CommentCrudController.php`:
+  * ⏩ **lister les champs de manière explicite dans la méthode `configureFields()` nous permet de les ordonner comme nous le souhaitons.**
 
-  Les méthodes `configureFilters()` définissent quels filtres apparaissent au dessus du champ de recherche.
+  Certains champs bénéficient d'une configuration supplémentaire, comme masquer le champ texte sur la page d'index.
 ]
 
 ---
@@ -1388,14 +1404,26 @@ class: middle
 .center[
 ### **Tester l'interface d'administration**
 ]
-
+.pull-right[
 .center[<img src="img/easy-admin-filter.png" alt="Easy admin filter" width="450px" />]
+]
 
-Ces personnalisations ne sont qu'une petite introduction aux possibilités offertes par EasyAdmin.
+.pull-left[
+  Ces personnalisations ne sont qu'une petite introduction aux possibilités offertes par EasyAdmin.
 
   * ⏩ **Jouez avec l'interface d'administration, filtrez les commentaires par conférence, ou recherchez des commentaires par email par exemple.**
 
-Le seul problème, c'est que n'importe qui peut accéder à cette interface. Ne vous inquiétez pas, nous la sécuriserons dans une prochaine étape.
+  Nous avons maintenant une interface d'administration fonctionnelle pour gérer les conférences et les commentaires.
+
+  .red.center[🚨 Le seul problème, c'est que n'importe qui peut accéder à cette interface. ]
+  .center[
+  👮 Ne vous inquiétez pas, nous la sécuriserons dans une prochaine étape.
+  ]
+]
+
+.clearfix[
+* ⏩ **Commitez notre travail `git add . && git commit -m "Easy admin"`**
+]
 
 ---
 class: middle
@@ -1410,7 +1438,7 @@ class: middle
 
 * ⏩ **Personnaliser les filtres pour les deux CRUDs**
 
-* ⏩ **Ajouter quelques produits et catégories afin de tester nos crud**
+* ⏩ **Ajouter quelques produits et catégories afin de tester nos CRUDs**
 
 * ⏩ **Ajouter un lien depuis notre page d'accueil vers l'interface d'administration**
 
@@ -1429,7 +1457,7 @@ class: middle
 
 Tout est maintenant en place pour créer la première version de l'interface du site. On ne la fera pas jolie pour le moment, seulement fonctionnelle.
 
-Vous vous souvenez de l'échappement de caractères que nous avons dû faire dans le contrôleur, pour l'easter egg, afin d'éviter les problèmes de sécurité ? Nous n'utiliserons pas PHP pour nos templates pour cette raison. À la place, nous utiliserons **Twig**. En plus de gérer l'échappement de caractères, Twig apporte de nombreuses fonctionnalités intéressantes, comme l'héritage des modèles.
+Vous vous souvenez de l'échappement de caractères que nous avons dû faire dans le contrôleur, pour l'easter egg, afin d'éviter les problèmes de sécurité ? Nous n'utiliserons pas PHP pour nos templates pour cette raison. À la place, nous utiliserons **[Twig](https://twig.symfony.com/)**. En plus de gérer l'échappement de caractères, Twig apporte de nombreuses fonctionnalités intéressantes, comme l'héritage des modèles.
 
 Toutes les pages du site Web suivront le même modèle de mise en page, la même structure HTML de base. Lors de l'installation de Twig, un répertoire `templates/` a été créé automatiquement, ainsi qu'un exemple de structure de base dans `base.html.twig`.
 
