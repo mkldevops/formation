@@ -2052,7 +2052,7 @@ class: middle
 
   Le tri de la liste des conférences par année peut faciliter la navigation. Nous pourrions créer notre propre méthode pour récupérer et trier toutes les conférences.
   
-  * ⏩ **Mais nous allons plutôt remplacer l'implémentation par défaut de la méthode `findAll()`, afin que le tri s'applique partout :**
+  * ⏩ **Mais nous allons plutôt remplacer l'implémentation par défaut de la méthode `CommentRepository::findAll()` , afin que le tri s'applique partout :**
 
 ```diff
 +    public function findAll(): array
@@ -2062,6 +2062,7 @@ class: middle
 +
      public function save(Conference $entity, bool $flush = false): void
 ```
+
 À la fin de cette étape, le site web devrait ressembler à ceci :
 
 .center[<img src="img/header.png" alt="header" width="340px" />]
