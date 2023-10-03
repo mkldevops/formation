@@ -1869,13 +1869,18 @@ class: middle
 ]
 
 **Objectif :**
-* ⏩ **Modifier la route `/produits` pour renvoyer la liste des produits depuis la base de données**
+
+* ⏩ **Modifier la route `/products` pour renvoyer la liste des produits depuis la base de données**
+
 * ⏩ **Créer un template pour la page d'accueil des produits**
+
+* ⏩ **Modifier la route `/product/{id}` pour renvoyer le produit correspondant à l'id depuis la base de données**! :  
+
 * ⏩ **Créer un template pour la page d'un produit**
 
 ---
 class: center, middle, inverse
-# 5. Les évenements
+# 7. Les évenements
 ---
 
 class: middle
@@ -2378,7 +2383,7 @@ class: middle
 ### **.red[Travaux pratique]**
 ]
 
-**1. Faire le Quizz : Symfony Part 5**
+**1. Faire le Quizz : Symfony Part 7**
 
 **2. Objectif :**
 
@@ -2394,7 +2399,7 @@ class: middle
 
 ---
 class: center, middle, inverse
-# 6. Les formulaires
+# 8. Les formulaires
 ---
 class: middle
 .center[
@@ -2777,7 +2782,7 @@ L'interface d'administration affiche actuellement le nom du fichier photo, mais 
 
 ---
 class: center, middle, inverse
-# 7. Sécurité
+# 9. Sécurité
 
 .center[
   <img src="https://images.unsplash.com/photo-1584433144760-1946bb52e9a4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" />
@@ -2994,7 +2999,7 @@ Si vous essayez d'accéder à l'interface d'administration, vous devriez mainten
 
 class: middle, center, inverse
 
-# 8. Symfony HttpClient
+# 10. Symfony HttpClient
 
 ---
 
@@ -3121,7 +3126,7 @@ Une façon simple de vérifier la présence de spam lorsqu'un nouveau commentair
 
 class: middle, center, inverse
 
-# 9. Les tests
+# 11. Les tests
 
 ---
 
@@ -3629,9 +3634,46 @@ Le bundle maker supporte la génération des types de tests suivants en fonction
 
 ---
 
+class: middle
+.center[
+  ### **Les outils pour la qualité de code**
+]
+
+Le composant `phpunit` est un outil de test unitaire. Il existe d'autres outils pour tester la qualité de votre code. Tel que `phpstan` qui est un outil d'analyse statique du code PHP. et phpcs-fixer qui est un outil de correction de code.
+
+
+#### PHPStan
+
+* ⏩ **Installez le composant `phpstan` :**
+  
+  ```sh
+  symfony composer req --dev phpstan/phpstan
+  ```
+
+* ⏩ **Lancez `phpstan` :**
+  
+  ```sh
+  symfony php vendor/bin/phpstan analyse --level max
+  ```
+
+#### PHPCs-fixer
+* ⏩ **Installez le composant `php-cs-fixer` :**
+  
+  ```sh
+  symfony composer req --dev friendsofphp/php-cs-fixer
+  ```
+
+* ⏩ **Lancer la correction du code :**
+  
+  ```sh
+  symfony php vendor/bin/php-cs-fixer fix
+  ```
+
+---
+
 class: middle, center, inverse
 
-# 10. Faire de l'asynchrone
+# 12. Faire de l'asynchrone
 
 ---
 
@@ -3722,15 +3764,18 @@ class: middle
   +        $comment2->setEmail('lucas@example.com');
   +        $comment2->setText('I think this one is going to be moderated.');
   +        $manager->persist($comment2);
-```
+  ```
 
 ---
+
 class: middle
+
 .center[
   ### **Mis à jour de notre code**
 ]
 
 * ⏩ **Pour les tests du contrôleur `tests/Controller/ConferenceControllerTest.php`, simulez la validation :**
+
   ```diff
   +use App\Repository\CommentRepository;
   +use Doctrine\ORM\EntityManagerInterface;
@@ -3757,6 +3802,7 @@ class: middle
 À partir d'un test PHPUnit, vous pouvez obtenir n'importe quel service depuis le conteneur grâce à self::getContainer()->get() ; il donne également accès aux services non publics.
 
 ---
+
 class: middle
 .center[
   ### **Comprendre Messenger**
@@ -4030,3 +4076,7 @@ Si un problème survient lors de la manipulation d'un message, le consumer rées
   symfony console messenger:failed:show
   symfony console messenger:failed:retry
   ```
+
+---
+
+class: middle, center, inverse
