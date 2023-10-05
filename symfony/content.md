@@ -3326,7 +3326,7 @@ Cela est très important car nous aurons besoin d'un jeu de données stable pour
   
     ```sh
     symfony console doctrine:database:create --env=test
-    symfony console doctrine:migrations:migrate --env=test --no-interaction
+    symfony console doctrine:schema:update --force --env=test
     ```
 
 Si vous lancez les tests maintenant, PHPUnit n'interagira plus avec votre base de données de développement. Pour lancer les nouveaux tests uniquement, passez le chemin de leur classe en argument.
