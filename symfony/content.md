@@ -3334,7 +3334,7 @@ Si vous lancez les tests maintenant, PHPUnit n'interagira plus avec votre base d
 * ⏩ **Lancez les tests unitaires :**
   
   ```sh
-  symfony php bin/phpunit tests/Controller/ConferenceControllerTest.php
+  symfony php bin/phpunit tests/ConferenceControllerTest.php
   ```
 
 ---
@@ -3531,7 +3531,7 @@ class: middle
 ```
 symfony console doctrine:fixtures:load --env=test
 
-symfony php bin/phpunit tests/Controller/ConferenceControllerTest.php
+symfony php bin/phpunit tests/ConferenceControllerTest.php
 ```
 
 ---
@@ -3554,7 +3554,7 @@ class: middle
   tests:
       symfony console doctrine:database:drop --force --env=test || true
       symfony console doctrine:database:create --env=test
-      symfony console doctrine:migrations:migrate -n --env=test
+      symfony console doctrine:schema:update --force --env=test
       symfony console doctrine:fixtures:load -n --env=test
       symfony php bin/phpunit $(MAKECMDGOALS)
   
