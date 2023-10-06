@@ -4080,3 +4080,252 @@ Si un problème survient lors de la manipulation d'un message, le consumer rées
 ---
 
 class: middle, center, inverse
+
+
+13. Symfony Workflow
+
+---
+
+class: middle
+.center[
+  #### **Prendre des décisions avec un workflow**
+]
+
+Avoir un état pour un modèle est assez commun. L'état du commentaire n'est déterminé que par le vérificateur de spam. Et si on ajoutait d'autres critères de décision ?
+
+Nous pourrions laisser l'admin du site modérer tous les commentaires après le vérificateur de spam. Le processus serait quelque chose comme :
+
+* Commencez par un état submitted lorsqu'un commentaire est soumis par un internaute ;
+* Laissez le vérificateur de spam analyser le commentaire et changer l'état en potential_spam, ham ou rejected
+* S'il n'est pas rejeté, attendez que l'admin du site décide si le commentaire est suffisamment utile en changeant l'état pour published ou rejected.
+
+La mise en œuvre de cette logique n'est pas trop complexe, mais vous pouvez imaginer que l'ajout de règles supplémentaires augmenterait considérablement la complexité. Au lieu de coder la logique nous-mêmes, nous pouvons utiliser le composant Symfony Workflow :
+
+* ⏩ **Installez le composant Workflow :**
+  ```sh
+  symfony composer req workflow
+  ```
+
+---
+
+class: middle
+.center[
+  ### **Définir un workflow**
+]
+
+.pull-left[
+* ⏩ **Le workflow de commentaires peut être décrit dans le fichier `config/packages/workflow.yaml` :**
+    ```yaml
+    framework:
+        workflows:
+            comment:
+                type: state_machine
+                audit_trail:
+                    enabled: "%kernel.debug%"
+                marking_store:
+                    type: 'method'
+                    property: 'state'
+                supports:
+                    - App\Entity\Comment
+                initial_marking: submitted
+                places:
+                    - submitted
+                    - ham
+                    - potential_spam
+                    - spam
+                    - rejected
+                    - published
+                transitions:
+                    accept:
+                        from: submitted
+                        to:   ham
+                    might_be_spam:
+                        from: submitted
+                        to:   potential_spam
+                    reject_spam:
+                        from: submitted
+                        to:   spam
+                    publish:
+                        from: potential_spam
+                        to:   published
+                    reject:
+                        from: potential_spam
+                        to:   rejected
+                    publish_ham:
+                        from: ham
+                        to:   published
+                    reject_ham:
+                        from: ham
+                        to:   rejected
+   ``` 
+]
+.pull-right[
+* ⏩ **Pour valider le workflow, générez une représentation visuelle :**
+
+```sh
+symfony console workflow:dump comment | dot -Tpng -o workflow.png
+```
+
+<img src="img/workflow.png" width="450px" />
+
+.info[
+  La commande `dot` fait partie de l'utilitaire [Graphviz](https://www.graphviz.org/).
+]
+
+]
+
+---
+
+class: middle
+.center[
+  ### **Utiliser le workflow**
+]
+
+* ⏩ **Remplacez la logique actuelle dans le gestionnaire de messages `src/MessageHandler/CommentMessageHandler.php` par le workflow :**
+
+.pull-left[
+
+```diff
+ use Doctrine\ORM\EntityManagerInterface;
++use Psr\Log\LoggerInterface;
+ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
++use Symfony\Component\Messenger\MessageBusInterface;
++use Symfony\Component\Workflow\WorkflowInterface;
+
+ #[AsMessageHandler]
+ class CommentMessageHandler
+@@ -15,6 +18,9 @@ class CommentMessageHandler
+         private EntityManagerInterface $entityManager,
+         private SpamChecker $spamChecker,
+         private CommentRepository $commentRepository,
++        private MessageBusInterface $bus,
++        private WorkflowInterface $commentStateMachine,
++        private ?LoggerInterface $logger = null,
+     ) {
+     }
+```
+]
+.pull-right[
+```diff
+@@ -25,12 +31,18 @@ class CommentMessageHandler
+             return;
+         }
+
+-        if (2 === $this->spamChecker->getSpamScore($comment, $message->getContext())) {
+-            $comment->setState('spam');
+-        } else {
+-            $comment->setState('published');
++        if ($this->commentStateMachine->can($comment, 'accept')) {
++            $score = $this->spamChecker->getSpamScore($comment, $message->getContext());
++            $transition = match ($score) {
++                2 => 'reject_spam',
++                1 => 'might_be_spam',
++                default => 'accept',
++            };
++            $this->commentStateMachine->apply($comment, $transition);
++            $this->entityManager->flush();
++            $this->bus->dispatch($message);
++        } elseif ($this->logger) {
++            $this->logger->debug('Dropping comment message', ['comment' => $comment->getId(), 'state' => $comment->getState()]);
+         }
+-
+-        $this->entityManager->flush();
+     }
+```
+]
+
+---
+
+class: middle
+
+La nouvelle logique se lit comme ceci :
+
+* Si la transition accept est disponible pour le commentaire dans le message, vérifiez si c'est un spam ;
+* Selon le résultat, choisissez la bonne transition à appliquer ;
+* Appellez `apply()` pour mettre à jour le Comment via un appel à la méthode `setState()` ;
+* Appelez `flush()` pour valider les changements dans la base de données ;
+* Réexpédiez le message pour permettre au workflow d'effectuer une nouvelle transition.
+
+Comme nous n'avons pas implémenté la fonctionnalité de validation par l'admin, la prochaine fois que le message sera consommé, le message "Dropping comment message" sera enregistré.
+
+* ⏩ **Mettons en place une validation automatique en attendant le prochain chapitre  dans `src/MessageHandler/CommentMessageHandler.php`:**
+
+```diff
+             $this->commentStateMachine->apply($comment, $transition);
+             $this->entityManager->flush();
+             $this->bus->dispatch($message);
++        } elseif ($this->commentStateMachine->can($comment, 'publish') || $this->commentStateMachine->can($comment, 'publish_ham')) {
++            $this->commentStateMachine->apply($comment, $this->commentStateMachine->can($comment, 'publish') ? 'publish' : 'publish_ham');
++            $this->entityManager->flush();
+         } elseif ($this->logger) {
+             $this->logger->debug('Dropping comment message', ['comment' => $comment->getId(), 'state' => $comment->getState()]);
+         }
+```
+* ⏩ **Exécutez symfony server:log et ajoutez un commentaire sur le site pour voir toutes les transitions se produire les unes après les autres.**
+
+---
+
+class: middle
+.center[
+  ### **Trouver des services depuis le conteneur d'injection de dépendances**
+]
+
+Quand nous utilisons l'injection de dépendances, nous récupérons des services depuis le conteneur d'injection de dépendances en utilisant le typage par interface ou parfois par une implémentation de classe concrète. Mais quand une interface à plusieurs implémentations, Symfony ne peut deviner celle dont vous avez besoin. Nous avons besoin d'être explicite.
+
+Nous venons juste de rencontrer un cas semblable avec l'injection de `WorkflowInterface` dans la section précédente.
+
+Comme nous injectons n'importe quelle instance de l'interface générique `WorkflowInterface` dans le constructeur, comment Symfony peut savoir quelle implémentation du workflow utiliser ? Symfony utilise une convention basée sur le nom de l'argument : `$commentStateMachine` fait référence au workflow comment de la configuration (dont le type est `state_machine`). Essayez n'importe quel autre argument et l'injection échouera.
+
+* ⏩ **Si vous ne vous rappelez pas de la convention, utilisez la commande debug:container. Cherchez tous les services contenant "workflow" :**
+```sh
+symfony console debug:container workflow
+
+ Select one of the following services to display its information:
+  [0] console.command.workflow_dump
+  [1] workflow.abstract
+  [2] workflow.marking_store.method
+  [3] workflow.registry
+  [4] workflow.security.expression_language
+  [5] workflow.twig_extension
+  [6] monolog.logger.workflow
+  [7] Symfony\Component\Workflow\Registry
+  [8] Symfony\Component\Workflow\WorkflowInterface $commentStateMachine
+  [9] Psr\Log\LoggerInterface $workflowLogger
+ >
+ ```
+ Remarquez le choix 8, `Symfony\Component\Workflow\WorkflowInterface $commentStateMachine` qui vous indique qu'utiliser `$commentStateMachine` comme argument nommé a une signification particulière.
+
+ <!---
+
+class: middle, center, inverse
+
+# 14. Emails
+
+---
+
+class: middle
+.center[
+  ### **Envoyer des emails aux admins**
+]
+
+Pour s'assurer que les commentaires soient de bonne qualité, l'admin doit tous les modérer. Lorsqu'un commentaire est dans l'état ham ou potential_spam, un email doit lui être envoyé avec deux liens : un pour l'accepter et un autre pour le rejeter.
+
+Pour stocker l'email de l'admin, utilisez un paramètre de conteneur. Pour l'exemple, nous autorisons également son paramétrage grâce à une variable d'environnement (ce qui ne devrait pas être nécessaire dans la "vraie vie") :
+
+* ⏩ **Ajoutez le paramètre `admin_email` dans le fichier `config/services.yaml` :**
+  ```diff
+parameters:
+     photo_dir: "%kernel.project_dir%/public/uploads/photos"
++    default_admin_email: admin@example.com
++    admin_email: "%env(string:default:default_admin_email:ADMIN_EMAIL)%"
+```
+
+Une variable d'environnement peut être "traitée" avant d'être utilisée. Ici, nous utilisons le processeur default afin d'utiliser la valeur du paramètre default_admin_email si la variable d'environnement ADMIN_EMAIL n'existe pas.
+
+---
+
+class: middle
+.center[
+  ### **Envoyer une notification par email**
+]
+
