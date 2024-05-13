@@ -1,127 +1,156 @@
 name: inverse
 class: center, middle, inverse
+
 # Symfony Framework
+
 # .red[PHP 8]
+
 <div class="logo"><svg class="logo-1" fill="white" width="196" height="64" viewBox="0 0 196 64" style="fill-rule: evenodd; clip-rule: evenodd; stroke-linejoin: round; stroke-miterlimit: 2;"><g transform="matrix(0.101031,0,0,0.101031,2.39526,-0.329946)"><g transform="matrix(1.27705,0,0,1.27705,1143.65,155.404)"><path d="M320.958,94.576C320.958,107.301 317.357,117.884 310.155,126.323C302.952,134.763 293.386,140.971 281.456,144.947L331.695,223.685L290.072,223.685L246.727,150.647L230.025,150.647L230.025,223.685L193.837,223.685L193.837,40.361L247.787,40.361C296.568,40.361 320.958,58.433 320.958,94.576ZM283.312,94.576C283.312,84.855 280.462,77.764 274.762,73.301C269.062,68.838 260.38,66.607 248.715,66.607L230.025,66.607L230.025,124.931L249.908,124.931C260.954,124.931 269.283,122.501 274.895,117.641C280.506,112.78 283.312,105.092 283.312,94.576Z" style="fill-rule: nonzero;"></path></g><g transform="matrix(1.27705,0,0,1.27705,1486.87,208.548)"><path d="M313.005,64.751L241.159,227.264L208.153,217.058L277.612,67.402L195.163,67.402L195.163,40.361L313.005,40.361L313.005,64.751Z" style="fill-rule: nonzero;"></path></g><g transform="matrix(1.27705,0,0,1.27705,1335.53,155.404)"><path d="M253.752,12.524C257.994,12.524 261.75,13.43 265.019,15.241C268.289,17.053 270.852,19.55 272.708,22.731C274.563,25.912 275.491,29.447 275.491,33.335C275.491,37.224 274.563,40.758 272.708,43.94C270.852,47.121 268.289,49.64 265.019,51.495C261.75,53.351 257.994,54.279 253.752,54.279C249.51,54.279 245.733,53.351 242.419,51.495C239.105,49.64 236.52,47.121 234.664,43.94C232.808,40.758 231.88,37.224 231.88,33.335C231.88,29.447 232.808,25.912 234.664,22.731C236.52,19.55 239.105,17.053 242.419,15.241C245.733,13.43 249.51,12.524 253.752,12.524ZM201.658,83.309L276.419,83.309L276.419,198.897L313.402,198.897L313.402,223.685L200.332,223.685L200.332,198.897L241.424,198.897L241.424,108.097L201.658,108.097L201.658,83.309Z" style="fill-rule: nonzero;"></path></g><g transform="matrix(2.01117,0,0,2.01117,165.834,-128.735)"><path d="M261.043,177.319L211.622,177.319L211.622,218.681L254.382,218.681L254.382,228.302L211.622,228.302L211.622,271.803L264.332,271.803L264.332,280.93L201.096,280.93L201.096,167.944L262.441,167.944L261.043,177.319ZM213.76,150.758L245.501,134.23L250.682,143.851L216.72,156.432L213.76,150.758Z" style="fill-rule: nonzero;"></path></g><g transform="matrix(2.01117,0,0,2.01117,165.834,-128.735)"><path d="M312.861,273.201C321.248,273.201 329.06,270.651 336.297,265.553L341.642,272.46C337.969,275.53 333.501,277.984 328.238,279.82C322.975,281.657 317.987,282.575 313.272,282.575C304.994,282.575 297.922,280.766 292.056,277.148C286.191,273.529 281.723,268.376 278.653,261.688C275.583,255 274.048,247.133 274.048,238.088C274.048,229.426 275.583,221.696 278.653,214.898C281.723,208.101 286.218,202.756 292.139,198.863C298.059,194.971 305.131,193.025 313.354,193.025C323.935,193.025 333.282,196.287 341.395,202.81L335.968,210.129C328.128,204.757 320.426,202.07 312.861,202.07C307.488,202.07 302.733,203.441 298.594,206.182C294.455,208.923 291.22,212.993 288.89,218.393C286.561,223.793 285.396,230.358 285.396,238.088C285.396,245.927 286.547,252.465 288.849,257.7C291.152,262.935 294.373,266.828 298.512,269.377C302.65,271.926 307.434,273.201 312.861,273.201Z" style="fill-rule: nonzero;"></path></g><g transform="matrix(2.01117,0,0,2.01117,165.834,-128.735)"><path d="M386.388,193.025C394.118,193.025 400.641,194.834 405.959,198.452C411.277,202.07 415.251,207.224 417.883,213.912C420.514,220.6 421.83,228.549 421.83,237.759C421.83,246.421 420.473,254.137 417.759,260.907C415.046,267.677 411.003,272.981 405.63,276.819C400.258,280.656 393.761,282.575 386.141,282.575C378.412,282.575 371.874,280.725 366.529,277.024C361.184,273.324 357.168,268.13 354.482,261.441C351.796,254.753 350.453,246.914 350.453,237.923C350.453,228.987 351.81,221.148 354.523,214.405C357.237,207.662 361.294,202.413 366.694,198.658C372.093,194.903 378.658,193.025 386.388,193.025ZM386.388,201.988C369.887,201.988 361.636,213.967 361.636,237.923C361.636,261.661 369.805,273.529 386.141,273.529C402.478,273.529 410.646,261.606 410.646,237.759C410.646,213.912 402.56,201.988 386.388,201.988Z" style="fill-rule: nonzero;"></path></g><g transform="matrix(2.01117,0,0,2.01117,165.834,-128.735)"><path d="M463.945,261.359C463.945,265.635 465.301,268.76 468.015,270.734C470.729,272.707 474.443,273.694 479.157,273.694C483.982,273.694 489.053,272.652 494.37,270.569L497.33,278.463C494.973,279.669 492.136,280.656 488.82,281.424C485.503,282.191 481.953,282.575 478.171,282.575C473.566,282.575 469.413,281.739 465.713,280.067C462.012,278.395 459.093,275.955 456.955,272.748C454.817,269.541 453.748,265.745 453.748,261.359L453.748,168.52L426.94,168.52L426.94,159.639L463.945,159.639L463.945,261.359Z" style="fill-rule: nonzero;"></path></g><g transform="matrix(2.01117,0,0,2.01117,165.834,-128.735)"><path d="M520.121,241.87C520.231,248.833 521.491,254.657 523.904,259.345C526.316,264.032 529.509,267.513 533.483,269.788C537.458,272.063 541.885,273.201 546.764,273.201C551.15,273.201 555.11,272.57 558.646,271.309C562.182,270.048 565.979,268.02 570.035,265.224L575.38,272.872C571.433,275.942 566.952,278.326 561.936,280.026C556.919,281.725 551.999,282.575 547.175,282.575C539.336,282.575 532.552,280.725 526.823,277.024C521.094,273.324 516.722,268.102 513.707,261.359C510.692,254.616 509.184,246.777 509.184,237.841C509.184,229.125 510.705,221.381 513.748,214.611C516.791,207.84 521.08,202.55 526.617,198.74C532.154,194.93 538.486,193.025 545.613,193.025C552.52,193.025 558.496,194.711 563.539,198.082C568.583,201.454 572.434,206.278 575.093,212.555C577.751,218.832 579.081,226.246 579.081,234.798C579.081,236.059 578.999,238.417 578.834,241.87L520.121,241.87ZM545.859,202.564C541.09,202.564 536.855,203.674 533.155,205.894C529.454,208.114 526.48,211.472 524.232,215.967C521.985,220.463 520.669,226.027 520.285,232.66L569.377,232.66C569.158,222.793 566.938,215.31 562.717,210.211C558.496,205.113 552.876,202.564 545.859,202.564Z" style="fill-rule: nonzero;"></path></g><path d="M250.428,75.558C385.339,75.558 494.87,185.089 494.87,320C494.87,454.911 385.339,564.442 250.428,564.442C115.517,564.442 5.986,454.911 5.986,320C5.986,185.089 115.517,75.558 250.428,75.558ZM131.233,450.023L131.233,203.31L220.202,205.493C297.709,207.676 311.355,209.314 331.55,219.685C400.87,255.709 417.79,343.587 365.937,402.536L344.65,426.552L356.658,438.014L368.12,450.023L256.772,450.023L256.772,339.22L269.872,351.228L282.972,363.782L294.434,352.32C308.08,338.674 309.171,325.575 297.163,309.2C294.835,305.797 292.624,303.334 289.625,301.561C283.483,297.931 274.034,297.192 253.497,297.192L218.564,297.192L218.564,450.023L131.233,450.023Z"></path></g></svg></div>
 
 ---
 
 class: middle
 
-
-  .center[
-    ### **Maîtrisez le développement web de haut niveau <br /> avec la Formation Symfony**
-   ]
-  
-  **La formation Symfony** est destinée aux développeurs qui souhaitent améliorer leurs compétences en matière de développement web. Elle vise à fournir aux participants une compréhension approfondie du framework Symfony, ainsi qu'à leur donner **les connaissances** et **les compétences** nécessaires pour créer des applications web de qualité supérieure.
-
 .center[
 
-## 🧗
+    ### **Maîtrisez le développement web de haut niveau <br>avec la Formation Symfony**
 
 ]
 
-Au cours de la formation, les participants apprendront comment utiliser les différents composants de Symfony pour construire des applications web robustes et évolutives. 
+**La formation Symfony** est destinée aux développeurs qui souhaitent améliorer leurs compétences en matière de développement web. Elle vise à fournir aux participants une compréhension approfondie du framework Symfony, ainsi qu'à leur donner **les connaissances** et **les compétences** nécessaires pour créer des applications web de qualité supérieure.
 
-Ils découvriront également comment travailler avec les différents modèles de données, comment gérer les utilisateurs et les autorisations, et comment implémenter des fonctionnalités avancées telles que :
+.center[
 
-* Les formulaires
-* Les validations
-* Les routes
-* Les contrôleurs
-* Les vues
-* etc...
+# 🧗
+
+]
+
+Au cours de la formation, vous apprendrez comment utiliser les différents composants de Symfony pour construire des applications web **robustes** et **évolutives**.
+
+Vous découvrirez également comment travailler avec les différents modèles de données, comment gérer les utilisateurs et les autorisations, et comment implémenter des fonctionnalités avancées telles que :
+
+.pull-left[
+
+- Les formulaires
+- Les validations
+- Les routes
+- Les contrôleurs
+- Les vues
+  ]
+
+.pull-right[
+
+- Les services
+- Les événements
+- Les commandes
+- Les tests
+- Les migrations
+  ]
 
 ---
+
 class: middle
 
 .center[
-  ### **Élevez vos compétences en équipe, <br />domptez les défis du web et brillez sur le Marché ! 🤩**
+
+### **Élevez vos compétences en équipe, <br/>domptez les défis du web et brillez sur le Marché ! 🤩**
+
 ]
 
-En outre, la formation permettra aux participants de développer **leur capacité à travailler en équipe**, à **communiquer avec d'autres développeurs** et à **gérer les défis du développement web**. Les participants auront également l'opportunité de mettre en pratique leurs compétences en travaillant sur des projets concrets.
+En outre, la formation vous permettra de développer **vos capacités à travailler en équipe**, à **communiquer avec d'autres développeurs** et à **gérer les défis du développement web**. Les participants auront également l'opportunité de mettre en pratique leurs compétences en travaillant sur des projets concrets.
 
 .center[
-## 😎 
+
+## 😎
+
 ]
 
 En somme, la formation Symfony est une occasion unique pour les développeurs de développer leurs compétences en développement web et de se faire remarquer sur le marché du travail.
 
-Les participants auront les outils et les connaissances nécessaires pour construire des applications web performantes et pour atteindre leurs objectifs professionnels.
-
 .center[
-  <img src="https://images.unsplash.com/photo-1612712191426-54db4d88cbec?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=200&q=80" alt="Découverte de symfony" />
+
+    <img src="https://images.unsplash.com/photo-1612712191426-54db4d88cbec?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=200&q=80" alt="Découverte de symfony" />
+
 ]
 
 ---
 
 class: middle
-.center[
-
-### **Au programme**
-
-]
-
+.center[]
 .pull-left[
-#### **Installation de notre environnement**
 
-* Gitpod / Codespace (github)
-* Docker
-* Un environement docker avec :
-  * PHP 8.2
-  * Composer
-  * Nodejs
-  * Symfony cli
+#### Objectifs d'apprentissage
+
+À la fin de cette session, les participants seront capables de :
+
+- Configurer un environnement de développement Symfony complet en utilisant Docker et Gitpod/Codespace.
+- Comprendre et utiliser les versions récentes de PHP et Node.js dans un contexte Symfony.
+- Développer une application web en utilisant Symfony 7, intégrant une base de données PostgreSQL et une interface administrateur avec EasyAdmin et Twig.
+
+#### Outils et Technologies Utilisés
+
+- **Gitpod / Codespace (GitHub)** : Fournit un environnement de développement intégré dans le cloud qui facilite la configuration et le partage des environnements de développement.
+- **Docker** : Utilisé pour créer, déployer et gérer des applications dans des conteneurs isolés, assurant la cohérence entre les environnements de développement et de production.
+
 ]
-
 .pull-right[
-#### **Symfony 6**
 
-* Nouveau projet symfony 6.3
-* Base de données avec Postgresql
-* Interface web (Easy admin, Twig)
-* Environnement de dev
-* Entité, Controller, Event
-* Messages
-* Redisq
-]
- 
-.center[
-  <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80&h=200" />
+#### Au programme
+
+- Nouveau projet Symfony 7
+- **Base de données avec PostgreSQL** : Intégration et utilisation de PostgreSQL pour la gestion des données.
+- **Interface web (EasyAdmin, Twig)** : Création d'interfaces utilisateur dynamiques et administratives.
+- **Environnement de développement** : Setup et configuration pour un développement fluide.
+- **Entité, Contrôleur, Event** : Définition des modèles de données, gestion des requêtes et réponse aux événements.
+- **Messages** : Gestion de la communication entre les différents composants de l'application.
+- **Workflows** : Implémentation de workflows Symfony pour automatiser des processus métier complexes et gérer des états d'entités.
+- **Redisq** : Utilisation de Redis pour la gestion des files d'attente et des tâches asynchrones.
+
+#### Exemples Pratiques
+
+- Des exemples de code seront fournis pour chaque module pour illustrer l'utilisation pratique des technologies et outils introduits.
+
 ]
 
 ---
+
 class: center, middle, inverse
+
 # 1. Environnement de travail
+
 ---
 
 class: middle
 .center[
+
 ### **Editeur en ligne Gitpod**
+
 ]
 
 .pull-left.mt-2[
+
 #### Avantages de l'utilisation d'éditeurs de code en ligne pour la formation Symfony
-* Accès depuis n'importe où, à tout moment
-* Interface utilisateur conviviale
-* Fonctionnalités de collaboration en temps réel
-* Intégration transparente avec des services tels que Git
-* Expérience de développement uniforme pour tous les participants
-* Possibilité de se concentrer sur le développement des compétences
-* Accès aux mêmes outils et fonctionnalités pour tous les participants
-* Facilitation de la collaboration en équipe et du partage de connaissances
-]
-.pull-right.center.middle[
+
+- Accès depuis n'importe où, à tout moment
+- Interface utilisateur conviviale
+- Fonctionnalités de collaboration en temps réel
+- Intégration transparente avec des services tels que Git
+- Expérience de développement uniforme pour tous les participants
+- Possibilité de se concentrer sur le développement des compétences
+- Accès aux mêmes outils et fonctionnalités pour tous les participants
+- Facilitation de la collaboration en équipe et du partage de connaissances
+  ]
+  .pull-right.center.middle[
   <img src="img/gitpod-tools.jpg" alt="Gitpod tools" width="450px" />
-]
+  ]
 
 En utilisant des éditeurs de code en ligne pour la formation Symfony, vous bénéficierez d'une expérience plus souple et plus facile, tout en garantissant une expérience de développement uniforme pour tous les participants.
 
 .center[
-  <a href="https://gitpod.io" target="_blank">
-    <img src="img/gitpod-logo.png" width="300" />
-    <br />Go to Gitpod
-  </a>
+<a href="https://gitpod.io" target="_blank">
+<img src="img/gitpod-logo.png" width="300" />
+<br />Go to Gitpod
+</a>
 ]
 
 ---
@@ -129,29 +158,34 @@ En utilisant des éditeurs de code en ligne pour la formation Symfony, vous bén
 class: middle
 
 .center[
-### **Mise en place**
+
+### Mise en place de Gitpod
 
 ]
-#### **Utilisation d'éditeurs de code en ligne pour la formation Symfony**
-Pendant cette formation, nous privilégierons l'utilisation de Gitpod. Pour pouvoir en bénéficier, vous devrez disposer d'un nouveau dépôt Git existant (sur Github, Gitlab ou Bitbucket).
+<br/>
+.info[
+⚠️ Gitpod offre **50 heures d'utilisation gratuite** chaque mois dans sa version légère de l'éditeur de code en ligne. Vous devrez également associer votre compte LinkedIn pour bénéficier de cette offre.
+]
 
-* ⏩ **Créer un nouveau dépôt git**
+- ⏩ **Créer un nouveau dépôt git**
 
 Gitpod embarque une image par défaut accessible à partir de https://hub.docker.com/r/gitpod/workspace-full. Toutefois, il est possible de personnaliser votre environnement de développement en configurant, par exemple, les extensions de PHP.
 
 Pour spécifier l'utilisation d'une image Docker à partir d'un fichier **Dockerfile**, il est nécessaire d'ajouter un fichier `.gitpod.yml` à la racine du projet git avec le contenu suivant :
+
 ```yml
 image:
-    file: .gitpod.Dockerfile
+  file: .gitpod.Dockerfile
 ```
 
-* ⏩ **Ajouter le fichier `.gitpod` à votre nouveau projet git**
+- ⏩ **Ajouter le fichier `.gitpod` à votre nouveau projet git**
 
 ---
 
 class: middle
 
-Ensuite, il faut créer un fichier nommé `.gitpod.Dockerfile` à la racine du projet et y ajouter le contenu suivant :
+- ⏩ **Ensuite, il faut créer un fichier nommé `.gitpod.Dockerfile` à la racine du projet et y ajouter le contenu suivant :**
+
 ```dockerfile
 FROM gitpod/workspace-full:latest
 
@@ -167,76 +201,86 @@ Ce fichier **Dockerfile** spécifie l'utilisation de l'image de base `gitpod/wor
 
 Puis, committez et poussez ces deux fichiers sur votre branche principale.
 
-* ⏩ **Rendez-vous sur https://gitpod.io**
-* ⏩ **Puis sur l'onglet "Project", cliquez sur "New Project".**
-* ⏩ **Choisissez le répertoire git préalablement configuré.**
+- ⏩ **Rendez-vous sur https://gitpod.io**
+- ⏩ **Si c'est votre première fois, donnez les droits à gitpod d'acceder à votre repo, puis créez un workspace**
+- ⏩ **Sinon rendez-vous sur l'onglet "Project", cliquez sur "New Project".**
+- ⏩ **Choisissez le répertoire git préalablement configuré.**
 
 .info[
-  Assurez-vous de suivre ces étapes pour vous préparer à utiliser l'éditeur de code en ligne pour la formation Symfony.
+Assurez-vous de suivre ces étapes pour vous préparer à utiliser l'éditeur de code en ligne pour la formation Symfony.
 ]
 
 ---
+
 class: middle
 .center[
-  ### **Verification de l'environnement Gitpod**
+
+### **Verification de l'environnement Gitpod**
+
 ]
+
 #### **Préparation pour la formation**
-* Sur l'éditeur de code en ligne, certains logiciels sont déjà installés.
-* Vérifions que nous avons tous les outils nécessaires pour cette formation.
 
+Sur l'éditeur de code en ligne, certains logiciels sont déjà installés. Vérifions que nous avons tous les outils nécessaires pour cette formation.
 
-* ⏩ **Assurez-vous de vérifier les outils nécessaires avant de commencer la formation avec un éditeur de code en ligne.**
+- ⏩ **Assurez-vous de vérifier les outils nécessaires avant de commencer la formation avec un éditeur de code en ligne.**
 
-| .red[software] | .red[command version] | .red[version] |
-|--|--|
-| **docker** | `docker --version` | +20.10 |
-| **docker compose** | `docker compose version` | +2.10 |
-| **php** | `php -version` | +8.1 |
-| **composer** | `symfony composer --version` | +2.4 |
-| **node** | `node --version` | +16 |
-| **yarn** | `yarn --version` | +1.22 |
-
+| **software**   | **command version**          | **version** |
+| -------------- | ---------------------------- | ----------- |
+| docker         | `docker --version`           | +26.10      |
+| docker compose | `docker compose version`     | +2.23       |
+| php            | `php -version`               | +8.3        |
+| composer       | `symfony composer --version` | +2.7        |
+| node           | `node --version`             | +20         |
+| yarn           | `yarn --version`             | +1.22       |
 
 ---
 
 class: middle
 .center[
-  ### **Initialisation du projet avec Symfony**
+
+### **Initialisation du projet avec Symfony**
+
 ]
 
-* Nous allons initialiser le projet avec le client Symfony.
-* Nous utiliserons la **version 6.3+**, la dernière en date.
-* Nous utiliserons également **PHP 8.2+**.
+- Nous allons initialiser le projet avec le client Symfony.
+- Nous utiliserons la **version 7.0+**, la dernière en date.
+- Nous utiliserons également **PHP 8.3+**.
 
 Assurez-vous de suivre ces étapes pour initialiser correctement votre projet avec Symfony en utilisant les dernières versions disponibles.
 
-Lancer la commande suivante depuis le terminal, elle va permettre de cloner symfony-skeleton, lancer composer ...
-❗ Assurez-vous que le repertoire en cours soit vide.
+- ⏩ **Lancer la commande suivante depuis le terminal pour initialiser un nouveau projet Symfony** :
+
 ```sh
-symfony new --dir=guestbook --webapp --version=6.3
-cd guestbook
-rm -rf .git
+  symfony new --dir=guestbook --webapp --version=7.0
+  rm -rf guestbook/.git
+  shopt -s dotglob
+  mv guestbook/* ./
+  rm -rf guestbook/
 ```
-* **`new`** L'argument permet de construire un nouveau projet
-* **`--dir=guestbook`** repertoire d'installation du projet symfony
-* **`--webapp`** L'option installe tous les paquets dont vous avez généralement besoin pour créer des applications Web.
+
+- **`new`** L'argument permet de construire un nouveau projet
+- **`--dir=guestbook`** repertoire d'installation du projet symfony
+- **`--webapp`** L'option installe tous les paquets dont vous avez généralement besoin pour créer des applications Web.
 
 Le binaire symfony fournit également un outil permettant de vérifier si votre ordinateur répond à toutes les exigences. Ouvrez votre terminal de console et exécutez cette commande :
+
 ```sh
 symfony book:check-requirements
 ```
 
-
 ---
+
 class: middle
 .center[
-### VsCode Extensions
+
+### IDE et Extensions
+
 ]
 .right-column[
 
-Nous aurons besoin de certaines extension sur Vscode pour travailler correctement et facilement.
+Vous pouvez utiliser n'importe quel éditeur de code pour travailler sur votre projet Symfony. Cependant, pour une expérience de développement optimale, nous vous recommandons d'utiliser Visual Studio Code (VSCode) avec les extensions suivantes :
 
-Liste des extensions
 - PHP Debug
 - PHP Intelephense
 - PHP Namespace Resolver
@@ -244,104 +288,282 @@ Liste des extensions
 - YAML
 - PHP 8 Getter & Setter
 - Extension Twig Language 2
-]
+  ]
 
----
-class: center, middle, inverse
-# 2. En route vers symfony 6
-https://symfony.com/doc/current/the-fast-track/fr/index.html
-
-<img src="https://images.unsplash.com/photo-1623176035122-4e07bc19bab7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=200&q=80" />
 ---
 
 class: middle
+
+### Rappel sur quelques notions de php orienté objet
+
+- **Les classes** : Les classes sont des modèles pour les objets. Elles définissent les propriétés et les méthodes des objets.
+
+  ```php
+  class ClassName { /** propriétés, méthodes, ... */}
+  ```
+
+- **Le constructeur** : Le constructeur est une méthode spéciale qui est appelée lorsqu'un objet est instancié.
+
+  ```php
+  public function __construct() { /** code */}
+  ```
+
+- **Les objets** : Les objets sont des instances de classes. Ils ont des propriétés et des méthodes.
+
+  ```php
+  $object = new ClassName();
+  ```
+
+- **Les propriétés** : Les propriétés sont les variables d'un objet. Elles contiennent les données de l'objet.
+
+  ```php
+  public string $property = 'value';
+  ```
+
+- **Les méthodes** : Les méthodes sont les fonctions d'un objet. Elles permettent de manipuler les données de l'objet.
+
+  ```php
+  public function method() { /** code */}
+  ```
+
+- **La visibilité** : La visibilité est le fait de définir l'accès aux propriétés et aux méthodes d'une classe.
+
+  ```php
+  public $property; // accessible partout
+  protected $property; // accessible dans la classe et les classes héritées
+  private $property; // accessible uniquement dans la classe
+  ```
+
+---
+
+class: middle
+
+- **Les espaces de noms** : Les espaces de noms sont des moyens de regrouper des classes, des interfaces, des fonctions et des constantes dans un espace de noms.
+
+  ```php
+  namespace NamespaceName;
+  class ClassName { /** code */}
+
+  new NamespaceName\ClassName();
+  ```
+
+- **La constante** : La constante est une valeur qui ne peut pas être modifiée une fois qu'elle a été définie.
+
+  ```php
+  public const string CONSTANT_NAME = 'value';
+  ```
+
+- **L'encapsulation** : L'encapsulation est le fait de regrouper les propriétés et les méthodes d'un objet dans une classe.
+
+  ```php
+  class ClassName
+  {
+      private string $property;
+      public function getProperty() {  return $this->property; }
+      public function setProperty($value) { $this->property = $value; }
+  }
+
+  ```
+
+- **Le typage** : Le typage est le fait de définir le type des propriétés et des paramètres des méthodes.
+
+  ```php
+  private readonly string $property;
+  public function method(string $param) : bool {  return true; }
+  ```
+
+- **Les enums** : Les enums sont des listes de valeurs constantes.
+
+  ```php
+  enum EnumName : string { VALUE1 = 'value1', VALUE2 = 'value2', VALUE3 = 'value3'}
+
+  private EnumName $property = EnumName::VALUE1;
+  ```
+
+---
+
+class: middle
+
+- **L'héritage** : L'héritage est le fait de créer une nouvelle classe à partir d'une classe existante. La nouvelle classe hérite des propriétés et des méthodes de la classe existante.
+
+  ```php
+  class ChildClass extends ParentClass { /** code */}
+  ```
+
+- **Le polymorphisme** : Le polymorphisme est le fait de redéfinir les méthodes d'une classe dans une classe héritée.
+
+  ```php
+  class ParentClass { public function method() { /** code */} }
+  class ChildClass extends ParentClass { public function method() { /** code */} }
+  ```
+
+- **L'abstraction** : L'abstraction est le fait de définir des classes abstraites qui ne peuvent pas être instanciées directement.
+
+  ```php
+  abstract class ClassName { /** code */}
+  ```
+
+- **L'interface** : L'interface est le fait de définir un ensemble de méthodes que les classes doivent implémenter.
+
+  ```php
+  interface InterfaceName { public function method(); }
+  ```
+
+- **Le trait** : Le trait est le fait de regrouper des méthodes qui peuvent être réutilisées dans plusieurs classes.
+
+  ```php
+  trait TraitName { public function method() { /** code */} }
+  class ClassName { use TraitName; }
+  ```
+
+- **Injection de dependance** : L'injection de dépendance est le fait de passer des objets à une classe au lieu de les instancier à l'intérieur de la classe.
+
+  ```php
+  class ClassName { public function __construct(Dependency $dependency) { /** code */} }
+  ```
+
+---
+
+class: center, middle, inverse
+
+# 2. En route vers symfony 7
+
+https://symfony.com/doc/current/the-fast-track/fr/index.html
+
+## <img src="https://images.unsplash.com/photo-1623176035122-4e07bc19bab7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=200&q=80" />
+
+---
+
+class: middle
+
 ### .center[**Présentation du projet**]
+
 Nous devons trouver un projet sur lequel travailler. C'est un certain défi car nous devons choisir un projet assez vaste pour couvrir complètement Symfony, mais en même temps, il devrait être assez petit ; Afin que vous ne vous ennuyiez pas à implémenter des fonctionnalités similaires plusieurs fois.
 
 #### Description du projet
-Le projet a pour but d'obtenir un retour d'expérience sur les conférences : une liste des conférences sur la page d'accueil ainsi qu'une page pour chacune d'entre elles, pleine de commentaires sympathiques. Un commentaire est composé d'un petit texte et d'une photo, optionnelle, prise pendant la conférence.
 
-Le projet comprendra plusieurs applications : 
+**Le projet a pour but d'obtenir un retour d'expérience sur les conférences :**
+
+> Une liste des conférences sur la page d'accueil ainsi qu'une page pour chacune d'entre elles, pleine de commentaires sympathiques. Un commentaire est composé d'un petit texte et d'une photo, optionnelle, prise pendant la conférence.
+
+Le projet comprendra plusieurs applications :
+Le projet comprendra plusieurs applications :
+
+- **Une application web traditionnelle avec une interface HTML**
+- **une API**
+- **une SPA pour les téléphones mobiles.**
+  Le projet comprendra plusieurs applications :
+- **Une application web traditionnelle avec une interface HTML**
+- **une API**
+- **une SPA pour les téléphones mobiles.**
+
 * **Une application web traditionnelle avec une interface HTML**
 * **une API**
 * **une SPA pour les téléphones mobiles.**
 
-#### La maîtrise s’acquiert par la pratique
-La maîtrise s’acquiert par la pratique. Point final. Lire un livre sur Symfony, c'est bien. Coder une application sur votre ordinateur tout en lisant un livre sur Symfony, c'est encore mieux. Cette formation est très spécial puisque tout a été fait pour que vous puissiez suivre et  coder.
+---
+
+class: middle
+
+### .center[La maîtrise s’acquiert par la pratique]
+
+- La maîtrise s’acquiert par la pratique. Point final. Lire un livre sur Symfony, c'est bien.
+
+- Coder une application sur votre ordinateur tout en lisant un livre sur Symfony, c'est encore mieux.
+
+- Cette formation est très spécial puisque tout a été fait pour que vous puissiez suivre et coder.
+
+.center[
+<img src="https://images.unsplash.com/photo-1499914485622-a88fac536970?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+]
 
 ---
 
 class: middle
 
 .center[
-### **Structure**
-]
 
+### **Structure**
+
+]
 
 .left-column[
 Jetons un coup d'oeil à la structure des répertoires :
 
 ```
-├── bin/
-├── composer.json
-├── composer.lock
-├── config/
-├── public/
-├── src/
-├── symfony.lock
-├── var/
-└── vendor/
+your-project/
+├─ assets/
+├─ bin/
+│  └─ console
+├─ config/
+├─ public/
+│  └─ index.php
+├─ src/
+│  └─ ...
+├─ templates/
+├─ tests/
+├─ translations/
+├─ var/
+│  ├─ cache/
+│  ├─ log/
+│  └─ ...
+├─ vendor/
+└─ .env
 ```
+
 ]
 .right-column[
 Comme Git est installé sur notre machine, `symfony new` nous a également créé un dépôt Git, dans lequel a été ajouté le tout premier commit.
 
+- **`bin/`** contient le principal point d'entrée de la ligne de commande : `console`. Vous l'utiliserez tout le temps.
 
-* **`bin/`** contient le principal point d'entrée de la ligne de commande : `console`. Vous l'utiliserez tout le temps.
+- **`config/`** est constitué d'un ensemble de fichiers de configuration sensibles, initialisés avec des valeurs par défaut. Un fichier par paquet. Vous les modifierez rarement : faire confiance aux valeurs par défaut est presque toujours une bonne idée.
 
-* **`config/`** est constitué d'un ensemble de fichiers de configuration sensibles, initialisés avec des valeurs par défaut. Un fichier par paquet. Vous les modifierez rarement : faire confiance aux valeurs par défaut est presque toujours une bonne idée.
+- **`public/`** est le répertoire racine du site web, et le script index.php est le point d'entrée principal de toutes les ressources HTTP dynamiques.
 
-* **`public/`** est le répertoire racine du site web, et le script index.php est le point d'entrée principal de toutes les ressources HTTP dynamiques.
+- **`src/`** héberge tout le code que vous allez écrire ; c'est ici que vous passerez la plupart de votre temps. Par défaut, toutes les classes de ce répertoire utilisent le namespace PHP App. C'est votre répertoire de travail, votre code, votre logique de domaine. Symfony n'a pas grand-chose à y faire.
 
-* **`src/`** héberge tout le code que vous allez écrire ; c'est ici que vous passerez la plupart de votre temps. Par défaut, toutes les classes de ce répertoire utilisent le namespace PHP App. C'est votre répertoire de travail, votre code, votre logique de domaine. Symfony n'a pas grand-chose à y faire.
+- **`var/`** contient les caches, les logs et les fichiers générés par l'application lors de son exécution. Vous pouvez le laisser tranquille. C'est le seul répertoire qui doit être en écriture en production.
 
-* **`var/`** contient les caches, les logs et les fichiers générés par l'application lors de son exécution. Vous pouvez le laisser tranquille. C'est le seul répertoire qui doit être en écriture en production.
-
-* **`vendor/`** contient tous les paquets installés par Composer, y compris Symfony lui-même. C'est notre arme secrète pour un maximum de productivité. Ne réinventons pas la roue. Vous profiterez des bibliothèques existantes pour vous faciliter le travail. Le répertoire est géré par Composer. N'y touchez jamais.
+- **`vendor/`** contient tous les paquets installés par Composer, y compris Symfony lui-même. C'est notre arme secrète pour un maximum de productivité. Ne réinventons pas la roue. Vous profiterez des bibliothèques existantes pour vous faciliter le travail. Le répertoire est géré par Composer. N'y touchez jamais.
 
 C'est tout ce que vous avez besoin de savoir pour l'instant. 🏁
 
 ]
 
-
 ---
 
 class: middle
 .center[
-  ### **Enregistrer notre travail**
+
+### **Enregistrer notre travail**
+
 ]
 
-Prenons l'habitude après chaque chapitre de commiter notre travail. Cela nous permettra de revenir en arrière si nous rencontrons des problèmes. 
+Prenons l'habitude après chaque chapitre de commiter notre travail. Cela nous permettra de revenir en arrière si nous rencontrons des problèmes.
 
-* ⏩ **Commitez notre travail via :**
+- ⏩ **Commitez notre travail via :**
   ```sh
-  git add . 
+  git add .
   git commit -m "Init structre"
   ```
 
 .center[
-  <img src="https://images.unsplash.com/photo-1589995186011-a7b485edc4bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&h=200&q=80" />
+<img src="https://images.unsplash.com/photo-1589995186011-a7b485edc4bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&h=200&q=80" />
 ]
 
 ---
 
 class: middle
 .center[
+
 ### **Resources publique**
+
 ]
 
 #### Créer des ressources publiques
-Tout ce qui se trouve dans le répertoire **`public/`** est accessible par un navigateur. 
+
+Tout ce qui se trouve dans le répertoire **`public/`** est accessible par un navigateur.
 
 Par exemple, si vous déplacez votre fichier GIF animé (nommez-le under-construction.gif) dans un nouveau répertoire `public/images/`, il sera alors disponible à une URL comme https://localhost/images/under-construction.gif.
 
@@ -349,13 +571,15 @@ Par exemple, si vous déplacez votre fichier GIF animé (nommez-le under-constru
 ![Under Construction](http://clipartmag.com/images/website-under-construction-image-6.gif)
 ]
 
-* ⏩ **Téléchargez l'image GIF animée dans le répertoire `public/images/`**
-```sh
-mkdir public/images/
-php -r "copy('http://clipartmag.com/images/website-under-construction-image-6.gif', 'public/images/under-construction.gif');"
-```
+- ⏩ **Téléchargez l'image GIF animée dans le répertoire `public/images/`**
+
+  ```sh
+  mkdir public/images/
+  php -r "copy('http://clipartmag.com/images/website-under-construction-image-6.gif', 'public/images/under-construction.gif');"
+  ```
 
 ---
+
 class: middle
 .center[
 ### **Lancer un serveur web local**
@@ -363,48 +587,87 @@ class: middle
 
 La commande symfony inclut un serveur web optimisé pour le développement. Comme vous vous en doutez, il marche très bien avec Symfony. Cependant, **ne l'utilisez jamais en production.**
 
-* ⏩ **À partir du répertoire du projet, démarrez le serveur web en arrière-plan (option `-d`)**
-```sh
-symfony server:start -d
-```
+- ⏩ **À partir du répertoire du projet, démarrez le serveur web en arrière-plan (option `-d`)**
+
+  ```sh
+  symfony server:start -d --no-tls
+  ```
 
 Depuis l'éditeur en ligne **Gitpod** vous pouvez retrouver le lien de notre serveur lancé sur l'onglet **PORTS**. Choisissez le port **8000**, un nouvel onglet s'ouvre affichant une page **"welcome to symfony"**
 
 .pull-right[
-  .info[
-    🤖 Ce n'est qu'une page de remplissage, car nous n'avons toujours pas défini de page d'accueil. Même si la page par défaut qui vous accueille est belle, c'est une page d'erreur **`404`**.
+.info[
+🤖 Ce n'est qu'une page de remplissage, car nous n'avons toujours pas défini de page d'accueil. Même si la page par défaut qui vous accueille est belle, c'est une page d'erreur **`404`**.
+]
+
+- ⏩ **Naviguez vers `/images/under-construction.gif.` Pour percevoir notre image animé sur notre projet symfony.**
+
+  _Le repertoire `public/` est le répertoire racine du site web, et le script `index.php` est le point d'entrée principal de toutes les ressources HTTP dynamiques._
+
+- ⏩ **📬 Commitez notre travail**
   ]
-
-* ⏩ **Naviguez vers `/images/under-construction.gif.` Pour percevoir notre image animé sur notre projet symfony.**
-
-  *Le repertoire `public/` est le répertoire racine du site web, et le script `index.php` est le point d'entrée principal de toutes les ressources HTTP dynamiques.*
-* ⏩ **📬 Commitez notre travail**
-]
-.pull-left[
+  .pull-left[
   .center[![Debug page](img/debug-page.png)]
-]
+  ]
 
 ---
 
 class: middle
 
 .center[
-  ### **Découvrir les outils de débogage de Symfony**
+
+### **Résolution des problèmes**
+
 ]
 
-Mettre en place un projet, c'est aussi avoir les bons outils pour déboguer les problèmes. Fort heureusement, des assistants très utiles sont inclus avec le paquet webapp.
+Mettre en place un projet, c'est aussi avoir les bons outils pour déboguer les problèmes. Fort heureusement, des assistants très utiles sont inclus avec le paquet `webapp`.
 
-Pour commencer, le **Symfony Profiler** vous fait gagner un temps fou lorsque vous avez besoin de trouver l'origine d'un problème. Si vous vous rendez sur la route `/_profiler` puis la première ligne avce le code **`404`**, vous obtenez le "vrai" message d'exception dans les logs du *Symfony Profiler*.
+#### **Découvrir les outils de débogage de Symfony**
+
+Pour commencer, Symfony Profiler vous fait gagner du temps lorsque vous devez trouver la cause première d'un problème.
+
+Si vous regardez la page d'accueil, vous devriez voir une barre d'outils en bas de l'écran :
+
+.pull-left.center[
+<img src="img/debug/404-toolbar.png" width=420 />
+]
+
+.pull-right[
+
+.info[
+En utilisant Gitpod, la barre d'outils de débogage n'apparaît pas car le projet fonctionne sans `HTTPS`, alors que l'accès à Gitpod lui-même est sécurisé par `HTTPS`. Pour résoudre ce problème, il faut insérer la fonction header suivante dans le fichier `index.php` :
+
+```php
+header('Content-Security-Policy: upgrade-insecure-requests');
+```
+
+]
+]
+
+---
+
+class: middle
+
+#### **Symfony Profiler**
+
+La première chose que vous remarquerez peut-être est la .red[404 en rouge]. N'oubliez pas que cette page est un espace réservé car nous n'avons pas encore défini de page d'accueil. Même si la page par défaut qui vous accueille est belle, cela reste une page d'erreur. Le code d'état `HTTP` correct est donc 404 et non 200. Grâce à la barre d'outils de débogage Web, vous disposez immédiatement de l'information.
+
+Si vous cliquez sur le petit point d'exclamation, vous obtenez le **"vrai"** message d'exception dans les **journaux du profileur Symfony**. Si vous souhaitez voir la trace de la pile, cliquez sur le lien **"Exception"** dans le menu de gauche.
+
+Chaque fois qu'il y a un problème avec votre code, vous verrez une page d'exception comme celle-ci qui vous donne tout ce dont vous avez besoin pour comprendre le problème et d'où il vient :
 
 .pull-left[
-.center[![Symfony profiler](img/symfony-profiler.png)]
+.center[![Symfony profiler](img/debug/symfony-profiler.png)]
 ]
 .pull-right[
 .info[
+
 > 🗒 Les logs sont également très utiles dans les sessions de débogage. Symfony a une commande pratique pour consulter tous les logs (du serveur web, de PHP et de votre application) :
+
 ```sh
 symfony server:log
 ```
+
 ]
 ]
 
@@ -412,24 +675,28 @@ symfony server:log
 
 class: middle
 .center[
+
 ### **Les environemments**
+
 ]
 
 #### Comprendre les environnements Symfony
+
 Comme le **Symfony Profiler** n'est utile que pendant le développement, nous voulons éviter qu'il soit installé en production. Par défaut, Symfony ne l'installe que pour les environnements de `dev` et de `test`.
 
 Symfony intègre une notion d'environnement. Par défaut, il y en a trois, mais vous pouvez en ajouter autant que vous le souhaitez : `dev`, `prod` et `test`. Tous les environnements partagent le même code, mais ils représentent des configurations différentes.
 
 **Par exemple:** tous les outils de débogage sont activés en environnement de `dev`. Dans celui de `prod`, l'application est optimisée pour la performance.
 
-* ⏩ **Basculer d'un environnement à l'autre peut se faire en changeant la variable d'environnement `APP_ENV`.**
+- ⏩ **Basculer d'un environnement à l'autre peut se faire en changeant la variable d'environnement `APP_ENV`.**
 
 #### Gérer la configuration des environnements
+
 `APP_ENV` peut être défini en utilisant des variables d'environnement "réelles" depuis votre terminal : `export APP_ENV=dev`
 
-* ⏩ **Essayez de modifier la valeur de la variable `APP_ENV` à "prod", redemarrez le serveur symfony, puis rendez-vous sur la page du profiler qui n'est disponible qu'en environnement de développement.**
+- ⏩ **Essayez de modifier la valeur de la variable `APP_ENV` à "prod", redemarrez le serveur symfony, puis rendez-vous sur la page du profiler qui n'est disponible qu'en environnement de développement.**
 
-* ⏩ **Pour supprimer notre variable d'environnement, vous pouvez utiliser la commande `unset APP_ENV` dans un terminal**
+- ⏩ **Pour supprimer notre variable d'environnement, vous pouvez utiliser la commande `unset APP_ENV` dans un terminal**
 
 ---
 
@@ -438,31 +705,39 @@ class: middle
 L'utilisation de variables d'environnement réelles est la meilleure façon de définir des valeurs comme `APP_ENV` en production. Mais sur les machines de développement, avoir à définir beaucoup de variables d'environnement peut s'avérer fastidieux. Définissez-les plutôt dans un fichier `.env.`
 
 Un fichier sensible `.env` a été généré automatiquement pour vous lorsque le projet a été créé :
+
 ```sh
 ###> symfony/framework-bundle ###
 APP_ENV=dev
 APP_SECRET=76f040716bf0a94fa2409642b1883e55
 ###< symfony/framework-bundle ###
 ```
+
 > 💡 N'importe quel paquet peut ajouter plus de variables d'environnement à ce fichier grâce à leur [recette utilisée par Symfony Flex](https://github.com/symfony/recipes).
 
 Le fichier .env est commité sur le dépôt Git et liste les valeurs par défaut de la production. Vous pouvez surcharger ces valeurs en créant un fichier `.env.local`. Ce fichier ne doit pas être commité : c'est pourquoi le fichier `.gitignore` l'ignore déjà.
 
 .info[
-  🚨 Ne stockez jamais des **données secrètes ou sensibles** dans ces fichiers. Nous verrons comment gérer ces données sensibles dans une autre étape.
+🚨 Ne stockez jamais des **données secrètes ou sensibles** dans ces fichiers. Nous verrons comment gérer ces données sensibles dans une autre étape.
 ]
 
 ---
+
 class: center, middle, inverse
+
 # 3. Notre première route
+
 .center[
-  <img src="https://images.unsplash.com/photo-1561220078-b3bdc2f75714?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200&q=80" />
+<img src="https://images.unsplash.com/photo-1561220078-b3bdc2f75714?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200&q=80" />
 ]
+
 ---
 
 class: middle
 .center[
-  ### **Maker bundle**
+
+### **Les controlleurs**
+
 ]
 
 La page d'accueil est une ennuyeuse page d'erreur 404. Corrigeons cela.
@@ -471,12 +746,18 @@ Lorsqu'une requête HTTP arrive au serveur, comme pour notre page d'accueil (htt
 
 Ces callables sont nommés **"contrôleurs"**. Dans Symfony, la plupart des contrôleurs sont implémentés sous la forme de classes PHP. Vous pouvez créer ces classes manuellement, mais comme nous aimons aller vite, voyons comment Symfony peut nous aider.
 
+---
+
+class: middle
+
 #### Se faciliter la vie avec le Maker Bundle
+
 Pour générer des contrôleurs facilement, nous pouvons utiliser le paquet `symfony/maker-bundle`, qui a été installé en tant que composant du paquet `webapp`.
 
 **Le Maker Bundle** vous permet de générer un grand nombre de classes différentes. Nous l'utiliserons constamment dans cette formation. Chaque **"générateur"** correspond à une commande et chacune d'entre elles appartient au même namespace `make`.
 
 La commande `list`, intégrée nativement à la console symfony, permet d'afficher toutes les commandes disponibles sous un namespace donné. Utilisez-la pour découvrir les générateurs fournis par **Maker Bundle** :
+
 ```sh
 symfony console list make
 ```
@@ -485,16 +766,19 @@ symfony console list make
 
 class: middle
 .center[
-  ### **Générer un contrôleur**
+
+### **Générer un contrôleur**
+
 ]
 
-* ⏩ **Créez votre premier Controller avec la commande `make:controller`** :
+- ⏩ **Créez votre premier Controller avec la commande `make:controller`** :
 
-```sh
-symfony console make:controller ConferenceController
-```
+  ```sh
+  symfony console make:controller ConferenceController
+  ```
+
 La commande crée une classe `ConferenceController` dans le répertoire `src/Controller/`. La classe générée contient du code standard prêt à être ajusté :
-    
+
 ```php
 # src/Controller/ConferenceController.php
 namespace App\Controller;
@@ -515,328 +799,433 @@ class ConferenceController extends AbstractController
 }
 ```
 
-* ⏩ **📬 Commitez notre travail**
+---
+
+class: middle
+
+Voyons ce que notre commande make a généré pour nous visuellement sur le navigateur.
+
+- ⏩ **Rendez-vous sur la page `/conference` de votre navigateur.**
+
+.center[
+<img src="img/constroller/conference-page.png" width=500 />
+]
+
+- ⏩ **📬 Commitez notre travail**
+  ```sh
+  git add .
+  git commit -m "Make controller conference"
+  ```
 
 ---
 
 class: middle
 .center[
-  ### **Personnaliser la route**
+
+### **Personnaliser la route**
+
 ]
 
 L'attribut `#[Route('/conference', name: 'conference')]` est ce qui fait de la méthode `index()` un contrôleur (la configuration est à côté du code qu'elle configure).
 
 Lorsque vous visitez la page `/conference` dans un navigateur, le contrôleur est exécuté et une réponse est renvoyée.
 
-* ⏩ **Modifiez la route afin qu'elle corresponde à la page d'accueil (`/`)**
+- ⏩ **Modifiez la route afin qu'elle corresponde à la page d'accueil (`/`)**
 
-```diff
-class ConferenceController extends AbstractController
-{
--   #[Route('/conference', name: 'app_conference')]
-+   #[Route('/', name: 'homepage')]
-    public function index(): Response
-    {
-```
+  ```diff
+  class ConferenceController extends AbstractController
+  {
+  -   #[Route('/conference', name: 'app_conference')]
+  +   #[Route('/', name: 'homepage')]
+      public function index(): Response
+      {
+  ```
 
 Le nom de la route (`name`) sera utile lorsque nous voudrons faire référence à la page d'accueil dans notre code. Au lieu de coder en dur le chemin `/`, nous utiliserons le nom de la route.
 
-* ⏩ **À la place de la page par défaut, retournons une simple page HTML**
+- ⏩ **À la place de la page par défaut, retournons une simple page HTML**
 
-```diff
-     public function index(): Response
-     {
--        return $this->render('conference/index.html.twig', [
--            'controller_name' => 'ConferenceController',
--        ]);
-+        return new Response(<<<EOF
-+            <html>
-+                <body><img src="/images/under-construction.gif" /></body>
-+            </html>
-+        EOF);
-     }
-```
+  ```diff
+      public function index(): Response
+      {
+  -        return $this->render('conference/index.html.twig', [
+  -            'controller_name' => 'ConferenceController',
+  -        ]);
+  +        return new Response(<<<EOF
+  +            <html>
+  +                <body><img src="/images/under-construction.gif" /></body>
+  +            </html>
+  +        EOF);
+      }
+  ```
 
 ---
 
 class: middle
 
-
-* ⏩ **Rafraîchissez le navigateur**
+- ⏩ **Rafraîchissez le navigateur**
 
 Nous avons maintenant une page d'accueil qui affiche une image animée. Nous avons également une route nommée `homepage` qui correspond à cette page. Nous utiliserons ce nom pour faire référence à cette page dans notre code.
 
 .center[
-  ![Symfony Contrôleur](img/symfony-controleur.png)
+![Symfony Contrôleur](img/symfony-controleur.png)
 ]
 
 .info[
 💡 La responsabilité principale d'un contrôleur est de retourner une réponse **HTTP** (classe `Response`) pour la requête (class `Request`).
 ]
 
-* ⏩ **Commitez notre travail `git add . && git commit -m "First controller"`**
+- ⏩ **Commitez notre travail**
+  ```sh
+  git add . && git commit -m "First controller"
+  ```
 
 ---
 
 class: middle
 
 .center[
+
 ### **Ajouter un easter egg**
+
 ]
 
 Pour montrer comment une réponse peut tirer parti de l'information contenue dans la requête, ajoutons un petit easter egg.
 
-* ⏩ **Lorsqu'une requête vers la page d'accueil sera réalisée avec un paramètre d'URL comme `?hello=Fabien`, nous ajouterons du texte pour saluer la personne**
+- ⏩ **Lorsqu'une requête vers la page d'accueil sera réalisée avec un paramètre d'URL comme `?hello=Fabien`, nous ajouterons du texte pour saluer la personne**
 
-```diff
- namespace App\Controller;
+  ```diff
+  namespace App\Controller;
 
- use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-+use Symfony\Component\HttpFoundation\Request;
- use Symfony\Component\HttpFoundation\Response;
- use Symfony\Component\Routing\Annotation\Route;
+  use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+  +use Symfony\Component\HttpFoundation\Request;
+  use Symfony\Component\HttpFoundation\Response;
+  use Symfony\Component\Routing\Annotation\Route;
 
- class ConferenceController extends AbstractController
- {
-     #[Route('/', name: 'homepage')]
--    public function index(): Response
-+    public function index(Request $request): Response
-     {
-+        $greet = '';
-+        if ($name = $request->query->get('hello')) {
-+            $greet = sprintf('<h1>Hello %s!</h1>', htmlspecialchars($name));
-+        }
-+
-         return new Response(<<<EOF
-             <html>
--                <body><img src="/images/under-construction.gif" /></body>
-+                <body>$greet<img src="/images/under-construction.gif" /></body>
-             </html>
-```
+  class ConferenceController extends AbstractController
+  {
+      #[Route('/', name: 'homepage')]
+  -    public function index(): Response
+  +    public function index(Request $request): Response
+      {
+  +        $greet = '';
+  +        if ($name = $request->query->get('hello')) {
+  +            $greet = sprintf('<h1>Hello %s!</h1>', htmlspecialchars($name));
+  +        }
+  +
+          return new Response(<<<EOF
+              <html>
+  -                <body><img src="/images/under-construction.gif" /></body>
+  +                <body>$greet<img src="/images/under-construction.gif" /></body>
+              </html>
+  ```
 
 ---
 
 class: middle
 .center[
-  ### **Paramètre de route dynamique**
+
+### **Paramètre de route dynamique**
 
 ]
 
 Symfony expose les données de la requête à travers un objet `Request`. Lorsque Symfony voit un argument de contrôleur avec ce typage précis, il sait automatiquement qu'il doit vous le passer. Nous pouvons l'utiliser pour récupérer le nom depuis le paramètre d'URL et ajouter un titre `<h1>`.
 
-* ⏩ **Dans un navigateur, rendez-vous sur `/`, puis sur `/?hello=Fabien` pour constater la différence.**
+- ⏩ **Dans un navigateur, rendez-vous sur `/`, puis sur `/?hello=Fabien` pour constater la différence.**
 
-* ⏩ **Nous aurions également pu inclure le nom directement dans l'URL :**
+- ⏩ **Nous aurions également pu inclure le nom directement dans l'URL :**
 
-```diff
- class ConferenceController extends AbstractController
- {
--    #[Route('/', name: 'homepage')]
--    public function index(Request $request): Response
-+    #[Route('/hello/{name}', name: 'homepage')]
-+    public function index(string $name = ''): Response
-     {
-         $greet = '';
--        if ($name = $request->query->get('hello')) {
-+        if ($name) {
-             $greet = sprintf('<h1>Hello %s!</h1>', htmlspecialchars($name));
-         }
-```
+  ```diff
+  class ConferenceController extends AbstractController
+  {
+  -    #[Route('/', name: 'homepage')]
+  -    public function index(Request $request): Response
+  +    #[Route('/hello/{name}', name: 'homepage')]
+  +    public function index(string $name = ''): Response
+      {
+          $greet = '';
+  -        if ($name = $request->query->get('hello')) {
+  +        if ($name) {
+              $greet = sprintf('<h1>Hello %s!</h1>', htmlspecialchars($name));
+          }
+  ```
 
 La partie de la route `{name}` est un paramètre de route dynamique - il fonctionne comme un joker. Vous pouvez maintenant vous rendre sur `/hello` et sur `/hello/Fabien` dans un navigateur pour obtenir les mêmes résultats qu'auparavant. Vous pouvez récupérer la valeur du paramètre `{name}` en ajoutant un argument portant le même nom au contrôleur, donc $name.
 
-* ⏩ **Annulez les changements que nous venons juste de faire via `git checkout .`**
+- ⏩ **Annulez les changements que nous venons juste de faire via `git checkout .`**
 
 ---
 
 class: middle
 .center[
+
 ### **Débogguer des variables**
+
 ]
 
 La fonction `dump()` est un utilitaire de déboggage très puissant. Elle est toujours disponible et vous permet de voir le contenu de variables complexes dans un format interactif.
 
-Modifiez temporairement le fichier `src/Controller/ConferenceController.php` pour afficher le contenu de l'objet Request :
+- ⏩ **Modifiez temporairement le fichier `src/Controller/ConferenceController.php` pour afficher le contenu de l'objet Request :**
 
-```diff
- use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-+use Symfony\Component\HttpFoundation\Request;
- use Symfony\Component\HttpFoundation\Response;
- use Symfony\Component\Routing\Annotation\Route;
+  ```diff
+  use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+  +use Symfony\Component\HttpFoundation\Request;
+  use Symfony\Component\HttpFoundation\Response;
+  use Symfony\Component\Routing\Annotation\Route;
 
- class ConferenceController extends AbstractController
- {
-     #[Route('/', name: 'homepage')]
--    public function index(): Response
-+    public function index(Request $request): Response
-     {
-+        dump($request);
-+
-         return new Response(<<<EOF
-             <html>
-                 <body>
+  class ConferenceController extends AbstractController
+  {
+      #[Route('/', name: 'homepage')]
+  -    public function index(): Response
+  +    public function index(Request $request): Response
+      {
+  +        dump($request);
+  +
+          return new Response(<<<EOF
+              <html>
+                  <body>
+  ```
 
-```
 Quand vous rafraichissez la page, une icône "cible" apparait dans la barre de déboggage; elle vous permet d'inspecter le dump. Cliquez dessus pour accéder à une page dédiée rendant la navigation plus simple.
 
-* ⏩ **Annulez les changements que nous venons juste de faire via `git checkout .`**
+- ⏩ **Annulez les changements que nous venons juste de faire via `git checkout .`**
 
 ---
 
 class: middle
 .center[
-  ### **.red[Travaux pratique]**
+
+### **.red[Travaux pratique]**
+
 ]
 
-**Objectif :** Créer un contrôleur qui gère une liste fictive de produits avec `/products` et permet aussi de récupérer des détails au format json (sans template twig) sur un produit spécifique en utilisant des routes dynamiques `/product/{id}`.
+.pull-left[
+**Objectif :**
 
-```php
-$products = [
-  [
-    'id' => 1,
-    'name' => 'Iphone 13',
-    'price' => 999.99,
-    'description' => 'Apple iPhone 13 Pro 256 Go Bleu Pacifique',
-    'category' => 'smartphone',
-  ],
-  [
-    'id' => 2,
-    'name' => 'Samsung Galaxy S21',
-    'price' => 899.99,
-    'description' => 'Samsung Galaxy S21 5G 128 Go Double SIM Noir Phantom',
-    'category' => 'smartphone',
-  ],
-  [
-    'id' => 3,
-    'name' => 'Huawei P40',
-    'price' => 799.99,
-    'description' => 'Huawei P40 Pro 5G 256 Go Double SIM Noir',
-    'category' => 'smartphone',
-  ],
-  [
-    'id' => 4,
-    'name' => 'MacBook Pro',
-    'price' => 1299.99,
-    'description' => 'Apple MacBook Pro 13" 256 Go SSD 8 Go RAM Intel Core i5 quadricœur à 1,4 GHz Argent',
-    'category' => 'laptop',
+- Créer un contrôleur qui gère une liste fictive de produits avec `/products`
+
+- Récupérer des détails au format json (sans template twig)
+
+- Ajouter une route pour un produit spécifique en utilisant des routes dynamiques `/product/{id}`.
+
+- Re-factoriser le code pour utiliser une seule liste de produits.
+
+- Commitez votre travail.
+
+]
+
+.pull-right[
+
+- **Données fictives :**
+
+  ```php
+  $products = [
+    [
+      'id' => 1,
+      'name' => 'Iphone 13',
+      'price' => 999.99,
+      'description' => 'Apple iPhone 13 Pro 256 Go Bleu Pacifique',
+      'category' => 'smartphone',
+    ],
+    [
+      'id' => 2,
+      'name' => 'Samsung Galaxy S21',
+      'price' => 899.99,
+      'description' => 'Samsung Galaxy S21 5G 128 Go Double SIM Noir Phantom',
+      'category' => 'smartphone',
+    ],
+    [
+      'id' => 3,
+      'name' => 'Huawei P40',
+      'price' => 799.99,
+      'description' => 'Huawei P40 Pro 5G 256 Go Double SIM Noir',
+      'category' => 'smartphone',
+    ],
+    [
+      'id' => 4,
+      'name' => 'MacBook Pro',
+      'price' => 1299.99,
+      'description' => 'Apple MacBook Pro 13" 256 Go SSD 8 Go RAM Intel Core i5 quadricœur à 1,4 GHz Argent',
+      'category' => 'laptop',
+    ]
   ]
+  ```
+
 ]
-```
 
 ---
+
 class: center, middle, inverse
+
 # 4. Gestion des données
+
 ---
 
 class: middle
 .center[
-  ### **Base de données PostgreSQL**
+
+### **Base de données PostgreSQL**
+
 ]
 
-  Le site web du livre d'or de la conférence permet de recueillir des **commentaires** pendant les **conférences**. Nous avons besoin de stocker ces commentaires dans un stockage persistant.
+Le site web du livre d'or de la conférence permet de recueillir des **commentaires** pendant les **conférences**. Nous avons besoin de stocker ces commentaires dans un stockage persistant.
 
 Un commentaire est mieux décrit par une structure de données fixe :
 
-* Un nom
-* Un email
-* Le texte du commentaire
-* Et une photo facultative
+- Un nom
+- Un email
+- Le texte du commentaire
+- Et une photo facultative
 
 Ce type de données se stocke facilement dans un moteur de base de données relationnelle traditionnel.
 
 .center[
-**🚀 PostgreSQL** est le moteur de base de données que nous allons utiliser.
+**🚀 Postgresql** est le moteur de base de données que nous allons utiliser.
 
-<img src="img/postgresql-logo.png" width="100" alt="PostgreSQL" />
+<img src="img/postgresql-logo.png" width="100" alt="Postgresql" />
 
 ]
 
 ---
+
 class: middle
 .center[
-  ### **Installer PostgreSQL**
+
+### **Installer PostgreSQL**
+
 ]
 
-Sur notre machine locale, nous avons décidé d'utiliser **Docker** pour gérer nos services. Le fichier `docker-compose.yaml` généré contient déjà **PostgreSQL** en tant que service :
+Sur notre machine locale, nous avons décidé d'utiliser **Docker** pour gérer nos services. Le fichier `compose.yaml` généré contient déjà **PostgreSQL** en tant que service :
+
+##### **Extrait du fichier `compose.yaml`**
 
 ```yml
 ###> doctrine/doctrine-bundle ###
 database:
-    image: postgres:${POSTGRES_VERSION:-15}-alpine
-    environment:
-        POSTGRES_DB: ${POSTGRES_DB:-app}
-        # You should definitely change the password in production
-        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
-        POSTGRES_USER: ${POSTGRES_USER:-app}
+  image: postgres:${POSTGRES_VERSION:-16}-alpine
+  environment:
+    POSTGRES_DB: ${POSTGRES_DB:-app}
+    # You should definitely change the password in production
+    POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
+    POSTGRES_USER: ${POSTGRES_USER:-app}
 volumes:
-    - db-data:/var/lib/postgresql/data:rw
-    # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-    # - ./docker/db/data:/var/lib/postgresql/data:rw
+  - db-data:/var/lib/postgresql/data:rw
+  # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+  # - ./docker/db/data:/var/lib/postgresql/data:rw
 ###< doctrine/doctrine-bundle ###
 ```
-
 
 Un serveur **PostgreSQL** sera alors installé et certaines variables d'environnement, qui contrôlent le nom de la base de données et ses identifiants, seront configurées. Les valeurs n'ont pas vraiment d'importance.
 
-Nous exposons également le port PostgreSQL (`5432`) du conteneur à l'hôte local (`docker-compose.override.yml`). Cela nous aidera à accéder à la base de données à partir de notre machine :
-```yaml
+---
+
+class: middle
+
+##### **Extrait du fichier `compose.override.yaml`**
+
+Le fichier `compose.override.yaml` est un fichier de configuration qui permet de surcharger les valeurs par défaut du fichier `compose.yaml`.
+
+Nous exposons également le port PostgreSQL (`5432`) du conteneur à l'hôte local. Cela nous aidera à accéder à la base de données à partir de notre machine :
+
+```diff
 ###> doctrine/doctrine-bundle ###
 database:
-    ports:
-    - "5432"
+  ports:
+-    - "5432"
++    - "5432:5432"
 ###< doctrine/doctrine-bundle ###
 ```
+
 ---
 
 class: middle
 .center[
-  ### **Lancer notre base de données via Docker compose**
+
+### **Lancer notre base de données via Docker compose**
+
 ]
 
-* ⏩ **Lancez Docker Compose en arrière-plan avec l'option `-d`**
+- ⏩ **Lancez Docker Compose en arrière-plan avec l'option `-d`**
+
 ```sh
-docker compose up -d
+docker compose up -d --wait
 ```
 
-* ⏩ **Attendez un peu pour laisser démarrer la base de données, puis vérifiez que tout fonctionne bien**
-```sh
-docker compose ps
-```
+> l'option `--wait` permet d'attendre que les conteneurs soient prêts avant de continuer.
+
+- ⏩ **Attendez un peu pour laisser démarrer la base de données, puis vérifiez que tout fonctionne bien**
+
+  ```sh
+  docker compose ps
+  ```
 
 .info[
-  ❗ S'il n'y a pas de conteneurs en cours d'exécution ou si la colonne `STATUS` n'indique pas `Up`, vérifiez les logs de **Docker Compose** :
-  ```sh
-  docker compose logs database
-  ```
+❗ S'il n'y a pas de conteneurs en cours d'exécution ou si la colonne `STATUS` n'indique pas `Up`, vérifiez les logs de **Docker Compose** :
+
+```sh
+docker compose logs database
+```
+
 ]
 
 ---
 
 class: middle
 .center[
-  ### **Accéder à la base de données**
+
+### **Accéder à la base de données**
+
 ]
 
-L'utilitaire en ligne de commande `psql` peut parfois s'avérer utile. 🤔 Mais vous devez vous rappelez des informations d'identification et du nom de la base de données. Encore moins évident, vous devez aussi connaître le port local sur lequel la base de données tourne sur l'hôte. Docker choisit un port aléatoire pour que vous puissiez travailler sur plus d'un projet en utilisant **PostgreSQL** en même temps (le port local fait partie de la sortie de `docker-compose ps`).
+L'utilitaire en ligne de commande `psql` peut parfois s'avérer utile. 🤔 Mais vous devez vous rappelez des informations d'identification et du nom de la base de données. Encore moins évident, vous devez aussi connaître le port local sur lequel la base de données tourne sur l'hôte.
 
 👉 Si vous utilisez `psql` avec la commande `symfony`, vous n'avez pas besoin de vous souvenir de quoi que ce soit.
 
 La commande `symfony` détecte automatiquement les services Docker en cours d'exécution pour le projet et expose les variables d'environnement dont `psql` a besoin pour se connecter à la base de données.
 
-* ⏩ **Grâce à ces conventions, accéder à la base de données avec `symfony run` est beaucoup plus facile**
-```sh
-symfony run psql
-```
+- ⏩ **Grâce à ces conventions, accéder à la base de données avec `symfony run` est beaucoup plus facile**
 
-* ⏩ **Ou via un `docker compose exec` sur le container `database`**
-```sh
- docker compose exec database psql app app
-```
+  ```sh
+  symfony run psql
+  ```
+
+- ⏩ **Ou via un `docker compose exec` sur le container `database`**
+
+  ```sh
+  docker compose exec database psql app app
+  ```
 
 .info[
 🗒 Documentation PostgreSQL
-* structure : https://www.postgresql.org/docs/13/tutorial-accessdb.html
-* table & requêtes : https://www.postgresql.org/docs/13/tutorial-table.html
+
+- structure : https://www.postgresql.org/docs/current/tutorial-accessdb.html
+- table & requêtes : https://www.postgresql.org/docs/current/tutorial-table.html
+  ]
+
+---
+
+class: middle
+
+.center[
+
+#### **Dump et restauration des données de la base de données**
+
+]
+
+Utilisez pg_dumppour vider les données de la base de données :
+
+```sh
+symfony run pg_dump --data-only > dump.sql
+```
+
+Et restaurez les données :
+
+```sh
+symfony run psql < dump.sql
+```
+
+.center[
+<img src="img/database/dump-restore.png" width=300 />
 ]
 
 ---
@@ -844,86 +1233,99 @@ symfony run psql
 class: middle
 
 .center[
-  ### **Exposer des variables d'environnement**
+
+### **Exposer des variables d'environnement**
+
 ]
 
-Entre les variables d'environnement définies dans le fichier `.env` et celles définies dans le fichier `docker-compose.yaml`, il y a beaucoup de variables d'environnement disponibles. <img src="https://em-content.zobj.net/source/telegram/358/face-with-spiral-eyes_1f635-200d-1f4ab.webp" width="20" alt="Confused" />
+Entre les variables d'environnement définies dans le fichier `.env` et celles définies dans le fichier `compose.yaml`, il y a beaucoup de variables d'environnement disponibles. <img src="https://em-content.zobj.net/source/telegram/358/face-with-spiral-eyes_1f635-200d-1f4ab.webp" width="20" alt="Confused" />
 
-Les mêmes nom de variables d'environnement peuvent être définis dans plusieurs fichiers, **mais les valeurs définies dans les fichiers `docker-compose.yaml` ont la priorité** sur celles définies dans `.env`.
+Les mêmes nom de variables d'environnement peuvent être définis dans plusieurs fichiers, **mais les valeurs définies dans les fichiers `compose.yaml` ont la priorité** sur celles définies dans `.env`.
 
 Pour afficher toutes les variables d'environnement exposées:
-* affiche toutes les variables (server, .env, docker, ...)
-```bash
-symfony var:export --debug --multiline
-```
-* afficher seulement les variables dans les fichiers `.env.*`
-```sh
-symfony console debug:dotenv
-```
 
+- affiche toutes les variables (server, .env, docker, ...)
+
+  ```bash
+  symfony var:export --debug --multiline
+  ```
+
+- afficher seulement les variables dans les fichiers `.env.*`
+
+  ```sh
+  symfony console debug:dotenv
+  ```
 
 ---
 
 class: middle
 .center[
-  ### **Configurer Doctrine ORM**
+
+### **Configurer Doctrine ORM**
+
 ]
 
 Pour interagir avec la base de données depuis PHP, nous allons nous appuyer sur [**Doctrine**](https://www.doctrine-project.org/), un ensemble de bibliothèques qui nous aide à gérer les bases de données :
 
 .pull-left[
-* **Doctrine DBAL** (une couche d'abstraction de la base de données)
-* **Doctrine ORM** (une librairie pour manipuler le contenu de notre base de données en utilisant des objets PHP)
-* Et **Doctrine Migrations**.
-]
-.pull-right[
+
+- **Doctrine DBAL** (une couche d'abstraction de la base de données)
+- **Doctrine ORM** (une librairie pour manipuler le contenu de notre base de données en utilisant des objets PHP)
+- Et **Doctrine Migrations**.
+  ]
+  .pull-right[
   .center[
   <img src="img/doctrine-logo.png" width="250" alt="Doctrine ORM" />
-]
-]
+  ]
+  ]
 
 > Comment est-ce que Doctrine est au courant de notre connexion à la base de données ? 🤔
 
-👉 La recette de Doctrine *(recipes au moment de l'installation du paquet)* a ajouté un fichier de configuration qui contrôle son comportement : `config/packages/doctrine.yaml`.
+👉 La recette de Doctrine _(`composer recipes` au moment de l'installation du paquet)_ a ajouté un fichier de configuration qui contrôle son comportement : `config/packages/doctrine.yaml`.
 
 Le paramètre principal est le `DSN` de la base de données, une chaîne contenant toutes les informations sur la connexion : identifiants, hôte, port, etc. Par défaut, Doctrine recherche une variable d'environnement `DATABASE_URL`.
 
 .info[
-  🔧 Presque tous les paquets installés sont configurés dans le répertoire `config/packages/`. Les valeurs par défaut ont été choisies avec soin pour fonctionner avec la plupart des applications.
+🔧 Presque tous les paquets installés sont configurés dans le répertoire `config/packages/`. Les valeurs par défaut ont été choisies avec soin pour fonctionner avec la plupart des applications.
 ]
+
 ---
 
 class: middle
 .center[
+
 ### **Comprendre les conventions des variables d'environnement de Symfony**
+
 ]
 
-> 👉 Vous pouvez définir la variable `DATABASE_URL` manuellement dans le fichier `.env` ou `.env.local`. 
+> 👉 Vous pouvez définir la variable `DATABASE_URL` manuellement dans le fichier `.env` ou `.env.local`.
 
 Mais grâce à la recette du paquet, vous verrez un exemple de variable `DATABASE_URL` dans votre fichier `.env`. Mais comme le port exposé par Docker vers PostgreSQL peut changer, c'est assez lourd. Il y a une meilleure solution.
 
 Au lieu de coder en dur la variable `DATABASE_URL` dans un fichier, nous pouvons préfixer toutes les commandes avec `symfony`. Ceci détectera les services exécutés par Docker (lorsque le tunnel est ouvert) et définira automatiquement la variable d'environnement.
 
-> 🪄 Docker Compose fonctionne parfaitement avec Symfony grâce à ces variables d'environnement.
+> 🪄 **Docker Compose** fonctionne parfaitement avec Symfony grâce à ces variables d'environnement.
 
 ---
+
 class: middle
 .center[
-  ### **Configurer l'url de la base de données**
+
+### **Configurer l'url de la base de données**
+
 ]
 
-* ⏩ **Vérifiez toutes les variables d'environnement exposées en exécutant :**
+- ⏩ **Vérifiez toutes les variables d'environnement exposées en exécutant :**
+
   ```sh
-  symfony var:export --multiline
-  
-  #...
-  export DATABASE_URL=postgres://app:!ChangeMe!@127.0.0.1:32768/app?sslmode=disable&charset=utf8
-  # ...
+  symfony var:export --multiline | grep DATABASE_URL
+
+  export DATABASE_URL=postgres://app:!ChangeMe!@127.0.0.1:5432/app?sslmode=disable&charset=utf8&serverVersion=16.3
   ```
 
-Vous rappelez-vous du nom du service `database` utilisé dans les configurations Docker `docker-compose.yml` ? Les noms des services sont utilisés comme préfixes pour définir des variables d'environnement telles que `DATABASE_URL`. Si vos services sont nommés selon les conventions Symfony, aucune autre configuration n'est nécessaire.
+Vous rappelez-vous du nom du service `database` utilisé dans les configurations Docker `compose.yml` ? Les noms des services sont utilisés comme préfixes pour définir des variables d'environnement telles que `DATABASE_URL`. Si vos services sont nommés selon les conventions Symfony, aucune autre configuration n'est nécessaire.
 
-* ⏩ **Nous allons quand même changer le fichier `.env` pour initialiser la variable `DATABASE_URL` pour l'utilisation de PostgreSQL**
+- ⏩ **Nous allons quand même changer le fichier `.env` pour initialiser la variable `DATABASE_URL` pour l'utilisation de PostgreSQL**
 
   ```diff
   # DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=8&charset=utf8mb4"
@@ -933,35 +1335,41 @@ Vous rappelez-vous du nom du service `database` utilisé dans les configurations
   ```
 
 🤔 Pourquoi l'information doit-elle être dupliquée à deux endroits différents ?
+
 > 👉 Parce que sur certaines plates-formes de Cloud, au moment de la compilation, l'URL de la base de données n'est peut-être pas encore connue mais Doctrine a besoin de connaître le moteur de la base de données pour initialiser sa configuration. Ainsi, l'hôte, le pseudo et le mot de passe n'ont pas vraiment d'importance.
 
 ---
 
 class: middle
 .center[
-  ### **Générer la classe d'entité "Conférence"**
+
+### **Générer la classe d'entité "Conférence"**
+
 ]
 
 **Une conférence** peut être décrite en quelques propriétés :
 
-* La ville où la conférence est organisée ;
-* L'année de la conférence ;
-* Une option international pour indiquer si la conférence est locale ou internationale (SymfonyLive vs SymfonyCon).
+- La ville où la conférence est organisée ;
+- L'année de la conférence ;
+- Une option international pour indiquer si la conférence est locale ou internationale (SymfonyLive vs SymfonyCon).
 
 Le **Maker Bundle** peut nous aider à générer une classe (une classe `Entity`) qui représente une conférence.
 
-* ⏩ **Il est maintenant temps de générer l'entité `Conference`**
-```sh
-symfony console make:entity Conference
-```
+- ⏩ **Il est maintenant temps de générer l'entité `Conference`**
+
+  ```sh
+  symfony console make:entity Conference
+  ```
+
 .info[
-  🤖 Cette commande est interactive : elle vous guidera dans le processus d'ajout de tous les champs dont vous avez besoin.
+🤖 Cette commande est interactive : elle vous guidera dans le processus d'ajout de tous les champs dont vous avez besoin.
 ]
 
 Utilisez les réponses suivantes (la plupart d'entre elles sont les valeurs par défaut, vous pouvez donc appuyer sur la touche "Entrée" pour les utiliser) :
-* `city`, `string`, `255`, `no` ;
-* `year`, `string`, `4`, `no` ;
-* `isInternational`, `boolean`, `no`.
+
+- `city`, `string`, `255`, `no` ;
+- `year`, `string`, `4`, `no` ;
+- `isInternational`, `boolean`, `no`.
 
 La classe `Conference` a été stockée sous le namespace `App\Entity\.` La commande a également généré une classe de repository Doctrine : `App\Repository\ConferenceRepository.`
 
@@ -969,44 +1377,50 @@ La classe `Conference` a été stockée sous le namespace `App\Entity\.` La comm
 
 class: middle
 .center[
-  ### **Générer la classe d'entités "Comment"**
+
+### **Générer la classe d'entités "Comment"**
+
 ]
 
 Notez que la classe elle-même est une classe PHP sans aucune référence à Doctrine. Les attributs sont utilisés pour ajouter des métadonnées utiles à Doctrine afin de mapper la classe à sa table associée dans la base de données.
 
 Doctrine a ajouté un attribut `id` pour stocker la clé primaire de la ligne dans la table de la base de données. Cette clé `(ORM\Id())` est générée automatiquement `(ORM\GeneratedValue())` avec une stratégie qui dépend du moteur de base de données.
 
-* ⏩ **Maintenant, générez une classe d'entité pour les commentaires de la conférence :**
-```sh
-symfony console make:entity Comment
-```
+- ⏩ **Maintenant, générez une classe d'entité pour les commentaires de la conférence :**
 
-* ⏩ **Entrez les réponses suivantes :**
+  ```sh
+  symfony console make:entity Comment
+  ```
 
-  * `author`, `string`, `255`, `no` ;
-  * `text`, `text`, `no` ;
-  * `email`, `string`, `255`, `no` ;
-  * `createdAt`, `datetime_immutable`, `no`.
+- ⏩ **Entrez les réponses suivantes :**
+
+  - `author`, `string`, `255`, `no` ;
+  - `text`, `text`, `no` ;
+  - `email`, `string`, `255`, `no` ;
+  - `createdAt`, `datetime_immutable`, `no`.
 
 ---
 
 class: middle
 .center[
-   ### **Lier les entités**
+
+### **Lier les entités**
+
 ]
 
 Les deux entités, `Conference` et `Comment`, devraient être liées l'une à l'autre. **Une conférence peut avoir zéro commentaire ou plus**, ce qui s'appelle une relation `one-to-many`.
 
-* ⏩ **Utilisez à nouveau la commande `make:entity` pour ajouter cette relation à la classe `Conference` :**
+- ⏩ **Utilisez à nouveau la commande `make:entity` pour ajouter cette relation à la classe `Conference` :**
 
-```sh
-symfony console make:entity Conference
-```
-* ⏩ **Entrez les responses suivantes :**
-* `comments`, `OneToMany`, `Comment`, `conference`, `no`, `yes`
+  ```sh
+  symfony console make:entity Conference
+  ```
+
+- ⏩ **Entrez les responses suivantes :**
+- `comments`, `OneToMany`, `Comment`, `conference`, `no`, `yes`
 
 .info[
-  💡 Si vous entrez `?` comme réponse pour le type, vous obtiendrez tous les types pris en charge
+💡 Si vous entrez `?` comme réponse pour le type, vous obtiendrez tous les types pris en charge
 ]
 
 Les entités ont été mis à jour et sont maintenant liées l'une à l'autre.
@@ -1017,21 +1431,25 @@ Tout ce dont vous avez besoin pour gérer la relation a été généré pour vou
 
 class: middle
 .center[
-  ### **Ajouter d'autres propriétés**
+
+### **Ajouter d'autres propriétés**
+
 ]
 
 Je viens de réaliser que nous avons oublié d'ajouter une propriété sur l'entité `Comment` :
-* Une photo de la conférence peut être jointe afin d'illustrer un retour d'expérience.
+
+- Une photo de la conférence peut être jointe afin d'illustrer un retour d'expérience.
 
 .center[
-  <img src="https://images.unsplash.com/photo-1464160551369-33c49e545109?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" />
+<img src="https://images.unsplash.com/photo-1464160551369-33c49e545109?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" />
 ]
 
 Allons modifier la classe `Comment` pour ajouter cette propriété.
 
-* ⏩ **Exécutez à nouveau `make:entity` et ajoutez une propriété/colonne `photoFilename` de type `string`.**
+- ⏩ **Exécutez à nouveau `make:entity` et ajoutez une propriété/colonne `photoFilename` de type `string`.**
 
 Mais, comme l'ajout d'une photo est facultatif, permettez-lui d'être null :
+
 ```sh
 symfony console make:entity Comment
 ```
@@ -1040,54 +1458,70 @@ symfony console make:entity Comment
 
 class: middle
 .center[
+
 ### **Migrer la base de données**
+
 ]
 
-La structure du projet est maintenant entièrement décrite par les deux classes générées.
-
-Ensuite, nous devons créer les tables de base de données liées à ces entités PHP.
+La structure du projet est maintenant entièrement décrite par les deux classes générées. Nous devons maintenant créer les tables de base de données liées à ces entités PHP.
 
 **Doctrine Migrations** est la solution idéale pour cela. Le paquet a déjà été installé dans le cadre de la dépendance `orm`.
 
 **Une migration** est une classe qui décrit les changements nécessaires pour mettre à jour un schéma de base de données, de son état actuel vers le nouveau, en fonction des attributs de l'entité. Comme la base de données est vide pour l'instant, la migration devrait consister en la création de deux tables.
 
-* ⏩ **Générez la migration pour créer les tables de base de données**
-```sh
-symfony console make:migration
-```
+- ⏩ **Générez la migration pour créer les tables de base de données**
+
+  ```sh
+  symfony console make:migration --formatted
+  ```
 
 Notez le nom du fichier généré, du genre `migrations/Version20191019083640.php`
 
 #### Mettre à jour la base de données locale
-* ⏩ **Vous pouvez maintenant exécuter la migration générée pour mettre à jour le schéma de la base de données locale**
-```sh
-symfony console doctrine:migrations:migrate
-```
+
+- ⏩ **Vous pouvez maintenant exécuter la migration générée pour mettre à jour le schéma de la base de données locale**
+
+  ```sh
+  symfony console doctrine:migrations:migrate --no-interaction
+  ```
+
+- ⏩ **📬 Commitez notre travail**
+  ```sh
+  git add . && git commit -m "Add entities and migrations"
+  ```
 
 ---
+
 class: middle
 .center[
-  ### **.red[Travaux pratique]**
+
+### **.red[Travaux pratique]**
+
 ]
 
-**Objectif :** 
+**Objectif :**
 
-* ⏩ **Créer une entité `Product` et `Category` en vous basant sur les données du précédent TP.**
+- ⏩ **Créer une entité `Product` et `Category` en vous basant sur les données du précédent TP, pour définir les propriétés.**
 
-* ⏩ **Ajouter une relation `ManyToOne` entre `Product` et `Category`**
+- ⏩ **Ajouter une relation `ManyToOne` entre `Product` et `Category`**
 
-* ⏩ **Générer la migration et mettre à jour la base de données.**
+- ⏩ **Générer la migration et mettre à jour la base de données.**
 
-* ⏩ **Bonus: Ajouter des données de test dans la base de données via la console `psql`**
+- ⏩ **Bonus: Ajouter des données de test dans la base de données via la console `psql`**
 
 ---
+
 class: center, middle, inverse
+
 # 5. Interface d'administration
+
 ---
 
 class: middle
 .center[
- ### **Easy Admin**
+
+### **Easy Admin**
+
 ]
 
 L'ajout des prochaines conférences à la base de données est le travail des admins du projet. Une interface d'administration est une section protégée du site web où les admins du projet peuvent gérer les données du site web, modérer les commentaires, et plus encore.
@@ -1095,22 +1529,24 @@ L'ajout des prochaines conférences à la base de données est le travail des ad
 Comment pouvons-nous le créer aussi rapidement ? En utilisant un bundle capable de générer une interface d'administration basée sur la structure du projet. **EasyAdmin** convient parfaitement.
 
 .center[
-  <img src="img/easy-admin-symfony.webp" width="400" alt="Easy Admin" />
+<img src="img/easy-admin/easy-admin-symfony.webp" width="400" alt="Easy Admin" />
 ]
 
 ---
 
 class: middle
 .center[
-  ### **Installer Easy Admin**
+
+### **Installer Easy Admin**
+
 ]
 
 Même si le package `webapp` a ajouté automatiquement de nombreux packages utiles, pour des fonctionnalités plus spécifiques, nous devons ajouter d'autres dépendances ? Avec Composer. En plus des paquets « standards » de Composer, nous travaillerons avec deux types de paquets « spéciaux » :
 
-* *Composants Symfony* : Paquets qui implémentent les fonctionnalités de base et les abstractions de bas niveau dont la plupart des applications ont besoin (routage, console, client HTTP, mailer, cache, etc.) ;
-* *Bundles Symfony* : Paquets qui ajoutent des fonctionnalités de haut niveau ou fournissent des intégrations avec des bibliothèques tierces (les bundles sont principalement créés par la communauté).
+- _Composants Symfony_ : Paquets qui implémentent les fonctionnalités de base et les abstractions de bas niveau dont la plupart des applications ont besoin (routage, console, client HTTP, mailer, cache, etc.) ;
+- _Bundles Symfony_ : Paquets qui ajoutent des fonctionnalités de haut niveau ou fournissent des intégrations avec des bibliothèques tierces (les bundles sont principalement créés par la communauté).
 
-* ⏩ **Ajoutez `EasyAdmin` comme dépendance du projet :**
+- ⏩ **Ajoutez `EasyAdmin` comme dépendance du projet :**
   ```sh
   symfony composer req "admin:^4"
   ```
@@ -1119,29 +1555,26 @@ Même si le package `webapp` a ajouté automatiquement de nombreux packages util
 💡 `admin` est un alias pour le paquet `easycorp/easyadmin-bundle`. Les alias ne sont pas une fonctionnalité interne à Composer, mais un concept fourni par Symfony pour vous faciliter la vie
 ]
 
-
 ---
 
 class: middle
 
 .center[
+
 ### **Configurer EasyAdmin**
+
 ]
 
 Le bundle EasyAdmin crée automatiquement une section d'administration pour votre application basée sur des contrôleurs spécifiques.
 
-.center[
-  #🪄
-]
-
 Pour débuter avec EasyAdmin
 
-* ⏩ **commençons par générer un "tableau de bord d'administration" qui sera le point d'entrée principal pour gérer les données du site.**
+- ⏩ **commençons par générer un "tableau de bord d'administration" qui sera le point d'entrée principal pour gérer les données du site.**
   ```sh
   symfony console make:admin:dashboard
   ```
 
-Avec les réponses par défaut, crée le contrôleur `src/Controller/Admin/DashboardController.php`
+Avec les réponses par défaut, le maker crée le contrôleur `src/Controller/Admin/DashboardController.php`
 
 .info[
   🗒 Par convention, les contrôleurs d'administration sont stockés dans leur propre espace de nom `App\Controller\Admin`.
@@ -1152,34 +1585,40 @@ Avec les réponses par défaut, crée le contrôleur `src/Controller/Admin/Dashb
 class: middle
 
 .center[
+
 ### **Configurer EasyAdmin**
+
 ]
 
 **Accédez à l'interface d'administration** générée grâce à l'URL `/admin` telle que configurée par la méthode `index()` (vous pouvez modifier l'URL comme bon vous semble) :
 
 .pull-left[
-<img src="img/easy-admin-empty.png" alt="Easy admin empty" width="430px">
+<img src="img/easy-admin/easy-admin-empty.png" alt="Easy admin empty" width="430px">
 ]
 .pull-right[
-  #.center[🚀]
-Boom ! Nous avons une belle interface d'administration, prête à être adaptée à nos besoins.
-]
+#.center[🚀]
+💥 Boom !💥
 
+Nous avons une belle interface d'administration, prête à être adaptée à nos besoins.
+]
 
 ---
 
 class: middle
 .center[
+
 ### **Génerer un CRUD**
+
 ]
 
-L'étape suivante consiste à créer des contrôleurs pour gérer les conférences et les commentaires.
+L'étape suivante consiste à créer des contrôleurs pour gérer **les conférences** et **les commentaires.**
 
 Dans le contrôleur du tableau de bord, vous avez peut-être remarqué la méthode `configureMenuItems()` qui contient un commentaire à propos de l'ajout de liens aux "CRUDs".
 
 **"CRUD"** est un acronyme pour **"Create, Read, Update and Delete"**, les quatre opérations de base que vous allez effectuer sur une entité. C'est exactement ce que nous voulons que notre page d'administration fasse pour nous. EasyAdmin facilite encore plus les choses en prenant en charge les fonctionnalités de filtre et de recherche.
 
-* ⏩ **Générons un `CRUD` pour les conférences :**
+- ⏩ **Générons un `CRUD` pour les conférences :**
+
   ```sh
   symfony console make:admin:crud
   ```
@@ -1187,20 +1626,23 @@ Dans le contrôleur du tableau de bord, vous avez peut-être remarqué la métho
   Sélectionnez `App\Entity\Conference` pour créer une interface d'administration pour les conférences et utiliser les valeurs par défaut pour les autres questions. Le fichier suivant devrait être généré :
   `src/Controller/Admin/ConferenceCrudController.php`
 
-* ⏩ **Faites la même chose pour les commentaires :**
+- ⏩ **Faites la même chose pour les commentaires :**
 
   ```sh
   symfony console make:admin:crud
   ```
 
-
 ---
+
 class: middle
 .center[
+
 ### **Lier un CRUD au Dashboard**
+
 ]
 
-* ⏩ **La dernière étape consiste à relier les CRUDs d'administration des *conférences* et des *commentaires* au tableau de bord**:
+- ⏩ **La dernière étape consiste à relier les CRUDs d'administration des _conférences_ et des _commentaires_ au tableau de bord**:
+
   ```diff
   # src/Controller/Admin/DashboardController.php
   namespace App\Controller\Admin;
@@ -1224,16 +1666,18 @@ Nous avons surchargé la méthode `configureMenuItems()` pour ajouter les élém
 
 EasyAdmin expose une API pour faciliter les liaisons avec les CRUDs des entités via la méthode `MenuItem::linkToRoute()`.
 
-
 ---
+
 class: middle
 .center[
+
 ### **Configurer le tableau de bord**
+
 ]
 
 Le tableau de bord principal est vide pour le moment. C'est ici que vous pouvez afficher certaines statistiques, ou n'importe quelle information pertinente.
 
-* ⏩ **Comme nous n'avons rien d'important à y afficher, redirigeons cette page vers la liste des conférences :**
+- ⏩ **Comme nous n'avons rien d'important à y afficher, redirigeons cette page vers la liste des conférences :**
 
 ```diff
 # src/Controller/Admin/DashboardController.php
@@ -1251,20 +1695,33 @@ Le tableau de bord principal est vide pour le moment. C'est ici que vous pouvez 
 +        return $this->redirect($url);
 ```
 
-* ⏩ **Rafraîchissez la page d'administration `/admin` pour voir le résultat.**
+---
 
+class: middle
+
+- ⏩ **Rafraîchissez la page d'administration `/admin` pour voir le résultat.**
+
+.center[
+<img src="img/easy-admin/dashboard-entities.png" alt="Easy admin dashboard" width="500">
+]
+
+Voilà ! Nous avons maintenant une interface d'administration fonctionnelle pour gérer les conférences et les commentaires. EasyAdmin a généré pour nous des contrôleurs pour les entités `Conference` et `Comment`, et les a liés à notre tableau de bord.
 
 ---
+
 class: middle
 .center[
+
 ### **Des entités Stringable**
+
 ]
 
 Quand nous affichons les relations entre les entités (la conférence liée à un commentaire), EasyAdmin essaie d'utiliser la représentation textuelle de la conférence. Par défaut, il s'appuie sur une convention qui utilise le nom de l'entité et la clé primaire (par exemple `Conference #1`) si l'entité ne définit pas la méthode "magique" `__toString()`. Pour rendre l'affichage plus parlant, ajoutez cette méthode sur la classe `Conference`.
 
-* ⏩ **La méthode `__toString()` fait partie du contrat de l'interface `\Stringable`. Nous devons l'implémenter pour respecter le contrat sur nos entités.**
+- ⏩ **La méthode `__toString()` fait partie du contrat de l'interface `\Stringable`. Nous devons l'implémenter pour respecter le contrat sur nos entités.**
 
 .pull-left[
+
 ```diff
 # src/Entity/Conference.php
 
@@ -1279,11 +1736,12 @@ Quand nous affichons les relations entre les entités (la conférence liée à u
 +    }
 +
      public function getId(): ?int
-     {
 ```
+
 ]
 .pull-right[
-  ```diff
+
+```diff
 # src/Entity/Comment.php
 
 - class Comment
@@ -1297,14 +1755,13 @@ Quand nous affichons les relations entre les entités (la conférence liée à u
 +    }
 +
      public function getId(): ?int
-     {
 ```
-]
 
+]
 
 Vous pouvez maintenant **ajouter/modifier/supprimer** des conférences directement depuis l'interface d'administration.
 
-* ⏩ **Jouez avec et ajoutez au moins une conférence.**
+- ⏩ **Jouez avec et ajoutez au moins une conférence.**
 
   .info[
     Notez qu'il ne sera pas possible d'ajouter de commentaires pour l'instant. Car certains champs sont obligatoires et ne sont pas affichés dans le formulaire.
@@ -1312,14 +1769,17 @@ Vous pouvez maintenant **ajouter/modifier/supprimer** des conférences directeme
   ]
 
 ---
+
 class: middle
 .center[
-### **Personnaliser EasyAdmin**
+
+  ### **Personnaliser EasyAdmin**
+
 ]
 
-L'interface d'administration par défaut fonctionne bien, mais elle peut être personnalisée de plusieurs façons pour améliorer son utilisation. 
+L'interface d'administration par défaut fonctionne bien, mais elle peut être personnalisée de plusieurs façons pour améliorer son utilisation.
 
-* ⏩ **Faisons quelques changements simples pour montrer quelques possibilités, comme la recherche, le tri et le filtrage des données.**
+- ⏩ **Faisons quelques changements simples pour montrer quelques possibilités, comme la recherche, le tri et le filtrage des données.**
 
   ```diff
   # src/Controller/Admin/CommentCrudController.php
@@ -1334,28 +1794,28 @@ L'interface d'administration par défaut fonctionne bien, mais elle peut être p
   +            ->setEntityLabelInSingular('Conference Comment')
   +            ->setEntityLabelInPlural('Conference Comments')
   +            ->setSearchFields(['author', 'text', 'email'])
-  +            ->setDefaultSort(['createdAt' => 'DESC'])
-  +        ;
+  +            ->setDefaultSort(['createdAt' => 'DESC']);
   +    }
   +
   +    public function configureFilters(Filters $filters): Filters
   +    {
   +        return $filters
-  +            ->add(EntityFilter::new('conference'))
-  +        ;
+  +            ->add(EntityFilter::new('conference'));
   +    }
   +
   ```
 
   🔹 La méthode `configureCrud()` permet de personnaliser le CRUD. Ici, nous avons changé le nom de l'entité, ajouté des champs de recherche, et défini un tri par défaut.
 
-  🔹 La méthode `configureFilters()` permet de personnaliser les filtres et  définissent quels filtres apparaissent au dessus du champ de recherche. Ici, nous avons ajouté un filtre pour la conférence.
+  🔹 La méthode `configureFilters()` permet de personnaliser les filtres et définissent quels filtres apparaissent au dessus du champ de recherche. Ici, nous avons ajouté un filtre pour la conférence.
 
 ---
 
 class: middle
 .center[
+
 ### **Personnaliser les champs d'un CRUD**
+
 ]
 
 .pull-right[
@@ -1391,68 +1851,89 @@ class: middle
      }
 -    */
 ```
+
 ]
+
 .pull-left[
+
   Pour personnaliser notre CRUD `src/Controller/Admin/CommentCrudController.php`:
-  * ⏩ **lister les champs de manière explicite dans la méthode `configureFields()` nous permet de les ordonner comme nous le souhaitons.**
+
+  - ⏩ **lister les champs de manière explicite dans la méthode `configureFields()` nous permet de les ordonner comme nous le souhaitons.**
 
   Certains champs bénéficient d'une configuration supplémentaire, comme masquer le champ texte sur la page d'index.
 ]
 
 ---
+
 class: middle
 .center[
-### **Tester l'interface d'administration**
+
+  ### **Tester l'interface d'administration**
+
 ]
 .pull-right[
-.center[<img src="img/easy-admin-filter.png" alt="Easy admin filter" width="450px" />]
+  .center[
+    <img src="img/easy-admin-filter.png" alt="Easy admin filter" width="480px" />
+  ]
 ]
 
 .pull-left[
   Ces personnalisations ne sont qu'une petite introduction aux possibilités offertes par EasyAdmin.
-
-  * ⏩ **Jouez avec l'interface d'administration, filtrez les commentaires par conférence, ou recherchez des commentaires par email par exemple.**
-
+  
+  - ⏩ **Jouez avec l'interface d'administration, filtrez les commentaires par conférence, ou recherchez des commentaires par email par exemple.**
+  
   Nous avons maintenant une interface d'administration fonctionnelle pour gérer les conférences et les commentaires.
-
+  
   .red.center[🚨 Le seul problème, c'est que n'importe qui peut accéder à cette interface. ]
   .center[
-  👮 Ne vous inquiétez pas, nous la sécuriserons dans une prochaine étape.
+    👮 Ne vous inquiétez pas, nous la sécuriserons dans une prochaine étape.
   ]
 ]
 
 .clearfix[
-* ⏩ **Commitez notre travail `git add . && git commit -m "Easy admin"`**
+
+  - ⏩ **Commitez notre travail `git add . && git commit -m "Easy admin"`**
+
 ]
 
 ---
+
 class: middle
 .center[
+
   ### **.red[Travaux pratique]**
+
 ]
 
 **Objectif :**
-* ⏩ **Ajouter un CRUD pour l'entité `Product` et `Category`**
 
-* ⏩ **Personnaliser les champs pour les deux CRUDs**
+- ⏩ **Ajouter un CRUD pour l'entité `Product` et `Category`**
 
-* ⏩ **Personnaliser les filtres pour les deux CRUDs**
+- ⏩ **Personnaliser les champs pour les deux CRUDs**
 
-* ⏩ **Ajouter quelques produits et catégories afin de tester nos CRUDs**
+- ⏩ **Personnaliser les filtres pour les deux CRUDs**
 
-* ⏩ **Ajouter un lien depuis notre page d'accueil vers l'interface d'administration**
+- ⏩ **Ajouter quelques produits et catégories afin de tester nos CRUDs**
+
+- ⏩ **Ajouter un lien depuis notre page d'accueil vers l'interface d'administration**
 
 ---
+
 class: center, middle, inverse
+
 # 6. Interface web TWIG
+
 .center[
   <img src="img/twig-logo.png" width="500" alt="Twig" />
 ]
+
 ---
 
 class: middle
 .center[
-### **🎋 Utiliser Twig pour les templates**
+
+  ### **🎋 Utiliser Twig pour les templates**
+
 ]
 
 Tout est maintenant en place pour créer la première version de l'interface du site. On ne la fera pas jolie pour le moment, seulement fonctionnelle.
@@ -1466,40 +1947,47 @@ Toutes les pages du site Web suivront le même modèle de mise en page, la même
 <html>
     <head>
         ...
-        {% block 'stylesheets' %}{{ encore_entry_link_tags('app') }}{% endblock %}
-        {% block 'javascripts' %}{{ encore_entry_script_tags('app') }}{% endblock %}
+        {% block stylesheets %}
+        {% endblock %}
+
+        {% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}
     </body>
 </html>
 ```
-Un modèle peut définir des `blocks`. Un `block` est un emplacement où les *templates enfants*, qui *étendent* le modèle, ajoutent leur contenu.
 
+Un modèle peut définir des `blocks`. Un `block` est un emplacement où les _templates enfants_, qui _étendent_ le modèle, ajoutent leur contenu.
 
 ---
+
 class: middle
 .center[
-### **Notre premier template Twig**
+
+  ### **Notre premier template Twig**
+
 ]
 
-* ⏩ **Créons un template pour la page d'accueil du projet dans `templates/conference/index.html.twig`.**
+- ⏩ **Créons un template pour la page d'accueil du projet dans `templates/conference/index.html.twig`.**
 
-```twig
-{% extends 'base.html.twig' %}
+  ```twig
+  {% extends 'base.html.twig' %}
 
-{% block title %}Conference Guestbook{% endblock %}
+  {% block title %}Conference Guestbook{% endblock %}
 
-{% block body %}
-    <h2>Give your feedback!</h2>
+  {% block body %}
+      <h2>Give your feedback!</h2>
 
-    {% for conference in conferences %}
-        <h4>{{ conference }}</h4>
-    {% endfor %}
-{% endblock %}
-```
+      {% for conference in conferences %}
+          <h4>{{ conference }}</h4>
+      {% endfor %}
+  {% endblock %}
+  ```
 
-Le template *étend* (ou `extends`) `base.html.twig` et redéfinit les blocs `title` et `body`.
+Le template _étend_ (ou `extends`) `base.html.twig` et redéfinit les blocs `title` et `body`.
 
 La notation `{% %}` dans un template indique des actions et des éléments de structure.
 
@@ -1509,33 +1997,36 @@ La notation `{{ }}` est utilisée pour afficher quelque chose. `{{ conference }}
 
 class: middle
 .center[
+
 ### **Utiliser Twig dans un contrôleur**
+
 ]
 
-* ⏩ **Mettez à jour le contrôleur pour générer le contenu du template Twig**
+- ⏩ **Mettez à jour le contrôleur pour générer le contenu du template Twig**
 
-```diff
-# src/Controller/ConferenceController.php
+  ```diff
+  # src/Controller/ConferenceController.php
 
-+use App\Repository\ConferenceRepository;
-+use Twig\Environment;
+  +use App\Repository\ConferenceRepository;
+  +use Twig\Environment;
 
- class ConferenceController extends AbstractController
- {
-     #[Route('/', name: 'homepage')]
--    public function index(): Response
-+    public function index(Environment $twig, ConferenceRepository $conferenceRepository): Response
-     {
--        return new Response(<<<EOF
--            <html>
--                <body><img src="/images/under-construction.gif" /></body>
--            </html>
--            EOF
--        );
-+        return new Response($twig->render('conference/index.html.twig', [
-+            'conferences' => $conferenceRepository->findAll(),
-+        ]));
-```
+  class ConferenceController extends AbstractController
+  {
+      #[Route('/', name: 'homepage')]
+  -    public function index(): Response
+  +    public function index(Environment $twig, ConferenceRepository $conferenceRepository): Response
+      {
+  -        return new Response(<<<EOF
+  -            <html>
+  -                <body><img src="/images/under-construction.gif" /></body>
+  -            </html>
+  -            EOF
+  -        );
+  +        return new Response($twig->render('conference/index.html.twig', [
+  +            'conferences' => $conferenceRepository->findAll(),
+  +        ]));
+  ```
+
 Il se passe beaucoup de choses ici.
 
 ---
@@ -1544,37 +2035,33 @@ class: middle
 .center[
   <img src="https://em-content.zobj.net/source/telegram/358/thinking-face_1f914.webp" width="80" alt="Twig" />
 ]
-* 
-  ```php
-  public function index(Environment $twig, ...): Response
-  ```
+```php
+public function index(Environment $twig, ...): Response
+```
 
-  Pour pouvoir générer le contenu du template, nous avons besoin de l'objet `Environment` de Twig (le point d'entrée principal de Twig). 
+Pour pouvoir générer le contenu du template, nous avons besoin de l'objet `Environment` de Twig (le point d'entrée principal de Twig).
 
-  👀 Notez que nous demandons l'instance Twig en spécifiant son type dans la méthode du contrôleur. Symfony est assez intelligent pour savoir comment injecter le bon objet. 
+👀 Notez que nous demandons l'instance Twig en spécifiant son type dans la méthode du contrôleur. Symfony est assez intelligent pour savoir comment injecter le bon objet.
 
-* 
-  ```php
-  public function index(..., ConferenceRepository $conferenceRepository): Response
-  ```
-  Nous avons également besoin du *repository* des conférences pour récupérer toutes les conférences depuis la base de données.
+```php
+public function index(..., ConferenceRepository $conferenceRepository): Response
+```
 
-* 
-  ```php
-  return new Response($twig->render('conference/index.html.twig', [
-      'conferences' => $conferenceRepository->findAll(),
-  ]));
-  ```
+Nous avons également besoin du *repository* des conférences pour récupérer toutes les conférences depuis la base de données.
 
-  Dans le code du contrôleur, la méthode `render()` génère le rendu du template et lui passe un tableau de variables. Nous passons la liste des objets `Conference` dans une variable `conferences`.
+```php
+return new Response($twig->render('conference/index.html.twig', [
+  'conferences' => $conferenceRepository->findAll(),
+]));
+```
 
-* 
-  ```php
-   class ConferenceController extends AbstractController
-  ```
+Dans le code du contrôleur, la méthode `render()` génère le rendu du template et lui passe un tableau de variables. Nous passons la liste des objets `Conference` dans une variable `conferences`.
 
-  Un contrôleur est une classe PHP standard. Nous n'avons même pas besoin d'étendre la classe `AbstractController` si nous voulons être explicites sur nos dépendances. Vous pouvez donc supprimer l'héritage (mais ne le faites pas, car nous utiliserons les raccourcis qu'il fournit dans les prochaines étapes).
+```php
+class ConferenceController extends AbstractController
+```
 
+Un contrôleur est une classe PHP standard. Nous n'avons même pas besoin d'étendre la classe `AbstractController` si nous voulons être explicites sur nos dépendances. Vous pouvez donc supprimer l'héritage (mais ne le faites pas, car nous utiliserons les raccourcis qu'il fournit dans les prochaines étapes).
 
 ---
 
@@ -1606,8 +2093,8 @@ Chaque conférence devrait avoir une page dédiée à l'affichage de ses comment
   +    }
   ```
 
-Cette méthode a un comportement particulier que nous n'avons pas encore vu. **Nous demandons qu'une instance** de `Conference` soit injectée dans la méthode. Mais il y en a peut-être beaucoup dans la base de données. 
-  > <span style="font-size: 3rem">🦸</span> Symfony est capable de déterminer celle que vous voulez en se basant sur l'`{id}` passé dans le chemin de la requête (`id` étant la clé primaire de la table `conference` dans la base de données).
+Cette méthode a un comportement particulier que nous n'avons pas encore vu. **Nous demandons qu'une instance** de `Conference` soit injectée dans la méthode. Mais il y en a peut-être beaucoup dans la base de données.
+> <span style="font-size: 3rem">🦸</span> Symfony est capable de déterminer celle que vous voulez en se basant sur l'`{id}` passé dans le chemin de la requête (`id` étant la clé primaire de la table `conference` dans la base de données).
 
 
 ---
@@ -1739,7 +2226,7 @@ Avec des milliers de personnes présentes, on peut s'attendre à un nombre impor
   ```
 
 .center[
-  <img src="https://em-content.zobj.net/source/telegram/358/open-book_1f4d6.webp" width="60px" alt="Paginator" />
+<img src="https://em-content.zobj.net/source/telegram/358/open-book_1f4d6.webp" width="60px" alt="Paginator" />
 ]
 
 ---
@@ -1874,7 +2361,7 @@ class: middle
 
 * ⏩ **Créer un template pour la page d'accueil des produits**
 
-* ⏩ **Modifier la route `/product/{id}` pour renvoyer le produit correspondant à l'id depuis la base de données**! :  
+* ⏩ **Modifier la route `/product/{id}` pour renvoyer le produit correspondant à l'id depuis la base de données**! :
 
 * ⏩ **Créer un template pour la page d'un produit**
 
@@ -1965,32 +2452,32 @@ Certains événements vous permettent d'interagir avec le **cycle de vie des req
 * Ou lorsqu'une exception a été levée.
 
 .info[
-  ☝ Un listener peut écouter un ou plusieurs événements et exécuter une logique basée sur le contexte de l'événement.
+☝ Un listener peut écouter un ou plusieurs événements et exécuter une logique basée sur le contexte de l'événement.
 ]
 ]
 
 .pull-right[
-  .center[
-  <img src="img/symfony-event-cycle.jpg" width=500 />
-  ]
+.center[
+<img src="img/symfony-event-cycle.jpg" width=500 />
+]
 ]
 
 ---
 
 class: middle
 .center[
-  ### **Les événements dans Symfony**
+### **Les événements dans Symfony**
 ]
 
 Les événements sont des points d'extension bien définis qui rendent le framework plus générique et extensible. De nombreux composants Symfony tels que Security, Messenger, Workflow ou Mailer les utilisent largement.
 
-**Un autre exemple intégré d'événements et de listeners en action est le cycle de vie d'une commande :** 
+**Un autre exemple intégré d'événements et de listeners en action est le cycle de vie d'une commande :**
 * 👉  Vous pouvez créer un listener pour exécuter du code avant n'importe quelle commande.
 
 Tout paquet ou bundle peut également déclencher ses propres événements pour rendre son code extensible.
 
 .center[
-  <img src="https://images.unsplash.com/photo-1526739178209-77cd6c6bcf4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&h=230&q=80" />
+<img src="https://images.unsplash.com/photo-1526739178209-77cd6c6bcf4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&h=230&q=80" />
 ]
 
 ---
@@ -2046,7 +2533,7 @@ class: middle
 ```
 
 Maintenant, vous pouvez ajouter autant de contrôleurs que vous le souhaitez : la variable `conferences` sera toujours disponible dans Twig.
-  
+
 > .info[🗒 Nous parlerons d'une alternative bien plus performante dans une prochaine étape.]
 
 ---
@@ -2055,9 +2542,9 @@ class: middle
 ### **Trier les conférences par année et par ville**
 ]
 
-  Le tri de la liste des conférences par année peut faciliter la navigation. Nous pourrions créer notre propre méthode pour récupérer et trier toutes les conférences.
-  
-  * ⏩ **Mais nous allons plutôt remplacer l'implémentation par défaut de la méthode `CommentRepository::findAll()` , afin que le tri s'applique partout :**
+Le tri de la liste des conférences par année peut faciliter la navigation. Nous pourrions créer notre propre méthode pour récupérer et trier toutes les conférences.
+
+* ⏩ **Mais nous allons plutôt remplacer l'implémentation par défaut de la méthode `CommentRepository::findAll()` , afin que le tri s'applique partout :**
 
 ```diff
 +    public function findAll(): array
@@ -2116,7 +2603,7 @@ class: middle
 ### **Ajouter des slugs aux conférences**
 ]
 
-Les URLs des conférences n'ont pas de sens : `/conference/1`. Plus important encore, ils dépendent d'un détail d'implémentation 
+Les URLs des conférences n'ont pas de sens : `/conference/1`. Plus important encore, ils dépendent d'un détail d'implémentation
 
 .center[**"😱 la clé primaire de la base de données est révélée 😱"**]
 
@@ -2137,7 +2624,7 @@ class: middle
 
 * ⏩ **Créez un fichier de migration pour ajouter la nouvelle colonne et Et exécutez cette nouvelle migration.**
 
-❗ Vous avez une erreur ? C'était prévu. Pourquoi ? 
+❗ Vous avez une erreur ? C'était prévu. Pourquoi ?
 
 👉 Parce que nous avons demandé que le `slug` ne soit pas `null`, et que les entrées existantes dans la base de données de la conférence obtiendront une valeur `null` lorsque la migration sera exécutée. Corrigeons cela en ajustant la migration.
 
@@ -2222,7 +2709,7 @@ Au lieu de réinventer la roue, utilisons le composant ***Symfony String***, qui
      public function getCity(): ?string
 ```
 
-La méthode `computeSlug()` ne calcule un slug que lorsque le slug courant est vide ou défini à la valeur spéciale. 
+La méthode `computeSlug()` ne calcule un slug que lorsque le slug courant est vide ou défini à la valeur spéciale.
 
 🤔 **Pourquoi avons-nous besoin de cette valeur particulière ?**
 
@@ -2268,7 +2755,7 @@ class: middle
 ### **Le conteneur d'injection de dépendance**
 ]
 
-🤔 Jusqu'à présent, nous n'avons pas parlé d'un élément clé de Symfony, ***"le conteneur d'injection de dépendance"***. 
+🤔 Jusqu'à présent, nous n'avons pas parlé d'un élément clé de Symfony, ***"le conteneur d'injection de dépendance"***.
 * 👉 **Le conteneur est responsable de la gestion des services : leur création, et leur injection en cas de besoin.**
 
 * 👉 **Un service** est un objet **"global"** qui fournit des fonctionnalités (par exemple un **mailer**, un **logger**, un **slugger**, etc.) contrairement aux objets de données (par exemple les instances d'entités Doctrine `App\Entity`).
@@ -2329,7 +2816,7 @@ class: middle
 ]
 
 * ⏩ **Essayez d'ajouter d'autres conférences dans l'interface d'administration et changez la ville ou l'année d'une conférence existante.**
-  
+
   Le slug ne sera pas mis à jour sauf si vous utilisez la valeur spéciale "-"
 
 * ⏩ **La dernière modification consiste à mettre à jour les contrôleurs et les modèles pour utiliser le slug de la conférence pour les routes, au lieu de son id :**
@@ -2416,7 +2903,7 @@ symfony console make:form CommentFormType Comment
 
 La classe `App\Form\CommentFormType` à été généré et définit un formulaire pour l'entité `App\Entity\Comment`
 
-**Un form type** décrit les champs de formulaire liés à un modèle. Il effectue la conversion des données entre les données soumises et les propriétés de la classe de modèle. 
+**Un form type** décrit les champs de formulaire liés à un modèle. Il effectue la conversion des données entre les données soumises et les propriétés de la classe de modèle.
 
 Par défaut, Symfony utilise les métadonnées de l'entité `Comment`, comme les métadonnées Doctrine, pour deviner la configuration de chaque champ, avec `data_class` défini sur `Comment::class` dans la méthode `configureOptions()`. Mais nous pourrions utiliser un modèle différent si nous le souhaitions.
 
@@ -2468,7 +2955,7 @@ class: middle
 ### **Afficher un formulaire**
 ]
 
-* ⏩ **L'affichage du formulaire dans le template peut se faire via la fonction Twig `form` dans le template `templates/conference/show.html.twig`:** 
+* ⏩ **L'affichage du formulaire dans le template peut se faire via la fonction Twig `form` dans le template `templates/conference/show.html.twig`:**
 
 ```diff
      {% endif %}
@@ -2486,7 +2973,7 @@ La fonction `form()` génère le formulaire HTML en fonction de toutes les infor
 ]
 .pull-right[
 .center[
-  <img src="img/form.png" width="600px">
+<img src="img/form.png" width="600px">
 ]
 ]
 
@@ -2537,8 +3024,8 @@ class: middle
 ### **Gerer les champs non mappés**
 ]
 
-Certains champs ne peuvent pas être auto-configurés, comme par exemple `photoFilename`. 
-* 👉 L'entité `Comment` n'a besoin d'enregistrer que le nom du fichier photo, **mais le formulaire doit s'occuper de l'upload du fichier lui-même**. 
+Certains champs ne peuvent pas être auto-configurés, comme par exemple `photoFilename`.
+* 👉 L'entité `Comment` n'a besoin d'enregistrer que le nom du fichier photo, **mais le formulaire doit s'occuper de l'upload du fichier lui-même**.
 
 Pour traiter ce cas, nous avons ajouté un champ appelé `photo` qui est un champ **"non mapped"** : il ne sera associé à aucune propriété de `Comment`. Nous le gérerons manuellement pour implémenter une logique spécifique (comme l'upload de la photo sur le disque).
 
@@ -2629,9 +3116,9 @@ Faisons un récapitulatif de ce que nous avons fait jusqu'à présent :
 * Si le formulaire n'est pas valide, nous affichons la page, mais le formulaire contiendra maintenant les valeurs soumises et les messages d'erreur afin qu'ils puissent être affichés à l'internaute.
 
 * ⏩ **Essayez le formulaire.**
-  
-  * ✅ Il devrait fonctionner correctement et les données devraient être stockées dans la base de données (vérifiez-les dans l'interface d'administration). 
-  
+
+  * ✅ Il devrait fonctionner correctement et les données devraient être stockées dans la base de données (vérifiez-les dans l'interface d'administration).
+
   * 🚨 Il y a cependant un problème : les photos. Elles ne fonctionnent pas puisque nous ne les avons pas encore traitées dans le contrôleur. Choses que nous allons faire dans la prochaine étape.
 
 ---
@@ -2641,7 +3128,7 @@ class: middle
 ### **Définition du chemin de stockage des photos**
 ]
 
-Les photos uploadées doivent **être stockées sur le disque local**, à un endroit accessible par un navigateur afin que nous puissions les afficher sur la page d'une conférence. 
+Les photos uploadées doivent **être stockées sur le disque local**, à un endroit accessible par un navigateur afin que nous puissions les afficher sur la page d'une conférence.
 
 > 👉 Nous les stockerons dans le dossier `public/uploads/photos` :
 
@@ -2659,7 +3146,7 @@ Comme nous ne souhaitons pas mettre le répertoire en dur dans le code, nous dev
 
 class: middle
 .center[
-  ### **Utiliser le chemin dans le contrôleur**
+### **Utiliser le chemin dans le contrôleur**
 ]
 
 Nous avons déjà vu comment les services sont automatiquement injectés dans les arguments des constructeurs. Pour les paramètres du conteneur, nous pouvons les injecter explicitement en utilisant l'attribut `Autowire`.
@@ -2734,14 +3221,14 @@ Le workflow classique d'un formulaire est le suivant :
 * L'internaute soumet le formulaire via une requête `POST` ;
 * Le serveur redirige l'internaute, soit vers une autre page, soit vers la même page.
 
-Mais comment pouvez-vous accéder au profileur pour une requête de soumission réussie ? Étant donné que la page est immédiatement redirigée, nous ne voyons jamais la barre d'outils de débogage Web pour la requête `POST`. 
+Mais comment pouvez-vous accéder au profileur pour une requête de soumission réussie ? Étant donné que la page est immédiatement redirigée, nous ne voyons jamais la barre d'outils de débogage Web pour la requête `POST`.
 
 Pas de problème : sur la page redirigée, survolez la partie verte `"200"` à gauche. Vous devriez voir la redirection `"302"` avec un lien vers le profileur (entre parenthèses).
 ]
 .pull-right[
-  .center[
-    <img src="img/form-profiler.png" height="370px" />
-  ]
+.center[
+<img src="img/form-profiler.png" height="370px" />
+]
 ]
 
 ---
@@ -2785,7 +3272,7 @@ class: center, middle, inverse
 # 9. Sécurité
 
 .center[
-  <img src="https://images.unsplash.com/photo-1584433144760-1946bb52e9a4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" />
+<img src="https://images.unsplash.com/photo-1584433144760-1946bb52e9a4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" />
 ]
 ---
 
@@ -2824,7 +3311,7 @@ class: middle
 La commande a généré une classe `App\Entity\Admin` avec les propriétés `username` et `password`. Elle contient des aussi des méthodes comme `getRoles()`, `eraseCredentials()` et d'autres qui sont nécessaires au système d'authentification de Symfony.
 
 .info[
-  💡 Si vous voulez ajouter d'autres propriétés à l'entité Admin, exécutez `make:entity`.
+💡 Si vous voulez ajouter d'autres propriétés à l'entité Admin, exécutez `make:entity`.
 ]
 
 * ⏩ **Implementer l'interface `\Stringable` dans l'entité `Admin` et ajouter notre nouvelle entité à Easyadmin :**
@@ -2911,7 +3398,7 @@ Maintenant que nous avons un admin, nous pouvons sécuriser l'interface d'admini
 
 * ⏩ **Exécutez la commande `make:auth`**
   * pour mettre à jour la configuration de sécurité
-  * générer un template pour la connexion 
+  * générer un template pour la connexion
   * créer une classe d'authentification (`Authenticator`) :
 
 ```sh
@@ -2921,7 +3408,7 @@ symfony console make:auth
 **La commande vous pose quelques questions :**
 * Sélectionnez 1 pour générer une classe d'authentification pour le formulaire de connexion
 * Nommez la classe d'authentification `AppAuthenticator`
-* Le contrôleur `SecurityController` 
+* Le contrôleur `SecurityController`
 * Créez une URL `/logout` (yes).
 
 La commande a mis à jour la configuration de sécurité `config/packages/security.yaml` pour lier les classes générées :
@@ -2955,7 +3442,7 @@ Comme l'indique la sortie de la commande `make:auth`.
 +        return new RedirectResponse($this->urlGenerator->generate('admin'));
 ```
 
-Un système de sécurité se compose de deux parties : l'authentification et l'autorisation. Lors de la création de l'admin, nous lui avons donné le rôle `ROLE_ADMIN`. 
+Un système de sécurité se compose de deux parties : l'authentification et l'autorisation. Lors de la création de l'admin, nous lui avons donné le rôle `ROLE_ADMIN`.
 
 * ⏩ **Limitons la section `/admin` aux seules personnes ayant ce rôle en ajoutant une règle à `access_control` :**
 
@@ -2980,19 +3467,19 @@ class: middle
 Si vous essayez d'accéder à l'interface d'administration, vous devriez maintenant être redirigé vers la page de connexion et être invité à entrer un identifiant et un mot de passe :
 
 * ⏩ **Connectez-vous en utilisant `admin` et le mot de passe que vous avez choisi précédemment.**
-  
+
   Si vous avez copié exactement ma requête SQL, le mot de passe est `admin`.
 
 .info[
-  💡Notez qu'EasyAdmin s'intègre automatiquement au système d'authentification de Symfony :
+💡Notez qu'EasyAdmin s'intègre automatiquement au système d'authentification de Symfony :
 ]
 
 > 🗒 Si vous voulez créer un système complet d'authentification par formulaire, jetez un coup d’œil à la commande `make:registration-form`.
 ]
 .pull-right[
-  .center[<img src="img/easy-admin-login.png" width="450px">]
+.center[<img src="img/easy-admin-login.png" width="450px">]
 
-  .center[<img src="img/easy-admin-secured.png" width="450px">]
+.center[<img src="img/easy-admin-secured.png" width="450px">]
 ]
 
 ---
@@ -3078,9 +3565,9 @@ class: middle
   ```
 
 La méthode `getSpamScore()` retourne 3 valeurs en fonction de la réponse de l'appel à l'API :
-  * `2` : si le commentaire est un "spam flagrant" ;
-  * `1` : si le commentaire pourrait être du spam ;
-  * `0` : si le commentaire n'est pas du spam (ham).
+* `2` : si le commentaire est un "spam flagrant" ;
+* `1` : si le commentaire pourrait être du spam ;
+* `0` : si le commentaire n'est pas du spam (ham).
 
 
 ---
@@ -3132,21 +3619,21 @@ class: middle, center, inverse
 
 class: middle
 .center[
-  ### **Générer une classe de test unitaire**
+### **Générer une classe de test unitaire**
 ]
 
 Comme nous commençons à ajouter de plus en plus de fonctionnalités dans l'application, c'est probablement le bon moment pour parler des tests.
 
-Symfony s'appuie sur PHPUnit pour les tests unitaires. 
+Symfony s'appuie sur PHPUnit pour les tests unitaires.
 * ⏩ **Installons-le :**
-  
+
   ```sh
   symfony composer req phpunit --dev
   ```
 
-SpamChecker est la première classe pour laquelle nous allons écrire des tests. 
+SpamChecker est la première classe pour laquelle nous allons écrire des tests.
 * ⏩ **Générez un test unitaire :**
-    
+
     ```sh
     symfony console make:test TestCase SpamCheckerTest
     ```
@@ -3157,7 +3644,7 @@ Tester le `SpamChecker` est un défi car nous ne voulons certainement pas utilis
 
 class: middle
 .center[
-  ### **Écrire des tests unitaires**
+### **Écrire des tests unitaires**
 ]
 
 * ⏩ **Écrivons un premier test pour le cas où l'API renverrai une erreur :**
@@ -3192,7 +3679,7 @@ La classe `MockHttpClient` permet de simuler n'importe quel serveur HTTP. Elle p
 Ensuite, nous appelons la méthode `getSpamScore()` et vérifions qu'une exception est levée via la méthode `expectException()` de PHPUnit.
 
 * ⏩ **Lancez les tests unitaires :**
-  
+
   ```sh
   symfony php bin/phpunit
   ```
@@ -3200,7 +3687,7 @@ Ensuite, nous appelons la méthode `getSpamScore()` et vérifions qu'une excepti
 
 class: middle
 .center[
-  ### **Ecrire le test pour le cas où l'API renverrai un spam flagrant**
+### **Ecrire le test pour le cas où l'API renverrai un spam flagrant**
 ]
 
 
@@ -3244,19 +3731,19 @@ Les data providers de PHPUnit nous permettent de réutiliser la même logique de
 
 class: middle
 .center[
-  ### **Écrire des tests fonctionnels pour les contrôleurs**
+### **Écrire des tests fonctionnels pour les contrôleurs**
 ]
 
 Tester les contrôleurs est un peu différent de tester une classe PHP "ordinaire" car nous voulons les exécuter dans le contexte d'une requête HTTP.
 
 * ⏩ **Générez une classe de test fonctionnel :**
-  
+
   ```sh
   symfony console make:test WebTestCase ConferenceControllerTest
   ```
 
 * ⏩ **Écrivez un test pour vérifier que la page d'accueil fonctionne :**
-  
+
   ```diff
   - public function testSomething(): void
   + public function testIndex(): void
@@ -3270,7 +3757,7 @@ Tester les contrôleurs est un peu différent de tester une classe PHP "ordinair
   ```
 Utiliser `Symfony\Bundle\FrameworkBundle\Test\WebTestCase` à la place de `PHPUnit\Framework\TestCase` comme classe de base pour nos tests nous fournit une abstraction bien pratique pour les tests fonctionnels.
 
-La variable `$client` simule un navigateur. Au lieu de faire des appels HTTP au serveur, il appelle directement l'application Symfony. Cette stratégie présente plusieurs avantages : 
+La variable `$client` simule un navigateur. Au lieu de faire des appels HTTP au serveur, il appelle directement l'application Symfony. Cette stratégie présente plusieurs avantages :
 * Elle est beaucoup plus rapide que les allers-retours entre le client et le serveur,
 * Mais elle permet aussi aux tests d'analyser l'état des services après chaque requête HTTP.
 
@@ -3280,7 +3767,7 @@ Ce premier test vérifie que la page d'accueil renvoie une réponse HTTP `200`
 
 class: middle
 .center[
-  ### **Configurer l'environnement de test**
+### **Configurer l'environnement de test**
 ]
 
 Par défaut, les tests PHPUnit sont exécutés dans l'environnement Symfony test tel qu'il est défini dans le fichier de configuration de PHPUnit `phpunit.xml.dist` :
@@ -3301,12 +3788,12 @@ Par défaut, les tests PHPUnit sont exécutés dans l'environnement Symfony test
   ```sh
   AKISMET_KEY=abcde
   ```
-  
+
 ---
 
 class: middle
 .center[
-  ### **Utiliser une base de données de test**
+### **Utiliser une base de données de test**
 ]
 
 Comme nous l'avons déjà vu, la commande Symfony définit automatiquement la variable d'environnement `DATABASE_URL`. Quand `APP_ENV` vaut test, comme c'est le cas lors de l'exécution de PHPUnit, cela change le nom de la base de données de `app` en `app_test` pour que les tests utilisent leur propre base de données :
@@ -3323,7 +3810,7 @@ when@test:
 Cela est très important car nous aurons besoin d'un jeu de données stable pour exécuter nos tests et nous ne voulons certainement pas écraser celui stocké dans la base de développement.
 
 * ⏩ **Avant de pouvoir lancer les tests, nous devons "initialiser" la base de données test (créez la base de données et jouez les migrations) :**
-  
+
     ```sh
     symfony console doctrine:database:create --env=test
     symfony console doctrine:schema:update --force --env=test
@@ -3332,7 +3819,7 @@ Cela est très important car nous aurons besoin d'un jeu de données stable pour
 Si vous lancez les tests maintenant, PHPUnit n'interagira plus avec votre base de données de développement. Pour lancer les nouveaux tests uniquement, passez le chemin de leur classe en argument.
 
 * ⏩ **Lancez les tests unitaires :**
-  
+
   ```sh
   symfony php bin/phpunit tests/ConferenceControllerTest.php
   ```
@@ -3341,21 +3828,21 @@ Si vous lancez les tests maintenant, PHPUnit n'interagira plus avec votre base d
 
 class: middle
 .center[
-  ### **Définir des fixtures (données de test)**
+### **Définir des fixtures (données de test)**
 ]
 
 Pour pouvoir tester la liste des commentaires, la pagination et la soumission du formulaire, nous devons remplir la base de données avec quelques données. Nous voulons également que les données soient identiques entre les cycles de tests pour qu'ils réussissent. Les fixtures sont exactement ce dont nous avons besoin.
 
 * ⏩ **Installez le composant `doctrine/doctrine-fixtures-bundle` :**
-  
+
   ```sh
   symfony composer req --dev doctrine/doctrine-fixtures-bundle
   ```
 
-Un nouveau répertoire `src/DataFixtures/` a été créé lors de l'installation, avec une classe d'exemple prête à être personnalisée. 
+Un nouveau répertoire `src/DataFixtures/` a été créé lors de l'installation, avec une classe d'exemple prête à être personnalisée.
 
 * ⏩ **Ajoutez deux conférences et un commentaire pour le moment :**
-  
+
   ```diff
       public function load(ObjectManager $manager): void
       {
@@ -3385,10 +3872,10 @@ Un nouveau répertoire `src/DataFixtures/` a été créé lors de l'installation
 
 class: middle
 .center[
-  ### **Charger les fixtures**
+### **Charger les fixtures**
 ]
 
-Lorsque nous chargerons les données de test, toutes les données présentes seront supprimées, y compris celles de l'admin. 
+Lorsque nous chargerons les données de test, toutes les données présentes seront supprimées, y compris celles de l'admin.
 
 * ⏩ **Pour éviter cela, modifions les fixtures :**
   ```diff
@@ -3421,7 +3908,7 @@ Lorsque nous chargerons les données de test, toutes les données présentes ser
   ```
 
 * ⏩ **Chargez les données de test pour l'environnement/la base de données de test :**
-    
+
     ```sh
     symfony console doctrine:fixtures:load --env=test --no-interaction
     ```
@@ -3430,13 +3917,13 @@ Lorsque nous chargerons les données de test, toutes les données présentes ser
 
 class: middle
 .center[
-  ### **Parcourir un site web avec des tests fonctionnels**
+### **Parcourir un site web avec des tests fonctionnels**
 ]
 
 Comme nous l'avons vu, le client HTTP utilisé dans les tests simule un navigateur, afin que nous puissions parcourir le site comme si nous utilisions un navigateur.
 
 .pull-left[
-  * ⏩ **Ajoutez un nouveau test qui clique sur une page de conférence depuis la page d'accueil :**
+* ⏩ **Ajoutez un nouveau test qui clique sur une page de conférence depuis la page d'accueil :**
   ```diff
           $this->assertSelectorTextContains('h2', 'Give your feedback');
       }
@@ -3468,17 +3955,17 @@ Comme nous l'avons vu, le client HTTP utilisé dans les tests simule un navigate
 * On clique ensuite sur le lien `"View"` (comme il n'est pas possible de cliquer sur plus d'un lien à la fois, Symfony choisit automatiquement le premier qu'il trouve) ;
 * Nous vérifions le titre de la page, la réponse et le `<h2>` de la page pour être sûr d'être sur la bonne page (nous aurions aussi pu vérifier la route correspondante) ;
 * Enfin, nous vérifions qu'il y a 1 commentaire sur la page. `div:contains()` n'est pas un sélecteur CSS valide, mais Symfony a quelques ajouts intéressants, empruntés à jQuery.
-]
+  ]
 
 
 ---
 
 class: middle
 .center[
-  ### **Soumettre un formulaire dans un test fonctionnel**
+### **Soumettre un formulaire dans un test fonctionnel**
 ]
 
-Voulez-vous passer au niveau supérieur ? Essayez d'ajouter un nouveau commentaire avec une photo sur une conférence, à partir d'un test, en simulant une soumission de formulaire. Cela semble ambitieux, n'est-ce pas ? 
+Voulez-vous passer au niveau supérieur ? Essayez d'ajouter un nouveau commentaire avec une photo sur une conférence, à partir d'un test, en simulant une soumission de formulaire. Cela semble ambitieux, n'est-ce pas ?
 
 * ⏩ **Regardez le code nécessaire : pas plus compliqué que ce que nous avons déjà écrit :**
   ```diff
@@ -3515,7 +4002,7 @@ Voulez-vous passer au niveau supérieur ? Essayez d'ajouter un nouveau commentai
 
 class: middle
 .center[
-  ### **Recharger les données de test**
+### **Recharger les données de test**
 ]
 
 * ⏩ **Si vous effectuez les tests une deuxième fois, ils devraient échouer.**
@@ -3538,7 +4025,7 @@ symfony php bin/phpunit tests/ConferenceControllerTest.php
 
 class: middle
 .center[
-  ### **Automatiser votre workflow avec un Makefile**
+### **Automatiser votre workflow avec un Makefile**
 ]
 
 <img src="https://em-content.zobj.net/source/telegram/358/pouting-face_1f621.webp" width="24px" /> Il est assez pénible d'avoir à se souvenir d'une séquence de commandes pour exécuter les tests. Cela devrait au moins être documenté, même si cette documentation ne devrait être consultée qu'en dernier recours. 
@@ -3562,7 +4049,7 @@ class: middle
   ```
 
 .info[
-  Dans une règle `Makefile`, l'indentation doit être une seule tabulation et non des espaces.
+Dans une règle `Makefile`, l'indentation doit être une seule tabulation et non des espaces.
 ]
 
 Notez l'option `-n` sur la commande Doctrine ; c'est une option standard sur les commandes Symfony qui les rend non interactives.
@@ -3576,7 +4063,7 @@ make tests
 
 class: middle
 .center[
-  ### **Réinitialiser la base de données après chaque test**
+### **Réinitialiser la base de données après chaque test**
 ]
 
 Réinitialiser la base de données après chaque test c'est bien, mais avoir des tests vraiment indépendants c'est encore mieux. 🚀🚀
@@ -3588,19 +4075,19 @@ Nous ne voulons pas qu'un test s'appuie sur les résultats des précédents. Le 
 > Les tests échouent maintenant. Le test `testCommentSubmission` ne peut pas trouver la conférence car elle a été supprimée par le test `testConferencePage`.
 
 * ⏩ **Pour résoudre ce problème, nous devons réinitialiser la base de données après chaque test en installant le composant `DoctrineTestBundle` :**
-  
+
   ```sh
   symfony composer req "dama/doctrine-test-bundle:^7" --dev
   ```
 
   .info[
-    Vous devrez confirmer l'application de la recette (car il ne s'agit pas d'un bundle "officiellement" supporté) :
+  Vous devrez confirmer l'application de la recette (car il ne s'agit pas d'un bundle "officiellement" supporté) :
   ]
 
 Et voilà. Toute modification apportée pendant les tests est automatiquement annulée à la fin de chaque test.
 
 * ⏩ **Les tests devraient passer à nouveau :**
-    
+
     ```sh
     make tests
     ```
@@ -3609,7 +4096,7 @@ Et voilà. Toute modification apportée pendant les tests est automatiquement an
 
 class: middle
 .center[
-  ### **Choisir le bon type de test**
+### **Choisir le bon type de test**
 ]
 
 Nous avons créé trois type de tests jusqu'à maintenant. Bien que nous n'ayons utilisé le bundle maker que pour générer des tests unitaires, nous aurions tout aussi bien pu l'utiliser pour générer les classes des autres tests :
@@ -3636,7 +4123,7 @@ Le bundle maker supporte la génération des types de tests suivants en fonction
 
 class: middle
 .center[
-  ### **Les outils pour la qualité de code**
+### **Les outils pour la qualité de code**
 ]
 
 Le composant `phpunit` est un outil de test unitaire. Il existe d'autres outils pour tester la qualité de votre code. Tel que `phpstan` qui est un outil d'analyse statique du code PHP. et phpcs-fixer qui est un outil de correction de code.
@@ -3645,26 +4132,26 @@ Le composant `phpunit` est un outil de test unitaire. Il existe d'autres outils 
 #### PHPStan
 
 * ⏩ **Installez le composant `phpstan` :**
-  
+
   ```sh
   symfony composer req --dev phpstan/phpstan
   ```
 
 * ⏩ **Lancez `phpstan` :**
-  
+
   ```sh
   symfony php vendor/bin/phpstan analyse --level max
   ```
 
 #### PHPCs-fixer
 * ⏩ **Installez le composant `php-cs-fixer` :**
-  
+
   ```sh
   symfony composer req --dev friendsofphp/php-cs-fixer
   ```
 
 * ⏩ **Lancer la correction du code :**
-  
+
   ```sh
   symfony php vendor/bin/php-cs-fixer fix
   ```
@@ -3679,7 +4166,7 @@ class: middle, center, inverse
 
 class: middle
 .center[
-  ### **Marquer les commentaires**
+### **Marquer les commentaires**
 ]
 
 Vérifier la présence de spam pendant le traitement de la soumission du formulaire peut entraîner certains problèmes. Si l'API d'Akismet devient lente, notre site web sera également lent pour les internautes. Mais pire encore, si nous atteignons le délai d'attente maximal ou si l'API d'Akismet n'est pas disponible, nous pourrions perdre des commentaires.
@@ -3706,7 +4193,7 @@ Nous avons besoin d'introduire un état (`state`) pour les commentaires : `submi
 ---
 class: middle
 .center[
-  ### **Migration de la base de données**
+### **Migration de la base de données**
 ]
 
 * ⏩ **Créez une migration de base de données :**
@@ -3729,7 +4216,7 @@ class: middle
 ---
 class: middle
 .center[
-  ### **Mis à jour de notre code**
+### **Mis à jour de notre code**
 ]
 
 * ⏩ **Modifiez la logique d'affichage pour éviter que des commentaires non publiés n'apparaissent sur le site :**
@@ -3771,7 +4258,7 @@ class: middle
 class: middle
 
 .center[
-  ### **Mis à jour de notre code**
+### **Mis à jour de notre code**
 ]
 
 * ⏩ **Pour les tests du contrôleur `tests/Controller/ConferenceControllerTest.php`, simulez la validation :**
@@ -3805,7 +4292,7 @@ class: middle
 
 class: middle
 .center[
-  ### **Comprendre Messenger**
+### **Comprendre Messenger**
 ]
 
 La gestion du code asynchrone avec Symfony est faite par le composant Messenger :
@@ -3829,7 +4316,7 @@ C'est très similaire à la façon dont les requêtes HTTP sont traitées, **sau
 
 class: middle
 .center[
-  ### **Coder un gestionnaire de messages**
+### **Coder un gestionnaire de messages**
 ]
 
 Un message est une classe de données (data object), qui ne doit contenir aucune logique. Il sera sérialisé pour être stocké dans une file d'attente, donc ne stockez que des données "simples" et sérialisables.
@@ -3951,7 +4438,7 @@ Nous avons fait quelque chose que nous n'avions pas prévu. Nous avons découpl�
 
 class: middle
 .center[
-  ### **Faire vraiment de l'asynchrone**
+### **Faire vraiment de l'asynchrone**
 ]
 
 Par défaut, les gestionnaires sont appelés de manière synchrone. Pour les rendre asynchrone, vous devez :
@@ -3967,14 +4454,14 @@ Par défaut, les gestionnaires sont appelés de manière synchrone. Pour les ren
 La configuration indique au bus d'envoyer les instances de `App\Message\CommentMessage` à la file d'attente `async`, qui est définie par un DSN (`MESSENGER_TRANSPORT_DSN`), qui pointe vers Doctrine tel que défini dans le fichier `.env`. En clair, nous utilisons PostgreSQL comme file d'attente pour nos messages.
 
 .info[
-  💡 En coulisses, Symfony utilise le système pub/sub intégré, performant, dimensionnable (`LISTEN`/`NOTIFY`). Vous pouvez aussi lire le chapitre sur RabbitMQ si vous voulez l'utiliser à la place de PostgreSQL comme gestionnaire de messages.
+💡 En coulisses, Symfony utilise le système pub/sub intégré, performant, dimensionnable (`LISTEN`/`NOTIFY`). Vous pouvez aussi lire le chapitre sur RabbitMQ si vous voulez l'utiliser à la place de PostgreSQL comme gestionnaire de messages.
 ]
 
 ---
 
 class: middle
 .center[
-  ### **Consommer des messages**
+### **Consommer des messages**
 ]
 
 Si vous essayez de soumettre un nouveau commentaire, le vérificateur de spam ne sera plus appelé. Ajoutez un appel à la fonction `error_log()` dans la méthode `getSpamScore()` pour le confirmer. Au lieu d'avoir un nouveau commentaire, un message est en attente dans la file d'attente, prêt à être consommé par d'autres processus.
@@ -3986,7 +4473,7 @@ Comme vous pouvez l'imaginer, Symfony est livré avec une commande pour consomme
   ```
 
 Cette commande devrait immédiatement consommer le message envoyé pour le commentaire soumis :
-  
+
 ```sh
   [OK] Consuming messages from transports "async".
 
@@ -4009,7 +4496,7 @@ L'activité du consumer de messages est enregistrée dans les logs, mais vous po
 
 class: middle
 .center[
-  ### **Lancer des workers en arrière-plan**
+### **Lancer des workers en arrière-plan**
 ]
 
 Au lieu de lancer le consumer à chaque fois que nous publions un commentaire et de l'arrêter immédiatement après, nous voulons l'exécuter en continu sans avoir trop de fenêtres ou d'onglets du terminal ouverts.
@@ -4022,14 +4509,14 @@ La commande `symfony` peut gérer des commandes en tâche de fond ou des workers
   ```
 
   .info[
-    💡 L'option `--watch` indique à Symfony que la commande doit être redémarrée chaque fois qu'il y a un changement dans un des fichiers des répertoires `config/`, `vendor/`, `src/` ou `templates/`.
+  💡 L'option `--watch` indique à Symfony que la commande doit être redémarrée chaque fois qu'il y a un changement dans un des fichiers des répertoires `config/`, `vendor/`, `src/` ou `templates/`.
   ]
 
 Si le consumer cesse de fonctionner pour une raison quelconque (limite de mémoire, bogue, etc.), il sera redémarré automatiquement. Et s'il tombe en panne trop rapidement, la commande symfony s'arrêtera.
 
 Les logs sont diffusés en continu par la commande symfony `server:log`, en même temps que ceux de PHP, du serveur web et de l'application.
 
-* ⏩ **Utilisez la commande `server:status` pour lister tous les workers en arrière-plan gérés pour le projet en cours :**  
+* ⏩ **Utilisez la commande `server:status` pour lister tous les workers en arrière-plan gérés pour le projet en cours :**
   ```sh
   symfony server:status
 
@@ -4043,7 +4530,7 @@ Les logs sont diffusés en continu par la commande symfony `server:log`, en mêm
 
 class: middle
 .center[
-  ### **Renvoyer des messages ayant échoué**
+### **Renvoyer des messages ayant échoué**
 ]
 
 Que faire si Akismet est en panne alors qu'un message est en train d'être consommé ? Il n'y a aucun impact pour les personnes qui soumettent des commentaires, mais le message est perdu et le spam n'est pas vérifié.
@@ -4088,7 +4575,7 @@ class: middle, center, inverse
 
 class: middle
 .center[
-  #### **Prendre des décisions avec un workflow**
+#### **Prendre des décisions avec un workflow**
 ]
 
 Avoir un état pour un modèle est assez commun. L'état du commentaire n'est déterminé que par le vérificateur de spam. Et si on ajoutait d'autres critères de décision ?
@@ -4110,7 +4597,7 @@ La mise en œuvre de cette logique n'est pas trop complexe, mais vous pouvez ima
 
 class: middle
 .center[
-  ### **Définir un workflow**
+### **Définir un workflow**
 ]
 
 .pull-left[
@@ -4169,7 +4656,7 @@ symfony console workflow:dump comment | dot -Tpng -o workflow.png
 <img src="img/workflow.png" width="450px" />
 
 .info[
-  La commande `dot` fait partie de l'utilitaire [Graphviz](https://www.graphviz.org/).
+La commande `dot` fait partie de l'utilitaire [Graphviz](https://www.graphviz.org/).
 ]
 
 ]
@@ -4178,7 +4665,7 @@ symfony console workflow:dump comment | dot -Tpng -o workflow.png
 
 class: middle
 .center[
-  ### **Utiliser le workflow**
+### **Utiliser le workflow**
 ]
 
 * ⏩ **Remplacez la logique actuelle dans le gestionnaire de messages `src/MessageHandler/CommentMessageHandler.php` par le workflow :**
@@ -4267,7 +4754,7 @@ Comme nous n'avons pas implémenté la fonctionnalité de validation par l'admin
 
 class: middle
 .center[
-  ### **Trouver des services depuis le conteneur d'injection de dépendances**
+### **Trouver des services depuis le conteneur d'injection de dépendances**
 ]
 
 Quand nous utilisons l'injection de dépendances, nous récupérons des services depuis le conteneur d'injection de dépendances en utilisant le typage par interface ou parfois par une implémentation de classe concrète. Mais quand une interface à plusieurs implémentations, Symfony ne peut deviner celle dont vous avez besoin. Nous avons besoin d'être explicite.
@@ -4293,7 +4780,7 @@ symfony console debug:container workflow
   [9] Psr\Log\LoggerInterface $workflowLogger
  >
  ```
- Remarquez le choix 8, `Symfony\Component\Workflow\WorkflowInterface $commentStateMachine` qui vous indique qu'utiliser `$commentStateMachine` comme argument nommé a une signification particulière.
+Remarquez le choix 8, `Symfony\Component\Workflow\WorkflowInterface $commentStateMachine` qui vous indique qu'utiliser `$commentStateMachine` comme argument nommé a une signification particulière.
 
  <!---
 
@@ -4328,4 +4815,3 @@ class: middle
 .center[
   ### **Envoyer une notification par email**
 ]
-
