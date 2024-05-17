@@ -447,19 +447,10 @@ Nous devons trouver un projet sur lequel travailler. C'est un certain défi car 
 > Une liste des conférences sur la page d'accueil ainsi qu'une page pour chacune d'entre elles, pleine de commentaires sympathiques. Un commentaire est composé d'un petit texte et d'une photo, optionnelle, prise pendant la conférence.
 
 Le projet comprendra plusieurs applications :
-Le projet comprendra plusieurs applications :
 
 - **Une application web traditionnelle avec une interface HTML**
 - **une API**
 - **une SPA pour les téléphones mobiles.**
-  Le projet comprendra plusieurs applications :
-- **Une application web traditionnelle avec une interface HTML**
-- **une API**
-- **une SPA pour les téléphones mobiles.**
-
-* **Une application web traditionnelle avec une interface HTML**
-* **une API**
-* **une SPA pour les téléphones mobiles.**
 
 ---
 
@@ -2671,7 +2662,7 @@ class: middle
      private Collection $comments;
 
 -    #[ORM\Column(length: 255)]
-+    #[ORM\Column(type: 'string', length: 255, unique: true)]
++    #[ORM\Column(length: 255, unique: true)]
      private ?string $slug = null;
 ```
 
@@ -3049,24 +3040,26 @@ class: middle
 
 * ⏩ **Pour éviter cela, nous devons ajouter des contraintes de validation à l'entité `Comment` :**
 
-```diff
- use Doctrine\ORM\Mapping as ORM;
-+use Symfony\Component\Validator\Constraints as Assert;
-
-@@ ....
-
-+    #[Assert\NotBlank]
-     private ?string $author = null;
-
-     #[ORM\Column(type: Types::TEXT)]
-+    #[Assert\NotBlank]
-     private ?string $text = null;
-
-     #[ORM\Column(length: 255)]
-+    #[Assert\NotBlank]
-+    #[Assert\Email]
-     private ?string $email = null;
-```
+  ```diff
+   use Doctrine\ORM\Mapping as ORM;
+  +use Symfony\Component\Validator\Constraints as Assert;
+  
+  @@ ....
+  
+  +    #[Assert\NotBlank]
+  +    #[Assert\Length(max: 255)]
+       private ?string $author = null;
+  
+       #[ORM\Column(type: Types::TEXT)]
+  +    #[Assert\NotBlank]
+       private ?string $text = null;
+  
+       #[ORM\Column(length: 255)]
+  +    #[Assert\NotBlank]
+  +    #[Assert\Length(max: 255)]
+  +    #[Assert\Email]
+       private ?string $email = null;
+  ```
 
 Nous utilisons ici les **contraintes de validation de Symfony** pour définir les règles de validation. Par exemple, le champ `author` ne doit pas être vide, le champ `email` doit être une adresse email valide, etc.
 
@@ -3083,24 +3076,24 @@ Nous devrions maintenant nous occuper de la soumission du formulaire et de la pe
 
 * ⏩ **Modifiez la méthode `show()` du contrôleur pour gérer la soumission du formulaire :**
 
-```diff
- class ConferenceController extends AbstractController
- {
-+    public function __construct(private readonly EntityManagerInterface $entityManager) { }
-
-@@ ...
-
-         $form = $this->createForm(CommentFormType::class, $comment);
-+        $form->handleRequest($request);
-+        if ($form->isSubmitted() && $form->isValid()) {
-+            $comment->setConference($conference);
-+
-+            $this->entityManager->persist($comment);
-+            $this->entityManager->flush();
-+
-+            return $this->redirectToRoute('conference', ['slug' => $conference->getSlug()]);
-+        }
-```
+  ```diff
+   class ConferenceController extends AbstractController
+   {
+  +    public function __construct(private readonly EntityManagerInterface $entityManager) { }
+  
+  @@ ...
+  
+           $form = $this->createForm(CommentFormType::class, $comment);
+  +        $form->handleRequest($request);
+  +        if ($form->isSubmitted() && $form->isValid()) {
+  +            $comment->setConference($conference);
+  +
+  +            $this->entityManager->persist($comment);
+  +            $this->entityManager->flush();
+  +
+  +            return $this->redirectToRoute('conference', ['slug' => $conference->getSlug()]);
+  +        }
+  ```
 
 ---
 
@@ -3136,11 +3129,11 @@ Comme nous ne souhaitons pas mettre le répertoire en dur dans le code, nous dev
 
 * ⏩ **Ajoutez un paramètre `photo_dir` dans le fichier `config/services.yaml` :**
 
-```diff
-# config/services.yaml
- parameters:
-+    photo_dir: "%kernel.project_dir%/public/uploads/photos"
-```
+  ```diff
+  # config/services.yaml
+   parameters:
+  +    photo_dir: "%kernel.project_dir%/public/uploads/photos"
+  ```
 
 ---
 
@@ -3155,17 +3148,18 @@ Maintenant, nous avons tout ce qu'il nous faut pour implémenter la logique néc
 
 * ⏩ **Modifiez la signature de méthode `show()` du contrôleur pour récupérer le paramètre `photo_dir` :**
 
-```diff
-# src/Controller/ConferenceController.php
--    public function show(Request $request, Conference $conference, CommentRepository $commentRepository): Response
--    {
-+    public function show(
-+        Request $request,
-+        Conference $conference,
-+        CommentRepository $commentRepository,
-+        #[Autowire('%photo_dir%')] string $photoDir,
-+    ): Response {
-```
+  ```diff
+  # src/Controller/ConferenceController.php
+  -    public function show(Request $request, Conference $conference, CommentRepository $commentRepository): Response
+  -    {
+  +    public function show(
+  +        Request $request,
+  +        Conference $conference,
+  +        CommentRepository $commentRepository,
+  +        #[Autowire('%photo_dir%')] 
+  +        string $photoDir,
+  +    ): Response {
+  ```
 
 ---
 
@@ -3176,25 +3170,25 @@ class: middle
 
 * ⏩ **Modifiez la méthode `show()` du contrôleur pour gérer l'upload de la photo :**
 
-```diff
-# src/Controller/ConferenceController.php
-
-         if ($form->isSubmitted() && $form->isValid()) {
-             $comment->setConference($conference);
-
-+            if ($photo = $form['photo']->getData()) {
-+                $filename = bin2hex(random_bytes(6)).'.'.$photo->guessExtension();
-+                try {
-+                    $photo->move($photoDir, $filename);
-+                } catch (FileException $e) {
-+                    // unable to upload the photo, give up
-+                }
-+                $comment->setPhotoFilename($filename);
-+            }
-
-             $this->entityManager->persist($comment);
-             $this->entityManager->flush();
-```
+  ```diff
+  # src/Controller/ConferenceController.php
+  
+           if ($form->isSubmitted() && $form->isValid()) {
+               $comment->setConference($conference);
+  
+  +            if ($photo = $form['photo']->getData()) {
+  +                $filename = bin2hex(random_bytes(6)).'.'.$photo->guessExtension();
+  +                try {
+  +                    $photo->move($photoDir, $filename);
+  +                } catch (FileException $e) {
+  +                    // unable to upload the photo, give up
+  +                }
+  +                $comment->setPhotoFilename($filename);
+  +            }
+  
+               $this->entityManager->persist($comment);
+               $this->entityManager->flush();
+  ```
 
 * Pour gérer les uploads de photos, nous créons un nom aléatoire pour le fichier.
 * Ensuite, nous déplaçons le fichier uploadé à son emplacement final (le répertoire photo).
@@ -3235,37 +3229,56 @@ Pas de problème : sur la page redirigée, survolez la partie verte `"200"` à g
 
 class: middle
 .center[
-### **Afficher les photos uploadées dans l'interface d'admin**
+### **Gérer les photos depuis l'interface d'administration**
 ]
 
 L'interface d'administration affiche actuellement le nom du fichier photo, mais nous voulons voir la vraie photo :
 
 * ⏩ **Modifiez la classe `CommentCrudController` pour afficher la photo :**
 
-```diff
- use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
-+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+  ```diff
+   use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+  +use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+  
+   @@ ...
+  
+  -        yield TextField::new('photoFilename')
+  +        yield ImageField::new('photoFilename')
+  +            ->setUploadDir('/public/uploads/photos')
+  +            ->setUploadedFileNamePattern(fn(UploadedFile $photo) => Comment::setFilename($photo))
+  +            ->setBasePath('/uploads/photos')
+  +            ->setLabel('Photo')
+               ->onlyOnIndex();
+  ```
+  
+* ⏩ **Ajoutez une méthode statique `setFilename()` à la classe `Comment` afin de factoriser la logique de génération de nom de fichier :**
+  ```php
+  public static function setFilename(UploadedFile $photo): string
+  {
+      return bin2hex(random_bytes(6)).'.'.$photo->guessExtension();
+  }
+  ``` 
 
- @@ ...
 
--        yield TextField::new('photoFilename')
-+        yield ImageField::new('photoFilename')
-+            ->setBasePath('/uploads/photos')
-+            ->setLabel('Photo')
-             ->onlyOnIndex();
-```
+---
+
+class: middle
+
 #### Exclure les photos uploadées de Git
 .red[**Ne commitez pas encore !**] Nous ne voulons pas stocker les images uploadées dans le dépôt Git. Ajoutez le dossier `/public/uploads` au fichier `.gitignore` :
 
 * ⏩ **Ajoutez `/public/uploads` au fichier `.gitignore` :**
 
-```diff
-+/public/uploads
+  ```diff
+  +/public/uploads
+  
+   ###> symfony/framework-bundle ###
+  ```
 
- ###> symfony/framework-bundle ###
-```
-
-* ⏩ **📬 Commitez notre travail via `git commit -am "Formulaire"`**
+* ⏩ **📬 Commitez notre travail via**
+  ```sh
+  git add . && git commit -m "Formulaire"
+  ```
 
 ---
 class: center, middle, inverse
@@ -3283,7 +3296,7 @@ class: middle
 
 👮 L'interface d'administration ne doit être accessible que par des personnes autorisées. La sécurisation de cette zone du site peut se faire à l'aide du composant **Symfony Security**.
 
-Même si les internautes ne pourront pas créer leur propre compte sur le site, nous allons créer un système d'authentification entièrement fonctionnel pour l'admin. Nous n'aurons donc qu'un seul `User`, l'admin du site.
+Même si les internautes ne pourront pas créer leur propre compte sur le site, nous allons créer un système d'authentification entièrement fonctionnel pour l'admin.
 
 > 👉 La première étape consiste à définir une entité `User`. Pour éviter toute confusion, nommons-la plutôt `Admin`.
 
@@ -3369,24 +3382,24 @@ Nous ne développerons pas de système dédié pour créer des comptes d'adminis
 
 * ⏩ **Lancer la commande `security:hash-password` pour générer le hash du mot de passe**
 
-```sh
-symfony console security:hash-password
-```
-* Sélectionnez `App\Entity\Admin`
-* Choisissez ce que vous voulez comme mot de passe
+  ```sh
+  symfony console security:hash-password myPassword 'App\User\Admin
+  ```
 
 > ❗Notez le hash généré, nous en aurons besoin pour insérer l'admin dans la base de données.
 
 
-* ⏩ **Insérez l'admin grâce à une requête SQL :**
-```sh
-symfony run psql -c "INSERT INTO admin (id, username, roles, password) \
-  VALUES (nextval('admin_id_seq'), 'admin', '[\"ROLE_ADMIN\"]', \
-  '\$argon2id\$v=19\$m=65536,t=4,p=1\$BQG+jovPcunctc30xG5PxQ\$TiGbx451NKdo+g9vLtfkMy4KjASKSOcnNxjij4gTX1s')"
-```
+* ⏩ **Ajouter le CRUD Admin de la classe `Admin` dans easyadmin et definissez-y le contenu de la methode crudFields comme ce qui suit:**
 
-> ❗Notez l'échappement du caractère `$` dans le mot de passe ; échappez tous les caractères qui en ont besoin !
-
+  ```php
+  public function configureFields(string $pageName): iterable
+  {
+      yield IdField::new('id')->hideOnForm();
+      yield TextField::new('username');
+      yield TextField::new('password');
+      yield ArrayField::new('roles');
+  }
+  ```
 ---
 
 class: middle
@@ -3396,17 +3409,17 @@ class: middle
 
 Maintenant que nous avons un admin, nous pouvons sécuriser l'interface d'administration. Symfony accepte plusieurs stratégies d'authentification. Utilisons un classique système d'authentification par formulaire.
 
-* ⏩ **Exécutez la commande `make:auth`**
+* ⏩ **Exécutez la commande `make:security`**
   * pour mettre à jour la configuration de sécurité
   * générer un template pour la connexion
   * créer une classe d'authentification (`Authenticator`) :
-
-```sh
-symfony console make:auth
-```
+  
+  ```sh
+  symfony console make:security
+  ```
 
 **La commande vous pose quelques questions :**
-* Sélectionnez 1 pour générer une classe d'authentification pour le formulaire de connexion
+* Sélectionnez `1` pour générer une classe d'authentification pour le formulaire de connexion
 * Nommez la classe d'authentification `AppAuthenticator`
 * Le contrôleur `SecurityController`
 * Créez une URL `/logout` (yes).
@@ -3507,19 +3520,19 @@ Nous allons concevoir une classe de vérification de spam.
 
 * ⏩ **Créez une nouvelle classe dans `src/` nommée `SpamChecker` pour contenir la logique d'appel à l'API d'Akismet et l'interprétation de ses réponses**
 
-* ⏩ **Définissez la propriété `$endpoint` pour stocker l'URL de l'API Akismet**
+* ⏩ **Définissez la propriété `private readonly string $endpoint` pour stocker l'URL de l'API Akismet**
 
 * ⏩ **Définissez le constructeur pour injecter l'URL de l'API Akismet et le client HTTP**
 
-```php
-public function __construct(
-  private readonly HttpClientInterface $client,
-  #[Autowire('%env(string:AKISMET_KEY)%')]
-  string $akismetKey
-) {
-  $this->endpoint = sprintf('https://%s.rest.akismet.com/1.1/comment-check', $akismetKey);
-}
-```
+  ```php
+  public function __construct(
+    private readonly HttpClientInterface $client,
+    #[Autowire('%env(string:AKISMET_KEY)%')]
+    string $akismetKey
+  ) {
+    $this->endpoint = sprintf('https://%s.rest.akismet.com/1.1/comment-check', $akismetKey);
+  }
+  ```
 
 ---
 
@@ -3608,6 +3621,35 @@ Une façon simple de vérifier la présence de spam lorsqu'un nouveau commentair
 
   * ✅ Le commentaire est stocké dans la base de données.
   * 🚨 Mais il n'est pas affiché sur la page de la conférence. Nous devons mettre à jour le contrôleur pour filtrer les commentaires marqués comme spam.
+
+---
+
+class: middle
+.center.red[
+### **Travaux pratique Kata**
+]
+
+Créer une application Symfony pour gérer une bibliothèque de livres, avec des fonctionnalités d’authentification utilisateur et d’intégration avec l’API Google Books pour obtenir les informations complètes des livres à partir du titre et de l’auteur.
+
+**Fonctionnalités Principales**
+
+1. **Gestion des Livres**
+   * Données d'un livre : titre, auteur, date de publication, ISBN, date d’ajout, de modification et l'utilisateur qui a ajouté le livre.
+   * Lister les Livres : Afficher une liste de tous les livres dans la bibliothèque.
+   * Voir les Détails d’un Livre : Afficher les détails d’un livre spécifique.
+   * Ajouter un Livre (authentification requise) : Permettre aux utilisateurs d’ajouter de nouveaux livres en entrant uniquement le titre et l’auteur. Les autres informations seront récupérées via l’API Google Books.
+   * Modifier un Livre (authentification requise) : Permettre aux utilisateurs de modifier les informations d’un livre existant.
+   * Supprimer un Livre (authentification requise) : Permettre aux utilisateurs de supprimer un livre de la bibliothèque.
+
+2. **Authentification Utilisateur**
+   * Inscription : Les nouveaux utilisateurs peuvent créer un compte.
+   * Connexion : Les utilisateurs existants peuvent se connecter.
+   * Déconnexion : Les utilisateurs peuvent se déconnecter.
+   * Sécurité : Restreindre l’accès aux fonctionnalités de gestion des livres (ajout, modification, suppression) aux utilisateurs authentifiés uniquement.
+
+3. **Intégration avec l’API Google Books (https://developers.google.com/books/docs/v1/getting_started?hl=fr)**
+   * Obtenir les Informations Complètes des Livres : Utiliser l’API Google Books pour récupérer les informations complètes d’un livre à partir du titre et de l’auteur fournis par l’utilisateur.
+   * Affichage des Informations : Afficher les informations récupérées dans la fiche du livre.
 
 ---
 
@@ -4569,7 +4611,7 @@ Si un problème survient lors de la manipulation d'un message, le consumer rées
 class: middle, center, inverse
 
 
-13. Symfony Workflow
+# 13. Symfony Workflow
 
 ---
 
@@ -4612,16 +4654,9 @@ class: middle
                 marking_store:
                     type: 'method'
                     property: 'state'
-                supports:
-                    - App\Entity\Comment
+                supports: [App\Entity\Comment]
                 initial_marking: submitted
-                places:
-                    - submitted
-                    - ham
-                    - potential_spam
-                    - spam
-                    - rejected
-                    - published
+                places: [submitted, ham, potential_spam, spam, rejected, published]
                 transitions:
                     accept:
                         from: submitted
