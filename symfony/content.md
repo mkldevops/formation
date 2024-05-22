@@ -3584,9 +3584,14 @@ class: middle
 
 class: middle
 
-La méthode `getSpamScore()` retourne 3 valeurs en fonction de la réponse de l'appel à l'API :
-* `2` : si le commentaire est un "spam flagrant" ;
+Identifions ce que fait la méthode `getSpamScore()`.
+
+Dans un premier temps, elle va transmettre à **Akismet** certaines données concernant le commentaire posté. Puis en fonction des données de la réponse, on retourne 3 valeurs différentes :
+
+* `2` : si le commentaire est un "spam flagrant" ; On lèvera une exception pour le signaler.
+
 * `1` : si le commentaire pourrait être du spam ;
+
 * `0` : si le commentaire n'est pas du spam (ham).
 
 
@@ -3602,11 +3607,8 @@ Une façon simple de vérifier la présence de spam lorsqu'un nouveau commentair
 * ⏩ **Modifiez la méthode `show()` du contrôleur pour appeler le vérificateur de spam :**
 
 ```diff
-         Request $request,
-         Conference $conference,
-         CommentRepository $commentRepository,
-+        SpamChecker $spamChecker,
          #[Autowire('%photo_dir%')] string $photoDir,
++        SpamChecker $spamChecker,
      ): Response {
          $comment = new Comment();
 @@ ...
@@ -3632,8 +3634,8 @@ Une façon simple de vérifier la présence de spam lorsqu'un nouveau commentair
 ---
 
 class: middle
-.center.red[
-### **Travaux pratique Kata**
+.center[
+### .red[**Travaux pratique Kata**]
 ]
 
 Créer une application Symfony pour gérer une bibliothèque de livres, avec des fonctionnalités d’authentification utilisateur et d’intégration avec l’API Google Books pour obtenir les informations complètes des livres à partir du titre et de l’auteur.
@@ -3671,7 +3673,7 @@ class: middle
 ### **Générer une classe de test unitaire**
 ]
 
-Comme nous commençons à ajouter de plus en plus de fonctionnalités dans l'application, c'est probablement le bon moment pour parler des tests.
+Comme nous commençons à ajouter, de plus en plus de fonctionnalités dans l'application, c'est probablement le bon moment pour parler des tests.
 
 Symfony s'appuie sur PHPUnit pour les tests unitaires.
 * ⏩ **Installons-le :**
@@ -3687,7 +3689,7 @@ SpamChecker est la première classe pour laquelle nous allons écrire des tests.
     symfony console make:test TestCase SpamCheckerTest
     ```
 
-Tester le `SpamChecker` est un défi car nous ne voulons certainement pas utiliser l'API Akismet. Nous allons mocker l'API.
+Tester le `SpamChecker` est un défi, car nous ne voulons certainement pas utiliser l'API Akismet. Nous allons mocker l'API.
 
 ---
 
@@ -3696,16 +3698,9 @@ class: middle
 ### **Écrire des tests unitaires**
 ]
 
-* ⏩ **Écrivons un premier test pour le cas où l'API renverrai une erreur :**
+* ⏩ **Écrivons un premier test pour le cas où l'API renverrait une erreur :**
 
   ```diff
-  +use App\Entity\Comment;
-  +use App\SpamChecker;
-  use PHPUnit\Framework\TestCase;
-  +use Symfony\Component\HttpClient\MockHttpClient;
-  +use Symfony\Component\HttpClient\Response\MockResponse;
-  +use Symfony\Contracts\HttpClient\ResponseInterface;
-
   class SpamCheckerTest extends TestCase
   {
   -    public function testSomething(): void
@@ -3742,37 +3737,37 @@ class: middle
 
 * ⏩ **Écrivons un test pour le cas où l'API renverrai un spam flagrant :**
 
-```diff
-+    /**
-+     * @dataProvider provideComments
-+     */
-+    public function testSpamScore(int $expectedScore, ResponseInterface $response, Comment $comment, array $context)
-+    {
-+        $client = new MockHttpClient([$response]);
-+        $checker = new SpamChecker($client, 'abcde');
-+
-+        $score = $checker->getSpamScore($comment, $context);
-+        $this->assertSame($expectedScore, $score);
-+    }
-```
+  ```diff
+  +    /**
+  +     * @dataProvider provideComments
+  +     */
+  +    public function testSpamScore(int $expectedScore, ResponseInterface $response, Comment $comment, array $context)
+  +    {
+  +        $client = new MockHttpClient([$response]);
+  +        $checker = new SpamChecker($client, 'abcde');
+  +
+  +        $score = $checker->getSpamScore($comment, $context);
+  +        $this->assertSame($expectedScore, $score);
+  +    }
+  ```
 
 * ⏩ **Ajoutez une méthode `provideComments()` pour fournir des données de test :**
 
-```diff
-+    public static function provideComments(): iterable
-+    {
-+        $comment = (new Comment())->setCreatedAtValue();
-+
-+        $response = new MockResponse('', ['response_headers' => ['x-akismet-pro-tip: discard']]);
-+        yield 'blatant_spam' => [2, $response, $comment, []];
-+
-+        $response = new MockResponse('true');
-+        yield 'spam' => [1, $response, $comment, []];
-+
-+        $response = new MockResponse('false');
-+        yield 'ham' => [0, $response, $comment, []];
-+    }
-```
+  ```diff
+  +    public static function provideComments(): iterable
+  +    {
+  +        $comment = (new Comment())->setCreatedAtValue();
+  +
+  +        $response = new MockResponse('', ['response_headers' => ['x-akismet-pro-tip: discard']]);
+  +        yield 'blatant_spam' => [2, $response, $comment, []];
+  +
+  +        $response = new MockResponse('true');
+  +        yield 'spam' => [1, $response, $comment, []];
+  +
+  +        $response = new MockResponse('false');
+  +        yield 'ham' => [0, $response, $comment, []];
+  +    }
+  ```
 
 Les data providers de PHPUnit nous permettent de réutiliser la même logique de test pour plusieurs scénarios.
 
@@ -3790,7 +3785,9 @@ Tester les contrôleurs est un peu différent de tester une classe PHP "ordinair
   ```sh
   symfony console make:test WebTestCase ConferenceControllerTest
   ```
+---
 
+class: middle 
 * ⏩ **Écrivez un test pour vérifier que la page d'accueil fonctionne :**
 
   ```diff
@@ -3828,13 +3825,14 @@ Par défaut, les tests PHPUnit sont exécutés dans l'environnement Symfony test
         <server name="APP_ENV" value="test" force="true" />
         <server name="SHELL_VERBOSITY" value="-1" />
         <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
-        <server name="SYMFONY_PHPUNIT_VERSION" value="8.5" />
+        <server name="SYMFONY_PHPUNIT_VERSION" value="9.5" />
         ...
 ```
 
 * ⏩ **Pour faire fonctionner les tests, nous devons définir la clé secrète AKISMET_KEY pour cet environnement test dans le fichier `.env.test.local` :**
 
   ```sh
+  # .env.test.local
   AKISMET_KEY=abcde
   ```
 
@@ -3858,6 +3856,9 @@ when@test:
 
 Cela est très important car nous aurons besoin d'un jeu de données stable pour exécuter nos tests et nous ne voulons certainement pas écraser celui stocké dans la base de développement.
 
+---
+
+class: middle
 * ⏩ **Avant de pouvoir lancer les tests, nous devons "initialiser" la base de données test (créez la base de données et jouez les migrations) :**
 
     ```sh
@@ -3889,6 +3890,9 @@ Pour pouvoir tester la liste des commentaires, la pagination et la soumission du
   ```
 
 Un nouveau répertoire `src/DataFixtures/` a été créé lors de l'installation, avec une classe d'exemple prête à être personnalisée.
+
+---
+class: middle
 
 * ⏩ **Ajoutez deux conférences et un commentaire pour le moment :**
 
@@ -4034,7 +4038,10 @@ Voulez-vous passer au niveau supérieur ? Essayez d'ajouter un nouveau commentai
   +    }
   ```
 
-  Pour soumettre un formulaire via submitForm(), recherchez les noms de champs grâce aux outils de développement du navigateur ou via l'onglet Form du Symfony Profiler. Notez la réutilisation pratique de l'image en construction !
+  Pour soumettre un formulaire via `submitForm()`, recherchez les noms de champs grâce aux outils de développement du navigateur ou via l'onglet **Form du Symfony Profiler**. Notez la réutilisation pratique de l'image en construction !
+
+---
+class:middle
 
 * ⏩ **Relancez les tests pour vérifier que tout est bon :**
   ```sh
@@ -4044,6 +4051,7 @@ Voulez-vous passer au niveau supérieur ? Essayez d'ajouter un nouveau commentai
 * ⏩ **Si vous voulez vérifier le résultat dans un navigateur, arrêtez le serveur web et relancer le pour l'environnement test :**
   ```sh
   symfony server:stop
+  
   APP_ENV=test symfony server:start
   ```
 
@@ -4063,12 +4071,12 @@ class: middle
 🤔 Comme il y a maintenant plus de commentaires dans la base de données, l'assertion qui vérifie le nombre de commentaires est erronée.
 
 * ⏩ **Nous devons réinitialiser l'état de la base de données entre chaque exécution, en rechargeant les données de test avant chacune d'elles :**
-
-```
-symfony console doctrine:fixtures:load --env=test
-
-symfony php bin/phpunit tests/ConferenceControllerTest.php
-```
+  
+  ```
+  symfony console doctrine:fixtures:load --env=test
+  
+  symfony php bin/phpunit tests/ConferenceControllerTest.php
+  ```
 
 ---
 
@@ -4077,9 +4085,18 @@ class: middle
 ### **Automatiser votre workflow avec un Makefile**
 ]
 
-<img src="https://em-content.zobj.net/source/telegram/358/pouting-face_1f621.webp" width="24px" /> Il est assez pénible d'avoir à se souvenir d'une séquence de commandes pour exécuter les tests. Cela devrait au moins être documenté, même si cette documentation ne devrait être consultée qu'en dernier recours. 
+<img src="https://em-content.zobj.net/source/telegram/358/pouting-face_1f621.webp" width="24px" /> 
+Il est assez pénible d'avoir à se souvenir d'une séquence de commandes pour exécuter les tests. Cela devrait au moins être documenté, même si cette documentation ne devrait être consultée qu'en dernier recours. 
 
 👉 Et si on automatisait plutôt les opérations récurrentes ? Cela servirait aussi de documentation rapidement accessible aux autres, et rendrait le développement plus facile et plus productif.
+
+.center[
+<img src="img/tests/gnu-make.png" width="300" />
+]
+
+---
+
+class:middle
 
 * ⏩ **L'utilisation d'un Makefile est une façon d'automatiser les commandes :**
 
@@ -4115,7 +4132,7 @@ class: middle
 ### **Réinitialiser la base de données après chaque test**
 ]
 
-Réinitialiser la base de données après chaque test c'est bien, mais avoir des tests vraiment indépendants c'est encore mieux. 🚀🚀
+Réinitialiser la base de données après chaque test, c'est bien ! Mais avoir des tests vraiment indépendants, c'est encore mieux. 🚀🚀
 
 Nous ne voulons pas qu'un test s'appuie sur les résultats des précédents. Le changement de l'ordre des tests ne devrait pas changer le résultat. Comme nous allons le découvrir maintenant, ce n'est pas le cas pour le moment.
 
@@ -4126,7 +4143,7 @@ Nous ne voulons pas qu'un test s'appuie sur les résultats des précédents. Le 
 * ⏩ **Pour résoudre ce problème, nous devons réinitialiser la base de données après chaque test en installant le composant `DoctrineTestBundle` :**
 
   ```sh
-  symfony composer req "dama/doctrine-test-bundle:^7" --dev
+  symfony composer require "dama/doctrine-test-bundle:^8" --dev
   ```
 
   .info[
@@ -4175,10 +4192,12 @@ class: middle
 ### **Les outils pour la qualité de code**
 ]
 
-Le composant `phpunit` est un outil de test unitaire. Il existe d'autres outils pour tester la qualité de votre code. Tel que `phpstan` qui est un outil d'analyse statique du code PHP. et phpcs-fixer qui est un outil de correction de code.
+Le composant `phpunit` est un outil de test unitaire. Il existe d'autres outils pour tester la qualité de votre code. Tel que `phpstan` qui est un outil d'analyse statique du code PHP et `phpcs-fixer` qui est un outil de correction de code.
 
 
 #### PHPStan
+
+PHPStan est un outil d'analyse statique du code PHP qui vous aide à détecter les erreurs potentielles dans votre code. Il est capable de détecter les erreurs de type, les erreurs de logique, les erreurs de syntaxe, les erreurs de performance et les erreurs de style.
 
 * ⏩ **Installez le composant `phpstan` :**
 
@@ -4192,7 +4211,14 @@ Le composant `phpunit` est un outil de test unitaire. Il existe d'autres outils 
   symfony php vendor/bin/phpstan analyse --level max
   ```
 
+---
+
+class: middle
+
 #### PHPCs-fixer
+
+PHP-CS-Fixer est un outil de correction de code qui vous aide à maintenir un code propre et conforme à un ensemble de règles de style. Il peut corriger automatiquement les erreurs de style de votre code.
+
 * ⏩ **Installez le composant `php-cs-fixer` :**
 
   ```sh
@@ -4335,7 +4361,7 @@ class: middle
   ```
 
 
-À partir d'un test PHPUnit, vous pouvez obtenir n'importe quel service depuis le conteneur grâce à self::getContainer()->get() ; il donne également accès aux services non publics.
+À partir d'un test PHPUnit, vous pouvez obtenir n'importe quel service depuis le conteneur grâce à `self::getContainer()->get('service');` il donne également accès aux services non publics.
 
 ---
 
@@ -4348,12 +4374,12 @@ La gestion du code asynchrone avec Symfony est faite par le composant Messenger 
 
 * ⏩ **Installez le composant Messenger :**
   ```sh
-  symfony composer req messenger
+  symfony composer require doctrine-messenger
   ```
 
 **Lorsqu'une action doit être exécutée de manière asynchrone**, envoyez un message à **un messenger bus**. Le bus stocke le message dans une file d'attente **et rend immédiatement la main** pour permettre au flux des opérations de reprendre aussi vite que possible.
 
-**Un consumer** s'exécute continuellement en arrière-plan pour lire les nouveaux messages dans la file d'attente et exécuter la logique associée. Le consumer peut s'exécuter sur le même serveur que l'application web, ou sur un serveur séparé.
+**Un `consumer`** s'exécute continuellement en arrière-plan pour lire les nouveaux messages dans la file d'attente et exécuter la logique associée. Le consumer peut s'exécuter sur le même serveur que l'application web, ou sur un serveur séparé.
 
 C'est très similaire à la façon dont les requêtes HTTP sont traitées, **sauf que nous n'avons pas de réponse.**
 
@@ -4411,7 +4437,7 @@ class: middle
   use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
   #[AsMessageHandler]
-  class CommentMessageHandler
+  final readonly class CommentMessageHandler
   {
       public function __construct(
           private EntityManagerInterface $entityManager,
@@ -4437,7 +4463,13 @@ class: middle
   }
   ```
 
-`AsMessageHandler` aide Symfony à enregistrer et à configurer automatiquement la classe en tant que gestionnaire Messenger. Par convention, la logique d'un gestionnaire réside dans une méthode appelée `__invoke()`. Le type `CommentMessage` précisé en tant qu'argument unique de cette méthode indique à Messenger quelle classe elle va gérer.
+---
+
+class: middle
+
+`#[AsMessageHandler]` aide Symfony à enregistrer et à configurer automatiquement la classe en tant que gestionnaire Messenger. 
+
+Par convention, la logique d'un gestionnaire réside dans une méthode appelée `__invoke()`. Le type `CommentMessage` précisé en tant qu'argument unique de cette méthode indique à Messenger quelle classe elle va gérer.
 
 ---
 
@@ -4477,11 +4509,15 @@ class: middle
 
   ```
 
+---
+
+class: middle
+
 Au lieu de dépendre du `SpamChecker`, nous envoyons maintenant un message dans le **bus**. Le gestionnaire décide alors ce qu'il en fait.
 
 Nous avons fait quelque chose que nous n'avions pas prévu. Nous avons découplé notre contrôleur du vérificateur de spam, et déplacé la logique vers une nouvelle classe, le gestionnaire. C'est un cas d'utilisation parfait pour le bus.
 * ⏩ **Testez le code, il fonctionne.**
-  > Tout se fait encore de manière synchrone, mais le code est probablement déjà "mieux".
+  > Tout se fait encore de manière synchrone, mais le code est probablement déjà "meilleur".
 
 ---
 
@@ -4520,6 +4556,10 @@ Comme vous pouvez l'imaginer, Symfony est livré avec une commande pour consomme
   ```sh
   symfony console messenger:consume async -vv
   ```
+
+---
+
+class: middle
 
 Cette commande devrait immédiatement consommer le message envoyé pour le commentaire soumis :
 
@@ -4563,6 +4603,10 @@ La commande `symfony` peut gérer des commandes en tâche de fond ou des workers
 
 Si le consumer cesse de fonctionner pour une raison quelconque (limite de mémoire, bogue, etc.), il sera redémarré automatiquement. Et s'il tombe en panne trop rapidement, la commande symfony s'arrêtera.
 
+---
+
+class: middle
+
 Les logs sont diffusés en continu par la commande symfony `server:log`, en même temps que ceux de PHP, du serveur web et de l'application.
 
 * ⏩ **Utilisez la commande `server:status` pour lister tous les workers en arrière-plan gérés pour le projet en cours :**
@@ -4573,7 +4617,10 @@ Les logs sont diffusés en continu par la commande symfony `server:log`, en mêm
       Command symfony console messenger:consume async running with PID 15774 (watching config/, src/, templates/)
   ```
 
-* ⏩ **Pour arrêter un worker, arrêtez le serveur web ou tuez le PID (identifiant du processus) donné par la commande `server:status`** : `kill 15774`
+* ⏩ **Pour arrêter un worker, arrêtez le serveur web ou tuez le PID (identifiant du processus) donné par la commande `server:status`** : 
+  ```
+  kill 15774
+  ```
 
 ---
 
@@ -4605,13 +4652,29 @@ framework:
             # sync: 'sync://'
 ```
 
+---
+
+class: middle
+
 Si un problème survient lors de la manipulation d'un message, le consumer réessaiera 3 fois avant d'abandonner. Mais au lieu de jeter le message, il le stockera indéfiniment dans la file d'attente `failed`, qui utilise une autre table de la base de données.
 
 * ⏩ **Inspectez les messages ayant échoué et relancez-les à l'aide des commandes suivantes :**
   ```sh
   symfony console messenger:failed:show
+  
   symfony console messenger:failed:retry
   ```
+  
+* ⏩ **Commitez votre travail via Git :**
+  ```sh
+  git add .
+  git commit -m "Add asynchronous processing"
+  ```
+  
+.info[
+ Liens utiles :
+  * [Messenger Component](https://symfony.com/doc/current/messenger.html)
+]
 
 ---
 
