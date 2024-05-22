@@ -3445,27 +3445,27 @@ class: middle
 
 Comme l'indique la sortie de la commande `make:auth`.
 * ⏩ **Nous devons personnaliser la route dans la méthode `onAuthenticationSuccess()` pour rediriger l'admin lorsqu'il a réussi à se connecter :**
-
-```diff
-# src/Security/AppAuthenticator.php
-
--        // For example:
--        // return new RedirectResponse($this->urlGenerator->generate('some_route'));
--        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
-+        return new RedirectResponse($this->urlGenerator->generate('admin'));
-```
+  
+  ```diff
+  # src/Security/AppAuthenticator.php
+  
+  -        // For example:
+  -        // return new RedirectResponse($this->urlGenerator->generate('some_route'));
+  -        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+  +        return new RedirectResponse($this->urlGenerator->generate('admin'));
+  ```
 
 Un système de sécurité se compose de deux parties : l'authentification et l'autorisation. Lors de la création de l'admin, nous lui avons donné le rôle `ROLE_ADMIN`.
 
 * ⏩ **Limitons la section `/admin` aux seules personnes ayant ce rôle en ajoutant une règle à `access_control` :**
-
-```diff
-# config/packages/security.yaml
-
-     access_control:
--        # - { path: ^/admin, roles: ROLE_ADMIN }
-+        - { path: ^/admin, roles: ROLE_ADMIN }
-```
+  
+  ```diff
+  # config/packages/security.yaml
+  
+       access_control:
+  -        # - { path: ^/admin, roles: ROLE_ADMIN }
+  +        - { path: ^/admin, roles: ROLE_ADMIN }
+  ```
 
 Les règles access_control limitent l'accès par des expressions régulières. Lorsqu'une personne connectée tente d'accéder à une URL qui commence par `/admin`, le système de sécurité vérifie qu'elle a bien le rôle `ROLE_ADMIN`.
 
@@ -3515,6 +3515,10 @@ J'ai décidé d'utiliser le service gratuit [Akismet](https://akismet.com/) pour
 * ⏩ **Créez un compte gratuit sur [akismet.com](https://akismet.com/) et récupérez la clé de l'API Akismet.**
 
 Au lieu d'utiliser une bibliothèque qui abstrait l'API d'Akismet, nous ferons directement tous les appels API avec Symfony/HttpClient. Faire nous-mêmes les appels HTTP est plus efficace (et nous permet de bénéficier de tous les outils de débogage de Symfony comme l'intégration avec le Symfony Profiler).
+
+---
+
+class: middle
 
 Nous allons concevoir une classe de vérification de spam.
 
@@ -3576,6 +3580,9 @@ class: middle
           return 'true' === $content ? 1 : 0;
       }
   ```
+---
+
+class: middle
 
 La méthode `getSpamScore()` retourne 3 valeurs en fonction de la réponse de l'appel à l'API :
 * `2` : si le commentaire est un "spam flagrant" ;
@@ -4141,7 +4148,7 @@ class: middle
 ### **Choisir le bon type de test**
 ]
 
-Nous avons créé trois type de tests jusqu'à maintenant. Bien que nous n'ayons utilisé le bundle maker que pour générer des tests unitaires, nous aurions tout aussi bien pu l'utiliser pour générer les classes des autres tests :
+Nous avons créé trois types de tests jusqu'à maintenant. Bien que nous n'ayons utilisé le bundle maker que pour générer des tests unitaires, nous aurions tout aussi bien pu l'utiliser pour générer les classes des autres tests :
 
 ```sh
 symfony console make:test WebTestCase Controller\\ConferenceController
