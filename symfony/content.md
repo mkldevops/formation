@@ -2415,8 +2415,11 @@ Comme nous n'avons que deux contrôleurs, vous pourriez procéder comme ceci **(
 🤔 Imaginez devoir mettre à jour des dizaines de contrôleurs. Et faire la même chose sur tous les nouveaux. Ce n'est pas très pratique. Il doit y avoir un meilleur moyen.
 
 **Twig a la notion de variables globales**. Une variable globale est disponible dans tous les templates générés. Vous pouvez les définir dans un fichier de configuration, mais cela ne fonctionne que pour les valeurs statiques. Pour ajouter toutes les conférences comme variable globale Twig, nous allons créer un **"listener"**.
+
 .center[
+
 <img src="https://em-content.zobj.net/source/telegram/358/ear_1f442.webp" width=50 />
+
 ]
 
 
@@ -2433,7 +2436,8 @@ class: middle
 - 👉 **Les listeners** sont des hooks dans le cœur du framework.
 
 .pull-left[
-**Par exemple:**
+
+**Par example:**
 
 Certains événements vous permettent d'interagir avec le **cycle de vie des requêtes HTTP**. Pendant le traitement d'une requête, le dispatcher répartit les événements :
 
@@ -2575,9 +2579,10 @@ Lorsque le comportement n'a besoin d'aucun service et ne doit être appliqué qu
 @@ -91,8 +92,12 @@ class Comment
 
 +    #[ORM\PrePersist]
-+    public function setCreatedAtValue()
++    public function setCreatedAtValue() : static
 +    {
 +        $this->createdAt = new \DateTimeImmutable();
++        return $this;
 +    }
 +
      public function getConference(): ?Conference
@@ -2690,11 +2695,13 @@ Au lieu de réinventer la roue, utilisons le composant ***Symfony String***, qui
 
 @@ ...
 
-+    public function computeSlug(SluggerInterface $slugger)
++    public function computeSlug(SluggerInterface $slugger) : static
 +    {
 +        if (!$this->slug || '-' === $this->slug) {
 +            $this->slug = (string) $slugger->slug((string) $this)->lower();
 +        }
++
++        return $this;
 +    }
 +
      public function getCity(): ?string
@@ -2730,7 +2737,7 @@ class ConferenceEntityListener
 {
     public function __construct(private SluggerInterface $slugger) { }
 
-    public function __invoke(Conference $conference, LifecycleEventArgs $event)
+    public function __invoke(Conference $conference, LifecycleEventArgs $event) : void
     {
         $conference->computeSlug($this->slugger);
     }
@@ -2751,7 +2758,7 @@ class: middle
 
 * 👉 **Un service** est un objet **"global"** qui fournit des fonctionnalités (par exemple un **mailer**, un **logger**, un **slugger**, etc.) contrairement aux objets de données (par exemple les instances d'entités Doctrine `App\Entity`).
 
-* 👉 Vous interagissez rarement directement avec le conteneur car **il injecte automatiquement des objets de service** quand vous en avez besoin.
+* 👉 Vous interagissez rarement directement avec le conteneur, car **il injecte automatiquement des objets de service** quand vous en avez besoin.
 
 **Par exemple**, le conteneur injecte les objets en arguments du contrôleur lorsque vous les typez, comme nous l'avons fait avec `Environment` et `ConferenceRepository` dans la méthode `index()` du contrôleur `ConferenceController`.
 
@@ -2775,7 +2782,11 @@ class: middle
 
 🤔 Si vous vous demandez comment le listener d'événement a été initialisé à l'étape précédente, vous avez maintenant la réponse :
 
-.center[**"le conteneur"**.]
+.center[ 
+
+**"Le conteneur"** 
+
+]
 
 Lorsqu'une classe implémente des **interfaces spécifiques**, ⇒ le conteneur sait que la classe doit être initialisée d'une certaine manière.
 
@@ -2892,14 +2903,13 @@ Il est temps de permettre aux personnes présentes de donner leur avis sur les c
 symfony console make:form CommentFormType Comment
 ```
 
-La classe `App\Form\CommentFormType` à été généré et définit un formulaire pour l'entité `App\Entity\Comment`
+La classe `App\Form\CommentFormType` a été généré et définit un formulaire pour l'entité `App\Entity\Comment`
 
 **Un form type** décrit les champs de formulaire liés à un modèle. Il effectue la conversion des données entre les données soumises et les propriétés de la classe de modèle.
 
 Par défaut, Symfony utilise les métadonnées de l'entité `Comment`, comme les métadonnées Doctrine, pour deviner la configuration de chaque champ, avec `data_class` défini sur `Comment::class` dans la méthode `configureOptions()`. Mais nous pourrions utiliser un modèle différent si nous le souhaitions.
 
-
-**Par exemple**, le champ `text` se présente sous la forme d'un `textarea` parce qu'il utilise une colonne plus grande dans la base de données. En effet on lui a défini le type de column doctrine `Types::TEXT` dans l'entité `Comment`.
+**Par exemple**, le champ `text` se présente sous la forme d'un `textarea` parce qu'il utilise une colonne plus grande dans la base de données. En effet, on lui a défini le type de column doctrine `Types::TEXT` dans l'entité `Comment`.
 
 
 ---
@@ -2957,15 +2967,19 @@ class: middle
  {% endblock %}
 ```
 .pull-left[
+
 Lorsque vous rafraîchissez la page d'une conférence dans le navigateur, notez que chaque champ de formulaire affiche la balise HTML appropriée (le type de données est défini à partir du modèle) :
 
 La fonction `form()` génère le formulaire HTML en fonction de toutes les informations définies dans le form type. Elle ajoute également `enctype=multipart/form-data` à la balise `<form> `comme l'exige le champ d'upload de fichier. De plus, elle se charge d'afficher les messages d'erreur lorsque la soumission comporte des erreurs. Tout peut être personnalisé en remplaçant les templates par défaut, mais nous n'en aurons pas besoin pour ce projet.
 
 ]
+
 .pull-right[
+
 .center[
 <img src="img/form.png" width="600px">
 ]
+
 ]
 
 ---
@@ -3015,7 +3029,7 @@ class: middle
 ### **Gerer les champs non mappés**
 ]
 
-Certains champs ne peuvent pas être auto-configurés, comme par exemple `photoFilename`.
+Certains champs ne peuvent pas être auto-configurés, comme par example `photoFilename`.
 * 👉 L'entité `Comment` n'a besoin d'enregistrer que le nom du fichier photo, **mais le formulaire doit s'occuper de l'upload du fichier lui-même**.
 
 Pour traiter ce cas, nous avons ajouté un champ appelé `photo` qui est un champ **"non mapped"** : il ne sera associé à aucune propriété de `Comment`. Nous le gérerons manuellement pour implémenter une logique spécifique (comme l'upload de la photo sur le disque).
@@ -3209,6 +3223,7 @@ class: middle
 Lorsqu'un formulaire est soumis et que quelque chose ne fonctionne pas correctement, utilisez le panneau **"Form" du Symfony Profiler**. Il vous donne des informations sur le formulaire, toutes ses options, les données soumises et comment elles sont converties en interne. Si le formulaire contient des erreurs, elles seront également répertoriées.
 
 .pull-left[
+
 Le workflow classique d'un formulaire est le suivant :
 
 * Le formulaire est affiché sur une page ;
@@ -3218,11 +3233,15 @@ Le workflow classique d'un formulaire est le suivant :
 Mais comment pouvez-vous accéder au profileur pour une requête de soumission réussie ? Étant donné que la page est immédiatement redirigée, nous ne voyons jamais la barre d'outils de débogage Web pour la requête `POST`.
 
 Pas de problème : sur la page redirigée, survolez la partie verte `"200"` à gauche. Vous devriez voir la redirection `"302"` avec un lien vers le profileur (entre parenthèses).
+
 ]
+
 .pull-right[
+
 .center[
 <img src="img/form-profiler.png" height="370px" />
 ]
+
 ]
 
 ---
@@ -3477,6 +3496,7 @@ class: middle
 ]
 
 .pull-left[
+
 Si vous essayez d'accéder à l'interface d'administration, vous devriez maintenant être redirigé vers la page de connexion et être invité à entrer un identifiant et un mot de passe :
 
 * ⏩ **Connectez-vous en utilisant `admin` et le mot de passe que vous avez choisi précédemment.**
@@ -3488,11 +3508,15 @@ Si vous essayez d'accéder à l'interface d'administration, vous devriez mainten
 ]
 
 > 🗒 Si vous voulez créer un système complet d'authentification par formulaire, jetez un coup d’œil à la commande `make:registration-form`.
+
 ]
+
 .pull-right[
+
 .center[<img src="img/easy-admin-login.png" width="450px">]
 
 .center[<img src="img/easy-admin-secured.png" width="450px">]
+
 ]
 
 ---
@@ -3670,8 +3694,10 @@ class: middle, center, inverse
 
 class: middle
 .center[
-### **Générer une classe de test unitaire**
+### **Installer PHPUnit**
 ]
+
+.pull-left[
 
 Comme nous commençons à ajouter, de plus en plus de fonctionnalités dans l'application, c'est probablement le bon moment pour parler des tests.
 
@@ -3679,15 +3705,67 @@ Symfony s'appuie sur PHPUnit pour les tests unitaires.
 * ⏩ **Installons-le :**
 
   ```sh
-  symfony composer req phpunit --dev
+  symfony composer req phpunit/phpunit:^11 -W --dev
   ```
 
-SpamChecker est la première classe pour laquelle nous allons écrire des tests.
-* ⏩ **Générez un test unitaire :**
+* ⏩ **Modifier le contenu du fichier `phpunit.xml.dist` pour ajouter la configuration de PHPUnit 11 :**
+
+]
+
+.pull-right[
+
+  ```xml
+  <?xml version="1.0" encoding="UTF-8"?>
+  
+  <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+    backupGlobals="false" colors="true"
+    bootstrap="tests/bootstrap.php"
+    failOnRisky="true" failOnWarning="true"
+    failOnEmptyTestSuite="true"
+    beStrictAboutChangesToGlobalState="true"
+    beStrictAboutOutputDuringTests="true"
+    cacheDirectory=".phpunit.cache"
+    >
+        <php>
+            <ini name="display_errors" value="1" />
+            <ini name="error_reporting" value="-1" />
+            <server name="APP_ENV" value="test" force="true" />
+            <server name="SHELL_VERBOSITY" value="-1" />
+            <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
+            <server name="SYMFONY_PHPUNIT_VERSION" value="11" />
+            <server name="SYMFONY_DEPRECATIONS_HELPER" value="disabled" />
+        </php>
+        <testsuites>
+            <testsuite name="Project Test Suite">
+                <directory>tests</directory>
+            </testsuite>
+        </testsuites>
+        <source>
+            <include>
+                <directory>src</directory>
+            </include>
+        </source>
+    </phpunit>
+  ```
+]
+
+---
+class: middle
+
+.center[
+### **Générer une classe de test unitaire**
+]
+
+`SpamChecker` est la première classe pour laquelle nous allons écrire des tests.
+
+* ⏩ **Générez un test unitaire avec le maker :**
 
     ```sh
     symfony console make:test TestCase SpamCheckerTest
     ```
+
+Suite à cette commande, une nouvelle classe `SpamCheckerTest` est créée dans le répertoire `tests/`. Elle contient une méthode de test `testSomething` qui vérifie que `true` est égal à `true`.
 
 Tester le `SpamChecker` est un défi, car nous ne voulons certainement pas utiliser l'API Akismet. Nous allons mocker l'API.
 
@@ -3698,31 +3776,32 @@ class: middle
 ### **Écrire des tests unitaires**
 ]
 
-* ⏩ **Écrivons un premier test pour le cas où l'API renverrait une erreur :**
+* ⏩ **Supprimez la méthode `testSomething()` et écrivons un premier test pour le cas où l'API renverrait une erreur :**
 
-  ```diff
+  ```php
   class SpamCheckerTest extends TestCase
   {
-  -    public function testSomething(): void
-  +    public function testSpamScoreWithInvalidRequest(): void
+      public function testSpamScoreWithInvalidRequest(): void
       {
-  -        $this->assertTrue(true);
-  +        $comment = (new Comment())->setCreatedAtValue();
-  +
-  +        $client = new MockHttpClient([new MockResponse('invalid', ['response_headers' => ['x-akismet-debug-help: Invalid key']])]);
-  +        $checker = new SpamChecker($client, 'abcde');
-  +
-  +        $this->expectException(\RuntimeException::class);
-  +        $this->expectExceptionMessage('Unable to check for spam: invalid (Invalid key).');
-  +        $checker->getSpamScore(comment: $comment, context: []);
+          ($comment = new Comment())->setCreatedAtValue();
+  
+          $client = new MockHttpClient([new MockResponse('invalid', ['response_headers' => ['x-akismet-debug-help: Invalid key']])]);
+          $checker = new SpamChecker($client, 'abcde');
+  
+          static::expectException(\RuntimeException::class);
+          static::expectExceptionMessage('Unable to check for spam: invalid (Invalid key).');
+          $checker->getSpamScore(comment: $comment, context: []);
       }
+  }
   ```
 
 La classe `MockHttpClient` permet de simuler n'importe quel serveur HTTP. Elle prend un tableau d'instances `MockResponse` contenant le corps et les en-têtes de réponse attendus.
 
+Elle implémente l'interface `HttpClientInterface` dont a besoin notre `SpamChecker`.
+
 Ensuite, nous appelons la méthode `getSpamScore()` et vérifions qu'une exception est levée via la méthode `expectException()` de PHPUnit.
 
-* ⏩ **Lancez les tests unitaires :**
+* ⏩ **Lancez notre premier test unitaire :**
 
   ```sh
   symfony php bin/phpunit
@@ -3735,41 +3814,43 @@ class: middle
 ]
 
 
-* ⏩ **Écrivons un test pour le cas où l'API renverrai un spam flagrant :**
+* ⏩ **Écrivons un autre test pour le cas où l'API renverrait un spam flagrant :**
 
-  ```diff
-  +    /**
-  +     * @dataProvider provideComments
-  +     */
-  +    public function testSpamScore(int $expectedScore, ResponseInterface $response, Comment $comment, array $context)
-  +    {
-  +        $client = new MockHttpClient([$response]);
-  +        $checker = new SpamChecker($client, 'abcde');
-  +
-  +        $score = $checker->getSpamScore($comment, $context);
-  +        $this->assertSame($expectedScore, $score);
-  +    }
+  ```php8
+      #[DataProvider('provideComments')]
+      public function testSpamScore(int $expectedScore, ResponseInterface $response, Comment $comment, array $context)
+      {
+          $client = new MockHttpClient([$response]);
+          $checker = new SpamChecker($client, 'abcde');
+  
+          $score = $checker->getSpamScore($comment, $context);
+          static::assertSame($expectedScore, $score);
+      }
   ```
 
 * ⏩ **Ajoutez une méthode `provideComments()` pour fournir des données de test :**
 
-  ```diff
-  +    public static function provideComments(): iterable
-  +    {
-  +        $comment = (new Comment())->setCreatedAtValue();
-  +
-  +        $response = new MockResponse('', ['response_headers' => ['x-akismet-pro-tip: discard']]);
-  +        yield 'blatant_spam' => [2, $response, $comment, []];
-  +
-  +        $response = new MockResponse('true');
-  +        yield 'spam' => [1, $response, $comment, []];
-  +
-  +        $response = new MockResponse('false');
-  +        yield 'ham' => [0, $response, $comment, []];
-  +    }
+  ```php
+    /** @return iterable<string, array<mixed>> */
+    public static function provideComments(): iterable
+    {
+        ($comment = new Comment())->setCreatedAtValue();
+        $response = new MockResponse('', ['response_headers' => ['x-akismet-pro-tip: discard']]);
+        yield 'blatant_spam' => [2, $response, $comment, []];
+        $response = new MockResponse('true');
+        yield 'spam' => [1, $response, $comment, []];
+        $response = new MockResponse('false');
+        yield 'ham' => [0, $response, $comment, []];
+    }
   ```
 
-Les data providers de PHPUnit nous permettent de réutiliser la même logique de test pour plusieurs scénarios.
+Les `DataProvider` de PHPUnit nous permettent de réutiliser la même logique de test pour plusieurs scénarios.
+
+* ⏩ **Lancez les tests unitaires :**
+
+  ```sh
+  symfony php bin/phpunit
+  ```
 
 ---
 
@@ -3778,36 +3859,40 @@ class: middle
 ### **Écrire des tests fonctionnels pour les contrôleurs**
 ]
 
-Tester les contrôleurs est un peu différent de tester une classe PHP "ordinaire" car nous voulons les exécuter dans le contexte d'une requête HTTP.
+Tester les contrôleurs est un peu différent de tester une classe PHP "ordinaire" car nous voulons les exécuter dans le contexte d'une requête HTTP. On appelle ces tests des tests fonctionnels.
+
+Le maker de Symfony peut générer des classes de test fonctionnel pour les contrôleurs.
 
 * ⏩ **Générez une classe de test fonctionnel :**
 
   ```sh
   symfony console make:test WebTestCase ConferenceControllerTest
   ```
+  
+Suite à cette commande, une nouvelle classe `ConferenceControllerTest` est créée dans le répertoire `tests/`.
+
 ---
 
 class: middle 
-* ⏩ **Écrivez un test pour vérifier que la page d'accueil fonctionne :**
+* ⏩ **Supprimez la methode `testSomething()` et écrivez un test pour vérifier que la page d'accueil fonctionne :**
 
-  ```diff
-  - public function testSomething(): void
-  + public function testIndex(): void
+  ```php
+    public function testIndex(): void
     {
-  
-  ...
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/');
 
-  -     $this->assertSelectorTextContains('h1', 'Hello World');
-  +     $this->assertSelectorTextContains('h2', 'Give your feedback!');
+        static::assertResponseIsSuccessful();
+        static::assertSelectorTextContains('h2', 'Give your feedback!');
     }
   ```
 Utiliser `Symfony\Bundle\FrameworkBundle\Test\WebTestCase` à la place de `PHPUnit\Framework\TestCase` comme classe de base pour nos tests nous fournit une abstraction bien pratique pour les tests fonctionnels.
 
-La variable `$client` simule un navigateur. Au lieu de faire des appels HTTP au serveur, il appelle directement l'application Symfony. Cette stratégie présente plusieurs avantages :
+La variable `$client` simule un navigateur. Au lieu de faire des appels HTTP au serveur, il appelle directement l'application Symfony. Cette stratégie présente plusieurs avantages ✅ :
 * Elle est beaucoup plus rapide que les allers-retours entre le client et le serveur,
 * Mais elle permet aussi aux tests d'analyser l'état des services après chaque requête HTTP.
 
-Ce premier test vérifie que la page d'accueil renvoie une réponse HTTP `200`
+Ce premier test vérifie que la page d'accueil renvoie une réponse HTTP `200` ✅
 
 ---
 
@@ -3820,20 +3905,34 @@ Par défaut, les tests PHPUnit sont exécutés dans l'environnement Symfony test
 
 ```xml
 <phpunit>
-    <php>
-        <ini name="error_reporting" value="-1" />
-        <server name="APP_ENV" value="test" force="true" />
-        <server name="SHELL_VERBOSITY" value="-1" />
-        <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
-        <server name="SYMFONY_PHPUNIT_VERSION" value="9.5" />
-        ...
+  <php>
+    <ini name="display_errors" value="1" />
+    <ini name="error_reporting" value="-1" />
+    <server name="APP_ENV" value="test" force="true" />
+    <server name="SHELL_VERBOSITY" value="-1" />
+    <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
+    <server name="SYMFONY_PHPUNIT_VERSION" value="11" />
+    <server name="SYMFONY_DEPRECATIONS_HELPER" value="disabled" />
+  </php>
+</phpunit>
 ```
 
-* ⏩ **Pour faire fonctionner les tests, nous devons définir la clé secrète AKISMET_KEY pour cet environnement test dans le fichier `.env.test.local` :**
+* ⏩ **Pour faire fonctionner les tests, nous devons définir la clé secrète `AKISMET_KEY` pour cet environnement test dans le fichier `.env.test.local` :**
 
   ```sh
   # .env.test.local
   AKISMET_KEY=abcde
+  ```
+* ⏩ **Mettez à jour le fichier `test/bootstrap.php` pour supporter phpunit 11 :**
+
+  ```diff
+  <?php
+
+  use Symfony\Component\Dotenv\Dotenv;
+  +use Symfony\Component\ErrorHandler\ErrorHandler;
+  
+  require dirname(__DIR__).'/vendor/autoload.php';
+  +set_exception_handler([new ErrorHandler(), 'handleException']);
   ```
 
 ---
@@ -3843,7 +3942,7 @@ class: middle
 ### **Utiliser une base de données de test**
 ]
 
-Comme nous l'avons déjà vu, la commande Symfony définit automatiquement la variable d'environnement `DATABASE_URL`. Quand `APP_ENV` vaut test, comme c'est le cas lors de l'exécution de PHPUnit, cela change le nom de la base de données de `app` en `app_test` pour que les tests utilisent leur propre base de données :
+Comme nous l'avons déjà vu, la commande Symfony définit automatiquement la variable d'environnement `DATABASE_URL`. Quand `APP_ENV` a pour valeur `test`, comme c'est le cas lors de l'exécution de PHPUnit, cela change le nom de la base de données de `app` en `app_test` pour que les tests utilisent leur propre base de données :
 
 ```yaml
 # config/packages/doctrine.yaml
@@ -3854,7 +3953,7 @@ when@test:
             dbname_suffix: '_test%env(default::TEST_TOKEN)%'
 ```
 
-Cela est très important car nous aurons besoin d'un jeu de données stable pour exécuter nos tests et nous ne voulons certainement pas écraser celui stocké dans la base de développement.
+Cela est très important, car nous aurons besoin d'un jeu de données stable pour exécuter nos tests et nous ne voulons certainement pas écraser celui stocké dans la base de développement.
 
 ---
 
@@ -3862,8 +3961,9 @@ class: middle
 * ⏩ **Avant de pouvoir lancer les tests, nous devons "initialiser" la base de données test (créez la base de données et jouez les migrations) :**
 
     ```sh
-    symfony console doctrine:database:create --env=test
-    symfony console doctrine:schema:update --force --env=test
+    APP_ENV=test symfony console doctrine:database:create
+  
+    APP_ENV=test symfony console doctrine:migrations:migrate -n
     ```
 
 Si vous lancez les tests maintenant, PHPUnit n'interagira plus avec votre base de données de développement. Pour lancer les nouveaux tests uniquement, passez le chemin de leur classe en argument.
@@ -3894,31 +3994,33 @@ Un nouveau répertoire `src/DataFixtures/` a été créé lors de l'installation
 ---
 class: middle
 
-* ⏩ **Ajoutez deux conférences et un commentaire pour le moment :**
+Dans le fichier `src/DataFixtures/AppFixtures.php`, nous allons ajouter des conférences et des commentaires pour les tests.
 
-  ```diff
-      public function load(ObjectManager $manager): void
-      {
-  -        // $product = new Product();
-  -        // $manager->persist($product);
-  +        $amsterdam = new Conference();
-  +        $amsterdam->setCity('Amsterdam');
-  +        $amsterdam->setYear('2019');
-  +        $amsterdam->setIsInternational(true);
-  +        $manager->persist($amsterdam);
-  +
-  +        $paris = new Conference();
-  +        $paris->setCity('Paris');
-  +        $paris->setYear('2020');
-  +        $paris->setIsInternational(false);
-  +        $manager->persist($paris);
-  +
-  +        $comment1 = new Comment();
-  +        $comment1->setConference($amsterdam);
-  +        $comment1->setAuthor('Fabien');
-  +        $comment1->setEmail('fabien@example.com');
-  +        $comment1->setText('This was a great conference.');
-  +        $manager->persist($comment1);
+* ⏩ **Remplacez le contenu de la méthode `load()` par le code suivant qui ajoute deux conférences et un commentaire :**
+
+  ```php
+    public function load(ObjectManager $manager): void
+    {
+        $amsterdam = new Conference();
+        $amsterdam->setCity('Amsterdam');
+        $amsterdam->setYear('2019');
+        $amsterdam->setIsInternational(true);
+        $manager->persist($amsterdam);
+
+        $paris = new Conference();
+        $paris->setCity('Paris');
+        $paris->setYear('2020');
+        $paris->setIsInternational(false);
+        $manager->persist($paris);
+
+        $comment1 = new Comment();
+        $comment1->setConference($amsterdam);
+        $comment1->setAuthor('Fabien');
+        $comment1->setEmail('fabien@example.com');
+        $comment1->setText('This was a great conference.');
+        $manager->persist($comment1);
+        $manager->flush();
+    }
   ```
 
 ---
@@ -3932,9 +4034,6 @@ Lorsque nous chargerons les données de test, toutes les données présentes ser
 
 * ⏩ **Pour éviter cela, modifions les fixtures :**
   ```diff
-  +use App\Entity\Admin;
-  +use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
-
   class AppFixtures extends Fixture
   {
   +    public function __construct(
@@ -3963,7 +4062,7 @@ Lorsque nous chargerons les données de test, toutes les données présentes ser
 * ⏩ **Chargez les données de test pour l'environnement/la base de données de test :**
 
     ```sh
-    symfony console doctrine:fixtures:load --env=test --no-interaction
+    APP_ENV=test symfony console doctrine:fixtures:load --no-interaction
     ```
 
 ---
@@ -3973,42 +4072,53 @@ class: middle
 ### **Parcourir un site web avec des tests fonctionnels**
 ]
 
-Comme nous l'avons vu, le client HTTP utilisé dans les tests simule un navigateur, afin que nous puissions parcourir le site comme si nous utilisions un navigateur.
+Comme nous l'avons vu, le client `HTTP` utilisé dans les tests simule un navigateur, afin que nous puissions parcourir le site comme si nous utilisions un navigateur.
 
 .pull-left[
-* ⏩ **Ajoutez un nouveau test qui clique sur une page de conférence depuis la page d'accueil :**
-  ```diff
-          $this->assertSelectorTextContains('h2', 'Give your feedback');
-      }
-    +
-    +    public function testConferencePage()
-    +    {
-    +        $client = static::createClient();
-    +        $crawler = $client->request('GET', '/');
-    +
-    +        $this->assertCount(2, $crawler->filter('h4'));
-    +
-    +        $client->clickLink('View');
-    +
-    +        $this->assertPageTitleContains('Amsterdam');
-    +        $this->assertResponseIsSuccessful();
-    +        $this->assertSelectorTextContains('h2', 'Amsterdam 2019');
-    +        $this->assertSelectorExists('div:contains("There are 1 comments")');
-    +    }
+* ⏩ **Ajoutez à la classe `ConferenceControllerTest` un nouveau test qui clique sur une page de conférence depuis la page d'accueil :**
+  ```php
+
+    public function testConferencePage() : void
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/');
+  
+        static::assertCount(2, $crawler->filter('h4'));
+  
+        $client->clickLink('View');
+  
+        static::assertPageTitleContains('Amsterdam');
+  
+        static::assertResponseIsSuccessful();
+        static::assertSelectorTextContains('h2', 'Amsterdam 2019');
+  
+        static::assertSelectorExists('div:contains("There are 1 comments")');
     }
   ```
+  
+* ⏩ **Exécutez les tests :**
+  ```sh
+  symfony php bin/phpunit tests/ConferenceControllerTest.php
+  ```
+
 ]
 .pull-right[
 
 **Décrivons ce qu’il se passe dans ce test :**
 
-* Comme pour le premier test, nous allons sur la page d'accueil
-* La méthode request() retourne une instance de `Crawler` qui aide à trouver des éléments sur la page (comme des liens, des formulaires, ou tout ce que vous pouvez atteindre avec des sélecteurs CSS ou XPath) ;
-* Grâce à un sélecteur CSS, nous testons que nous avons bien deux conférences listées sur la page d'accueil ;
-* On clique ensuite sur le lien `"View"` (comme il n'est pas possible de cliquer sur plus d'un lien à la fois, Symfony choisit automatiquement le premier qu'il trouve) ;
-* Nous vérifions le titre de la page, la réponse et le `<h2>` de la page pour être sûr d'être sur la bonne page (nous aurions aussi pu vérifier la route correspondante) ;
-* Enfin, nous vérifions qu'il y a 1 commentaire sur la page. `div:contains()` n'est pas un sélecteur CSS valide, mais Symfony a quelques ajouts intéressants, empruntés à jQuery.
-  ]
+  * Comme pour le premier test, nous allons sur la page d'accueil
+
+  * La méthode `request()` retourne une instance de `Crawler` qui aide à trouver des éléments sur la page (comme des liens, des formulaires, ou tout ce que vous pouvez atteindre avec des sélecteurs CSS ou XPath) ;
+
+  * Grâce à un sélecteur CSS, nous testons que nous avons bien deux conférences listées sur la page d'accueil ;
+
+  * On clique ensuite sur le lien `"View"` (comme il n'est pas possible de cliquer sur plus d'un lien à la fois, Symfony choisit automatiquement le premier qu'il trouve) ;
+
+  * Nous vérifions le titre de la page, la réponse et le `<h2>` de la page pour être sûr d'être sur la bonne page (nous aurions aussi pu vérifier la route correspondante) ;
+
+  * Enfin, nous vérifions qu'il y a 1 commentaire sur la page. `div:contains()` n'est pas un sélecteur CSS valide, mais Symfony a quelques ajouts intéressants, empruntés à jQuery.
+
+]
 
 
 ---
@@ -4018,24 +4128,28 @@ class: middle
 ### **Soumettre un formulaire dans un test fonctionnel**
 ]
 
-Voulez-vous passer au niveau supérieur ? Essayez d'ajouter un nouveau commentaire avec une photo sur une conférence, à partir d'un test, en simulant une soumission de formulaire. Cela semble ambitieux, n'est-ce pas ?
+🆙 Voulez-vous passer au niveau supérieur ?
 
-* ⏩ **Regardez le code nécessaire : pas plus compliqué que ce que nous avons déjà écrit :**
-  ```diff
-  +    public function testCommentSubmission()
-  +    {
-  +        $client = static::createClient();
-  +        $client->request('GET', '/conference/amsterdam-2019');
-  +        $client->submitForm('Submit', [
-  +            'comment_form[author]' => 'Fabien',
-  +            'comment_form[text]' => 'Some feedback from an automated functional test',
-  +            'comment_form[email]' => 'me@automat.ed',
-  +            'comment_form[photo]' => dirname(__DIR__, 2).'/public/images/under-construction.gif',
-  +        ]);
-  +        $this->assertResponseRedirects();
-  +        $client->followRedirect();
-  +        $this->assertSelectorExists('div:contains("There are 2 comments")');
-  +    }
+Essayez d'ajouter un nouveau commentaire avec une photo sur une conférence, à partir d'un test, en simulant une soumission de formulaire. Cela semble ambitieux, n'est-ce pas ?
+
+* ⏩ **Regardez le code nécessaire : pas plus compliqué que ce que nous avons déjà écrit. Ajoutez cd test à notre classe `ConferenceControllerTest`**
+  ```php
+      public function testCommentSubmission() : void
+      {
+          $client = static::createClient();
+          $client->request('GET', '/conference/amsterdam-2019');
+  
+          $client->submitForm('Submit', [
+              'comment_form[author]' => 'Fabien',
+              'comment_form[text]' => 'Some feedback from an automated functional test',
+              'comment_form[email]' => 'me@automat.ed',
+              'comment_form[photo]' => dirname(__DIR__, 2).'/public/images/under-construction.gif',
+          ]);
+  
+          static::assertResponseRedirects();
+          $client->followRedirect();
+          static::assertSelectorExists('div:contains("There are 2 comments")');
+      }
   ```
 
   Pour soumettre un formulaire via `submitForm()`, recherchez les noms de champs grâce aux outils de développement du navigateur ou via l'onglet **Form du Symfony Profiler**. Notez la réutilisation pratique de l'image en construction !
@@ -4047,6 +4161,8 @@ class:middle
   ```sh
   symfony php bin/phpunit tests/Controller/ConferenceControllerTest.php
   ```
+  
+  .center[<img src="https://em-content.zobj.net/source/telegram/386/check-mark-button_2705.webp" width=50>]
 
 * ⏩ **Si vous voulez vérifier le résultat dans un navigateur, arrêtez le serveur web et relancer le pour l'environnement test :**
   ```sh
@@ -4073,10 +4189,18 @@ class: middle
 * ⏩ **Nous devons réinitialiser l'état de la base de données entre chaque exécution, en rechargeant les données de test avant chacune d'elles :**
   
   ```
-  symfony console doctrine:fixtures:load --env=test
+  APP_ENV=test symfony console doctrine:fixtures:load -n
   
   symfony php bin/phpunit tests/ConferenceControllerTest.php
   ```
+  
+.center[
+
+Yeap ! Les tests passent à nouveau.
+
+<img src="https://em-content.zobj.net/source/telegram/386/raising-hands_1f64c.webp" width=50 alt="Yeap" />
+
+]
 
 ---
 
@@ -4088,7 +4212,9 @@ class: middle
 <img src="https://em-content.zobj.net/source/telegram/358/pouting-face_1f621.webp" width="24px" /> 
 Il est assez pénible d'avoir à se souvenir d'une séquence de commandes pour exécuter les tests. Cela devrait au moins être documenté, même si cette documentation ne devrait être consultée qu'en dernier recours. 
 
-👉 Et si on automatisait plutôt les opérations récurrentes ? Cela servirait aussi de documentation rapidement accessible aux autres, et rendrait le développement plus facile et plus productif.
+👉 Et si on automatisait plutôt les opérations récurrentes ? 
+
+Cela servirait aussi de documentation rapidement accessible aux autres, et rendrait le développement plus facile et plus productif.
 
 .center[
 <img src="img/tests/gnu-make.png" width="300" />
@@ -4098,24 +4224,24 @@ Il est assez pénible d'avoir à se souvenir d'une séquence de commandes pour e
 
 class:middle
 
-* ⏩ **L'utilisation d'un Makefile est une façon d'automatiser les commandes :**
+* ⏩ **L'utilisation d'un fichier `Makefile` est une façon d'automatiser les commandes :**
 
-  ```sh
+  ```makefile
   # Makefile
   SHELL := /bin/bash
 
   tests:
-      symfony console doctrine:database:drop --force --env=test || true
-      symfony console doctrine:database:create --env=test
-      symfony console doctrine:schema:update --force --env=test
-      symfony console doctrine:fixtures:load -n --env=test
-      symfony php bin/phpunit $(MAKECMDGOALS)
+      APP_ENV=test symfony console doctrine:database:drop --force || true
+      APP_ENV=test symfony console doctrine:database:create
+      APP_ENV=test symfony console doctrine:schema:update --force
+      APP_ENV=test symfony console doctrine:fixtures:load -n
+      APP_ENV=dev symfony php bin/phpunit $(MAKECMDGOALS)
   
   .PHONY: tests
   ```
 
 .info[
-Dans une règle `Makefile`, l'indentation doit être une seule tabulation et non des espaces.
+⚠️ Dans une règle `Makefile`, l'indentation doit être une seule tabulation et non des espaces.
 ]
 
 Notez l'option `-n` sur la commande Doctrine ; c'est une option standard sur les commandes Symfony qui les rend non interactives.
@@ -4136,11 +4262,17 @@ Réinitialiser la base de données après chaque test, c'est bien ! Mais avoir d
 
 Nous ne voulons pas qu'un test s'appuie sur les résultats des précédents. Le changement de l'ordre des tests ne devrait pas changer le résultat. Comme nous allons le découvrir maintenant, ce n'est pas le cas pour le moment.
 
-* ⏩ **Déplacez le test `testConferencePage` après `testCommentSubmission` :**
+* ⏩ **Déplacez le test `testConferencePage` après `testCommentSubmission` et rejouez les tests avec `make tests`**
 
-> Les tests échouent maintenant. Le test `testCommentSubmission` ne peut pas trouver la conférence car elle a été supprimée par le test `testConferencePage`.
+> 🛑 Les tests échouent maintenant. Le test `testCommentSubmission` ne peut pas trouver la conférence car elle a été supprimée par le test `testConferencePage`.
 
-* ⏩ **Pour résoudre ce problème, nous devons réinitialiser la base de données après chaque test en installant le composant `DoctrineTestBundle` :**
+---
+
+class:middle
+
+Pour résoudre ce problème, nous devons réinitialiser la base de données après chaque test en installant le composant `DoctrineTestBundle`
+
+* ⏩ **Installez le composant `DoctrineTestBundle` :**
 
   ```sh
   symfony composer require "dama/doctrine-test-bundle:^8" --dev
@@ -4149,6 +4281,16 @@ Nous ne voulons pas qu'un test s'appuie sur les résultats des précédents. Le 
   .info[
   Vous devrez confirmer l'application de la recette (car il ne s'agit pas d'un bundle "officiellement" supporté) :
   ]
+
+La recette `dama/doctrine-test-bundle` a mis à jour le fichier `phpunit.xml.dist` pour ajouter une configuration spécifique à `DoctrineTestBundle`. Celle-ci n'est pas compatible avec la configuration de PHPUnit 11 que nous avons ajoutée précédemment.
+
+* ⏩ **Modifiez le fichier `phpunit.xml.dist` pour ajouter la configuration de `DoctrineTestBundle` :**
+
+```xml
+    <extensions>
+        <bootstrap class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
+    </extensions>
+```
 
 Et voilà. Toute modification apportée pendant les tests est automatiquement annulée à la fin de chaque test.
 
@@ -4169,33 +4311,41 @@ Nous avons créé trois types de tests jusqu'à maintenant. Bien que nous n'ayon
 
 ```sh
 symfony console make:test WebTestCase Controller\\ConferenceController
-
 symfony console make:test PantherTestCase Controller\\ConferenceController
 ```
 
 Le bundle maker supporte la génération des types de tests suivants en fonction de la manière dont vous voulez tester votre application :
 
 * `TestCase`: Tests PHPUnit basiques ;
-
 * `KernelTestCase` : Tests basiques ayant accès aux services Symfony ;
-
 * `WebTestCase` : Pour exécuter des scénarios à la manière d'un navigateur, mais sans exécution du code JavaScript ;
-
 * `ApiTestCase` : Pour jouer des scénarios orientés API ;
-
 * `PantherTestCase` : Pour jouer des scénarios e2e, en utilisant un vrai navigateur ou client HTTP et un vrai serveur web.
+
+Les tests sont importants pour garantir que votre application fonctionne correctement. Ils vous permettent de vérifier que les nouvelles fonctionnalités que vous ajoutez ne cassent pas les fonctionnalités existantes.
+
+* ⏩ **Commitez les modifications :**
+
+  ```sh
+  git add .
+  git commit -m "Add tests"
+  ```
+
+---
+
+class: middle, center, inverse
+
+# (Bonus) Les outils pour la qualité de code
 
 ---
 
 class: middle
 .center[
-### **Les outils pour la qualité de code**
+### **PHPStan**
 ]
 
 Le composant `phpunit` est un outil de test unitaire. Il existe d'autres outils pour tester la qualité de votre code. Tel que `phpstan` qui est un outil d'analyse statique du code PHP et `phpcs-fixer` qui est un outil de correction de code.
 
-
-#### PHPStan
 
 PHPStan est un outil d'analyse statique du code PHP qui vous aide à détecter les erreurs potentielles dans votre code. Il est capable de détecter les erreurs de type, les erreurs de logique, les erreurs de syntaxe, les erreurs de performance et les erreurs de style.
 
@@ -4205,17 +4355,27 @@ PHPStan est un outil d'analyse statique du code PHP qui vous aide à détecter l
   symfony composer req --dev phpstan/phpstan
   ```
 
+* ⏩ **Ajouter a notre fichier Makefile la commande pour lancer `phpstan` :**
+
+  ```makefile
+    phpstan:
+        APP_ENV=dev symfony php vendor/bin/phpstan analyse --level max
+    ```
+
 * ⏩ **Lancez `phpstan` :**
 
   ```sh
-  symfony php vendor/bin/phpstan analyse --level max
+  make phpstan
   ```
+
+🛑 Vous remarquerez que PHPStan a détecté des erreurs dans notre code. C'est une bonne chose, car cela signifie que nous pouvons les corriger avant qu'elles ne deviennent des problèmes.
 
 ---
 
 class: middle
-
-#### PHPCs-fixer
+.center[
+### **PHPCs-fixer**
+]
 
 PHP-CS-Fixer est un outil de correction de code qui vous aide à maintenir un code propre et conforme à un ensemble de règles de style. Il peut corriger automatiquement les erreurs de style de votre code.
 
@@ -4225,10 +4385,49 @@ PHP-CS-Fixer est un outil de correction de code qui vous aide à maintenir un co
   symfony composer req --dev friendsofphp/php-cs-fixer
   ```
 
+* ⏩ **Ajouter a notre fichier Makefile la commande pour lancer `php-cs-fixer` :**
+
+  ```makefile
+    php-cs-fixer:
+        APP_ENV=dev symfony php vendor/bin/php-cs-fixer fix
+  
+    php-cs-fixer-dry-run:
+        APP_ENV=dev symfony php vendor/bin/php-cs-fixer fix --dry-run
+    ```
+
 * ⏩ **Lancer la correction du code :**
 
   ```sh
-  symfony php vendor/bin/php-cs-fixer fix
+    make php-cs-fixer
+  ```
+  
+Le Cs-fixer corrige les erreurs de style dans notre code. Cela nous permet de nous concentrer sur l'écriture de code et de ne pas perdre de temps à le formater.
+
+---
+
+class: middle
+
+Pour automatiser la vérification de la qualité de notre code, nous pouvons ajouter une commande `quality` à notre `Makefile` qui exécute `phpstan`, `php-cs-fixer` et les tests.
+
+* ⏩ **Ajouter la commande `quality` à notre `Makefile` :**
+
+  ```makefile
+    quality: phpstan php-cs-fixer tests
+  ```
+  
+* ⏩ **Lancer la vérification de la qualité du code :**
+
+  ```sh
+    make quality
+  ```
+  
+Grâce à cette commande, nous pouvons vérifier la qualité de notre code en une seule commande. Cela nous permet de nous permet de gagner du temps et de nous concentrer sur l'écriture de code.
+
+* ⏩ **Commitez les modifications :**
+
+  ```sh
+  git add .
+  git commit -m "Add quality tools"
   ```
 
 ---
@@ -4244,15 +4443,32 @@ class: middle
 ### **Marquer les commentaires**
 ]
 
-Vérifier la présence de spam pendant le traitement de la soumission du formulaire peut entraîner certains problèmes. Si l'API d'Akismet devient lente, notre site web sera également lent pour les internautes. Mais pire encore, si nous atteignons le délai d'attente maximal ou si l'API d'Akismet n'est pas disponible, nous pourrions perdre des commentaires.
+Vérifier la présence de spam pendant le traitement de la soumission du formulaire peut entraîner certains problèmes. 
+
+🤔 Si l'API d'Akismet devient lente, notre site web sera également lent pour les internautes. Mais pire encore 😱, si nous atteignons le délai d'attente maximal ou si l'API d'Akismet n'est pas disponible, nous pourrions perdre des commentaires.
 
 Idéalement, nous devrions stocker les données soumises, sans les publier, et renvoyer une réponse immédiatement. La vérification du spam pourra être faite par la suite.
 
+---
+
+class: middle
+
 Nous avons besoin d'introduire un état (`state`) pour les commentaires : `submitted`, `spam` et `published`.
 
-* ⏩ **Ajoutez la propriété state à la classe Comment :**
+* ⏩ **Ajoutez la propriété state à la classe `Comment` :**
   ```sh
   symfony console make:entity Comment
+  ```
+* ⏩ **Ajouter une classe enum `App\Entity\Enum\CommentStateEnum.php` :**
+  ```php
+    namespace App\Entity\Enum;
+  
+    enum CommentStateEnum : string
+    {
+        case Submitted = 'submitted';
+        public const Spam = 'spam';
+        public const Published = 'published';
+    }
   ```
 
 * ⏩ **Nous devrions également nous assurer que, par défaut, le paramètre `state` est initialisé avec la valeur `submitted` :**
@@ -4261,11 +4477,12 @@ Nous avons besoin d'introduire un état (`state`) pour les commentaires : `submi
 
   -    #[ORM\Column(length: 255)]
   -    private ?string $state = null;
-  +    #[ORM\Column(length: 255, options: ['default' => 'submitted'])]
-  +    private ?string $state = 'submitted';
+  +    #[ORM\Column(length: 255, options: ['default' => CommentStateEnum::Submitted->value])]
+  +    private ?CommentStateEnum $state = CommentStateEnum::Submitted;
   ```
 
 ---
+
 class: middle
 .center[
 ### **Migration de la base de données**
