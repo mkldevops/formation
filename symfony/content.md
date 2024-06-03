@@ -4459,26 +4459,33 @@ Nous avons besoin d'introduire un état (`state`) pour les commentaires : `submi
   ```sh
   symfony console make:entity Comment
   ```
-* ⏩ **Ajouter une classe enum `App\Entity\Enum\CommentStateEnum.php` :**
+* ⏩ **Ajouter une classe enum `App\Entity\Enum\CommentStateEnum.php` pour définir les états possible :**
   ```php
-    namespace App\Entity\Enum;
+
+      namespace App\Entity\Enum;
   
-    enum CommentStateEnum : string
-    {
-        case Submitted = 'submitted';
-        public const Spam = 'spam';
-        public const Published = 'published';
-    }
+      enum CommentStateEnum : string
+      {
+          case Submitted = 'submitted';
+          case Spam = 'spam';
+          case Published = 'published';
+      }
   ```
 
-* ⏩ **Nous devrions également nous assurer que, par défaut, le paramètre `state` est initialisé avec la valeur `submitted` :**
-  ```diff
-      private ?string $photoFilename = null;
+Au niveau de notre entité `Comment`, utilisons cette classe enum pour définir les états possibles. Et nous devrions également nous assurer que, par défaut, le paramètre `state` est initialisé avec la valeur `submitted`
 
+* ⏩ **Mettez à jour la classe `Comment` :**
+  ```diff
   -    #[ORM\Column(length: 255)]
   -    private ?string $state = null;
   +    #[ORM\Column(length: 255, options: ['default' => CommentStateEnum::Submitted->value])]
   +    private ?CommentStateEnum $state = CommentStateEnum::Submitted;
+  ...
+  -    public function getState(): ?string
+  +    public function getState(): ?CommentStateEnum
+  ...
+  -    public function setState(?string $state): static
+  +    public function setState(?CommentStateEnum $state): static
   ```
 
 ---
@@ -4490,7 +4497,7 @@ class: middle
 
 * ⏩ **Créez une migration de base de données :**
   ```sh
-  symfony console make:migration
+  symfony console make:migration --formatted
   ```
 
 * ⏩ **Modifiez la migration pour mettre à jour tous les commentaires existants comme étant published par défaut :**
@@ -4502,7 +4509,7 @@ class: middle
 
 * ⏩ **Exécutez la migration :**
   ```sh
-  symfony console doctrine:migrations:migrate
+  symfony console doctrine:migrations:migrate -n
   ```
 
 ---
@@ -4519,7 +4526,7 @@ class: middle
               ->andWhere('c.conference = :conference')
   +            ->andWhere('c.state = :state')
               ->setParameter('conference', $conference)
-  +            ->setParameter('state', 'published')
+  +            ->setParameter('state', CommentStateEnum::Published)
   ```
 
 * ⏩ **Modifiez la configuration d'EasyAdmin pour voir l'état du commentaire :**
@@ -4531,10 +4538,10 @@ class: middle
   +        yield TextField::new('state');
   ```
 
-* ⏩ **N'oubliez pas de modifier les tests en renseignant le state dans les fixtures :**
+* ⏩ **N'oubliez pas de modifier les tests en renseignant le state dans les fixtures `AppFixtures`, profitons aussi pour ajouter un autre commentaire :**
   ```diff
           $comment1->setText('This was a great conference.');
-  +        $comment1->setState('published');
+  +        $comment1->setState(CommentStateEnum::Published);
           $manager->persist($comment1);
 
   +        $comment2 = new Comment();
@@ -4542,6 +4549,7 @@ class: middle
   +        $comment2->setAuthor('Lucas');
   +        $comment2->setEmail('lucas@example.com');
   +        $comment2->setText('I think this one is going to be moderated.');
+  +        $comment2->setState(CommentStateEnum::Published);
   +        $manager->persist($comment2);
   ```
 
@@ -4569,17 +4577,25 @@ class: middle
   +            'comment_form[email]' => $email = 'me@automat.ed',
               'comment_form[photo]' => dirname(__DIR__, 2).'/public/images/under-construction.gif',
           ]);
-          $this->assertResponseRedirects();
+          static::assertResponseRedirects();
   +
   +        // simulate comment validation
-  +        $comment = self::getContainer()->get(CommentRepository::class)->findOneByEmail($email);
-  +        $comment->setState('published');
-  +        self::getContainer()->get(EntityManagerInterface::class)->flush();
+  +        $comment = static::getContainer()->get(CommentRepository::class)->findOneByEmail($email);
+  +        $comment->setState(CommentStateEnum::Published);
+  +        static::getContainer()->get(EntityManagerInterface::class)->flush();
+  
+          $client->followRedirect();
+  -        static::assertSelectorExists('div:contains("There are 2 comments")');
+  +        self::assertSelectorExists('div:contains("There are 3 comments")');
   ```
 
+À partir d'un test PHPUnit, vous pouvez obtenir n'importe quel service depuis le conteneur grâce à `static::getContainer()->get('service');` il donne également accès aux services non publics.
 
-À partir d'un test PHPUnit, vous pouvez obtenir n'importe quel service depuis le conteneur grâce à `self::getContainer()->get('service');` il donne également accès aux services non publics.
+* ⏩ **Lancez les tests :**
 
+  ```sh
+  make tests
+  ```
 ---
 
 class: middle
@@ -4613,27 +4629,23 @@ class: middle
 
 Un message est une classe de données (data object), qui ne doit contenir aucune logique. Il sera sérialisé pour être stocké dans une file d'attente, donc ne stockez que des données "simples" et sérialisables.
 
-* ⏩ **Créez la classe `src/Message/CommentMessage` :**
+* ⏩ **Générez nos classe de Message et Handler via le maker :**
+  ```sh
+    symfony console make:message CommentMessage
+  ```
+
+  Une classe `CommentMessage` est générée dans le répertoire `src/Message` et une classe `CommentMessageHandler` est générée dans le répertoire `src/MessageHandler`.
+
+* ⏩ **Modifiez la classe `CommentMessage` pour ajouter un contexte :**
   ```php
   namespace App\Message;
 
-  class CommentMessage
+  final readonly class CommentMessage
   {
       public function __construct(
-          private int $id,
-          private array $context = [],
-      ) {
-      }
-
-      public function getId(): int
-      {
-          return $this->id;
-      }
-
-      public function getContext(): array
-      {
-          return $this->context;
-      }
+        public int $id,
+        public array $context = [],
+      ) { }
   }
   ```
 
@@ -4643,7 +4655,7 @@ Dans le monde de Messenger, nous n'avons pas de contrôleurs, mais des gestionna
 
 class: middle
 
-* ⏩ **Sous un nouveau namespace `App\MessageHandler`, créez une classe `CommentMessageHandler` qui saura comment gérer les messages `CommentMessage` :**
+* ⏩ **Sous un nouveau namespace `App\MessageHandler`, modifiez la classe `CommentMessageHandler` qui saura comment gérer les messages `CommentMessage` :**
   ```php
   namespace App\MessageHandler;
 
@@ -4663,16 +4675,16 @@ class: middle
       ) {
       }
 
-      public function __invoke(CommentMessage $message)
+      public function __invoke(CommentMessage $message) : void
       {
-          $comment = $this->commentRepository->find($message->getId());
+          $comment = $this->commentRepository->find($message->id);
           if (null === $comment) {
               return;
           }
 
-          $comment->setState('published');
-          if (2 === $this->spamChecker->getSpamScore($comment, $message->getContext())) {
-              $comment->setState('spam');
+          $comment->setState(CommentStateEnum::Published);
+          if (2 === $this->spamChecker->getSpamScore($comment, $message->context)) {
+              $comment->setState(CommentStateEnum::Spam);
           }
 
           $this->entityManager->flush();
@@ -4700,16 +4712,10 @@ class: middle
   +use Symfony\Component\Messenger\MessageBusInterface;
 
   @@ ...
-      public function __construct(
-          private EntityManagerInterface $entityManager,
-  +     private MessageBusInterface $bus,
-      ) {
-      }
-
-  @@ ...
           CommentRepository $commentRepository,
-  -     SpamChecker $spamChecker,
-          #[Autowire('%photo_dir%')] string $photoDir,
+  -        SpamChecker $spamChecker,
+  +        MessageBusInterface $bus,
+          #[Autowire('%photo_dir%')] string $photoDir,e
       ): Response {
   @@ ...
 
@@ -4722,7 +4728,7 @@ class: middle
   -            }
   -
   -            $this->entityManager->flush();
-  +            $this->bus->dispatch(new CommentMessage($comment->getId(), $context));
+  +            $bus->dispatch(new CommentMessage($comment->getId(), $context));
 
   ```
 
@@ -4794,7 +4800,7 @@ Cette commande devrait immédiatement consommer le message envoyé pour le comme
 11:30:20 INFO      [messenger] App\Message\CommentMessage was handled successfully (acknowledging to transport). ["message" => App\Message\CommentMessage^ { …},"class" => "App\Message\CommentMessage"]
 ```
 
-L'activité du consumer de messages est enregistrée dans les logs, mais vous pouvez avoir un affichage instantané dans la console en passant l'option `-vv`. Vous devriez même voir l'appel vers l'API d'Akismet.
+L'activité du `consumer` de messages est enregistrée dans les logs, mais vous pouvez avoir un affichage instantané dans la console en passant l'option `-vv`. Vous devriez même voir l'appel vers l'API d'Akismet.
 
 * ⏩ **Pour arrêter le consumer, appuyez sur `Ctrl+C`.**
 
@@ -4889,6 +4895,7 @@ Si un problème survient lors de la manipulation d'un message, le consumer rées
   ```
   
 .info[
+
  Liens utiles :
   * [Messenger Component](https://symfony.com/doc/current/messenger.html)
 ]
@@ -4911,9 +4918,9 @@ Avoir un état pour un modèle est assez commun. L'état du commentaire n'est d�
 
 Nous pourrions laisser l'admin du site modérer tous les commentaires après le vérificateur de spam. Le processus serait quelque chose comme :
 
-* Commencez par un état submitted lorsqu'un commentaire est soumis par un internaute ;
-* Laissez le vérificateur de spam analyser le commentaire et changer l'état en potential_spam, ham ou rejected
-* S'il n'est pas rejeté, attendez que l'admin du site décide si le commentaire est suffisamment utile en changeant l'état pour published ou rejected.
+* Commencez par un état `submitted` lorsqu'un commentaire est soumis par un internaute ;
+* Laissez le vérificateur de spam analyser le commentaire et changer l'état en `potential_spam`, `ham` ou `rejected`
+* S'il n'est pas rejeté, attendez que l'admin du site décide si le commentaire est suffisamment utile en changeant l'état pour `published` ou `rejected`.
 
 La mise en œuvre de cette logique n'est pas trop complexe, mais vous pouvez imaginer que l'ajout de règles supplémentaires augmenterait considérablement la complexité. Au lieu de coder la logique nous-mêmes, nous pouvons utiliser le composant Symfony Workflow :
 
@@ -4940,7 +4947,7 @@ class: middle
                     enabled: "%kernel.debug%"
                 marking_store:
                     type: 'method'
-                    property: 'state'
+                    property: 'stateAsString'
                 supports: [App\Entity\Comment]
                 initial_marking: submitted
                 places: [submitted, ham, potential_spam, spam, rejected, published]
@@ -4968,19 +4975,55 @@ class: middle
                         to:   rejected
    ``` 
 ]
+
 .pull-right[
+
+* ⏩ **Ajouter l'accesseur et le mutateur sur notre champ state en tant que méthode `getStateAsString()` et `setStateAsString()` dans la classe `Comment` :**
+    ```php
+    public function getStateAsString(): string
+    {
+        return $this->state->value;
+    }
+
+    public function setStateAsString(string $state): void
+    {
+        $this->state = CommentStateEnum::from($state);
+    }
+    ```
+  
+* ⏩ **Mettons à jour notre class enum CommentStateEnum avec les nouveaux `state` possible :**
+  ```php
+    enum CommentStateEnum : string
+    {
+        case Submitted = 'submitted';
+        case Ham = 'ham';
+        case PotentialSpam = 'potential_spam';
+        case Spam = 'spam';
+        case Rejected = 'rejected';
+        case Published = 'published';
+    }
+  ```
+
+]
+
+---
+
+class:middle
+
 * ⏩ **Pour valider le workflow, générez une représentation visuelle :**
 
-```sh
-symfony console workflow:dump comment | dot -Tpng -o workflow.png
-```
+  ```sh
+  symfony console workflow:dump comment | dot -Tpng -o workflow.png
+  ```
 
-<img src="img/workflow.png" width="450px" />
+.center[
+
+<img src="img/workflow/workflow.png" width="450" alt="workflow" />
+
+]
 
 .info[
 La commande `dot` fait partie de l'utilitaire [Graphviz](https://www.graphviz.org/).
-]
-
 ]
 
 ---
@@ -5002,7 +5045,7 @@ class: middle
 +use Symfony\Component\Workflow\WorkflowInterface;
 
  #[AsMessageHandler]
- class CommentMessageHandler
+ final readonly class CommentMessageHandler
 @@ -15,6 +18,9 @@ class CommentMessageHandler
          private EntityManagerInterface $entityManager,
          private SpamChecker $spamChecker,
@@ -5049,29 +5092,63 @@ class: middle
 
 La nouvelle logique se lit comme ceci :
 
-* Si la transition accept est disponible pour le commentaire dans le message, vérifiez si c'est un spam ;
+* Si la transition `accept` est disponible pour le commentaire dans le message, vérifiez si c'est un spam ;
+  ```php
+  if ($this->commentStateMachine->can($comment, 'accept')) {
+  ```
 * Selon le résultat, choisissez la bonne transition à appliquer ;
-* Appellez `apply()` pour mettre à jour le Comment via un appel à la méthode `setState()` ;
+  ```php
+    $transition = match ($score) {
+        2 => 'reject_spam',
+        1 => 'might_be_spam',
+        default => 'accept',
+    };
+    
+  ```
+* Appelez `apply()` pour mettre à jour le `Comment` via un appel à la méthode `setStateASString()` ;
+  ```php
+    $this->commentStateMachine->apply($comment, $transition);
+  ```
 * Appelez `flush()` pour valider les changements dans la base de données ;
+  ```php
+    $this->entityManager->flush();
+  ```
 * Réexpédiez le message pour permettre au workflow d'effectuer une nouvelle transition.
+    ```php
+        $this->bus->dispatch($message);
+    ```
+
+---
+
+class: middle
 
 Comme nous n'avons pas implémenté la fonctionnalité de validation par l'admin, la prochaine fois que le message sera consommé, le message "Dropping comment message" sera enregistré.
 
-* ⏩ **Mettons en place une validation automatique en attendant le prochain chapitre  dans `src/MessageHandler/CommentMessageHandler.php`:**
+* ⏩ **Mettons en place une validation automatique en attendant le prochain chapitre dans `src/MessageHandler/CommentMessageHandler.php`:**
 
-```diff
-             $this->commentStateMachine->apply($comment, $transition);
-             $this->entityManager->flush();
-             $this->bus->dispatch($message);
-+        } elseif ($this->commentStateMachine->can($comment, 'publish') || $this->commentStateMachine->can($comment, 'publish_ham')) {
-+            $this->commentStateMachine->apply($comment, $this->commentStateMachine->can($comment, 'publish') ? 'publish' : 'publish_ham');
-+            $this->entityManager->flush();
-         } elseif ($this->logger) {
-             $this->logger->debug('Dropping comment message', ['comment' => $comment->getId(), 'state' => $comment->getState()]);
-         }
-```
-* ⏩ **Exécutez symfony server:log et ajoutez un commentaire sur le site pour voir toutes les transitions se produire les unes après les autres.**
+  ```diff
+               $this->commentStateMachine->apply($comment, $transition);
+               $this->entityManager->flush();
+               $this->bus->dispatch($message);
+  +
+  +        } elseif ($this->commentStateMachine->can($comment, 'publish') 
+  +            || $this->commentStateMachine->can($comment, 'publish_ham')) {
+  +
+  +            $this->commentStateMachine->apply($comment, $this->commentStateMachine->can($comment, 'publish') ? 'publish' : 'publish_ham');
+  +            $this->entityManager->flush();
+  +
+           } elseif ($this->logger) {
+               $this->logger->debug('Dropping comment message', ['comment' => $comment->getId(), 'state' => $comment->getState()]);
+           }
+  ```
+* ⏩ **Exécutez symfony `server:log` et ajoutez un commentaire sur le site pour voir toutes les transitions se produire les unes après les autres.**
 
+* ⏩ **Commitez votre travail via Git :**
+  ```sh
+  git add .
+  git commit -m "Add workflow"
+  ```
+  
 ---
 
 class: middle
@@ -5085,26 +5162,19 @@ Nous venons juste de rencontrer un cas semblable avec l'injection de `WorkflowIn
 
 Comme nous injectons n'importe quelle instance de l'interface générique `WorkflowInterface` dans le constructeur, comment Symfony peut savoir quelle implémentation du workflow utiliser ? Symfony utilise une convention basée sur le nom de l'argument : `$commentStateMachine` fait référence au workflow comment de la configuration (dont le type est `state_machine`). Essayez n'importe quel autre argument et l'injection échouera.
 
-* ⏩ **Si vous ne vous rappelez pas de la convention, utilisez la commande debug:container. Cherchez tous les services contenant "workflow" :**
+* ⏩ **Si vous ne vous rappelez pas de la convention, utilisez la commande `debug:container`. Cherchez tous les services contenant "`workflow`" :**
 ```sh
 symfony console debug:container workflow
 
  Select one of the following services to display its information:
-  [0] console.command.workflow_dump
-  [1] workflow.abstract
-  [2] workflow.marking_store.method
-  [3] workflow.registry
-  [4] workflow.security.expression_language
-  [5] workflow.twig_extension
-  [6] monolog.logger.workflow
-  [7] Symfony\Component\Workflow\Registry
+  ...
   [8] Symfony\Component\Workflow\WorkflowInterface $commentStateMachine
   [9] Psr\Log\LoggerInterface $workflowLogger
  >
  ```
 Remarquez le choix 8, `Symfony\Component\Workflow\WorkflowInterface $commentStateMachine` qui vous indique qu'utiliser `$commentStateMachine` comme argument nommé a une signification particulière.
 
- <!---
+---
 
 class: middle, center, inverse
 
@@ -5117,19 +5187,19 @@ class: middle
   ### **Envoyer des emails aux admins**
 ]
 
-Pour s'assurer que les commentaires soient de bonne qualité, l'admin doit tous les modérer. Lorsqu'un commentaire est dans l'état ham ou potential_spam, un email doit lui être envoyé avec deux liens : un pour l'accepter et un autre pour le rejeter.
+Pour garantir des commentaires de haute qualité, l'administrateur doit modérer tous les commentaires. Lorsqu'un commentaire est à l'état `ham` ou `potential_spam`, un e-mail doit être envoyé à l'administrateur avec deux liens : un pour accepter le commentaire et un pour le rejeter.
 
 Pour stocker l'email de l'admin, utilisez un paramètre de conteneur. Pour l'exemple, nous autorisons également son paramétrage grâce à une variable d'environnement (ce qui ne devrait pas être nécessaire dans la "vraie vie") :
 
 * ⏩ **Ajoutez le paramètre `admin_email` dans le fichier `config/services.yaml` :**
   ```diff
-parameters:
+  parameters:
      photo_dir: "%kernel.project_dir%/public/uploads/photos"
-+    default_admin_email: admin@example.com
-+    admin_email: "%env(string:default:default_admin_email:ADMIN_EMAIL)%"
-```
+  +    default_admin_email: admin@example.com
+  +    admin_email: "%env(string:default:default_admin_email:ADMIN_EMAIL)%"
+  ```
 
-Une variable d'environnement peut être "traitée" avant d'être utilisée. Ici, nous utilisons le processeur default afin d'utiliser la valeur du paramètre default_admin_email si la variable d'environnement ADMIN_EMAIL n'existe pas.
+Une variable d'environnement peut-être "traitée" avant d'être utilisée. Ici, nous utilisons le processeur default afin d'utiliser la valeur du paramètre `default_admin_email` si la variable d'environnement `ADMIN_EMAIL` n'existe pas.
 
 ---
 
@@ -5137,3 +5207,523 @@ class: middle
 .center[
   ### **Envoyer une notification par email**
 ]
+
+Pour envoyer un email, vous pouvez choisir entre plusieurs classes abstraites de `Email`; de `Message`, le niveau le plus bas, à `NotificationEmail`, le niveau le plus élevé. C’est probablement la classe `Email` que vous utiliserez le plus, mais `NotificationEmail` est le choix idéal pour les e-mails internes.
+
+* ⏩ **Ajoutez l'envoi d'un email dans le gestionnaire de messages `src/MessageHandler/CommentMessageHandler.php` :**
+  ```diff
+        private WorkflowInterface $commentStateMachine,
+  +        private MailerInterface $mailer,
+  +        #[Autowire('%admin_email%')] private string $adminEmail,
+           private ?LoggerInterface $logger = null,
+    ) {
+    @@ ...
+           } elseif ($this->commentStateMachine->can($comment, 'publish') || $this->commentStateMachine->can($comment, 'publish_ham')) {
+  -            $this->commentStateMachine->apply($comment, $this->commentStateMachine->can($comment, 'publish') ? 'publish' : 'publish_ham');
+  -            $this->entityManager->flush();
+  +            $this->mailer->send((new NotificationEmail())
+  +                ->subject('New comment posted')
+  +                ->htmlTemplate('emails/comment_notification.html.twig')
+  +                ->from($this->adminEmail)
+  +                ->to($this->adminEmail)
+  +                ->context(['comment' => $comment])
+  +            );
+  ```
+  
+Le `MailerInterface` est notre service de messagerie. Il est capable d'envoyer des emails. Nous utilisons la méthode `send()` pour envoyer un email.
+
+---
+
+class: middle
+
+Pour envoyer un email, nous avons besoin d’un expéditeur (l’en-tête `From` / `Sender`). Au lieu de le définir explicitement sur l'instance Email, définissez-le globalement :
+
+* ⏩ **Définissez l'expéditeur par défaut dans le fichier `config/packages/mailer.yaml` :**
+  ```yaml
+  framework:
+      mailer:
+          dsn: '%env(MAILER_DSN)%'
+          envelope:
+              sender: "%admin_email%"
+  ```
+  
+---
+
+class: middle
+
+.center[
+### **Personnaliser le contenu de l'email**
+]
+
+Pour personnaliser le contenu de l'email, créez un modèle Twig dans le répertoire `templates/emails/comment_notification.html.twig` :
+
+* ⏩ **Créez le modèle Twig `templates/emails/comment_notification.html.twig` :**
+
+  ```twig
+  {% extends '@email/default/notification/body.html.twig' %}
+  
+  {% block content %}
+      Author: {{ comment.author }}<br />
+      Email: {{ comment.email }}<br />
+      State: {{ comment.state }}<br />
+  
+      <p>
+          {{ comment.text }}
+      </p>
+  {% endblock %}
+  
+  {% block action %}
+      <spacer size="16"></spacer>
+      <button href="{{ url('review_comment', { id: comment.id }) }}">Accept</button>
+      <button href="{{ url('review_comment', { id: comment.id, reject: true }) }}">Reject</button>
+  {% endblock %}
+  ```
+
+Le template remplace quelques blocs pour personnaliser le message de l'e-mail et ajouter des liens permettant à l'administrateur d'accepter ou de rejeter un commentaire. Tout argument de route qui n'est pas un paramètre de route valide est ajouté en tant qu'élément de chaîne de requête (l'URL de rejet ressemble à `/admin/comment/review/42?reject=true`).
+
+---
+
+class: middle
+
+Le `NotificationEmail` utilise par défaut [Inky](https://get.foundation/emails/docs/inky.html) au lieu de `HTML` pour concevoir les e-mails. Il permet de créer des e-mails réactifs compatibles avec tous les clients de messagerie populaires.
+
+Pour une compatibilité maximale avec les lecteurs de courrier électronique, la mise en page de base de notification intègre toutes les feuilles de style (via le package CSS inliner) par défaut.
+
+Ces deux fonctionnalités font partie des extensions Twig facultatives qui doivent être installées :
+
+* ⏩ **Installez les extensions Twig pour Inky et CSS inliner :**
+  ```sh
+  symfony composer req "twig/cssinliner-extra:^3" "twig/inky-extra:^3"
+  ```
+  
+---
+
+class: middle
+
+.center[
+### **Générer des URL absolues dans une commande Symfony**
+]
+
+Dans les e-mails, on génère des URL avec `url()` au lieu de `path()` pour obtenir des URL absolues (avec schéma et hôte).
+
+L'e-mail est envoyé depuis le gestionnaire de messages, dans un contexte de console. Générer des URL absolues dans un contexte Web est plus facile, car nous connaissons le schéma et le domaine de la page actuelle. Ce n'est pas le cas dans un contexte de console.
+
+* ⏩ **Définissez le nom de domaine et le schéma à utiliser explicitement :**
+  ```diff
+      admin_email: "%env(string:default:default_admin_email:ADMIN_EMAIL)%"
+  +    default_base_url: 'http://127.0.0.1'
+  +    router.request_context.base_url: '%env(default:default_base_url:SYMFONY_DEFAULT_ROUTE_URL)%'
+
+  ```
+  
+---
+
+class: middle
+
+.center[
+### **Ajouter la route de review_comment**
+]
+
+* ⏩ **Ajoutez le controller `src/Controller/Admin/CommentReviewController.php` via le maker:**
+  ```sh
+  symfony console make:controller 'Admin\ReviewComment' --invokable --no-interaction
+  ```
+  
+* ⏩ **Modifiez le controller pour accepter ou rejeter un commentaire :**
+
+  ```php
+  #[Route('/admin/review/comment/{id}', name: 'review_comment')]
+  public function __invoke(
+      Request $request, 
+      Comment $comment, 
+      WorkflowInterface $commentStateMachine,
+      EntityManagerInterface $entityManager,
+      MessageBusInterface $bus,
+  ): Response {
+      $accepted = !$request->query->getBoolean('reject');
+  
+      if ($commentStateMachine->can($comment, 'publish')) {
+          $transition = $accepted ? 'publish' : 'reject';
+      } elseif ($commentStateMachine->can($comment, 'publish_ham')) {
+          $transition = $accepted ? 'publish_ham' : 'reject_ham';
+      } else {
+          return new Response('Comment already reviewed or not in the right state.');
+      }
+  
+      $commentStateMachine->apply($comment, $transition);
+      $entityManager->flush();
+  
+      if ($accepted) {
+          $bus->dispatch(new CommentMessage($comment->getId()));
+      }
+  
+      return $this->render('admin/review_comment.html.twig', ['transition' => $transition, 'comment' => $comment, ]);
+  }
+  ```
+  
+---
+
+class: middle
+
+L'URL du commentaire de révision commence par `/admin/` pour la protéger avec le pare-feu défini lors d'une étape précédente. L'administrateur doit être authentifié pour accéder à cette ressource.
+
+Une fois l'examen terminé, un court modèle remercie l'administrateur pour son travail acharné :
+
+* ⏩ **Créez le modèle Twig `templates/admin/review.html.twig` :**
+
+  ```twig
+  {% extends 'base.html.twig' %}
+  
+  {% block title %}Revue de commenataire{% endblock %}
+  
+  {% block body %}
+      <h2>Comment reviewed, thank you!</h2>
+  
+      <p>Applied transition: <strong>{{ transition }}</strong></p>
+      <p>New state: <strong>{{ comment.state }}</strong></p>
+  {% endblock %}
+  ```
+  
+---
+
+class: middle
+
+.center[
+### **Utiliser un mail catcher**
+]
+
+Au lieu d'utiliser un "vrai" serveur SMTP ou un fournisseur tiers pour envoyer des e-mails, utilisons un **mail catcher**. 
+
+.info[
+
+  ℹ️ **Un mail catcher** fournit un serveur SMTP qui ne délivre pas les e-mails, mais les rend disponibles via une interface Web. 
+
+]
+
+Heureusement, Symfony a déjà configuré automatiquement un tel outil pour nous :
+
+```yaml
+# compose.override.yaml
+
+mailer:
+  image: axllent/mailpit
+  ports:
+    - "1025"
+    - "8025"
+  environment:
+    MP_SMTP_AUTH_ACCEPT_ANY: 1
+    MP_SMTP_AUTH_ALLOW_INSECURE: 1
+```
+
+---
+
+class: middle
+
+.center[
+
+### **Accéder au Webmail**
+
+]
+
+* ⏩ **Démarrez le mail catcher :**
+  ```sh
+  symfony open:local:webmail
+  ```
+
+.pull-left.center[
+
+Ou depuis la barre d'outils de débogage Web :
+
+<img src="img/mail/webmail-toolbar.png" />
+
+]
+
+.pull-right.center[
+
+Depuis gitpod, vous pouvez accéder à l'interface Webmail via le lien fourni dans la console.
+
+<img src="img/mail/webmail-terminal.png" width="500" />
+
+]
+
+---
+
+class: middle
+
+.center[
+
+### **Test des e-mails**
+
+]
+
+Il existe de nombreuses façons de tester les e-mails. Vous pouvez écrire des tests unitaires si vous écrivez une classe par email (qui étend de `Email` ou `TemplatedEmail` par exemple).
+
+Les tests les plus courants que vous écrirez sont cependant des tests fonctionnels qui vérifient que certaines actions déclenchent un e-mail, et probablement des tests sur le contenu des e-mails s'ils sont dynamiques.
+
+Symfony est livré avec des assertions qui facilitent de tels tests, voici un exemple de test qui démontre quelques possibilités :
+
+  ```php
+  public function testMailerAssertions()
+  {
+    $client = static::createClient();
+    $client->request('GET', '/');
+  
+    $this->assertEmailCount(1);
+    $event = $this->getMailerEvent(0);
+    $this->assertEmailIsQueued($event);
+
+    $email = $this->getMailerMessage(0);
+    $this->assertEmailHeaderSame($email, 'To', 'fabien@example.com');
+    $this->assertEmailTextBodyContains($email, 'Bar');
+    $this->assertEmailAttachmentCount($email, 1);
+  }
+  ```
+
+Ces assertions fonctionnent lorsque les e-mails sont envoyés de manière synchrone ou asynchrone.
+
+* ⏩ **Commitez votre travail via Git :**
+  ```sh
+  git add .
+  git commit -m "Add email notifications"
+  ```
+
+---
+
+class: middle, center, inverse
+
+# 15. Mise en cache pour les performances
+
+---
+
+class: middle
+
+.center[
+
+### **Ajout d'en-têtes de cache HTTP**
+
+]
+
+Des problèmes de performances peuvent survenir avec la popularité. Quelques exemples typiques : index de base de données manquants ou tonnes de requêtes SQL par page. Vous n'aurez aucun problème avec une base de données vide, mais avec plus de trafic et de données croissantes, cela pourrait survenir à un moment donné.
+
+L'utilisation de stratégies de mise en cache `HTTP` est un excellent moyen d'optimiser les performances pour les utilisateurs finaux avec peu d'effort. Ajoutez un cache proxy inverse en production pour activer la mise en cache et utilisez un [https://en.wikipedia.org/wiki/Content_delivery_network](CDN) pour mettre en cache en périphérie pour des performances encore meilleures.
+
+* ⏩ **Mettons en cache la page d'accueil pendant une heure :**
+  ```diff
+           return $this->render('conference/index.html.twig', [
+               'conferences' => $conferenceRepository->findAll(),
+  -        ]);
+  +        ])->setSharedMaxAge(3600);
+       }
+  ```
+
+La méthode `setSharedMaxAge()` configure l'expiration du cache pour les **reverse proxy**. Utilisez `setMaxAge()` pour contrôler le cache du navigateur. Le temps est exprimé en secondes (1 heure = 60 minutes = 3600 secondes).
+
+La mise en cache de la page de la conférence est plus difficile, car plus dynamique. N’importe qui peut ajouter un commentaire à tout moment et personne ne veut attendre une heure pour le voir en ligne. Dans de tels cas, utilisez la stratégie de validation `HTTP`.
+
+---
+
+class: middle
+
+.center[
+
+### **Activation du Symfony HTTP Cache Kernel**
+
+]
+
+Pour tester la mise en cache, vous pouvez activer le **Symfony HTTP Cache Kernel** mais seulement en développement (pour l'environnement "production", nous utiliserons une solution "plus robuste").
+
+* ⏩ **Ajouter le cache en dev dans le fichier `config/packages/framework.yaml` :**
+
+  ```diff
+         session:
+             storage_factory_id: session.storage.factory.mock_file
+  +
+  +when@dev:
+  +    framework:
+  +        http_cache: true
+  ```
+
+En plus d'être un HTTP reverse proxy à part entière, le HTTP reverse proxy de Symfony (via la classe `HttpCache`) ajoute de belles informations de débogage sous forme d'en-têtes HTTP. Cela aide grandement à valider les en-têtes de cache que nous avons définis.
+
+* ⏩ **Vérifiez-le sur la page d'accueil :**
+
+  ```sh
+  curl -s -I -X GET https://127.0.0.1:8000/
+  
+  HTTP/2 200
+  age: 0
+  cache-control: public, s-maxage=3600
+  content-type: text/html; charset=UTF-8
+  date: Mon, 28 Oct 2019 08:11:57 GMT
+  x-content-digest: en63cef7045fe418859d73668c2703fb1324fcc0d35b21d95369a9ed1aca48e73e
+  x-debug-token: 9eb25a
+  x-debug-token-link: https://127.0.0.1:8000/_profiler/9eb25a
+  x-robots-tag: noindex
+  x-symfony-cache: GET /: miss, store
+  content-length: 50978
+  ```
+
+---
+
+class: middle,center,inverse
+
+# 16. Styliser l'interface utilisateur avec Webpack
+
+---
+
+class: middle
+
+.center[
+
+### **Installer Webpack Encore**
+
+]
+
+Nous n'avons pas consacré de temps à la conception de l'interface utilisateur. Pour styliser comme un pro, nous utiliserons une stack moderne, basée sur Webpack. Et pour ajouter une touche Symfony et faciliter son intégration avec l'application, utilisons Webpack Encore :
+
+* ⏩ **Installez Webpack Encore et supprimer Asset Mapper :**
+
+  ```sh
+  symfony composer rem asset-mapper
+  symfony composer req encore
+  ```
+
+Un environnement Webpack complet a été créé pour vous : package.jsonil webpack.config.jsa été généré et contient une bonne configuration par défaut. Open webpack.config.js, il utilise l'abstraction Encore pour configurer Webpack.
+
+Le fichier `package.json` définit quelques commandes intéressantes que nous utiliserons tout le temps.
+
+Le répertoire `assets` contient les principaux points d'entrée des actifs du projet : `styles/app.css` et `app.js`.
+
+---
+
+class: middle
+
+.center[
+### **Utiliser Sass**
+
+]
+
+* ⏩ **Au lieu d'utiliser du CSS simple, passons à [Sass](https://sass-lang.com/) :**
+
+  ```sh
+  mv assets/styles/app.css assets/styles/app.scss
+  ```
+  _assets/app.js_
+  ```diff
+  # assets/app.js
+  
+   // any CSS you import will output into a single css file (app.css in this case)
+  -import './styles/app.css';
+  +import './styles/app.scss';
+  ```
+
+* ⏩ **Installez le chargeur Sass :**
+
+  ```sh
+  npm install node-sass sass-loader@13 --save-dev
+  ```
+* ⏩ ** Et activez le chargeur Sass dans webpack _webpack.config.js_**
+  ```diff
+   
+     // enables Sass/SCSS support
+  -    //.enableSassLoader()
+  +    .enableSassLoader()
+  ```
+Comment savoir quels packages installer ? Si nous avions essayé de créer nos actifs sans eux, `Encore` nous aurait donné un joli message d'erreur suggérant la commande `npm install` nécessaire pour installer les dépendances pour charger les fichiers `.scss`.
+
+---
+
+class: middle
+
+.center[
+
+### **Tirer parti de Bootstrap**
+
+]
+
+Pour commencer avec de bonnes valeurs par défaut et créer un site Web réactif, un framework CSS comme Bootstrap peut aller très loin. Installez-le sous forme de package :
+
+* ⏩ **Installez Bootstrap :**
+
+  ```sh
+  npm install bootstrap @popperjs/core bs-custom-file-input --save-dev
+  ```
+
+* ⏩ **Exiger Bootstrap dans le fichier CSS `assets/styles/app.scss` (nous avons également nettoyé le fichier) :**
+
+  ```diff
+  -body {
+  -    background-color: lightgray;
+  -}
+  +@import '~bootstrap/scss/bootstrap';
+  ```
+* ⏩ **Faites de même pour le fichier JS `assets/app.js` :**
+
+  ```diff
+   // any CSS you import will output into a single css file (app.css in this case)
+  import './styles/app.scss';
+  +import 'bootstrap';
+  +import bsCustomFileInput from 'bs-custom-file-input';
+  +
+  +bsCustomFileInput.init();
+  ```
+
+* ⏩ **Activer le thème Bootstrap dans le fichier `config/packages/twig.yaml` :**
+
+  ```yaml
+  twig:
+      form_themes: ['bootstrap_5_layout.html.twig']
+  ```
+
+---
+
+class: middle
+.center[
+
+### **Styliser le HTML**
+
+]
+
+Nous sommes maintenant prêts à styliser l'application. 
+
+* ⏩ **Téléchargez et développez l'archive à la racine du projet :**
+
+  ```shell
+  php -r "copy('https://symfony.com/uploads/assets/guestbook-6.4.zip', 'guestbook-6.4.zip');"
+  unzip -o guestbook-6.4.zip
+  rm guestbook-6.4.zip
+  ```
+
+Jetez un œil aux modèles, vous apprendrez peut-être une astuce ou deux sur Twig.
+
+
+---
+
+class: middle
+.center[
+
+### **Construisons Assets**
+
+]
+
+Un changement majeur lors de l'utilisation de Webpack est que les fichiers CSS et JS ne sont pas utilisables directement par l'application. Ils doivent d'abord être "compilés".
+
+* ⏩ **En développement, la compilation des actifs peut se faire via la commande `encore dev` :**
+
+  ```shell
+  symfony run npm run dev
+  ```
+
+Au lieu d'exécuter la commande à chaque fois qu'il y a un changement, 
+
+* ⏩ **envoyez-la en arrière-plan et laissez-la surveiller les modifications JS et CSS :**
+
+  ```shell
+  symfony run -d npm run watch
+  ```
+
+---
+
+class: middle
+
+Prenez le temps de découvrir les changements visuels. Jetez un œil au nouveau design dans un navigateur.

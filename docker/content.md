@@ -10,13 +10,31 @@ class: center, middle, inverse
 ---
 
 class: middle
-.left-column[
-### Introduction
-]
-.right-column[
-#### Introduction
+.center[
 
-**Docker** est une technologie de **conteneurisation** qui permet de créer, de distribuer et d'exécuter des applications dans des conteneurs légers et portables. Cette technologie est devenue de plus en plus populaire ces dernières années, en raison de ses nombreux avantages pour les développeurs et les administrateurs système.
+### **Introduction à Docker**
+
+]
+
+**Objectif :** Comprendre les bases de Docker de manière interactive et pratique.
+
+##### Qu’est-ce que Docker ?
+
+**Docker** est une technologie de **conteneurisation** qui permet de créer, de distribuer et d'exécuter des applications dans des conteneurs légers et portables.
+
+Contrairement aux machines virtuelles, les conteneurs partagent le noyau du système d’exploitation hôte, ce qui les rend plus rapides et moins gourmands en ressources.
+
+Cette technologie est devenue de plus en plus populaire ces dernières années, en raison de ses nombreux avantages pour les développeurs et les administrateurs système.
+
+---
+
+class: middle
+
+.center[
+
+### **Pourquoi Docker ?**
+
+]
 
 L'utilisation de Docker permet de :
 
@@ -26,154 +44,71 @@ L'utilisation de Docker permet de :
 
 * **Améliorer la sécurité :** Docker utilise une architecture de sécurité qui permet de sécuriser les applications et les données sensibles en les isolant dans des conteneurs. Cette approche permet de réduire les risques de failles de sécurité et de compromission des données.
 
-Dans ce cours, nous allons nous concentrer sur l'utilisation de Docker pour **le développement et le déploiement d'applications**. Nous allons voir comment Docker permet de simplifier le processus de déploiement en créant des conteneurs légers et portables, et comment Docker Compose permet de gérer facilement les applications multi-conteneurs. Nous allons également explorer les principales commandes et fonctionnalités de Docker, afin que vous puissiez commencer à utiliser cette technologie dès aujourd'hui.
-]
-
 ---
 
 class: middle
-.left-column[
-### Introduction
-### Au programme
-]
-.right-column[
-.pull-left[
-* **Introduction à Docker**
-  * Qu'est-ce que Docker?
-  * Pourquoi utiliser Docker?
-  * Architecture Docker
-  * Les composants de Docker
-  * Les machines virtuelles vs les conteneurs
+.center[
 
-* **Installation et configuration de Docker**
-  * Les différents systèmes d'exploitation compatibles avec Docker
-  * Installer Docker sur Windows, macOS, ou Linux
-  * Configurer l'environnement Docker
-
-* **Les bases de Docker**
-  * Lancer un premier conteneur
-  * Les commandes de base de Docker
-  * Créer une image Docker personnalisée
-  * Partager une image sur Docker Hub
+### **Au programme**
 
 ]
-.pull-right[
-* **Docker Compose**
-  * Présentation de Docker Compose
-  * Installation de Docker Compose
-  * Configuration de Docker Compose
-  * Lancer des conteneurs avec Docker Compose
-  * Utilisation des variables d'environnement dans Docker Compose
 
-* **Les réseaux Docker**
-  * Les réseaux Docker et leur fonctionnement
-  * Création de réseaux Docker personnalisés
-  * Connexion de conteneurs à un réseau Docker
+Dans ce cours, 
+* Nous allons nous concentrer sur l'utilisation de Docker pour **le développement et le déploiement d'applications**.
 
-* **Les volumes Docker**
-  * Comprendre les volumes Docker
-  * Création de volumes Docker personnalisés
-  * Utilisation des volumes avec Docker Compose
-]
-]
+* Nous allons voir comment Docker permet de simplifier le processus de déploiement en créant des conteneurs légers et portables, et comment Docker Compose permet de gérer facilement les applications multi-conteneurs.
+
+* Nous allons également explorer les principales commandes et fonctionnalités de Docker, afin que vous puissiez commencer à utiliser cette technologie dès aujourd'hui.
 
 ---
+
 class: center, middle, inverse
 # 1. Introduction à Docker
----
-class: middle
-.left-column[
-#### Qu'est-ce que Docker?
-]
-.right-column[
-  **Docker** est une technologie open source qui permet de créer, de déployer et de gérer des applications dans des conteneurs logiciels. 
-  
-  **Les conteneurs** sont des environnements d'exécution légers et portables qui encapsulent une application et toutes ses dépendances.
-
-  **Docker** repose sur une technologie de virtualisation de type conteneur. Les conteneurs permettent d'isoler l'exécution des applications, en créant un environnement d'exécution **indépendant du système d'exploitation hôte**. Contrairement aux machines virtuelles, qui nécessitent un système d'exploitation complet pour chaque instance, les conteneurs partagent le même noyau du système d'exploitation hôte, ce qui les rend plus légers et plus rapides à démarrer.
-
-  **Les applications peuvent être développées, testées et déployées dans des conteneurs de manière cohérente et reproductible.** Cette approche permet de résoudre les problèmes liés à la configuration et à la compatibilité des environnements d'exécution, tout en offrant une plus grande flexibilité et une meilleure portabilité.
-
-  En outre, Docker est une plateforme très modulaire qui peut être utilisée dans de nombreux contextes, notamment **le développement d'applications, le déploiement d'applications dans le cloud, la mise en place d'environnements de test**, etc.
-]
 
 ---
+
 class: middle
-.left-column[
-#### Qu'est-ce que Docker?
-#### Pourquoi utiliser Docker?
-]
-.right-column[
-  Docker offre de nombreux avantages par rapport aux méthodes traditionnelles de déploiement d'applications, tels que :
-
-  * **Isolation:** les applications fonctionnent dans un environnement isolé qui empêche les conflits entre les différentes applications et garantit leur stabilité.
-  
-  * **Portabilité:** les conteneurs Docker sont indépendants du système d'exploitation et de l'infrastructure sous-jacente, ce qui permet de les déployer facilement sur n'importe quel environnement.
-  
-  * **Rapidité:** les conteneurs Docker sont légers et peuvent être créés rapidement, ce qui permet de réduire considérablement les temps de déploiement.
-  
-  * **Gestion des ressources:** Docker offre une gestion fine des ressources, ce qui permet d'optimiser l'utilisation des ressources du système et de réduire les coûts d'infrastructure.
-
 .center[
-  <img src="img/docker-benefits.png" alt="Les composants de Docker" width="300px" />
+
+### **Installation et configuration**
+
 ]
-]
+
+Étapes :
+
+* **Téléchargez Docker** : Rendez-vous sur [le site officiel de Docker](https://docs.docker.com/engine/install) et téléchargez Docker Desktop pour votre système d’exploitation.
+  .info[
+    Pour les utilisateur de macOs vous avez une alternative a Docker desktop qui est obstark, plus leger.
+  ]
+
+* **Installez Docker :** Suivez les instructions d’installation pour votre OS (Windows, macOS ou Linux).
+
+* **Vérifiez l’installation :** Ouvrez un terminal et tapez `docker --version.` Vous devriez voir la version de Docker installée.
 
 ---
+
 class: middle
-.left-column[
-#### Qu'est-ce que Docker?
-#### Pourquoi utiliser Docker?
-#### Architecture Docker
-]
-.right-column[
-Docker utilise une architecture client-serveur, composée de plusieurs éléments clés :
-
-* **Le Docker client:** interface en ligne de commande permettant d'interagir avec le daemon Docker.
-
-* **Le Docker daemon:** processus en arrière-plan qui gère les opérations de base, telles que la création, le démarrage et l'arrêt des conteneurs Docker.
-
-* **Les images Docker:** un modèle de base pour la création de conteneurs Docker, qui contient toutes les informations nécessaires à l'exécution d'une application.
-
-* **Les conteneurs Docker:** une instance exécutable d'une image Docker.
-
-* **Les registres Docker:** un service centralisé pour stocker et distribuer des images Docker.
-]
-
----
-class: middle
-.left-column[
-#### Qu'est-ce que Docker?
-#### Pourquoi utiliser Docker?
-#### Architecture Docker
-#### Les composants de Docker
-]
-.right-column[
-Docker se compose de plusieurs composants, notamment :
-
-* **Le Docker Engine:** le moteur principal de Docker qui gère les opérations de conteneurisation.
-
-* **Docker Hub:** un service cloud de registre Docker public où les utilisateurs peuvent stocker et partager leurs images Docker.
-
-* **Docker Compose:** un outil permettant de définir et de gérer des environnements multi-conteneurs avec une seule commande.
-
-* **Docker Swarm:** un outil de clustering Docker qui permet de gérer des clusters de conteneurs sur plusieurs hôtes.
-
 .center[
-  <img src="img/docker.png" alt="Les composants de Docker" width="600px" />
+
+### **Qu'est-ce qu'un conteneur (container)**
+
 ]
-]
+
+**Docker** est une technologie de **conteneurisation**
+
+**Les conteneurs** sont des environnements d'exécution légers et portables qui encapsulent une application et toutes ses dépendances.
+
+**Docker** repose sur une technologie de virtualisation de type conteneur. Les conteneurs permettent d'isoler l'exécution des applications, en créant un environnement d'exécution **indépendant du système d'exploitation hôte**. Contrairement aux machines virtuelles, qui nécessitent un système d'exploitation complet pour chaque instance, les conteneurs partagent le même noyau du système d'exploitation hôte, ce qui les rend plus légers et plus rapides à démarrer.
+
+**Les applications peuvent être développées, testées et déployées dans des conteneurs de manière cohérente et reproductible.** Cette approche permet de résoudre les problèmes liés à la configuration et à la compatibilité des environnements d'exécution, tout en offrant une plus grande flexibilité et une meilleure portabilité.
 
 ---
 class: middle
-.left-column[
-#### Qu'est-ce que Docker?
-#### Pourquoi utiliser Docker?
-#### Architecture Docker
-#### Les composants de Docker
-#### Machines virtuelles vs les conteneurs
+.center[
+### **Machines virtuelles vs les conteneurs**
+
 ]
-.right-column[
+
 .center[
   <img src="img/virtualization-vs-containers.png" alt="Machines virtuelles vs les conteneurs" width="800px" />
 ]
@@ -181,82 +116,33 @@ class: middle
 **Les conteneurs Docker** et **les machines virtuelles (VM)** ont des différences clés. Les machines virtuelles **émulent une pile complète de matériel**, tandis que les conteneurs **partagent les ressources du système hôte**, ce qui les rend plus légers et plus rapides à créer et à déployer.
 
 Les conteneurs sont également **plus portables** et **plus adaptés** aux architectures distribuées que les machines virtuelles.
-]
 
 ---
+
 class: center, middle, inverse
-# 2. Installation et configuration de Docker
+# 2. Les bases de Docker
 
 ---
+
 class: middle
-.left-column[
-#### Les différents systèmes d'exploitation compatibles avec Docker
-]
-.right-column[
-Docker est compatible avec différents systèmes d'exploitation. Voici une liste des systèmes d'exploitation compatibles avec Docker :
-
-* **Linux :** Docker est natif sur les distributions Linux. Docker utilise le noyau Linux pour exécuter des conteneurs. Les distributions Linux les plus couramment utilisées pour Docker sont Ubuntu, Debian, CentOS, Red Hat Enterprise Linux, Fedora et Arch Linux.
-
-* **macOS :** Docker Desktop est disponible pour les utilisateurs de macOS. Docker Desktop utilise une machine virtuelle pour exécuter des conteneurs. La machine virtuelle utilise le noyau Linux pour exécuter des conteneurs, mais elle est transparente pour l'utilisateur.
-
-* **Windows :** Docker Desktop est également disponible pour les utilisateurs de Windows. Docker Desktop utilise également une machine virtuelle pour exécuter des conteneurs. La machine virtuelle utilise le noyau Linux pour exécuter des conteneurs, mais elle est également transparente pour l'utilisateur.
-
 .center[
-  <img src="img/docker-desktop.png" alt="Les systèmes d'exploitation compatibles avec Docker" width="300px" />
+
+### **Lancer votre premier conteneur**
+
 ]
 
-> Il est important de noter que pour exécuter des conteneurs Windows, vous devez utiliser des conteneurs Windows Server Core ou Nano Server, qui nécessitent une licence de Windows Server.
-]
----
-class: middle
-.left-column[
-#### Les différents systèmes d'exploitation compatibles avec Docker
-#### Installation de Docker
-]
-.right-column[
-Avant de pouvoir utiliser Docker, vous devez installer et configurer Docker sur votre machine. Dans ce chapitre, nous allons couvrir les étapes pour installer et configurer Docker.
+Maintenant que nous avons installé Docker sur notre machine, nous allons explorer les bases de Docker. Nous allons apprendre à lancer notre premier conteneur, à utiliser les commandes de base de Docker, à créer une image Docker personnalisée et à partager une image sur Docker Hub.
 
-#### Installation de Docker
-La première étape de l'installation de Docker consiste à télécharger le package d'installation de Docker pour votre système d'exploitation à partir du site Web officiel de Docker. ***https://docs.docker.com/engine/install***
+Pour lancer un premier conteneur, nous allons utiliser l'image Docker [`hello-world`](https://hub.docker.com/_/hello-world). Cette image est un exemple simple qui affiche un message dans la sortie standard.
 
-Une fois le package d'installation téléchargé, suivez les instructions d'installation pour installer Docker sur votre système.
+* ⏩ **Pour lancer un conteneur à partir de l'image `hello-world`, nous allons utiliser la commande suivante :**
+  ```sh
+  docker run hello-world
+  ```
+  
+.info[
 
-Après avoir terminé l'installation, vous pouvez vérifier que Docker est correctement installé en exécutant la commande suivante dans votre terminal :
-```sh
-docker --version
-```
-
-Cette commande affichera la version de Docker que vous avez installée sur votre machine.
-
-]  
----
-class: middle
-.left-column[
-#### Les différents systèmes d'exploitation compatibles avec Docker
-#### Installation de Docker
-#### Configuration de Docker
-]
-.right-column[
-Après l'installation de Docker, vous pouvez commencer à configurer Docker pour répondre à vos besoins. Les fichiers de configuration Docker se trouvent généralement dans le répertoire `/etc/docker` sur Linux, ou dans le menu Docker Desktop sur macOS ou Windows.
-
-Les fichiers de configuration Docker les plus couramment utilisés sont :
-
-* **daemon.json** : ce fichier de configuration permet de définir les paramètres du démon Docker, tels que la configuration du stockage, les limites de ressources, la sécurité, etc.
-
-* **docker-compose.yml** : ce fichier permet de définir les services, les réseaux et les volumes pour une application multi-conteneurs.
-
-* **Dockerfile** : ce fichier est utilisé pour créer une image personnalisée à partir de laquelle vous pouvez lancer des conteneurs.
-]  
----
-
-class: middle
-.left-column[
-#### Les différents systèmes d'exploitation compatibles avec Docker
-#### Installation de Docker
-#### Configuration de Docker
-]
-.right-column[
-**💡 Pour ceux ayant un environnement linux**, il est bien sûr est possible de configurer Docker pour que vous n'ayez pas besoin d'utiliser `sudo` à chaque fois que vous souhaitez exécuter une commande Docker.
+**💡 Pour ceux ayant un environnement linux**, vous aurez besoin d'utiliser `sudo` à chaque fois que vous souhaitez exécuter une commande Docker.
 
 Pour éviter d'utiliser `sudo`, vous pouvez ajouter votre utilisateur au groupe docker en utilisant la commande suivante :
 
@@ -264,38 +150,66 @@ Pour éviter d'utiliser `sudo`, vous pouvez ajouter votre utilisateur au groupe 
 sudo usermod -aG docker $USER
 ```
 
-Après avoir ajouté votre utilisateur au groupe docker, vous devez vous déconnecter et vous reconnecter pour que les modifications prennent effet.
-
-Une fois que vous avez effectué cette étape, vous pouvez exécuter des commandes Docker sans utiliser sudo. Par exemple, pour exécuter un conteneur, vous pouvez utiliser la commande suivante :
-```sh
-docker run hello-world
-```
-Il est important de noter que cette configuration est utile pour les utilisateurs qui travaillent seuls sur leur machine. Si plusieurs utilisateurs travaillent sur la même machine, il est recommandé de configurer l'accès à Docker de manière appropriée pour chaque utilisateur.
 ]
----
 
-class: center, middle, inverse
-# 3. Les bases de Docker
+La commande `docker run` crée un nouveau conteneur à partir de l'image `hello-world` et exécute la commande par défaut de l'image. Dans ce cas, la commande par défaut de l'image `hello-world` affiche un message de bienvenue.
 
 ---
 
 class: middle
-.left-column[
-#### Lancer votre premier conteneur
+
+.center[
+
+### **Qu'est-ce qu'une image docker**
+
 ]
-.right-column[
-  Maintenant que nous avons installé Docker sur notre machine, nous allons explorer les bases de Docker. Nous allons apprendre à lancer notre premier conteneur, à utiliser les commandes de base de Docker, à créer une image Docker personnalisée et à partager une image sur Docker Hub.
 
-#### Lancer votre premier conteneur
-Pour lancer un premier conteneur, nous allons utiliser l'image Docker [`hello-world`](https://hub.docker.com/_/hello-world). Cette image est un exemple simple qui affiche un message dans la sortie standard.
+Une image Docker est un modèle léger, autonome et exécutable qui inclut tout ce qui est nécessaire pour exécuter un morceau de logiciel, y compris le code, les bibliothèques, les dépendances et les paramètres de configuration.
 
-Pour lancer un conteneur à partir de l'image `hello-world`, nous allons utiliser la commande suivante :
+**Où les trouver**
+
+Les images Docker peuvent être trouvées et téléchargées depuis des registres publics comme Docker Hub (https://hub.docker.com/). Docker Hub est une plateforme en ligne où les développeurs peuvent partager et accéder à des milliers d’images Docker créées par la communauté et les entreprises.
+
+.info[
+
+💡La majorité des images Docker sont basées sur Linux, car Docker utilise des fonctionnalités du noyau Linux pour la conteneurisation.
+
+Docker prend également en charge les conteneurs Windows, ce qui permet de créer et d’exécuter des images basées sur Windows. Ces images sont disponibles sur Docker Hub, mais nécessitent un système hôte Windows pour fonctionner.
+
+]
+
+---
+
+class: middle
+.center[
+### **Définir une image Docker personnalisée**
+]
+
+
+Il est souvent nécessaire de créer une image Docker personnalisée pour vos projets. 
+
+Pour créer une image Docker personnalisée, vous devez créer un fichier `Dockerfile` qui contient les instructions pour la création de l'image.
+
+Voici un exemple de fichier `Dockerfile` qui crée une image Docker pour une application `PHP` :
 ```sh
-docker run hello-world
-```
-La commande `docker run` crée un nouveau conteneur à partir de l'image `hello-world` et exécute la commande par défaut de l'image. Dans ce cas, la commande par défaut de l'image `hello-world` affiche un message de bienvenue.
+# Utiliser une image de base officielle de PHP avec Alpine Linux
+FROM php:8.3-alpine
 
-]
+# Définir le répertoire de travail dans le conteneur
+WORKDIR /app
+
+# Copier tous les fichiers de l'application dans le répertoire de travail
+COPY . .
+
+# Exposer le port 8080 pour accéder à l'application
+EXPOSE 8080
+
+# Définir la commande par défaut pour lancer l'application
+CMD ["php", "-S", "0.0.0.0:8080"]
+```
+
+Ce fichier `Dockerfile` utilise la dernière image de base [`php:8.3-alpine` (8.3)](https://hub.docker.com/layers/library/php/8.2-alpine/images/sha256-55fd6cd3f17e48015df5ff8f2843a9a48fba6c363a90b7f431dc01e6c57b1bc5?context=explore)  pour créer une image qui copie les fichiers de l'application PHP dans le conteneur, expose le port `8080` et définit la commande par défaut pour lancer le serveur web intégré de PHP.
+
 
 ---
 
@@ -327,31 +241,6 @@ Docker dispose de nombreuses commandes pour travailler avec des conteneurs, des 
 * **`docker pull` :** Cette commande télécharge une image Docker depuis un registre Docker.
 
 * **`docker push` :** Cette commande envoie une image Docker vers un registre Docker.
-
-]
-
----
-
-class: middle
-.left-column[
-#### Lancer votre premier conteneur
-#### Utiliser les commandes de base de Docker
-#### Utiliser les commandes de base de Docker
-#### Définir une image Docker personnalisée
-]
-.right-column[
-Il est souvent nécessaire de créer une image Docker personnalisée pour vos projets. Pour créer une image Docker personnalisée, vous devez créer un fichier `Dockerfile` qui contient les instructions pour la création de l'image.
-
-Voici un exemple de fichier `Dockerfile` qui crée une image Docker pour une application `PHP` :
-```sh
-FROM php:8.2-alpine
-WORKDIR /app
-COPY . .
-CMD [ "php", "-S", "0.0.0.0:8080" ]
-EXPOSE 8080
-```
-
-Ce fichier `Dockerfile` utilise la dernière image de base [`php:8.2-alpine` (8.2)](https://hub.docker.com/layers/library/php/8.2-alpine/images/sha256-55fd6cd3f17e48015df5ff8f2843a9a48fba6c363a90b7f431dc01e6c57b1bc5?context=explore)  pour créer une image qui copie les fichiers de l'application PHP dans le conteneur, expose le port `8080` et définit la commande par défaut pour lancer le serveur web intégré de PHP.
 
 ]
 
