@@ -14,35 +14,37 @@ class: middle
 
 ]
 .right-column[
+
 1. **Introduction à API Platform :**
-<br />présentation de l'outil, de ses fonctionnalités et de son écosystème.
+   <br />présentation de l'outil, de ses fonctionnalités et de son écosystème.
 
 2. **Installation et configuration de l'environnement de développement :**
-<br />installation de Symfony, configuration de l'environnement de développement, installation de API Platform via Composer.
+   <br />installation de Symfony, configuration de l'environnement de développement, installation de API Platform via Composer.
 
 3. **Création d'une première API :**
-<br />création d'une entité, définition de la ressource API, gestion des opérations CRUD.
+   <br />création d'une entité, définition de la ressource API, gestion des opérations CRUD.
 
 4. **Pagination, filtrage et tri :**
-<br />mise en place de la pagination, du filtrage et du tri des résultats.
+   <br />mise en place de la pagination, du filtrage et du tri des résultats.
 
 5. **Sérialisation et désérialisation des données :**
-<br />définition des groupes de sérialisation, gestion des relations entre les entités, utilisation de formats de données alternatifs (XML, CSV, etc.).
+   <br />définition des groupes de sérialisation, gestion des relations entre les entités, utilisation de formats de données alternatifs (XML, CSV, etc.).
 
 6. **Authentification et autorisation :**
-<br />configuration de l'authentification et de l'autorisation, utilisation de JWT et de OAuth2.
+   <br />configuration de l'authentification et de l'autorisation, utilisation de JWT et de OAuth2.
 
 7. **Validation des données :**
-<br />validation des données entrantes, gestion des erreurs et des messages d'erreur.
+   <br />validation des données entrantes, gestion des erreurs et des messages d'erreur.
 
 8. **Relations entre les entités :**
-<br />définition des relations entre les entités, gestion de la navigation entre les ressources liées.
+   <br />définition des relations entre les entités, gestion de la navigation entre les ressources liées.
 
 9. **Utilisation de GraphQL :**
-<br />configuration de GraphQL dans API Platform, définition des types de ressources, utilisation de l'API GraphQL.
-]
+   <br />configuration de GraphQL dans API Platform, définition des types de ressources, utilisation de l'API GraphQL.
+   ]
 
 ---
+
 class: middle, inverse, center
 
 # 1. L'introduction à API Platform
@@ -57,73 +59,72 @@ L'introduction à **API Platform** vise à fournir une vue d'ensemble de l'outil
 API Platform est un **framework PHP open source basé sur Symfony**, qui permet de créer des API REST et des applications web modernes. Il offre une approche pragmatique pour créer des API web sécurisées, performantes et évolutives.
 
 #### Les fonctionnalités d'API Platform
+
 API Platform est livré avec une large gamme de fonctionnalités, y compris :
 
-* La génération automatique de la documentation Swagger et ReDoc pour votre API
+- La génération automatique de la documentation Swagger et ReDoc pour votre API
 
-* Le support de formats de données variés (JSON-LD, HAL, Hydra, etc.)
+- Le support de formats de données variés (JSON-LD, HAL, Hydra, etc.)
 
-* Le support de multiples formats de requêtes (CRUD, filtres, pagination, tri, etc.)
+- Le support de multiples formats de requêtes (CRUD, filtres, pagination, tri, etc.)
 
-* L'authentification et l'autorisation avec OAuth2 et JWT
+- L'authentification et l'autorisation avec OAuth2 et JWT
 
-* La validation automatique des données entrantes et des réponses sortantes
+- La validation automatique des données entrantes et des réponses sortantes
 
-* La personnalisation de l'interface d'administration avec EasyAdmin 
+- La personnalisation de l'interface d'administration avec EasyAdmin
 
-* L'optimisation des performances avec le cache de doctrine et le HTTP/2 Push
+- L'optimisation des performances avec le cache de doctrine et le HTTP/2 Push
 
-* La prise en charge de GraphQL
+- La prise en charge de GraphQL
 
 ---
+
 class: middle
 
 #### L'écosystème d'API Platform
 
 API Platform s'intègre facilement avec de nombreux autres outils et technologies, tels que :
 
-* **Symfony :** API Platform est construit sur Symfony, donc il est compatible avec toutes les fonctionnalités de Symfony.
+- **Symfony :** API Platform est construit sur Symfony, donc il est compatible avec toutes les fonctionnalités de Symfony.
 
-* **Doctrine :** API Platform utilise Doctrine pour la gestion de la base de données, ce qui facilite la création et la manipulation des entités.
+- **Doctrine :** API Platform utilise Doctrine pour la gestion de la base de données, ce qui facilite la création et la manipulation des entités.
 
-* **React et Angular :** API Platform offre une compatibilité prête à l'emploi avec les bibliothèques React et Angular, ce qui facilite la création d'applications web modernes.
+- **React et Angular :** API Platform offre une compatibilité prête à l'emploi avec les bibliothèques React et Angular, ce qui facilite la création d'applications web modernes.
 
-* **Docker :** API Platform peut facilement être intégré dans des environnements Dockerisés pour la production.
+- **Docker :** API Platform peut facilement être intégré dans des environnements Dockerisés pour la production.
 
-En résumé, API Platform est un outil puissant et flexible pour la création d'API REST modernes. 
+En résumé, API Platform est un outil puissant et flexible pour la création d'API REST modernes.
 
 Avec ses fonctionnalités riches et son écosystème étendu, il est facile de démarrer rapidement avec API Platform pour créer des applications web sécurisées, performantes et évolutives.
 
 ---
+
 class: middle, inverse, center
 
 # 2. Installation et configuration de l'environnement de développement
 
 ---
-class: middle
 
-#### Installation de Symfony
+class: middle
+.center[
+
+### **Installation de Symfony**
+
+]
 
 Pour commencer avec API Platform, il est nécessaire d'installer Symfony. Symfony est un framework PHP qui fournit un ensemble de composants pour construire des applications web modernes.
 
-Durant cette formation nous allons utiliser Gitpod pour installer Symfony, il suffit d'utiliser le template suivant : https://github.com/mkl-devops-ri7/formation-symfony-template  
+Durant cette formation nous allons utiliser Gitpod pour installer Symfony, il suffit d'utiliser le template suivant : https://github.com/mkldevops/symfony-template
 
 Suivons les étapes du `README.md`, l'installation de symfony se fera automatiquement et lancera le projet sur le port `8080`.
-
-#### Configuration de l'environnement de développement
 
 Une fois Symfony installé, il est recommandé de configurer l'environnement de développement. Il est possible de créer un fichier `.env.local` à la racine du projet pour stocker les variables d'environnement spécifiques au développement.
 
 Dans ce fichier, vous pouvez définir des paramètres tels que la configuration de la base de données, les informations d'identification de l'API, etc.
 
-Nous utiliserons Sqlite comme base de données lors de cette formation. Dans un nouveau fichier `.env.local` ajoutez-y le code suivant.
-
-```dotenv
-# .env.local
-DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db"
-```
-
 ---
+
 class: middle
 
 #### Installation de API Platform via Composer
@@ -141,7 +142,7 @@ Cette commande a installer tous les composants nécessaires pour utiliser API Pl
 🪄 Api Platform est installé vous pouvez vous rendre sur `/api`. Vous êtes prêt à commencer à développer des API REST modernes avec API Platform.
 
 .center[
-  <img src="img/api-platform-doc-page.png" alt="Api Platform doc page" width="400" />
+<img src="img/api-platform-doc-page.png" alt="Api Platform doc page" width="400" />
 ]
 
 ---
@@ -153,23 +154,24 @@ class: middle, inverse, center
 ---
 
 class: middle
+
 #### Création d'une entité
 
-Pour créer une API avec API Platform, vous devez d'abord créer une entité. Les entités sont des objets qui représentent des données que vous souhaitez stocker dans votre base de données. 
+Pour créer une API avec API Platform, vous devez d'abord créer une entité. Les entités sont des objets qui représentent des données que vous souhaitez stocker dans votre base de données.
 
 Par exemple, si vous créez une application de gestion de bibliothèque, vous pourriez créer une entité "`Book`" pour stocker les informations sur les livres.
 
 Pour créer une entité avec Symfony, vous pouvez utiliser la commande `make:entity`. Par exemple, pour créer une entité "`Book`", vous pouvez exécuter la commande suivante :
-  
+
 ```bash
 symfony console make:entity Book
 ```
 
 Cette commande va créer une classe `Book` dans le dossier `src/Entity`. Définissez les propriétes suivantes:
 
-* `title`, `string`, `255`, `no` 
-* `author`, `string`, `255`, `no`
-* `year`, `string`, `4`, `yes`
+- `title`, `string`, `255`, `no`
+- `author`, `string`, `255`, `no`
+- `year`, `string`, `4`, `yes`
 
 Génerer le fichier de migration, puis l'appliquer
 
@@ -179,6 +181,7 @@ symfony console doctrine:migrations:migrate
 ```
 
 ---
+
 class: middle
 
 #### Définition de la ressource API
@@ -209,7 +212,9 @@ Cela signifie que les opérations **CRUD** (Create, Read, Update, Delete) seront
 .center[<img src="img/api-platform-doc-book.png" alt="Api Platform doc page" width="350" />]
 
 ---
+
 class: middle
+
 #### Gestion des opérations CRUD
 
 Avec la ressource API définie, API Platform générera automatiquement les opérations CRUD correspondantes pour la ressource. Par exemple, vous pouvez envoyer une requête `POST` pour créer un nouveau livre via un curl dans le container :
@@ -233,7 +238,7 @@ ou par la page de documentation swagger `/api` :
 API Platform effectuera la validation des données entrantes et créera un nouveau livre dans la base de données.
 
 Vous pouvez également envoyer une requête `GET` pour récupérer une liste de livres :
-  
+
 ```bash
 curl -X GET "http://localhost:80/api/books" \
   -H "Content-Type: application/json"
@@ -242,6 +247,7 @@ curl -X GET "http://localhost:80/api/books" \
 API Platform retournera une liste de tous les livres disponibles dans la base de données.
 
 ---
+
 class: middle, inverse, center
 
 # 4. Pagination, filtrage et tri
@@ -252,14 +258,14 @@ class: middle
 
 #### Pagination
 
-La pagination est une technique permettant de limiter le nombre de résultats renvoyés par une requête et de fournir des liens pour accéder aux pages suivantes ou précédentes. 
+La pagination est une technique permettant de limiter le nombre de résultats renvoyés par une requête et de fournir des liens pour accéder aux pages suivantes ou précédentes.
 
 API Platform prend en charge les collections paginées en mode natif. La pagination est activée par défaut pour toutes les collections. Chaque collection contient 30 éléments par page. L'activation de la pagination et le nombre d'éléments par page peuvent être configurés.
 
-* **Elle peut être désactivée via l'option** `#[ApiResource(paginationEnabled: false)]`
+- **Elle peut être désactivée via l'option** `#[ApiResource(paginationEnabled: false)]`
 
-* **Le nombre de résulat par page peut-être modifié via l'option** `#[ApiResource(paginationItemsPerPage: 10)]`
-* **Le nombre maximul de résulat peut-être modifié via l'option** `#[ApiResource(paginationMaximumItemsPerPage: 100)]`
+- **Le nombre de résulat par page peut-être modifié via l'option** `#[ApiResource(paginationItemsPerPage: 10)]`
+- **Le nombre maximul de résulat peut-être modifié via l'option** `#[ApiResource(paginationMaximumItemsPerPage: 100)]`
 
 Dans ces exemples nous avons comment gérer la configuration depuis notre projet symfony. Vous pouvez aussi activer la récupération des résultats paginés en envoyant une requête `GET` avec le paramètres `itemsPerPage`:
 
@@ -302,19 +308,20 @@ Par exemple, si vous souhaitez filtrer les livres en fonction de leur titre, vou
 ```
 
 Dans cet exemple, nous avons utilisé le filtre `SearchFilter` pour permettre le filtrage sur le champ `title` des livres. Le paramètre partial indique que la recherche sera partielle, c'est-à-dire que les résultats incluront tous les livres dont le titre contient la valeur de recherche. Vous pouvez maintenant envoyer une requête `GET` avec le paramètre `title` pour filtrer les résultats en fonction du titre :
-  
-  ```bash
-  curl -X GET "http://localhost:80/api/books?title=Hitchhikers" \
-    -H "Content-Type: application/json"
-  ```
+
+```bash
+curl -X GET "http://localhost:80/api/books?title=Hitchhikers" \
+  -H "Content-Type: application/json"
+```
 
 ---
+
 class: middle
 
 #### Tri
 
 Le tri permet de trier les résultats renvoyés par une requête en fonction d'un ou plusieurs critères. Pour activer le tri dans API Platform, vous pouvez utiliser l'attribute `#[ApiFilter]`. Par exemple, si vous souhaitez trier les livres en fonction de leur titre, vous pouvez ajouter l'attribute suivante à la classe `Book` :
-  
+
 ```diff
   ...
 
@@ -348,20 +355,22 @@ class: middle, inverse, center
 # 5. Sérialisation et désérialisation des données
 
 ---
+
 class: middle
 
-* **La sérialisation** consiste à transformer des objets PHP en données `JSON` ou `XML` qui peuvent être envoyées sur le réseau.
+- **La sérialisation** consiste à transformer des objets PHP en données `JSON` ou `XML` qui peuvent être envoyées sur le réseau.
 
-* **La désérialisation** consiste à transformer des données `JSON` ou `XML` en objets PHP.
+- **La désérialisation** consiste à transformer des données `JSON` ou `XML` en objets PHP.
 
 .center[<object data="img/api-plateform-serializer-workflow.svg" type="image/svg+xml"></object>]
 
 ---
 
 class: middle
+
 #### Sérialisation
 
-Dans API Platform, la sérialisation est gérée automatiquement grâce à la bibliothèque de sérialisation **[Symfony Serializer](https://github.com/symfony/serializer)**. 
+Dans API Platform, la sérialisation est gérée automatiquement grâce à la bibliothèque de sérialisation **[Symfony Serializer](https://github.com/symfony/serializer)**.
 
 Par défaut, toutes les propriétés de l'entité sont sérialisées, mais vous pouvez personnaliser ce comportement en utilisant l'attribute `#[ApiProperty]` et ses options `readable` et `writable`.
 
@@ -388,14 +397,15 @@ Vous pouvez maintenant récupérer les résultats de votre API de livres sous fo
 ---
 
 class: middle
+
 #### Désérialisation
 
-Dans API Platform, la désérialisation est également gérée automatiquement grâce à la bibliothèque Symfony Serializer. 
+Dans API Platform, la désérialisation est également gérée automatiquement grâce à la bibliothèque Symfony Serializer.
 
 Si vous souhaitez autoriser la création ou la modification d'objets via votre API, vous devez spécifier les champs qui peuvent être modifiés en utilisant l'option `writable` de l'annotation `#[ApiProperty]`.
 
 Par exemple, si vous souhaitez autoriser la modification de la propriété `title` d'un livre, vous pouvez ajouter l'attribute suivante à la classe `Book` :
-  
+
 ```diff
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -428,13 +438,14 @@ Dans cette partie, nous allons aborder l'authentification et l'autorisation dans
 
 API Platform prend en charge différents types d'authentification, notamment :
 
-* **L'authentification basique :** dans ce cas, l'utilisateur doit fournir un nom d'utilisateur et un mot de passe pour accéder à l'API. C'est le type d'authentification le plus simple, mais il n'est pas très sécurisé car les informations d'identification sont envoyées en clair sur le réseau.
+- **L'authentification basique :** dans ce cas, l'utilisateur doit fournir un nom d'utilisateur et un mot de passe pour accéder à l'API. C'est le type d'authentification le plus simple, mais il n'est pas très sécurisé car les informations d'identification sont envoyées en clair sur le réseau.
 
-* **L'authentification avec token :** dans ce cas, l'utilisateur doit obtenir un token d'authentification valide auprès de l'API avant de pouvoir accéder aux ressources protégées. Le token est généralement envoyé dans l'en-tête de la requête.
+- **L'authentification avec token :** dans ce cas, l'utilisateur doit obtenir un token d'authentification valide auprès de l'API avant de pouvoir accéder aux ressources protégées. Le token est généralement envoyé dans l'en-tête de la requête.
 
-* **L'authentification OAuth2** : dans ce cas, l'utilisateur doit autoriser l'API à accéder à certaines ressources en utilisant un fournisseur d'identité tiers, tel que Google ou Facebook.
+- **L'authentification OAuth2** : dans ce cas, l'utilisateur doit autoriser l'API à accéder à certaines ressources en utilisant un fournisseur d'identité tiers, tel que Google ou Facebook.
 
 ---
+
 class: middle
 
 ### Génerer l'entité User
@@ -448,16 +459,16 @@ symfony console make:user
 Cette commande va créer une entité `User` avec les champs `id`, `email`, `roles` et `password`.
 
 Exécutez la commande suivante pour generer la migrations et migrer les changements de la base de donnée :
-  
-  ```bash
-  symfony console make:migration
-  symfony console doctrine:migrations:migrate -n
-  ```
+
+```bash
+symfony console make:migration
+symfony console doctrine:migrations:migrate -n
+```
 
 ### Installer JWT bundle
 
 Pour utiliser l'authentification avec token, vous devez installer le bundle **LexikJWTAuthenticationBundle**
-  
+
 ```bash
 symfony composer require lexik/jwt-authentication-bundle
 ```
@@ -490,14 +501,14 @@ Pour configurer le bundle, vous devez ajouter le code suivant dans le fichier `c
 
 ```yaml
 lexik_jwt_authentication:
-    secret_key: '%env(resolve:JWT_SECRET_KEY)%'
-    public_key: '%env(resolve:JWT_PUBLIC_KEY)%'
-    pass_phrase: '%env(JWT_PASSPHRASE)%'
-    token_ttl: 86400
-    api_platform:
-        check_path: /api/login_check
-        username_path: email
-        password_path: security.credentials.password
+  secret_key: "%env(resolve:JWT_SECRET_KEY)%"
+  public_key: "%env(resolve:JWT_PUBLIC_KEY)%"
+  pass_phrase: "%env(JWT_PASSPHRASE)%"
+  token_ttl: 86400
+  api_platform:
+    check_path: /api/login_check
+    username_path: email
+    password_path: security.credentials.password
 ```
 
 Dans cet exemple, nous avons configuré le bundle pour utiliser l'authentification avec token. Nous avons également spécifié que l'URL de vérification des identifiants est `/api/login_check`.
@@ -512,7 +523,7 @@ Pour configurer la route d'authentification, vous devez ajouter le code suivant 
 
 ```yaml
 api_login_check:
-    path: /api/login_check
+  path: /api/login_check
 ```
 
 #### Documenter le mécanisme d'authentification
@@ -521,11 +532,11 @@ Pour documenter le mécanisme d'authentification avec Swagger/Open API, vous dev
 
 ```yaml
 api_platform:
-    swagger:
-         api_keys:
-             JWT:
-                name: Authorization
-                type: header
+  swagger:
+    api_keys:
+      JWT:
+        name: Authorization
+        type: header
 ```
 
 N'hésitez à supprimer votre cache avec la commande `symfony console c:c`
@@ -592,8 +603,8 @@ Pour obtenir un token, vous devez envoyer une requête `POST` à l'URL `/api/log
 
 ```bash
 curl -X POST -H "Content-Type: application/json" http://localhost/api/login_check \
- -d '{"email":"john@doe.com","password":"myPassword"}'  
-  ```
+ -d '{"email":"john@doe.com","password":"myPassword"}'
+```
 
 Faites à nouveau une requête HTTP pour récuperer les livres, on aura une erreur `{"code":401,"message":"JWT Token not found"}`.
 
@@ -624,7 +635,7 @@ Pour valider les données de l'entité Book en utilisant des annotations, vous p
 
 class Book
 {
-  ... 
+  ...
 + #[Assert\NotBlank]
   #[ORM\Column(length: 255)]
   #[ApiProperty(writable: false)]
@@ -640,7 +651,7 @@ class Book
   private ?string $year = null;
 
 }
-``` 
+```
 
 Dans cet exemple, nous avons ajouté les contraintes `NotBlank` et `Length` de la bibliothèque Symfony Validator à la propriété `$author` de l'entité `Book`. Cela signifie que le nom de l'auteur ne peut pas être vide et doit avoir une longueur minimale de 3 caractères. Nous avons également ajouté la contrainte `Length` à la propriété `$year`, ce qui signifie que l'année n'est pas obligatoire, mais si elle est défini elle devra avoir une longueur de 4 caractères.
 
@@ -675,6 +686,7 @@ Dans cet exemple, nous envoyons une requête `PUT` à l'API pour mettre à jour 
 Comme nous avons ajouté des contraintes de validation à ces deux propriétés, la requête devrait renvoyer une erreur de validation avec des messages d'erreur décrivant les problèmes.
 
 ---
+
 class: middle
 
 #### Personnalisation des messages d'erreur
@@ -702,6 +714,7 @@ Vous pouvez également valider les données de manière conditionnelle en utilis
 Testez ce dernier validateur avec une requête invalide lors de la création.
 
 ---
+
 class: middle
 
 🚧 Voici un mini TP pour vous aider à pratiquer la validation des données sur l'entité User :
@@ -714,11 +727,11 @@ Valider les données de l'entité User en utilisant la validation Symfony Valida
 
 Ajout des contraintes de validation
 
-* Ajoutez des contraintes de validation aux propriétés de l'entité User en utilisant la validation Symfony Validator. Par exemple, vous pouvez ajouter les contraintes suivantes :
-  * **`email` :** non vide et format valide d'adresse e-mail.
-  * **`password` :** non vide et longueur minimale de 8 caractères.
-  * **`roles` :** non vide et tableau de chaînes de caractères.
-* Vous pouvez ajouter ces contraintes en utilisant des attributs, comme décrit dans les sections précédentes.
+- Ajoutez des contraintes de validation aux propriétés de l'entité User en utilisant la validation Symfony Validator. Par exemple, vous pouvez ajouter les contraintes suivantes :
+  - **`email` :** non vide et format valide d'adresse e-mail.
+  - **`password` :** non vide et longueur minimale de 8 caractères.
+  - **`roles` :** non vide et tableau de chaînes de caractères.
+- Vous pouvez ajouter ces contraintes en utilisant des attributs, comme décrit dans les sections précédentes.
 
 #### Test de la validation
 
@@ -733,13 +746,14 @@ class: middle, center, inverse
 # 8. Relations entre les entités
 
 ---
+
 class: middle
 
 Dans API Platform, vous pouvez définir des relations entre les différentes entités de votre API. Les relations peuvent être de différents types, tels que :
 
-* `OneToMany`
-* `ManyToOne`
-* `ManyToMany`
+- `OneToMany`
+- `ManyToOne`
+- `ManyToMany`
 
 Dans ce chapitre, nous allons voir comment définir des relations entre les entités de votre API.
 
@@ -751,7 +765,7 @@ Nous devrons définir une relation `OneToMany` inverse dans l'entité `Category`
 symfony console make:entity Category
 ```
 
-> ❗ Sqlite ne supporte pas les migrations qui modifie les clés étrangère, pour résoudre cela supprimez les fichiers de `migrations` et le fichier  `var/data.db` puis Exécutez la commande suivante pour generer la migrations et migrer les changements de la base de donnée :
+> ❗ Sqlite ne supporte pas les migrations qui modifie les clés étrangère, pour résoudre cela supprimez les fichiers de `migrations` et le fichier `var/data.db` puis Exécutez la commande suivante pour generer la migrations et migrer les changements de la base de donnée :
 
 ```bash
 symfony console make:migration
@@ -763,6 +777,7 @@ symfony console doctrine:query:sql \
 ```
 
 ---
+
 class: middle
 
 🚧 L'objectif de ce mini TP est de vous familiariser avec l'utilisation des endpoints REST actuels de l'API (Book et Category) pour alimenter la base de données à partir d'un jeu de données JSON généré.
@@ -785,11 +800,9 @@ class: middle
 
 #### Groupe de sérialisation
 
-
 API Platform utilise le composant Serializer de Symfony pour convertir les objets PHP en formats de données tels que JSON ou XML. Les groupes de sérialisation et de désérialisation permettent de contrôler les propriétés qui sont incluses ou exclues de l'objet sérialisé ou désérialisé.
 
 En utilisant les groupes, vous pouvez spécifier les propriétés à inclure ou exclure pour chaque opération d'API (lecture, écriture, etc.) et pour chaque entité.
-
 
 .pull-left[
 
@@ -838,8 +851,7 @@ Lors de la récupération d'une categorie à l'aide de l'API, la réponse JSON i
 }
 ```
 
-]
----
+## ]
 
 class: middle
 
@@ -884,6 +896,7 @@ class Book
     #[ORM\JoinColumn(nullable: true)]
     private ?Category $category = null;
 ```
+
 ]
 .pull-right[
 Nous avons utilisé les attributs PHP pour spécifier les contraintes de validation et les groupes de sérialisation et désérialisation. Nous avons également ajouté les annotations `#[ApiProperty]` et `#[Groups]` pour spécifier l'identifiant de la ressource, les groupes de lecture et d'écriture de la sérialisation et la désérialisation.
@@ -892,16 +905,16 @@ Lors de la récupération d'un livre à l'aide de l'API, la réponse JSON inclur
 
 ```json
 {
+  "id": 1,
+  "title": "The Great Gatsby",
+  "category": {
+    "@id": "/api/categories/1",
     "id": 1,
-    "title": "The Great Gatsby",
-    "category": {
-        "@id": "/api/categories/1",
-        "id": 1,
-        "name": "Fiction"
-    },
-    "@context": "/api/contexts/Book",
-    "@id": "/api/books/1",
-    "@type": "Book"
+    "name": "Fiction"
+  },
+  "@context": "/api/contexts/Book",
+  "@id": "/api/books/1",
+  "@type": "Book"
 }
 ```
 
@@ -909,10 +922,10 @@ Pour créer un nouveau livre associé à une catégorie existante, vous pouvez e
 
 ```json
 {
-    "title": "The Great Gatsby",
-    "author": "F. Scott Fitzgerald",
-    "year": "1925",
-    "category": "/api/categories/1"
+  "title": "The Great Gatsby",
+  "author": "F. Scott Fitzgerald",
+  "year": "1925",
+  "category": "/api/categories/1"
 }
 ```
 
