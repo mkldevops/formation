@@ -115,9 +115,9 @@ class: middle
 
 Pour commencer avec API Platform, il est nécessaire d'installer Symfony. Symfony est un framework PHP qui fournit un ensemble de composants pour construire des applications web modernes.
 
-Durant cette formation nous allons utiliser Gitpod pour installer Symfony, il suffit d'utiliser le template suivant : https://github.com/mkldevops/symfony-template
+Durant cette formation, nous allons utiliser Gitpod pour installer Symfony, il suffit d'utiliser le template suivant : https://github.com/mkl-devops-ri7/gitpod-template
 
-Suivons les étapes du `README.md`, l'installation de symfony se fera automatiquement et lancera le projet sur le port `8080`.
+Suivons les étapes du `README.md`, l'installation de symfony se fera automatiquement et lancera le projet sur le port `8080` [http://localhost:8080](http://localhost:8080).
 
 Une fois Symfony installé, il est recommandé de configurer l'environnement de développement. Il est possible de créer un fichier `.env.local` à la racine du projet pour stocker les variables d'environnement spécifiques au développement.
 
@@ -129,17 +129,19 @@ class: middle
 
 #### Installation de API Platform via Composer
 
-Une fois que Symfony est installé et configuré, connectez-vous au container via `make docker-sh`.
-
 Vous pouvez installer API Platform en utilisant **Composer**. API Platform est disponible sous forme de paquet Composer, qui peut être installé en utilisant la commande suivante :
 
 ```bash
 symfony composer require api
 ```
 
-Cette commande a installer tous les composants nécessaires pour utiliser API Platform dans votre projet Symfony, y compris la **documentation Swagger**, la prise en charge de **JSON-LD** et de **HAL**, et les composants pour la **validation**, la **pagination**, le **tri** et le **filtrage**.
+.info[
+    L'installation de API Platform, s'est réalisée automatiquement lors de la création du projet Symfony avec le template `symfony-template`.
+]
 
-🪄 Api Platform est installé vous pouvez vous rendre sur `/api`. Vous êtes prêt à commencer à développer des API REST modernes avec API Platform.
+Cette commande a installé tous les composants nécessaires pour utiliser API Platform dans votre projet Symfony, y compris la **documentation Swagger**, la prise en charge de **JSON-LD** et de **HAL**, et les composants pour la **validation**, la **pagination**, le **tri** et le **filtrage**.
+
+🪄 Api Platform est installé vous pouvez vous rendre sur `/api/docs`. Vous êtes prêt à commencer à développer des API REST modernes avec API Platform.
 
 .center[
 <img src="img/api-platform-doc-page.png" alt="Api Platform doc page" width="400" />
@@ -164,7 +166,7 @@ Par exemple, si vous créez une application de gestion de bibliothèque, vous po
 Pour créer une entité avec Symfony, vous pouvez utiliser la commande `make:entity`. Par exemple, pour créer une entité "`Book`", vous pouvez exécuter la commande suivante :
 
 ```bash
-symfony console make:entity Book
+symfony console make:entity Book --api-resource
 ```
 
 Cette commande va créer une classe `Book` dans le dossier `src/Entity`. Définissez les propriétes suivantes:
@@ -220,12 +222,12 @@ class: middle
 Avec la ressource API définie, API Platform générera automatiquement les opérations CRUD correspondantes pour la ressource. Par exemple, vous pouvez envoyer une requête `POST` pour créer un nouveau livre via un curl dans le container :
 
 ```bash
-curl -X POST "http://localhost:80/api/books" \
+curl -sX POST "http://localhost:8000/api/books" \
   -H "Content-Type: application/json" \
-  -d '{"title": "The Hitchhikers Guide to the Galaxy", "author": "Douglas Adams", "year": "1979"}'
+  -d '{"title": "The Hitchhikers Guide to the Galaxy", "author": "Douglas Adams", "year": "1979"}' | jq
 ```
 
-ou par la page de documentation swagger `/api` :
+ou par la page de documentation swagger `/api/docs` :
 
 ```json
 {
@@ -240,8 +242,8 @@ API Platform effectuera la validation des données entrantes et créera un nouve
 Vous pouvez également envoyer une requête `GET` pour récupérer une liste de livres :
 
 ```bash
-curl -X GET "http://localhost:80/api/books" \
-  -H "Content-Type: application/json"
+curl -sX GET "http://localhost:8000/api/books" \
+  -H "Content-Type: application/json" | jq
 ```
 
 API Platform retournera une liste de tous les livres disponibles dans la base de données.
@@ -274,7 +276,7 @@ Dans ces exemples nous avons comment gérer la configuration depuis notre projet
 ```
 
 ```sh
-curl -X GET "http://localhost:80/api/books?itemsPerPage=10" -H "Content-Type: application/json"
+curl -sX GET "http://localhost:8000/api/books?itemsPerPage=10" -H "Content-Type: application/json" | jq
 ```
 
 ---
@@ -310,8 +312,8 @@ Par exemple, si vous souhaitez filtrer les livres en fonction de leur titre, vou
 Dans cet exemple, nous avons utilisé le filtre `SearchFilter` pour permettre le filtrage sur le champ `title` des livres. Le paramètre partial indique que la recherche sera partielle, c'est-à-dire que les résultats incluront tous les livres dont le titre contient la valeur de recherche. Vous pouvez maintenant envoyer une requête `GET` avec le paramètre `title` pour filtrer les résultats en fonction du titre :
 
 ```bash
-curl -X GET "http://localhost:80/api/books?title=Hitchhikers" \
-  -H "Content-Type: application/json"
+curl -X GET "http://localhost:8000/api/books?title=Hitchhikers" \
+  -H "Content-Type: application/json" | jq
 ```
 
 ---
@@ -342,8 +344,8 @@ Le tri permet de trier les résultats renvoyés par une requête en fonction d'u
 Dans cet exemple, nous avons utilisé le filtre `OrderFilter` pour permettre le tri sur le champ `title` des livres. Vous pouvez maintenant envoyer une requête GET avec le paramètre order pour trier les résultats en fonction du titre :
 
 ```bash
-curl -X GET "http://localhost:80/api/books?order%5Btitle%5D=asc" \
-  -H "Content-Type: application/json"
+curl -X GET "http://localhost:8000/api/books?order%5Btitle%5D=asc" \
+  -H "Content-Type: application/json" | jq
 ```
 
 Dans cet exemple, nous avons trié les résultats par ordre croissant (`asc`) du champ `title`. Vous pouvez également trier par ordre décroissant en utilisant la valeur `desc`.
@@ -606,14 +608,14 @@ curl -X POST -H "Content-Type: application/json" http://localhost/api/login_chec
  -d '{"email":"john@doe.com","password":"myPassword"}'
 ```
 
-Faites à nouveau une requête HTTP pour récuperer les livres, on aura une erreur `{"code":401,"message":"JWT Token not found"}`.
+Faites à nouveau une requête HTTP pour récupérer les livres, on aura une erreur `{"code":401,"message":"JWT Token not found"}`.
 
 En `effet` il faudra à présent vous authentifier pour avoir accès au données de l'api. stockez le token obtenu dans une variable d'environnement `TOKEN`, puis lancer la requête suivante.
 
 ```bash
-curl -X GET  http://localhost/api/books \
+curl -sX GET  http://localhost:800/api/books \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer ${TOKEN}"
+  -H "Authorization: Bearer ${TOKEN}" | jq
 ```
 
 ---
@@ -662,10 +664,10 @@ class: middle
 Voici un exemple de commande curl pour tester la validation des données de l'entité `Book` :
 
 ```sh
-curl -X 'POST' http://localhost:/api/books \
+curl -X 'POST' http://localhost:8000/api/books \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer ${TOKEN}" \
-  -d '{ "title" : "Symfony fast track", "author": "Fa", "year": "22" }'
+  -d '{ "title" : "Symfony fast track", "author": "Fa", "year": "22" }' | jq
 ```
 
 Dans cet exemple, nous envoyons une requête POST à l'API pour créer un nouveau livre avec un auteur ayant moins de **3 caractères** et une année de publication n'ayant pas **exactement 4 caractères**.
@@ -675,10 +677,10 @@ Comme nous avons ajouté des contraintes de validation à ces deux propriétés,
 Vous pouvez également tester la validation en envoyant une requête `PUT` ou `PATCH` pour mettre à jour un livre existant avec des données non valides. Par exemple :
 
 ```sh
-curl -X 'PUT' http://localhost:/api/books/1 \
+curl -X 'PUT' http://localhost:8000/api/books/1 \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer ${TOKEN}" \
-  -d '{ "title" : "a", "year": "" }'
+  -d '{ "title" : "a", "year": "" }' | jq
 ```
 
 Dans cet exemple, nous envoyons une requête `PUT` à l'API pour mettre à jour le livre avec **l'ID 1** avec un titre de 1 caractère et une date de publication vide.
@@ -764,8 +766,7 @@ Nous devrons définir une relation `OneToMany` inverse dans l'entité `Category`
 ```sh
 symfony console make:entity Category
 ```
-
-> ❗ Sqlite ne supporte pas les migrations qui modifie les clés étrangère, pour résoudre cela supprimez les fichiers de `migrations` et le fichier `var/data.db` puis Exécutez la commande suivante pour generer la migrations et migrer les changements de la base de donnée :
+Appliquer la migration
 
 ```bash
 symfony console make:migration
