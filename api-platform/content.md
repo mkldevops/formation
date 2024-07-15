@@ -126,8 +126,9 @@ Dans ce fichier, vous pouvez définir des paramètres tels que la configuration 
 ---
 
 class: middle
-
-#### Installation de API Platform via Composer
+.center[
+### **Installation de API Platform via Composer**
+]
 
 Vous pouvez installer API Platform en utilisant **Composer**. API Platform est disponible sous forme de paquet Composer, qui peut être installé en utilisant la commande suivante :
 
@@ -148,6 +149,44 @@ Cette commande a installé tous les composants nécessaires pour utiliser API Pl
 ]
 
 ---
+class: middle
+.center[
+### **Configuration d'API Platform**
+]
+
+- Ajouter la configuration d'API Platform dans le fichier `config/packages/api_platform.yaml` le format `['application/json']` :
+    ```diff
+    formats:
+      jsonld: ['application/ld+json']
+    +  json:     ['application/json']
+    docs_formats:
+      jsonld: ['application/ld+json']
+    +  json:     ['application/json']
+    ```
+
+.info[
+   Cette configuration permet de définir les formats de données pris en charge par API Platform. Par défaut, API Platform prend en charge les formats JSON-LD et HAL. En ajoutant le format JSON, vous pouvez également prendre en charge les données JSON.
+]
+
+---
+class: middle
+.center[
+### **Installation d’un Outil pour API (Postman, Insomnia, Bruno)**
+]
+
+Pour tester et interagir avec vos API, l’utilisation d’outils dédiés comme Postman, Insomnia ou Bruno est recommandée. Ces outils permettent d’envoyer des requêtes HTTP, de visualiser les réponses, et d’automatiser les tests.
+
+- Vous pouvez installer Postman en téléchargeant l'application depuis le site officiel : [https://www.postman.com/downloads/](https://www.postman.com/downloads/)
+
+- Pour Insomnia, vous pouvez télécharger l'application depuis le site officiel : [https://insomnia.rest/download](https://insomnia.rest/download)
+
+- Pour Bruno, vous pouvez télécharger l'application depuis le site officiel : [https://brunolabs.com/](https://brunolabs.com/)
+
+- Pour les plus téméraires, vous pouvez utiliser curl depuis le terminal.
+
+Ces outils sont essentiels pour le développement et le débogage des API, facilitant les interactions et les tests.
+
+---
 
 class: middle, inverse, center
 
@@ -156,18 +195,21 @@ class: middle, inverse, center
 ---
 
 class: middle
-
-#### Création d'une entité
+.center[
+### **Création d'une entité**
+]
 
 Pour créer une API avec API Platform, vous devez d'abord créer une entité. Les entités sont des objets qui représentent des données que vous souhaitez stocker dans votre base de données.
 
 Par exemple, si vous créez une application de gestion de bibliothèque, vous pourriez créer une entité "`Book`" pour stocker les informations sur les livres.
 
-Pour créer une entité avec Symfony, vous pouvez utiliser la commande `make:entity`. Par exemple, pour créer une entité "`Book`", vous pouvez exécuter la commande suivante :
-
-```bash
-symfony console make:entity Book --api-resource
-```
+* Pour créer une entité avec Symfony, vous pouvez utiliser la commande `make:entity`. Par exemple, pour créer une entité "`Book`", vous pouvez exécuter la commande suivante :
+    ```bash
+    symfony console make:entity Book --api-resource
+    ```
+   .info[
+    L'option `--api-resource` permet de créer une ressource API pour l'entité.
+   ]
 
 Cette commande va créer une classe `Book` dans le dossier `src/Entity`. Définissez les propriétes suivantes:
 
@@ -175,18 +217,20 @@ Cette commande va créer une classe `Book` dans le dossier `src/Entity`. Défini
 - `author`, `string`, `255`, `no`
 - `year`, `string`, `4`, `yes`
 
-Génerer le fichier de migration, puis l'appliquer
+* Génerer le fichier de migration, puis l'appliquer
 
-```bash
-symfony console make:migration
-symfony console doctrine:migrations:migrate
-```
+    ```bash
+    symfony console make:migration
+    symfony console doctrine:migrations:migrate -n
+    ```
 
 ---
 
 class: middle
 
-#### Définition de la ressource API
+.center[
+### **Définition de la ressource API**
+]
 
 Une fois que l'entité est créée, il est temps de définir la ressource API correspondante pour cette entité. Vous pouvez le faire en ajoutant des annotations à la classe entité. Dans cet exemple, nous avons utilisé l'attribute `#[ApiResource]` pour définir la ressource API pour l'entité `Book`.
 
@@ -216,18 +260,21 @@ Cela signifie que les opérations **CRUD** (Create, Read, Update, Delete) seront
 ---
 
 class: middle
+.center[
+### **Ajout de données à la base de données**
+]
 
-#### Gestion des opérations CRUD
+Avec la ressource API définie, API Platform générera automatiquement les opérations CRUD correspondantes pour la ressource. 
 
-Avec la ressource API définie, API Platform générera automatiquement les opérations CRUD correspondantes pour la ressource. Par exemple, vous pouvez envoyer une requête `POST` pour créer un nouveau livre via un curl dans le container :
+- Vous pouvez envoyer une requête `POST` pour créer un nouveau livre via un curl dans le container ou l'outil de votre choix :
 
-```bash
-curl -sX POST "http://localhost:8000/api/books" \
-  -H "Content-Type: application/json" \
-  -d '{"title": "The Hitchhikers Guide to the Galaxy", "author": "Douglas Adams", "year": "1979"}' | jq
-```
+    ```bash
+    curl -sX POST "http://localhost:8000/api/books" \
+      -H "Content-Type: application/json" \
+      -d '{"title": "The Hitchhikers Guide to the Galaxy", "author": "Douglas Adams", "year": "1979"}' | jq
+    ```
 
-ou par la page de documentation swagger `/api/docs` :
+Vous aurez une réponse similaire à celle-ci :
 
 ```json
 {
@@ -237,16 +284,69 @@ ou par la page de documentation swagger `/api/docs` :
 }
 ```
 
-API Platform effectuera la validation des données entrantes et créera un nouveau livre dans la base de données.
+API Platform a effectué la validation des données entrantes et a créé un nouveau livre dans la base de données.
 
-Vous pouvez également envoyer une requête `GET` pour récupérer une liste de livres :
+---
 
-```bash
-curl -sX GET "http://localhost:8000/api/books" \
-  -H "Content-Type: application/json" | jq
-```
+class: middle
+.center[
+### **Récupération des données de la base de données**
+]
 
-API Platform retournera une liste de tous les livres disponibles dans la base de données.
+
+* Vous pouvez également envoyer une requête `GET` pour récupérer une liste de livres :
+
+    ```bash
+    curl -sX GET "http://localhost:8000/api/books" \
+      -H "Content-Type: application/json" | jq
+    ```
+
+    API Platform retournera une liste de tous les livres disponibles dans la base de données.
+    
+    ```json
+    {
+      "@context": "/api/contexts/Book",
+      "@id": "/api/books",
+      "@type": "hydra:Collection",
+      "hydra:totalItems": 1,
+      "hydra:member": [
+        {
+          "@id": "/api/books/1",
+          "@type": "Book",
+          "id": 1,
+          "title": "The Hitchhikers Guide to the Galaxy",
+          "author": "Douglas Adams",
+          "year": "1979"
+        }
+      ]
+    }
+    ```
+  
+API Platform gère automatiquement les opérations de lecture pour les ressources API.
+
+---
+
+class: middle
+.center[
+### **Mise à jour et suppression des données**
+]
+
+* Vous pouvez envoyer une requête `PUT` pour mettre à jour un livre existant :
+
+    ```bash
+    curl -sX PUT "http://localhost:8000/api/books/1" \
+      -H "Content-Type: application/json" \
+      -d '{"title": "The Hitchhikers Guide to the Galaxy", "author": "Douglas Adams", "year": "1980"}' | jq
+    ```
+  
+* Vous pouvez envoyer une requête `DELETE` pour supprimer un livre existant :
+
+    ```bash
+    curl -sX DELETE "http://localhost:8000/api/books/1" \
+      -H "Content-Type: application/json" | jq
+    ```
+  
+API Platform gère automatiquement les opérations de mise à jour et de suppression pour les ressources API.
 
 ---
 
