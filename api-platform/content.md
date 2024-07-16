@@ -698,14 +698,14 @@ Ajoutons à notre application un utilsateur via la commande suivante :
 symfony console security:hash-password -n myPassword
 
 # ajoute l'utilisateur
-symfony console doctrine:query:sql "insert into user (email, password, roles) values ('john@doe.com', '\$2y\$13\$PbnSuELtRM4rqLdgpjz6U.iAN6CWo5cG/AJsh/DtIH4Cs5HEjISsG', '[\"ROLE_ADMIN\"]');"
+symfony console doctrine:query:sql "insert into public.user (id, email, password, roles) values (1, 'john@doe.com', '\$2y\$13\$PbnSuELtRM4rqLdgpjz6U.iAN6CWo5cG/AJsh/DtIH4Cs5HEjISsG', '[\"ROLE_ADMIN\"]');"
 ```
 
 Pour obtenir un token, vous devez envoyer une requête `POST` à l'URL `/api/login_check` avec les informations d'identification de l'utilisateur. Par exemple, si vous avez créé un utilisateur avec l'adresse e-mail
 
 ```bash
-curl -X POST -H "Content-Type: application/json" http://localhost/api/login_check \
- -d '{"email":"john@doe.com","password":"myPassword"}'
+curl -sX POST -H "Content-Type: application/json" http://localhost:8000/api/login_check \
+ -d '{"email":"john@doe.com","password":"myPassword"}' | jq
 ```
 
 Faites à nouveau une requête HTTP pour récupérer les livres, on aura une erreur `{"code":401,"message":"JWT Token not found"}`.
@@ -713,7 +713,7 @@ Faites à nouveau une requête HTTP pour récupérer les livres, on aura une err
 En `effet` il faudra à présent vous authentifier pour avoir accès au données de l'api. stockez le token obtenu dans une variable d'environnement `TOKEN`, puis lancer la requête suivante.
 
 ```bash
-curl -sX GET  http://localhost:800/api/books \
+curl -sX GET  http://localhost:8000/api/books \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer ${TOKEN}" | jq
 ```
@@ -790,10 +790,12 @@ Comme nous avons ajouté des contraintes de validation à ces deux propriétés,
 ---
 
 class: middle
+.center[
+### **Personnalisation des messages d'erreur**
+]
 
-#### Personnalisation des messages d'erreur
-
-Vous pouvez personnaliser les messages d'erreur renvoyés par la validation en ajoutant des messages personnalisés à chaque contrainte. Par exemple, si vous voulez personnaliser le message d'erreur pour la contrainte Length, vous pouvez modifier la validation comme suit :
+Vous pouvez personnaliser les messages d'erreur renvoyés par la validation en ajoutant des messages personnalisés à chaque contrainte. 
+Par exemple, si vous voulez personnaliser le message d'erreur pour la contrainte Length, vous pouvez modifier la validation comme suit :
 
 ```diff
 + #[Assert\NotBlank(message: "L'auteur doit être renseigné")]
@@ -804,7 +806,9 @@ Vous pouvez personnaliser les messages d'erreur renvoyés par la validation en a
 
 #### Validation conditionnelle
 
-Vous pouvez également valider les données de manière conditionnelle en utilisant des groupes de validation. Les groupes de validation vous permettent de valider uniquement certaines propriétés de l'entité en fonction du contexte. Par exemple, si vous souhaitez valider la propriété $year uniquement lors de la création d'un nouveau livre, vous pouvez ajouter la contrainte NotBlank à cette propriété dans le groupe de validation creation comme suit :
+Vous pouvez également valider les données de manière conditionnelle en utilisant des groupes de validation. 
+Les groupes de validation vous permettent de valider uniquement certaines propriétés de l'entité en fonction du contexte. 
+Par exemple, si vous souhaitez valider la propriété `$year` uniquement lors de la création d'un nouveau livre, vous pouvez ajouter la contrainte NotBlank à cette propriété dans le groupe de validation creation comme suit :
 
 ```diff
 + #[Assert\NotBlank(groups: ["creation"])]
@@ -813,13 +817,14 @@ Vous pouvez également valider les données de manière conditionnelle en utilis
   private ?string $year = null;
 ```
 
-Testez ce dernier validateur avec une requête invalide lors de la création.
+- **Testez ce dernier validateur avec une requête invalide lors de la création.**
 
 ---
 
 class: middle
-
-🚧 Voici un mini TP pour vous aider à pratiquer la validation des données sur l'entité User :
+.center[
+### **Travaux Pratiques**
+]
 
 #### Objectif
 
@@ -837,9 +842,12 @@ Ajout des contraintes de validation
 
 #### Test de la validation
 
-Utilisez la commande curl pour tester la validation des données de l'entité `User`. Envoyez une requête `POST` pour créer un nouvel utilisateur avec des données invalides (par exemple, un nom d'utilisateur vide ou une adresse e-mail invalide). Vérifiez que la requête renvoie une erreur de validation avec des messages d'erreur appropriés.
+- Utilisez la commande curl pour tester la validation des données de l'entité `User`. 
+  - Envoyez une requête `POST` pour créer un nouvel utilisateur avec des données invalides (par exemple, un nom d'utilisateur vide ou une adresse e-mail invalide).
+  - Vérifiez que la requête renvoie une erreur de validation avec des messages d'erreur appropriés.
 
-Ensuite, envoyez une requête `PUT` ou `PATCH` pour mettre à jour un utilisateur existant avec des données invalides (par exemple, un mot de passe trop court). Vérifiez que la requête renvoie une erreur de validation avec des messages d'erreur appropriés.
+- Ensuite, envoyez une requête `PUT` ou `PATCH` pour mettre à jour un utilisateur existant avec des données invalides (par exemple, un mot de passe trop court). 
+  - Vérifiez que la requête renvoie une erreur de validation avec des messages d'erreur appropriés.
 
 ---
 
@@ -871,17 +879,17 @@ Appliquer la migration
 ```bash
 symfony console make:migration
 symfony console doctrine:migrations:migrate -n
-
-# Ajoutons des données via la console pour pouvoir s'authentifier
-symfony console doctrine:query:sql \
-  "insert into user (email, password, roles) values ('john@doe.com', '\$2y\$13\$PbnSuELtRM4rqLdgpjz6U.iAN6CWo5cG/AJsh/DtIH4Cs5HEjISsG', '[\"ROLE_ADMIN\"]');"
 ```
 
 ---
 
 class: middle
 
-🚧 L'objectif de ce mini TP est de vous familiariser avec l'utilisation des endpoints REST actuels de l'API (Book et Category) pour alimenter la base de données à partir d'un jeu de données JSON généré.
+.center[
+### **Travaux Pratiques**
+]
+
+L'objectif de ce mini TP : est de vous familiariser avec l'utilisation des endpoints REST actuels de l'API (Book et Category) pour alimenter la base de données à partir d'un jeu de données JSON généré.
 
 1. Voici un jeu de données <a href="file/data.json" title="data.json" target="_blank"><i class="fa-solid fa-file"></i> data.json</a> qui contient des informations sur les livres et les catégories.
 
@@ -898,8 +906,9 @@ Ce mini TP vous a permis de découvrir comment alimenter la base de données de 
 ---
 
 class: middle
-
-#### Groupe de sérialisation
+.center[
+### **Groupe de sérialisation**
+]
 
 API Platform utilise le composant Serializer de Symfony pour convertir les objets PHP en formats de données tels que JSON ou XML. Les groupes de sérialisation et de désérialisation permettent de contrôler les propriétés qui sont incluses ou exclues de l'objet sérialisé ou désérialisé.
 
@@ -913,24 +922,24 @@ En utilisant les groupes, vous pouvez spécifier les propriétés à inclure ou 
 + use Symfony\Component\Serializer\Annotation\Groups;
 
 + #[ApiResource(
-+     normalizationContext: [ 'groups' => ['category']],
++     normalizationContext: [ 'groups' => ['category:read']],
 +     denormalizationContext: [ 'groups' => ['category:write']],
 + )]
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 class Category
 {
-+   #[Groups(['category'])]
++   #[Groups(['category:read'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
 +   #[Assert\NotBlank()]
-+   #[Groups(['category', 'book', 'category:write'])]
++   #[Groups(['category:read', 'book:read', 'category:write'])]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-+   #[Groups(['category'])]
++   #[Groups(['category:read'])]
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Book::class, orphanRemoval: true)]
     private Collection $books;
 ```
@@ -951,8 +960,9 @@ Lors de la récupération d'une categorie à l'aide de l'API, la réponse JSON i
   "name": "Fiction"
 }
 ```
+]
 
-## ]
+---
 
 class: middle
 
@@ -961,37 +971,37 @@ class: middle
 ```diff
 #[ApiResource(
     paginationClientItemsPerPage: true,
-+   normalizationContext: ['groups' => ['book']],
++   normalizationContext: ['groups' => ['book:read']],
 +   denormalizationContext: ['groups' => ['book:write']],
 )]
 class Book
 {
 +   #[ApiProperty(identifier: true)]
-+   #[Groups(['book'])]
++   #[Groups(['book:read'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-+   #[Groups(['book', 'book:write'])]
++   #[Groups(['book:read', 'book:write'])]
     #[Assert\NotBlank]
     #[ORM\Column(length: 255)]
 -   #[ApiProperty(writable: false)]
     private ?string $title = null;
 
-+   #[Groups(['book', 'book:write'])]
++   #[Groups(['book:read', 'book:write'])]
     #[Assert\NotBlank]
     #[Assert\Length(min: 3)]
     #[ORM\Column(length: 255)]
     private ?string $author = null;
 
-+   #[Groups(['book', 'book:write'])]
++   #[Groups(['book:read', 'book:write'])]
     #[Assert\NotBlank]
     #[Assert\Length(exactly: 4)]
     #[ORM\Column(length: 4, nullable: true)]
     private ?string $year = null;
 
-+   #[Groups(['book', 'book:write'])]
++   #[Groups(['book:read', 'book:write'])]
     #[Assert\NotNull()]
     #[ORM\ManyToOne(inversedBy: 'books')]
     #[ORM\JoinColumn(nullable: true)]
@@ -1041,8 +1051,9 @@ class: middle, center, inverse
 ---
 
 class: middle
-
-#### Installation de GraphQL
+.center[
+### **Installation de GraphQL**
+]
 
 **GraphQL** est un langage de requête pour les APIs créé par Facebook. Contrairement aux APIs REST, qui exposent un ensemble d'URLs pour interagir avec les ressources, GraphQL permet aux clients de définir les données exactes dont ils ont besoin et d'obtenir une réponse qui correspond exactement à cette demande. API Platform prend en charge GraphQL et vous permet de définir des types de ressources personnalisés pour GraphQL.
 
@@ -1053,15 +1064,27 @@ symfony composer require webonyx/graphql-php
 symfony console cache:clear
 ```
 
-API Platform detect automatiquement la presence de GraphQL et vous pourrez utiliser le endpoint sur la route `api/graphql`
-.pull-left[
-**l'IDE GraphiQL** est disponible sur `api/graphql/graphiql`, qui est un IDE web pour GraphQL développé par Facebook. Il est disponible en tant qu'interface utilisateur intégrée à API Platform. GraphiQL offre des fonctionnalités telles que l'autocomplétion, la validation de requêtes et l'exploration de schémas GraphQL.
-]
-.pull-right[
-**GraphQL Playground** est disponible sur `api/graphql/graphiql`qui est un IDE web pour GraphQL qui offre une interface utilisateur moderne et intuitive. Il permet de tester et d'explorer les requêtes GraphQL en temps réel, ainsi que de visualiser les résultats et les erreurs de manière claire.
+
+
+---
+class: middle
+.center[
+### **Configuration de GraphQL**
 ]
 
-Donnons accès publique à ses deux IDE, depuis le fichier `config/packages/security.yaml`
+API Platform detect automatiquement la presence de GraphQL et vous pourrez utiliser le endpoint sur la route `api/graphql`
+
+.pull-left[
+**l'IDE GraphiQL** est disponible sur `api/graphql/graphiql`, qui est un IDE web pour GraphQL développé par Facebook. 
+Il est disponible en tant qu'interface utilisateur intégrée à API Platform. 
+GraphiQL offre des fonctionnalités telles que l'autocomplétion, la validation de requêtes et l'exploration de schémas GraphQL.
+]
+.pull-right[
+**GraphQL Playground** est disponible sur `api/graphql/graphiql`qui est un IDE web pour GraphQL qui offre une interface utilisateur moderne et intuitive. 
+Il permet de tester et d'explorer les requêtes GraphQL en temps réel, ainsi que de visualiser les résultats et les erreurs de manière claire.
+]
+
+Donnons un accès publique à ses deux IDE, depuis le fichier `config/packages/security.yaml`
 
 ```diff
     access_control:
@@ -1074,14 +1097,19 @@ Donnons accès publique à ses deux IDE, depuis le fichier `config/packages/secu
 ---
 
 class: middle
+.center[
+### **Définition des types de ressources pour GraphQL**
+]
 
-#### Définition des types de ressources pour GraphQL
+API Platform vous permet de définir des types de ressources personnalisés pour GraphQL à l'aide de l'attribute `#[ApiResource]`.
 
-API Platform vous permet de définir des types de ressources personnalisés pour GraphQL à l'aide de l'attribute #[ApiResource]. Les entités `Book` et `Category` utilise cet attributes, et son directement disponible depuis le endpoint `/api/graphql`.
+Les entités `Book` et `Category` utilise cet attributes, et son directement disponible depuis le endpoint `/api/graphql`.
 
 #### Utilisation de l'API GraphQL
 
-Pour tester l'API GraphQL, vous pouvez utiliser un client GraphQL tel que GraphiQL ou Playground. Ces clients vous permettent de créer et d'envoyer des requêtes GraphQL à votre API. Voici un exemple de requête GraphQL pour récupérer un livre par son identifiant :
+Pour tester l'API GraphQL, vous pouvez utiliser un client GraphQL tel que GraphiQL ou Playground. Ces clients vous permettent de créer et d'envoyer des requêtes GraphQL à votre API. 
+
+* **Voici un exemple de requête GraphQL pour récupérer un livre par son identifiant :**
 
 ```graphql
 query {
