@@ -869,7 +869,7 @@ Dans ce chapitre, nous allons voir comment définir des relations entre les enti
 
 Nous devrons définir une relation `ManyToOne` entre les entités `Book` et `Category` (`id` et `name`). Chaque livre peut être associé à une seule catégorie (`nullable: true`).
 
-Nous devrons définir une relation `OneToMany` inverse dans l'entité `Category`. Chaque catégorie peut avoir plusieurs livres.
+Nous devrons définir une relation `OneToMany` inverse dans l'entité `Category`. Chaque catégorie a un nom et peut avoir plusieurs livres.
 
 ```sh
 symfony console make:entity Category
@@ -949,7 +949,7 @@ class Category
 
 Dans cet exemple, nous avons défini deux groupes de sérialisation et de désérialisation différents : `category` et `category:write`. Le groupe `category:write` inclut la propriété `name` tandis que le groupe `category` inclut toutes les propriétés.
 
-Lors de la récupération d'une categorie à l'aide de l'API, la réponse JSON inclura uniquement les propriétés définies dans le groupe de sérialisation correspondant :
+Lors de la récupération d'une catégorie à l'aide de l'API, la réponse JSON inclura uniquement les propriétés définies dans le groupe de sérialisation correspondant :
 
 ```json
 {
