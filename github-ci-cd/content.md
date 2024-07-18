@@ -559,17 +559,26 @@ class: middle
 
 class: middle
 
-### Construire une image docker de l'application depuis le workflow Github
+.center[
+### **Construire une image docker de l'application depuis le workflow Github**
+]
 
-Dans cette partie, nous allons explorer la possibilité de construire une image Docker de votre application à partir de votre workflow GitHub. Cela vous permettra de générer facilement des images prêtes à être déployées sur différentes plates-formes ou environnements.
+Dans cette partie, nous allons explorer la possibilité de construire une image Docker de votre application à partir de votre workflow GitHub.
+Cela vous permettra de générer facilement des images prêtes à être déployées sur différentes plates-formes ou environnements.
 
 Voici les étapes pour construire une image Docker de votre application depuis votre workflow GitHub :
 
-.pull-left[
+- Assurez-vous d'avoir un fichier `Dockerfile` dans votre dépôt GitHub. Ce fichier contient les instructions nécessaires pour construire votre image Docker.
 
-* Assurez-vous d'avoir un fichier `Dockerfile` dans votre dépôt GitHub. Ce fichier contient les instructions nécessaires pour construire votre image Docker.
-* Dans votre fichier de workflow GitHub, ajoutez une étape qui utilise l'action `docker/login-action@v2`. Cette action permet le login vers [Docker Hub](https://hub.docker.com).
-* Et ajoutez une étape qui utilise l'action `docker/build-push-action`. Cette action simplifie la construction et le push de l'image Docker.
+- Dans votre fichier de workflow GitHub, ajoutez une étape qui utilise l'action `docker/login-action@v2`. Cette action permet le login vers [Docker Hub](https://hub.docker.com).
+
+- Et ajoutez une étape qui utilise l'action `docker/build-push-action`. Cette action simplifie la construction et le push de l'image Docker.
+
+- Définissez les variables secrets `DOCKERHUB_USERNAME` et `DOCKERHUB_TOKEN` dans Github.
+
+---
+
+class: middle
 
 Voici un exemple de code pour cette étape :
 
@@ -584,12 +593,8 @@ Voici un exemple de code pour cette étape :
   with:
     context: .
     push: true
-    tags: your-dockerhub-username/your-image-name:latest
+    tags: <your-dockerhub-username>/<your-image-name>:latest
 ```
-
-]
-
-.pull-right[
 
 Dans cet exemple, l'action `docker/build-push-action` est utilisée pour construire et pousser l'image Docker. Assurez-vous de remplacer `your-dockerhub-username` et `your-image-name` par vos propres informations.
 
@@ -597,11 +602,13 @@ Dans cet exemple, l'action `docker/build-push-action` est utilisée pour constru
 * Vous pouvez également spécifier des balises `tags` supplémentaires pour votre image Docker, par exemple pour marquer des versions spécifiques de votre application.
 * Assurez-vous que vous avez configuré les informations d'identification Docker dans vos secrets GitHub. Vous devrez ajouter les secrets `DOCKER_USERNAME` et `DOCKER_PASSWORD` avec vos informations d'identification [DockerHub](https://hub.docker.com).
 
-]
-
 ---
 
 class: middle
+
+.center[
+### **Tester l'image Docker construite depuis le workflow Github**
+]
 
 .pull-left[
 Une fois que vous avez ajouté cette étape à votre fichier de workflow, le processus de construction de l'image Docker sera déclenché à chaque fois que vous effectuez un push sur votre dépôt. L'image Docker sera construite et poussée vers le registre DockerHub.
@@ -629,38 +636,93 @@ docker run -d -p "8080:80" -e APP_ENV=dev --name=your-image-name your-dockerhub-
 ---
 
 class: middle
+.center[
+### **Configurer notre serveur VPS pour le déploiement de l'application**
+]
 
+Nous allons installer sur le VPS les outils nécessaires pour le déploiement de notre application. Notre VPS est sous Debian 12.
 
-### Déploiement automatique de l'application sur une plateforme (Heroku, AWS, etc.)
+**Pour cela, nous allons dans un premier temps installer Docker (https://docs.docker.com/engine/install/debian/)**
 
-Dans cette partie, nous allons voir comment déployer automatiquement votre application sur la plateforme Heroku à partir de votre workflow GitHub en utilisant l'action "Deploy to Heroku" disponible sur le Marketplace GitHub.
+- Mettre à jour le système et ajouter les dépendances nécessaires :
+  ```sh
+  sudo apt-get update
+  sudo apt-get install ca-certificates curl
+  sudo install -m 0755 -d /etc/apt/keyrings
+  sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+  sudo chmod a+r /etc/apt/keyrings/docker.asc
+  
+  # Add the repository to Apt sources:
+  echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  sudo apt-get update
+  ```
 
-.pull-left[
-Voici les étapes pour configurer le déploiement automatique de votre application sur Heroku :
+- Installer le packet docker engine
+  ```shell
+  sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  ```
 
-Dans votre fichier de workflow, ajoutez une étape qui utilise l'action "[Deploy to Heroku](https://github.com/marketplace/actions/deploy-to-heroku)". Cette action simplifie le processus de déploiement de votre application sur Heroku.
+- Donner les droits à l'utilisateur courant pour lancer les commandes docker (https://docs.docker.com/engine/install/linux-postinstall/)
+  ```shell
+    sudo usermod -aG docker $USER
+  ```
 
-Voici un exemple de code pour cette étape :
+- Tester l'installation
+  ```shell
+  docker --version
+  docker compose --version
+  
+  ```
 
-```yaml
-- name: Deploy to cloud platform
-  if: success()
-  uses: akhileshns/heroku-deploy@v3.12.13 # This is the action
-  with:
-    heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-    heroku_app_name: your-heroku-app-name #Must be unique in Heroku
-    heroku_email: your-email
+---
+
+class: middle
+
+**Générer les clés SSH pour la connexion au serveur VPS**
+
+Pour se connecter à notre serveur VPS, nous allons générer une paire de clés SSH. Pour cela, nous allons utiliser la commande `ssh-keygen` sur notre machine locale.
+
+```shell
+ssh-keygen -t rsa -b 4096 -C "
 ```
 
-.info[
-  Notez que pour déployer sur une plateforme cloud, vous devrez disposer d'un compte et d'une clé d'API valide pour cette plateforme. Dans l'exemple ci-dessus, nous avons utilisé Heroku comme plateforme cloud.
-]
+Cette commande générera une paire de clés SSH publique et privée dans le répertoire `~/.ssh`. Vous pouvez spécifier un nom de fichier pour les clés si vous le souhaitez.
+
+**Copier la clé publique sur le serveur VPS**
+
+Pour vous connecter à votre serveur VPS à l'aide de la clé SSH, vous devez copier la clé publique sur le serveur. Vous pouvez le faire en utilisant la commande `ssh-copy-id` :
+
+```shell
+ssh-copy-id user@server_ip
+```
+
+---
+
+class: middle
+**Installation de Caddy server pour le reverse proxy**
+
+Pour déployer notre application sur le serveur VPS, nous allons utiliser Caddy Server comme reverse proxy. Caddy Server est un serveur web open source qui prend en charge le HTTPS automatique et la configuration facile du reverse proxy.
+
+```shell
+sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https curl
+curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
+sudo apt update
+sudo apt install caddy
+```
+
+___
+
+class: middle
+.center[
+### **Déploiement automatique de l'application sur un VPS**
 ]
 
-.pull-right[
-Une fois que vous avez ajouté cette étape à votre fichier de workflow, le déploiement automatique de votre application sur Heroku sera déclenché à chaque fois que vous effectuez un push sur votre dépôt. L'action "[Deploy to Heroku](https://github.com/marketplace/actions/deploy-to-heroku)" s'occupera du déploiement de votre application.
+Dans cette partie, nous allons explorer la possibilité de déployer automatiquement votre application sur un serveur VPS à partir de votre workflow GitHub.
+Cela vous permettra de déployer rapidement et facilement votre application sur un serveur distant.
 
-Assurez-vous de personnaliser ces étapes en fonction de votre configuration Heroku et de votre application spécifique. Vous pouvez également ajouter d'autres étapes à votre workflow pour exécuter des tests supplémentaires ou effectuer d'autres actions avant ou après le déploiement.
 
-Le déploiement automatique de votre application sur Heroku à partir de votre workflow GitHub vous permet de simplifier et d'automatiser le processus de déploiement, facilitant ainsi la livraison continue de votre application aux utilisateurs finaux.
-]
+

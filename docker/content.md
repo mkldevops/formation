@@ -979,45 +979,6 @@ Le fichier `Dockerfile` peut contenir plusieurs commandes, chacune d'entre elle 
 class: middle
 .center[
 
-### **Définir une image Docker personnalisée**
-
-]
-
-Nous allons voir un exemple de fichier `Dockerfile` qui crée une image Docker pour une application `PHP` :
-
-- ⏩ **Créez un fichier `Dockerfile` dans le répertoire de votre application PHP et ajoutez les instructions suivantes :**
-
-  ```sh
-  # Definition d'un argument pour la version de PHP
-  ARG PHP_VERSION=8.2
-  ARG DEVELOPED_BY=username
-
-  # Definition d'une variable d'environnement pour le port
-  ENV PORT=8080
-
-  # Utiliser une image de base officielle de PHP avec Alpine Linux
-  FROM php:${PHP_VERSION}-alpine
-
-  # Définir le répertoire de travail dans le conteneur
-  WORKDIR /app
-
-  # Copier tous les fichiers de l'application dans le répertoire de travail
-  COPY . .
-
-  # Exposer le port 8080 pour accéder à l'application
-  EXPOSE ${PORT}
-
-  # Définir la commande par défaut pour lancer l'application
-  CMD ["php", "-S", "0.0.0.0:${PORT}", "-t", "/app]
-  ```
-
-Ce fichier `Dockerfile` utilise la dernière image de base [`php:8.2-alpine` (8.2)](https://hub.docker.com/layers/library/php/8.2-alpine/images/sha256-55fd6cd3f17e48015df5ff8f2843a9a48fba6c363a90b7f431dc01e6c57b1bc5?context=explore) pour créer une image qui copie les fichiers de l'application PHP dans le conteneur, expose le port `8080` et définit la commande par défaut pour lancer le serveur web intégré de PHP.
-
----
-
-class: middle
-.center[
-
 ### **Options disponibles dans le Dockerfile**
 
 ]
@@ -1042,6 +1003,49 @@ Ces options permettent de créer une image Docker personnalisée selon les besoi
 class: middle
 .center[
 
+### **Définir une image Docker personnalisée**
+
+]
+
+Nous allons voir un exemple de fichier `Dockerfile` qui crée une image Docker pour une application `PHP` :
+
+- ⏩ **Créez un fichier `Dockerfile` dans le répertoire de votre application PHP et ajoutez les instructions suivantes :**
+
+  ```sh
+  # Definition d'un argument pour la version de PHP
+  ARG PHP_VERSION=8.2
+  
+  # Utiliser une image de base officielle de PHP avec Alpine Linux
+  FROM php:${PHP_VERSION}-alpine
+  
+  ARG DEVELOPED_BY=username
+  
+  # Definition d'une variable d'environnement pour le port
+  ENV PORT=8080
+  ENV DEVELOPED_BY=${DEVELOPED_BY:-username}
+  
+  RUN echo "PORT : ${PORT}"
+  
+  # Définir le répertoire de travail dans le conteneur
+  WORKDIR /app
+  
+  # Copier tous les fichiers de l'application dans le répertoire de travail
+  COPY . .
+  
+  # Exposer le port 8080 pour accéder à l'application
+  EXPOSE ${PORT}
+  
+  # Définir la commande par défaut pour lancer l'application
+  CMD php -S 0.0.0.0:${PORT} -t /app
+  ```
+
+Ce fichier `Dockerfile` utilise la dernière image de base [`php:8.2-alpine` (8.2)](https://hub.docker.com/layers/library/php/8.2-alpine/images/sha256-55fd6cd3f17e48015df5ff8f2843a9a48fba6c363a90b7f431dc01e6c57b1bc5?context=explore) pour créer une image qui copie les fichiers de l'application PHP dans le conteneur, expose le port `8080` et définit la commande par défaut pour lancer le serveur web intégré de PHP.
+
+---
+
+class: middle
+.center[
+
 ### **Mettons à jour notre code PHP**
 
 ]
@@ -1052,22 +1056,22 @@ Pour que notre application PHP fonctionne correctement, nous devons créer un fi
   ```php
     <html>
       <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Application PHP personnalisée</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Application PHP personnalisée</title>
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
       </head>
       <body>
-        <header class="container">
-            <h1>Bienvenue sur notre application PHP personnalisée</h1>
-        </header>
-        <main class="container">
+      <header class="container">
+          <h1>Bienvenue sur notre application PHP personnalisée</h1>
+      </header>
+      <main class="container">
           <h2><?php echo "Version de PHP : " . phpversion(); ?></h2>
           <p>Cette application a été créée à partir d'une image Docker personnalisée.</p>
-        </main>
-        <footer class="container">
-          <p>Développé par <?php getenv('DEVELOPED_BY') ?></p>
-        </footer>
+      </main>
+      <footer class="container">
+          <p>Développé par <?= getenv(name: 'DEVELOPED_BY') ?></p>
+      </footer>
       </body>
     </html>
   ```
@@ -1083,14 +1087,14 @@ class: middle
 
 - ⏩ **Créer l'image Docker à partir du fichier `Dockerfile`, utilisez la commande suivante :**
   ```sh
-  docker build -t mon-image-php-8.3 --arg PHP_VERSION=8.3 .
+  docker build -t mon-image-php-8.3 --build-arg DEVELOPED_BY=my-name --build-arg PHP_VERSION=8.3 .
   ```
 
 La commande `docker build` crée une nouvelle image Docker à partir du fichier `Dockerfile`. L'option `-t` permet de donner un nom à l'image. Dans ce cas, le nom de l'image est `mon-image`.
 
 - ⏩ **Construisons une autre image avec la version par default qui est la 8.2 :**
   ```sh
-  docker build -t mon-image-php-8.2 .
+  docker build -t mon-image-php-8.2 --build-arg DEVELOPED_BY=my-name .
   ```
 
 En utilisant la commande `docker images`, vous y verrez nos images `mon-image-php-8.2 et mon-image-php-8.3` créées.
