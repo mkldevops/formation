@@ -371,15 +371,17 @@ Pour trouver des actions communautaires, accédez au [Marketplace GitHub Actions
 
 Une fois que vous avez trouvé une action qui répond à vos besoins, cliquez sur son nom pour accéder à sa page de description. Vous pouvez y trouver des informations sur la façon d'utiliser l'action, ainsi que des exemples de workflows qui l'utilisent.
 
-### Intégrez l'action dans votre workflow
+---
+class: middle
+.center[
+### **Intégrez l'action dans votre workflow**
+]
 
 Pour intégrer une action communautaire dans votre workflow, ajoutez simplement une étape à votre workflow qui utilise l'action. Vous pouvez copier et coller l'exemple de code fourni sur la page de description de l'action, puis le modifier en fonction de vos besoins.
 
 Nous identfions l'action "[Checkout](https://github.com/marketplace/actions/checkout)" commme exemple à intégrer, pour récupérer le code source de votre dépôt GitHub dans l'espace de travail du workflow.
 
----
 
-class: middle
 
 Voici un workflow qui utilise l'action "Checkout" :
 
@@ -401,15 +403,16 @@ Dans cet exemple,
 
 * La première étape utilise l'action "Checkout" pour récupérer le code source de votre dépôt GitHub.
 
-* La deuxième étape exécute simplement une commande "ls -al" pour afficher la liste des fichiers.
+* La deuxième étape exécute simplement une commande `ls -al` pour afficher la liste des fichiers.
 
 ---
 
 class: middle
+.center[
+### 🚧 **.red[Exercice de travaux pratiques]**
+]
 
-### 🚧 .red[Exercice de travaux pratiques]
-
-Créer un workflow pour cloner, installer les extensions PHP nécessaires et lancer un "composer install"
+Créer un workflow pour cloner, installer les extensions PHP nécessaires et lancer un `composer install`
 
 Dans cet exercice, vous devrez créer un workflow GitHub Actions qui clonera un dépôt GitHub, installera les extensions PHP nécessaires et exécutera la commande "composer install".
 
@@ -422,10 +425,10 @@ Voici les instructions pour l'exercice :
 * Ajoutez une étape qui utilise l'action **"Checkout"** pour cloner le dépôt GitHub dans votre workflow. Vous pouvez utiliser l'exemple de code fourni dans la documentation.
 
 * Ajoutez une étape qui utilise l'action "[shivammathur/setup-php](https://github.com/marketplace/actions/setup-php-action)" pour installer les extensions PHP nécessaires. 
-  * Cette action télécharge et installe les versions spécifiées de PHP (8.2) et des extensions PHP, et configure l'environnement pour qu'il utilise ces versions. 
+  * Cette action télécharge et installe les versions spécifiées de PHP (8.3) et des extensions PHP, et configure l'environnement pour qu'il utilise ces versions. 
   * Vous pouvez spécifier les versions et les extensions PHP dont vous avez besoin dans le fichier de configuration de l'action.
 
-* Ajoutez une étape qui exécute la commande "composer install" pour installer les dépendances PHP de votre projet.
+* Ajoutez une étape qui exécute la commande `composer install` pour installer les dépendances PHP de votre projet.
 
 * Vérifiez que votre workflow ne contient pas d'erreurs en le testant avec un commit ou une pull request.
 
@@ -438,40 +441,45 @@ class: middle, inverse, center
 ---
 
 class: middle
+.center[
+### **Utilisation des variables d'environnement**
+]
 
-GitHub Actions offre la possibilité d'utiliser des variables d'environnement et des secrets dans vos workflows pour stocker des informations sensibles ou des valeurs qui peuvent changer en fonction de l'environnement. Dans cette section, nous allons aborder l'utilisation des variables d'environnement, la création et la gestion des secrets, ainsi que l'utilisation des secrets dans les workflows.
+GitHub Actions offre la possibilité d'utiliser des variables d'environnement et des secrets dans vos workflows pour stocker des informations sensibles ou des valeurs qui peuvent changer en fonction de l'environnement. 
 
-### Utilisation des variables d'environnement
+Dans cette section, nous allons aborder l'utilisation des variables d'environnement, la création et la gestion des secrets, ainsi que l'utilisation des secrets dans les workflows.
 
-Les variables d'environnement sont des valeurs qui peuvent être stockées dans votre workflow et utilisées par les actions que vous exécutez. Vous pouvez définir des variables d'environnement dans votre fichier de workflow en utilisant la syntaxe suivante :
+Les variables d'environnement sont des valeurs qui peuvent être stockées dans votre workflow et utilisées par les actions que vous exécutez. 
 
-```yaml
-env:
-  VARIABLE_NAME: value
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: display variable
-        run: echo ${{ env.VARIABLE_NAME }}
-```
+* **Vous pouvez définir des variables d'environnement dans votre fichier de workflow en utilisant la syntaxe suivante :**
+  ```yaml
+  env:
+    VARIABLE_NAME: value
+  
+  jobs:
+    build:
+      runs-on: ubuntu-latest
+      steps:
+        - name: display variable
+          run: echo ${{ env.VARIABLE_NAME }}
+  ```
 
 Vous pouvez ensuite utiliser la variable dans vos actions en utilisant la syntaxe `${{ env.VARIABLE_NAME }}`.
 
 ---
 
 class: middle
-
-### Création et gestion des secrets
+.center[
+### **Création et gestion des variables secrets**
+]
 
 **Les secrets sont des informations sensibles** telles que des clés d'API, des mots de passe ou des jetons d'accès. Les secrets sont stockés de manière sécurisée dans GitHub et ne peuvent être utilisés que dans des workflows autorisés.
 
 Pour créer un secret, allez dans les paramètres de votre dépôt et sélectionnez **"Secrets"**. Cliquez sur **"New secret"** pour ajouter un nouveau secret. Vous pouvez le nommer `SECRET_NAME` et donner une valeur à votre secret. Une fois créé, vous pouvez utiliser votre secret dans vos workflows.
 
-### Utilisation des secrets dans les workflows
+Pour utiliser un secret dans votre workflow, vous devez d'abord le référencer dans votre fichier de workflow. 
 
-Pour utiliser un secret dans votre workflow, vous devez d'abord le référencer dans votre fichier de workflow. Vous pouvez le faire en utilisant la syntaxe suivante :
+- **Vous pouvez le faire en utilisant la syntaxe suivante :**
 
 ```yaml
 steps:
@@ -511,15 +519,15 @@ Notre exemple de projet est une application web développée en Symfony qui util
 
 * Tester l'application à l'aide de PHPUnit
 
-* Déployer automatiquement l'application sur une plateforme cloud (Heroku, AWS, etc.) après les tests réussis
+* Déployer automatiquement l'application sur un VPS après les tests réussis
 
 ---
 
 class: middle
+.center[
+### **Mise en place d'un workflow de CI/CD pour tester l'application**
+]
 
-### Mise en place d'un workflow de CI/CD pour tester l'application
-
-.pull-left[
   Voici un exemple de fichier de workflow YAML qui pourrait être utilisé pour notre exemple de projet :
 
   ```yaml
@@ -543,15 +551,25 @@ class: middle
         - name: Run tests
           run: ./vendor/bin/phpunit
   ```
-]
-.pull-right[
-  Dans ce fichier de workflow, nous avons défini un travail (**"job"**) nommé **"build"** qui sera déclenché lorsque des modifications sont poussées sur la branche **"main"**.
+
+  Dans ce fichier de workflow, nous avons défini un travail (`job`) nommé `build` qui sera déclenché lorsque des modifications sont poussées sur la branche **"main"**.
   
   Nous avons ensuite défini les étapes du travail qui cloneront le code source, installeront les dépendances PHP, exécuteront les tests avec PHPUnit.
 
-  .center[
-    <image src="img/github-workflow-1.png" width="500" alt="github workflow result" />
-  ]
+
+---
+class: middle
+.center[
+### **Automatisations des tests de l'application**
+]
+
+Avec le workflow de CI/CD que nous avons créé, chaque fois que vous poussez des modifications sur la branche principale de votre dépôt GitHub, le workflow sera déclenché.
+
+- **Pushez nos modifications sur la branche principale de notre dépôt GitHub**
+- **Vérifiez que le workflow a été déclenché et exécuté avec succès en consultant l'onglet "Actions" de votre dépôt GitHub.**
+
+.center[
+  <image src="img/github-workflow-1.png" width="500" alt="github workflow result" />
 ]
 
 
@@ -570,17 +588,9 @@ Voici les étapes pour construire une image Docker de votre application depuis v
 
 - Assurez-vous d'avoir un fichier `Dockerfile` dans votre dépôt GitHub. Ce fichier contient les instructions nécessaires pour construire votre image Docker.
 
-- Dans votre fichier de workflow GitHub, ajoutez une étape qui utilise l'action `docker/login-action@v2`. Cette action permet le login vers [Docker Hub](https://hub.docker.com).
-
-- Et ajoutez une étape qui utilise l'action `docker/build-push-action`. Cette action simplifie la construction et le push de l'image Docker.
-
 - Définissez les variables secrets `DOCKERHUB_USERNAME` et `DOCKERHUB_TOKEN` dans Github.
 
----
-
-class: middle
-
-Voici un exemple de code pour cette étape :
+- Dans votre fichier de workflow GitHub, ajoutez une étape qui utilise l'action `docker/login-action@v2`. Cette action permet le login vers [Docker Hub](https://hub.docker.com).
 
 ```yaml
 - name: Login to Docker Hub
@@ -588,9 +598,21 @@ Voici un exemple de code pour cette étape :
   with:
     username: ${{ secrets.DOCKERHUB_USERNAME }}
     password: ${{ secrets.DOCKERHUB_TOKEN }}
+```
+
+---
+
+class: middle
+
+
+
+- Et ajoutez une étape qui utilise l'action `docker/build-push-action`. Cette action simplifie la construction et le push de l'image Docker.
+
+```yaml
 - name: Build and push Docker image
   uses: docker/build-push-action@v4
   with:
+    platforms: linux/amd64, linux/arm64
     context: .
     push: true
     tags: <your-dockerhub-username>/<your-image-name>:latest
@@ -600,14 +622,13 @@ Dans cet exemple, l'action `docker/build-push-action` est utilisée pour constru
 
 * Cette étape utilise le contexte actuel `.` comme répertoire de construction pour l'image Docker. Assurez-vous que votre `Dockerfile` et les fichiers nécessaires sont présents dans ce répertoire.
 * Vous pouvez également spécifier des balises `tags` supplémentaires pour votre image Docker, par exemple pour marquer des versions spécifiques de votre application.
-* Assurez-vous que vous avez configuré les informations d'identification Docker dans vos secrets GitHub. Vous devrez ajouter les secrets `DOCKER_USERNAME` et `DOCKER_PASSWORD` avec vos informations d'identification [DockerHub](https://hub.docker.com).
 
 ---
 
 class: middle
 
 .center[
-### **Tester l'image Docker construite depuis le workflow Github**
+### **Build and push Docker image**
 ]
 
 .pull-left[
@@ -617,21 +638,34 @@ N'oubliez pas de personnaliser ces étapes en fonction de votre configuration Do
 
 La construction d'une image Docker depuis votre workflow GitHub facilite le processus de déploiement de votre application dans des environnements conteneurisés et peut améliorer l'efficacité de votre pipeline de développement.
 
-Voici un example de mise en place de notre image :
-
-```sh
-docker pull your-dockerhub-username/your-image-name:latest
-docker rm -f your-image-name
-docker run -d -p "8080:80" -e APP_ENV=dev --name=your-image-name your-dockerhub-username/your-image-name:latest
-```
-
 
 ]
 .pull-right[
+  <br>
   .center[
     <image src="img/github-workflow-2.png" width="500" alt="github workflow result" />
   ]
 ]
+
+---
+
+class: middle
+
+.center[
+### **Tester l'image Docker construite depuis le workflow Github**
+]
+
+Vérifiez que l'image Docker a été construite et poussée avec succès en vous rendant sur votre compte DockerHub. Vous devriez voir l'image Docker avec les balises que vous avez spécifiées dans votre fichier de workflow.
+
+Vous pouvez également tester l'image Docker localement en utilisant la commande `docker run` :
+
+```shell
+# Supprimer l'image Docker si elle existe déjà
+docker image rm  <your-dockerhub-username>/<your-image-name>:latest
+
+# Exécuter l'image Docker
+docker run -p 8080:80 <your-dockerhub-username>/<your-image-name>:latest
+```
 
 ---
 
@@ -661,20 +695,16 @@ Nous allons installer sur le VPS les outils nécessaires pour le déploiement de
   ```
 
 - Installer le packet docker engine
-  ```shell
+  ```sh
   sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-  ```
-
-- Donner les droits à l'utilisateur courant pour lancer les commandes docker (https://docs.docker.com/engine/install/linux-postinstall/)
-  ```shell
-    sudo usermod -aG docker $USER
+  
+  # Donner les droits à l'utilisateur courant pour lancer les commandes docker (https://docs.docker.com/engine/install/linux-postinstall/)
+  sudo usermod -aG docker $USER
   ```
 
 - Tester l'installation
-  ```shell
-  docker --version
-  docker compose --version
-  
+  ```sh
+  docker --version && docker compose --version
   ```
 
 ---
@@ -683,11 +713,10 @@ class: middle
 
 **Générer les clés SSH pour la connexion au serveur VPS**
 
-Pour se connecter à notre serveur VPS, nous allons générer une paire de clés SSH. Pour cela, nous allons utiliser la commande `ssh-keygen` sur notre machine locale.
-
-```shell
-ssh-keygen -t rsa -b 4096 -C "
-```
+- **Pour se connecter à notre serveur VPS, nous allons générer une paire de clés SSH. Pour cela, nous allons utiliser la commande `ssh-keygen` sur notre machine locale.**
+  ```shell
+  ssh-keygen
+  ```
 
 Cette commande générera une paire de clés SSH publique et privée dans le répertoire `~/.ssh`. Vous pouvez spécifier un nom de fichier pour les clés si vous le souhaitez.
 
@@ -706,15 +735,18 @@ class: middle
 
 Pour déployer notre application sur le serveur VPS, nous allons utiliser Caddy Server comme reverse proxy. Caddy Server est un serveur web open source qui prend en charge le HTTPS automatique et la configuration facile du reverse proxy.
 
-```shell
-sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https curl
-curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
-curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
-sudo apt update
-sudo apt install caddy
-```
+- **Installation de Caddy Server sur Debian 12**
+  ```shell
+  sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https curl
+  curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+  curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
+  sudo apt update
+  sudo apt install caddy
+  ```
 
-___
+Testez l'installation de caddy en vous rendant l'ip de votre serveur sur le port 80.
+
+---
 
 class: middle
 .center[

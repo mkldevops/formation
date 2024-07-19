@@ -1002,15 +1002,66 @@ Ces options permettent de créer une image Docker personnalisée selon les besoi
 
 class: middle
 .center[
+### **Découvrir les images Docker personnalisées**
+]
 
-### **Définir une image Docker personnalisée**
+Pour créer une image Docker personnalisée, vous devez créer un fichier `Dockerfile` dans le répertoire de votre application.
+```dockerfile
+FROM php:8.3-alpine
+
+WORKDIR /app
+
+RUN echo '<h1>Hello World!</div>' index.php
+
+EXPOSE 80
+
+CMD php -S 0.0.0.0:80 -t /app
+```
+
+Ce `Dockerfile` crée une image Docker personnalisée à partir de l'image de base `php:8.3-alpine`. Il définit le répertoire de travail `/app`, copie un fichier `index.php` dans le répertoire de travail, expose le port `80` et définit la commande par défaut pour lancer le serveur web intégré de PHP.
+
+* **Construisons cette image en utilisant la commande `docker build` **
+  ```sh
+  docker build -t mon-image-php-8.3 .
+  ```
+  .info[
+* L'option `-t` permet de donner un nom à l'image. Dans ce cas, le nom de l'image est `mon-image-php-8.3`.
+* Le `.` à la fin de la commande indique que le `Dockerfile` se trouve dans le répertoire actuel.
+]
+
+* **Verifions que l'image a bien été créée en utilisant la commande `docker images`**
+  ```sh
+  docker images
+  ```
+  
+---
+
+class: middle
+.center[
+### **Lancer un conteneur à partir de l'image Docker personnalisée**
+]
+
+Pour lancer un conteneur à partir de l'image Docker personnalisée que nous venons de créer, vous pouvez utiliser la commande `docker run`.
+
+- **Lancer un conteneur à partir de l'image Docker personnalisée :**
+  ```sh
+  docker run -d -p 8080:80 --name mon-conteneur-php-8.3 mon-image-php-8.3
+  ```
+  
+Accédez à l'application PHP en utilisant l'URL `http://localhost:8080` dans votre navigateur. Vous devriez voir le message `Hello World!` affiché dans votre navigateur.
+
+---
+
+class: middle
+.center[
+
+### **Aller plus loin avec les images Docker personnalisées**
 
 ]
 
-Nous allons voir un exemple de fichier `Dockerfile` qui crée une image Docker pour une application `PHP` :
+Vous pouvez personnaliser davantage votre image Docker en utilisant des arguments pour définir des variables d'environnement, des options de configuration ou des paramètres de version.
 
-- ⏩ **Créez un fichier `Dockerfile` dans le répertoire de votre application PHP et ajoutez les instructions suivantes :**
-
+- ⏩ **Mettons à jour le `Dockerfile` pour définir des arguments et des variables d'environnement :**
   ```sh
   # Definition d'un argument pour la version de PHP
   ARG PHP_VERSION=8.2
@@ -1018,10 +1069,12 @@ Nous allons voir un exemple de fichier `Dockerfile` qui crée une image Docker p
   # Utiliser une image de base officielle de PHP avec Alpine Linux
   FROM php:${PHP_VERSION}-alpine
   
+  # Definition d'un argument pour le nom du développeur
   ARG DEVELOPED_BY=username
   
   # Definition d'une variable d'environnement pour le port
-  ENV PORT=8080
+  ENV PORT=80
+  # Definition d'une variable d'environnement pour le nom du développeur en utilisant l'argument DEVELOPED_BY
   ENV DEVELOPED_BY=${DEVELOPED_BY:-username}
   
   RUN echo "PORT : ${PORT}"
@@ -1039,18 +1092,18 @@ Nous allons voir un exemple de fichier `Dockerfile` qui crée une image Docker p
   CMD php -S 0.0.0.0:${PORT} -t /app
   ```
 
-Ce fichier `Dockerfile` utilise la dernière image de base [`php:8.2-alpine` (8.2)](https://hub.docker.com/layers/library/php/8.2-alpine/images/sha256-55fd6cd3f17e48015df5ff8f2843a9a48fba6c363a90b7f431dc01e6c57b1bc5?context=explore) pour créer une image qui copie les fichiers de l'application PHP dans le conteneur, expose le port `8080` et définit la commande par défaut pour lancer le serveur web intégré de PHP.
-
+Construisez une nouvelle image Docker à partir du `Dockerfile` en utilisant la commande `docker build` avec des arguments et des variables d'environnement personnalisés. 
+Puis lancez un conteneur à partir de l'image Docker personnalisée.
 ---
 
 class: middle
 .center[
 
-### **Mettons à jour notre code PHP**
+### **Mettons à jour notre fichier `index.php`**
 
 ]
 
-Pour que notre application PHP fonctionne correctement, nous devons créer un fichier `index.php` dans le répertoire de notre application PHP.
+Pour profiter de nos variables d'environnement, nous allons mettre à jour notre fichier `index.php`.
 
 - ⏩ **Ajoutez le contenu suivant :**
   ```php
@@ -1092,12 +1145,12 @@ class: middle
 
 La commande `docker build` crée une nouvelle image Docker à partir du fichier `Dockerfile`. L'option `-t` permet de donner un nom à l'image. Dans ce cas, le nom de l'image est `mon-image`.
 
-- ⏩ **Construisons une autre image avec la version par default qui est la 8.2 :**
+- ⏩ **Si nous ne passons pas d'argument, la valeur par défaut sera utilisée :**
   ```sh
   docker build -t mon-image-php-8.2 --build-arg DEVELOPED_BY=my-name .
   ```
+  
 
-En utilisant la commande `docker images`, vous y verrez nos images `mon-image-php-8.2 et mon-image-php-8.3` créées.
 
 ---
 
@@ -1113,9 +1166,9 @@ Exploitons nos images construit avec nos besoins dans des conteneurs.
 - ⏩ **Lancer les conteneurs à partir de nos images Docker personnalisée, via la commande suivante :**
 
 ```sh
-docker run -d -p 8080:80 --name mon-conteneur-php8.3 mon-image-php8.3
+docker run -d -p 8080:80 --name mon-conteneur-php-8.3 mon-image-php-8.3
 
-docker run -d -p 8081:80 --name mon-conteneur-php8.2 mon-image-php8.@
+docker run -d -p 8081:80 --name mon-conteneur-php-8.2 mon-image-php-8.2
 ```
 
 Ces commandes créent deux nouveaux conteneurs à partir des images `mon-image-php-8.3` et `mon-image-php-8.2` et les lancent en tant que démons. Vous pouvez accéder à l'application PHP en utilisant l'URL `http://localhost:8080` et `http://localhost:8081` dans votre navigateur.
@@ -1144,7 +1197,7 @@ class: middle
 
 **1.** Installer le client symfony dans notre image Docker personnalisée.
 
-**2.** Lancer `symfony serve -d --port=8080` lors du lancement du conteneur
+**2.** Lancer `symfony serve --port=80` lors du lancement du conteneur
 
 ---
 
