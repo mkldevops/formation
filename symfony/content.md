@@ -17,7 +17,11 @@ class: middle
 
 ]
 
-**La formation Symfony** est destinée aux développeurs qui souhaitent améliorer leurs compétences en matière de développement web. Elle vise à fournir aux participants une compréhension approfondie du framework Symfony, ainsi qu'à leur donner **les connaissances** et **les compétences** nécessaires pour créer des applications web de qualité supérieure.
+**La formation Symfony** est destinée aux développeurs qui souhaitent améliorer leurs compétences en matière de développement web.
+
+Elle vise à fournir aux participants 
+* **Une compréhension approfondie** du framework Symfony
+* Ainsi qu'à leur donner **les connaissances** et **les compétences** nécessaires pour créer des applications web de qualité supérieure.
 
 .center[
 
@@ -25,21 +29,25 @@ class: middle
 
 ]
 
+---
+
+class: middle
+
 Au cours de la formation, vous apprendrez comment utiliser les différents composants de Symfony pour construire des applications web **robustes** et **évolutives**.
 
 Vous découvrirez également comment travailler avec les différents modèles de données, comment gérer les utilisateurs et les autorisations, et comment implémenter des fonctionnalités avancées telles que :
 
 .pull-left[
-
+- Les entités
 - Les formulaires
 - Les validations
 - Les routes
 - Les contrôleurs
-- Les vues
+- Les vues avec Twig
   ]
 
 .pull-right[
-
+- Les messages
 - Les services
 - Les événements
 - Les commandes
@@ -57,7 +65,9 @@ class: middle
 
 ]
 
-En outre, la formation vous permettra de développer **vos capacités à travailler en équipe**, à **communiquer avec d'autres développeurs** et à **gérer les défis du développement web**. Les participants auront également l'opportunité de mettre en pratique leurs compétences en travaillant sur des projets concrets.
+En outre, la formation vous permettra de développer **vos capacités à travailler en équipe**, à **communiquer avec d'autres développeurs** et à **gérer les défis du développement web**.
+
+Les participants auront également l'opportunité de mettre en pratique leurs compétences en travaillant sur des projets concrets.
 
 .center[
 
@@ -68,9 +78,7 @@ En outre, la formation vous permettra de développer **vos capacités à travail
 En somme, la formation Symfony est une occasion unique pour les développeurs de développer leurs compétences en développement web et de se faire remarquer sur le marché du travail.
 
 .center[
-
     <img src="https://images.unsplash.com/photo-1612712191426-54db4d88cbec?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=200&q=80" alt="Découverte de symfony" />
-
 ]
 
 ---
@@ -83,18 +91,21 @@ class: middle
 
 À la fin de cette session, les participants seront capables de :
 
-- Configurer un environnement de développement Symfony complet en utilisant Docker et Gitpod/Codespace.
+- Configurer un environnement de développement Symfony complet.
 - Comprendre et utiliser les versions récentes de PHP et Node.js dans un contexte Symfony.
 - Développer une application web en utilisant Symfony 7, intégrant une base de données PostgreSQL et une interface administrateur avec EasyAdmin et Twig.
-
+]
+.pull-right[
 #### Outils et Technologies Utilisés
 
-- **Gitpod / Codespace (GitHub)** : Fournit un environnement de développement intégré dans le cloud qui facilite la configuration et le partage des environnements de développement.
 - **Docker** : Utilisé pour créer, déployer et gérer des applications dans des conteneurs isolés, assurant la cohérence entre les environnements de développement et de production.
 
 ]
-.pull-right[
 
+
+---
+
+class: middle
 #### Au programme
 
 - Nouveau projet Symfony 7
@@ -109,8 +120,6 @@ class: middle
 #### Exemples Pratiques
 
 - Des exemples de code seront fournis pour chaque module pour illustrer l'utilisation pratique des technologies et outils introduits.
-
-]
 
 ---
 
@@ -127,95 +136,13 @@ class: middle
 
 ]
 
-.pull-left.mt-2[
-
-#### Avantages de l'utilisation d'éditeurs de code en ligne pour la formation Symfony
-
-- Accès depuis n'importe où, à tout moment
-- Interface utilisateur conviviale
-- Fonctionnalités de collaboration en temps réel
-- Intégration transparente avec des services tels que Git
-- Expérience de développement uniforme pour tous les participants
-- Possibilité de se concentrer sur le développement des compétences
-- Accès aux mêmes outils et fonctionnalités pour tous les participants
-- Facilitation de la collaboration en équipe et du partage de connaissances
-  ]
-  .pull-right.center.middle[
-  <img src="img/gitpod-tools.jpg" alt="Gitpod tools" width="450px" />
-  ]
-
-En utilisant des éditeurs de code en ligne pour la formation Symfony, vous bénéficierez d'une expérience plus souple et plus facile, tout en garantissant une expérience de développement uniforme pour tous les participants.
-
-.center[
-<a href="https://gitpod.io" target="_blank">
-<img src="img/gitpod-logo.png" width="300" />
-<br />Go to Gitpod
-</a>
-]
-
----
-
-class: middle
-
-.center[
-
-### Mise en place de Gitpod
-
-]
-<br/>
-.info[
-⚠️ Gitpod offre **50 heures d'utilisation gratuite** chaque mois dans sa version légère de l'éditeur de code en ligne. Vous devrez également associer votre compte LinkedIn pour bénéficier de cette offre.
-]
-
-- ⏩ **Créer un nouveau dépôt git**
-
-Gitpod embarque une image par défaut accessible à partir de https://hub.docker.com/r/gitpod/workspace-full. Toutefois, il est possible de personnaliser votre environnement de développement en configurant, par exemple, les extensions de PHP.
-
-Pour spécifier l'utilisation d'une image Docker à partir d'un fichier **Dockerfile**, il est nécessaire d'ajouter un fichier `.gitpod.yml` à la racine du projet git avec le contenu suivant :
-
-```yml
-image:
-  file: .gitpod.Dockerfile
-```
-
-- ⏩ **Ajouter le fichier `.gitpod` à votre nouveau projet git**
-
----
-
-class: middle
-
-- ⏩ **Ensuite, il faut créer un fichier nommé `.gitpod.Dockerfile` à la racine du projet et y ajouter le contenu suivant :**
-
-```dockerfile
-FROM gitpod/workspace-full:latest
-
-RUN sudo apt update
-RUN sudo apt install -y apt-utils apt-transport-https postgresql postgresql-contrib
-RUN sudo install-packages php-intl php-redis php-amqp php-pgsql
-
-RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | sudo -E bash
-RUN sudo apt install symfony-cli
-```
-
-Ce fichier **Dockerfile** spécifie l'utilisation de l'image de base `gitpod/workspace-full` et installe des paquets supplémentaires nécessaires, tels que `php-intl`, `php-redis` et `php-amqp`. Il installe également `apt-utils` et `apt-transport-https` pour la gestion des paquets, et installe `symfony-cli` en utilisant les scripts d'installation fournis par Symfony. Bien sûr, le contenu de ce fichier peut être modifié en fonction des besoins spécifiques de chaque projet.
-
-Puis, committez et poussez ces deux fichiers sur votre branche principale.
-
-- ⏩ **Rendez-vous sur https://gitpod.io**
-- ⏩ **Si c'est votre première fois, donnez les droits à gitpod d'acceder à votre repo, puis créez un workspace**
-- ⏩ **Sinon rendez-vous sur l'onglet "Project", cliquez sur "New Project".**
-- ⏩ **Choisissez le répertoire git préalablement configuré.**
-
-.info[
-Assurez-vous de suivre ces étapes pour vous préparer à utiliser l'éditeur de code en ligne pour la formation Symfony.
-]
 
 ---
 
 class: middle
 .center[
 
-### **Verification de l'environnement Gitpod**
+### **Verification de l'environnement**
 
 ]
 
@@ -1568,7 +1495,7 @@ Pour débuter avec EasyAdmin
 Avec les réponses par défaut, le maker crée le contrôleur `src/Controller/Admin/DashboardController.php`
 
 .info[
-  🗒 Par convention, les contrôleurs d'administration sont stockés dans leur propre espace de nom `App\Controller\Admin`.
+🗒 Par convention, les contrôleurs d'administration sont stockés dans leur propre espace de nom `App\Controller\Admin`.
 ]
 
 ---
@@ -1755,8 +1682,8 @@ Vous pouvez maintenant **ajouter/modifier/supprimer** des conférences directeme
 - ⏩ **Jouez avec et ajoutez au moins une conférence.**
 
   .info[
-    Notez qu'il ne sera pas possible d'ajouter de commentaires pour l'instant. Car certains champs sont obligatoires et ne sont pas affichés dans le formulaire.
-    Nous allons y remédier dans la prochaine étape.
+  Notez qu'il ne sera pas possible d'ajouter de commentaires pour l'instant. Car certains champs sont obligatoires et ne sont pas affichés dans le formulaire.
+  Nous allons y remédier dans la prochaine étape.
   ]
 
 ---
@@ -1764,7 +1691,7 @@ Vous pouvez maintenant **ajouter/modifier/supprimer** des conférences directeme
 class: middle
 .center[
 
-  ### **Personnaliser EasyAdmin**
+### **Personnaliser EasyAdmin**
 
 ]
 
@@ -1847,11 +1774,11 @@ class: middle
 
 .pull-left[
 
-  Pour personnaliser notre CRUD `src/Controller/Admin/CommentCrudController.php`:
+Pour personnaliser notre CRUD `src/Controller/Admin/CommentCrudController.php`:
 
-  - ⏩ **lister les champs de manière explicite dans la méthode `configureFields()` nous permet de les ordonner comme nous le souhaitons.**
+- ⏩ **lister les champs de manière explicite dans la méthode `configureFields()` nous permet de les ordonner comme nous le souhaitons.**
 
-  Certains champs bénéficient d'une configuration supplémentaire, comme masquer le champ texte sur la page d'index.
+Certains champs bénéficient d'une configuration supplémentaire, comme masquer le champ texte sur la page d'index.
 ]
 
 ---
@@ -1859,31 +1786,31 @@ class: middle
 class: middle
 .center[
 
-  ### **Tester l'interface d'administration**
+### **Tester l'interface d'administration**
 
 ]
 .pull-right[
-  .center[
-    <img src="img/easy-admin-filter.png" alt="Easy admin filter" width="480px" />
-  ]
+.center[
+<img src="img/easy-admin-filter.png" alt="Easy admin filter" width="480px" />
+]
 ]
 
 .pull-left[
-  Ces personnalisations ne sont qu'une petite introduction aux possibilités offertes par EasyAdmin.
-  
-  - ⏩ **Jouez avec l'interface d'administration, filtrez les commentaires par conférence, ou recherchez des commentaires par email par exemple.**
-  
-  Nous avons maintenant une interface d'administration fonctionnelle pour gérer les conférences et les commentaires.
-  
-  .red.center[🚨 Le seul problème, c'est que n'importe qui peut accéder à cette interface. ]
-  .center[
-    👮 Ne vous inquiétez pas, nous la sécuriserons dans une prochaine étape.
-  ]
+Ces personnalisations ne sont qu'une petite introduction aux possibilités offertes par EasyAdmin.
+
+- ⏩ **Jouez avec l'interface d'administration, filtrez les commentaires par conférence, ou recherchez des commentaires par email par exemple.**
+
+Nous avons maintenant une interface d'administration fonctionnelle pour gérer les conférences et les commentaires.
+
+.red.center[🚨 Le seul problème, c'est que n'importe qui peut accéder à cette interface. ]
+.center[
+👮 Ne vous inquiétez pas, nous la sécuriserons dans une prochaine étape.
+]
 ]
 
 .clearfix[
 
-  - ⏩ **Commitez notre travail `git add . && git commit -m "Easy admin"`**
+- ⏩ **Commitez notre travail `git add . && git commit -m "Easy admin"`**
 
 ]
 
@@ -1892,7 +1819,7 @@ class: middle
 class: middle
 .center[
 
-  ### **.red[Travaux pratique]**
+### **.red[Travaux pratique]**
 
 ]
 
@@ -1915,7 +1842,7 @@ class: center, middle, inverse
 # 6. Interface web TWIG
 
 .center[
-  <img src="img/twig-logo.png" width="500" alt="Twig" />
+<img src="img/twig-logo.png" width="500" alt="Twig" />
 ]
 
 ---
@@ -1923,7 +1850,7 @@ class: center, middle, inverse
 class: middle
 .center[
 
-  ### **🎋 Utiliser Twig pour les templates**
+### **🎋 Utiliser Twig pour les templates**
 
 ]
 
@@ -1958,7 +1885,7 @@ Un modèle peut définir des `blocks`. Un `block` est un emplacement où les _te
 class: middle
 .center[
 
-  ### **Notre premier template Twig**
+### **Notre premier template Twig**
 
 ]
 
@@ -2024,8 +1951,9 @@ Il se passe beaucoup de choses ici.
 
 class: middle
 .center[
-  <img src="https://em-content.zobj.net/source/telegram/358/thinking-face_1f914.webp" width="80" alt="Twig" />
+<img src="https://em-content.zobj.net/source/telegram/358/thinking-face_1f914.webp" width="80" alt="Twig" />
 ]
+
 ```php
 public function index(Environment $twig, ...): Response
 ```
@@ -2038,7 +1966,7 @@ Pour pouvoir générer le contenu du template, nous avons besoin de l'objet `Env
 public function index(..., ConferenceRepository $conferenceRepository): Response
 ```
 
-Nous avons également besoin du *repository* des conférences pour récupérer toutes les conférences depuis la base de données.
+Nous avons également besoin du _repository_ des conférences pour récupérer toutes les conférences depuis la base de données.
 
 ```php
 return new Response($twig->render('conference/index.html.twig', [
@@ -2058,12 +1986,14 @@ Un contrôleur est une classe PHP standard. Nous n'avons même pas besoin d'éte
 
 class: middle
 .center[
+
 ### **Créer la page d'une conférence**
+
 ]
 
 Chaque conférence devrait avoir une page dédiée à l'affichage de ses commentaires. L'ajout d'une nouvelle page consiste à ajouter un contrôleur, à définir une route et à créer le template correspondant.
 
-* ⏩ **Ajoutez une méthode `show()` dans le fichier `src/Controller/ConferenceController.php`**
+- ⏩ **Ajoutez une méthode `show()` dans le fichier `src/Controller/ConferenceController.php`**
 
   ```diff
   +use App\Entity\Conference;
@@ -2085,19 +2015,22 @@ Chaque conférence devrait avoir une page dédiée à l'affichage de ses comment
   ```
 
 Cette méthode a un comportement particulier que nous n'avons pas encore vu. **Nous demandons qu'une instance** de `Conference` soit injectée dans la méthode. Mais il y en a peut-être beaucoup dans la base de données.
-> <span style="font-size: 3rem">🦸</span> Symfony est capable de déterminer celle que vous voulez en se basant sur l'`{id}` passé dans le chemin de la requête (`id` étant la clé primaire de la table `conference` dans la base de données).
 
+> <span style="font-size: 3rem">🦸</span> Symfony est capable de déterminer celle que vous voulez en se basant sur l'`{id}` passé dans le chemin de la requête (`id` étant la clé primaire de la table `conference` dans la base de données).
 
 ---
 
 class: middle
 .center[
+
 ### **Template de la page d'une conférence**
+
 ]
 
 La récupération des commentaires associés à la conférence peut se faire via la méthode `findBy()`, qui prend un critère comme premier argument.
 
-* ⏩ **La dernière étape consiste à créer le fichier `templates/conference/show.html.twig`**
+- ⏩ **La dernière étape consiste à créer le fichier `templates/conference/show.html.twig`**
+
   ```twig
   {% extends 'base.html.twig' %}
 
@@ -2123,12 +2056,13 @@ La récupération des commentaires associés à la conférence peut se faire via
   {% endblock %}
   ```
 
-Dans ce template, nous utilisons le symbole `|` pour appeler les filtres Twig. Un filtre transforme une valeur. `comments|length` retourne le nombre de commentaires et `comment.createdAt|format_datetime('medium', 'short')` affiche la date dans un format lisible par l'internaute.
----
+## Dans ce template, nous utilisons le symbole `|` pour appeler les filtres Twig. Un filtre transforme une valeur. `comments|length` retourne le nombre de commentaires et `comment.createdAt|format_datetime('medium', 'short')` affiche la date dans un format lisible par l'internaute.
 
 class: middle
 .center[
+
 ### **Installer le composant twig intl**
+
 ]
 
 Essayez d'afficher la "première" conférence en naviguant vers `/conference/1`, et constatez l'erreur suivante :
@@ -2137,7 +2071,7 @@ Essayez d'afficher la "première" conférence en naviguant vers `/conference/1`,
 
 L'erreur vient du filtre `format_datetime`, qui ne fait pas partie du noyau de Twig. Le message d'erreur vous donne un indice sur le paquet à installer pour résoudre le problème :
 
-* ⏩ **Installez le paquet `twig/intl-extra` et rechargez la page.**
+- ⏩ **Installez le paquet `twig/intl-extra` et rechargez la page.**
   ```sh
   symfony composer req "twig/intl-extra:^3"
   ```
@@ -2148,11 +2082,15 @@ Maintenant la page fonctionne correctement.
 
 class: middle
 .center[
+
 ### **Lier des pages entre elles**
+
 ]
 
 La toute dernière étape pour terminer notre première version de l'interface est:
-* ⏩ **De rendre les pages de la conférence accessibles depuis la page d'accueil**
+
+- ⏩ **De rendre les pages de la conférence accessibles depuis la page d'accueil**
+
   ```diff
   # templates/conference/index.html.twig
 
@@ -2167,7 +2105,7 @@ La toute dernière étape pour terminer notre première version de l'interface e
 
 Mais coder un chemin en dur est une mauvaise idée pour plusieurs raisons. La raison principale est que si vous transformez le chemin (de `/conference/{id}` en `/conferences/{id}` par exemple), tous les liens doivent être mis à jour manuellement.
 
-* ⏩ **Utilisez plutôt la fonction Twig `path()` avec le nom de la route**
+- ⏩ **Utilisez plutôt la fonction Twig `path()` avec le nom de la route**
   ```diff
   # templates/conference/index.html.twig
           <p>
@@ -2179,17 +2117,19 @@ Mais coder un chemin en dur est une mauvaise idée pour plusieurs raisons. La ra
 
 La fonction `path()` génère le chemin d'accès vers une page à l'aide du nom de la route. Les valeurs des paramètres dynamiques de la route sont transmises sous la forme d'un objet Twig.
 
-
 ---
 
 class: middle
 .center[
+
 ### **Paginer les commentaires**
+
 ]
 
 Avec des milliers de personnes présentes, on peut s'attendre à un nombre important de commentaires. Si nous les affichons tous sur une seule page, elle deviendra rapidement énorme.
 
-* ⏩ **Créez une méthode `getCommentPaginator()` dans `CommentRepository`. Cette méthode renvoie un `Paginator` de commentaires basé sur une conférence et un décalage (où commencer)**
+- ⏩ **Créez une méthode `getCommentPaginator()` dans `CommentRepository`. Cette méthode renvoie un `Paginator` de commentaires basé sur une conférence et un décalage (où commencer)**
+
   ```diff
   # src/Repository/CommentRepository.php
   +use App\Entity\Conference;
@@ -2224,12 +2164,15 @@ Avec des milliers de personnes présentes, on peut s'attendre à un nombre impor
 
 class: middle
 .center[
+
 ### **Transmettre le Paginator à Twig**
+
 ]
 
 Nous avons fixé le nombre maximum de commentaires par page à 2 pour faciliter les tests.
 
-* ⏩ **Pour gérer la pagination dans le template, transmettez à Twig le Doctrine Paginator au lieu de la Doctrine Collection**
+- ⏩ **Pour gérer la pagination dans le template, transmettez à Twig le Doctrine Paginator au lieu de la Doctrine Collection**
+
   ```diff
   # src/Controller/ConferenceController.php
 
@@ -2258,12 +2201,15 @@ Le contrôleur récupère la valeur du décalage (offset) depuis les paramètres
 
 class: middle
 .center[
+
 ### **Gerer la pagination dans Twig**
+
 ]
 
 Les décalages précédent et suivant sont calculés sur la base de toutes les informations que nous avons reçues du paginateur.
 
-* ⏩ **Enfin, mettez à jour le template pour ajouter des liens vers les pages suivantes et précédentes**
+- ⏩ **Enfin, mettez à jour le template pour ajouter des liens vers les pages suivantes et précédentes**
+
   ```diff
   # templates/conference/show.html.twig
 
@@ -2289,12 +2235,15 @@ Vous devriez maintenant pouvoir naviguer dans les commentaires avec les liens **
 
 class: middle
 .center[
+
 ### **Optimiser le contrôleur**
+
 ]
 
 Vous avez peut-être remarqué que les deux méthodes présentes dans `ConferenceController` prennent un environnement Twig comme argument.
 
-* ⏩ **Au lieu de l'injecter dans chaque méthode, appelons la méthode `render()` de la classe parente**
+- ⏩ **Au lieu de l'injecter dans chaque méthode, appelons la méthode `render()` de la classe parente**
+
   ```diff
   -use Twig\Environment;
 
@@ -2311,13 +2260,18 @@ Vous avez peut-être remarqué que les deux méthodes présentes dans `Conferenc
   +        ]);
       }
   ```
+
 ---
+
 class: middle
 .center[
+
 ### **Optimiser le contrôleur**
+
 ]
 
-* ⏩ **Optimisons également la méthode `show()`**
+- ⏩ **Optimisons également la méthode `show()`**
+
   ```diff
       #[Route('/conference/{id}', name: 'conference')]
   -    public function show(Request $request, Environment $twig, Conference $conference, CommentRepository $commentRepository): Response
@@ -2337,41 +2291,49 @@ class: middle
       }
   ```
 
-* ⏩ **📬 Commitez notre travail via `git commit -am "Twig"`**
+- ⏩ **📬 Commitez notre travail via `git commit -am "Twig"`**
 
 ---
 
 class: middle
 .center[
+
 ### **.red[Travaux pratique]**
+
 ]
 
 **Objectif :**
 
-* ⏩ **Modifier la route `/products` pour renvoyer la liste des produits depuis la base de données**
+- ⏩ **Modifier la route `/products` pour renvoyer la liste des produits depuis la base de données**
 
-* ⏩ **Créer un template pour la page d'accueil des produits**
+- ⏩ **Créer un template pour la page d'accueil des produits**
 
-* ⏩ **Modifier la route `/product/{id}` pour renvoyer le produit correspondant à l'id depuis la base de données**! :
+- ⏩ **Modifier la route `/product/{id}` pour renvoyer le produit correspondant à l'id depuis la base de données**! :
 
-* ⏩ **Créer un template pour la page d'un produit**
+- ⏩ **Créer un template pour la page d'un produit**
 
 ---
+
 class: center, middle, inverse
+
 # 7. Les évenements
+
 ---
 
 class: middle
 .center[
+
 ### **Écouter les événements**
+
 ]
 
 Il manque une barre de navigation au layout actuel pour revenir à la page d'accueil ou pour passer d'une conférence à l'autre.
+
 #### Ajouter un en-tête au site web
 
 Tout ce qui doit être affiché sur toutes les pages web, comme un en-tête, doit faire partie du layout de base principal :
 
-* ⏩ **Ajoutez un en-tête au layout de base `templates/base.html.twig`**
+- ⏩ **Ajoutez un en-tête au layout de base `templates/base.html.twig`**
 
 ```diff
      <body>
@@ -2390,16 +2352,19 @@ Tout ce qui doit être affiché sur toutes les pages web, comme un en-tête, doi
 
 L'ajout de ce code au layout signifie que tous les templates qui l'étendent doivent définir une variable conferences, créée et transmise par leurs contrôleurs.
 
-
 ---
+
 class: middle
 .center[
+
 ### **Transmettre des variables à tous les templates**
+
 ]
 
 Comme nous n'avons que deux contrôleurs, vous pourriez procéder comme ceci **(ne modifiez pas votre code car nous verrons très vite une meilleure façon de faire)** :
+
 ```diff
-# 
+#
      #[Route('/conference/{id}', name: 'conference')]
 -    public function show(Request $request, Conference $conference, CommentRepository $commentRepository): Response
 +    public function show(Request $request, Conference $conference, CommentRepository $commentRepository, ConferenceRepository $conferenceRepository): Response
@@ -2412,6 +2377,7 @@ Comme nous n'avons que deux contrôleurs, vous pourriez procéder comme ceci **(
             ...
          ]);
 ```
+
 🤔 Imaginez devoir mettre à jour des dizaines de contrôleurs. Et faire la même chose sur tous les nouveaux. Ce n'est pas très pratique. Il doit y avoir un meilleur moyen.
 
 **Twig a la notion de variables globales**. Une variable globale est disponible dans tous les templates générés. Vous pouvez les définir dans un fichier de configuration, mais cela ne fonctionne que pour les valeurs statiques. Pour ajouter toutes les conférences comme variable globale Twig, nous allons créer un **"listener"**.
@@ -2422,11 +2388,13 @@ Comme nous n'avons que deux contrôleurs, vous pourriez procéder comme ceci **(
 
 ]
 
-
 ---
+
 class: middle
 .center[
+
 ### **Découvrir les événements Symfony**
+
 ]
 
 **Symfony intègre un composant Event Dispatcher.**
@@ -2441,10 +2409,10 @@ class: middle
 
 Certains événements vous permettent d'interagir avec le **cycle de vie des requêtes HTTP**. Pendant le traitement d'une requête, le dispatcher répartit les événements :
 
-* Lorsqu'une requête a été créée,
-* Lorsqu'un contrôleur est sur le point d'être exécuté
-* Lorsqu'une réponse est prête à être envoyée
-* Ou lorsqu'une exception a été levée.
+- Lorsqu'une requête a été créée,
+- Lorsqu'un contrôleur est sur le point d'être exécuté
+- Lorsqu'une réponse est prête à être envoyée
+- Ou lorsqu'une exception a été levée.
 
 .info[
 ☝ Un listener peut écouter un ou plusieurs événements et exécuter une logique basée sur le contexte de l'événement.
@@ -2461,13 +2429,16 @@ Certains événements vous permettent d'interagir avec le **cycle de vie des req
 
 class: middle
 .center[
+
 ### **Les événements dans Symfony**
+
 ]
 
 Les événements sont des points d'extension bien définis qui rendent le framework plus générique et extensible. De nombreux composants Symfony tels que Security, Messenger, Workflow ou Mailer les utilisent largement.
 
 **Un autre exemple intégré d'événements et de listeners en action est le cycle de vie d'une commande :**
-* 👉  Vous pouvez créer un listener pour exécuter du code avant n'importe quelle commande.
+
+- 👉 Vous pouvez créer un listener pour exécuter du code avant n'importe quelle commande.
 
 Tout paquet ou bundle peut également déclencher ses propres événements pour rendre son code extensible.
 
@@ -2476,9 +2447,12 @@ Tout paquet ou bundle peut également déclencher ses propres événements pour 
 ]
 
 ---
+
 class: middle
 .center[
+
 ### **Implémenter un subscriber**
+
 ]
 
 Pour éviter d'avoir un fichier de configuration (`service.yaml`) qui décrit les événements qu'un listener veut écouter, utilisons plutôt un subscriber.
@@ -2487,36 +2461,40 @@ Pour éviter d'avoir un fichier de configuration (`service.yaml`) qui décrit le
 
 Résumons donc la différence entre un **listener** et un **subscriber** :
 
-* 👉 **Un listener est une classe avec une méthode publique qui écoute un événement spécifique.**
-* 👉 **Un subscriber est une classe avec une méthode statique qui retourne la configuration de tous les événements qu'il écoute.**
+- 👉 **Un listener est une classe avec une méthode publique qui écoute un événement spécifique.**
+- 👉 **Un subscriber est une classe avec une méthode statique qui retourne la configuration de tous les événements qu'il écoute.**
 
 Vous connaissez la chanson par cœur maintenant
 
-* ⏩ **Utilisez le Maker Bundle pour générer un subscriber :**
+- ⏩ **Utilisez le Maker Bundle pour générer un subscriber :**
+
 ```sh
 symfony console make:subscriber TwigEventSubscriber
 ```
 
 La commande vous demande quel événement vous voulez écouter.
 
-* ⏩ **Choisissez l'événement `Symfony\Component\HttpKernel\Event\ControllerEvent` qui est envoyé juste avant l'appel d'un contrôleur.**
+- ⏩ **Choisissez l'événement `Symfony\Component\HttpKernel\Event\ControllerEvent` qui est envoyé juste avant l'appel d'un contrôleur.**
 
 C'est le meilleur moment pour injecter la variable globale conferences afin que Twig y ait accès lorsque le contrôleur générera le template.
 
 ---
+
 class: middle
 .center[
+
 ### **Personnaliser le subscriber généré**
+
 ]
 
-* ⏩ **Mettez votre subscriber à jour comme suit :**
+- ⏩ **Mettez votre subscriber à jour comme suit :**
 
 ```diff
  class TwigEventSubscriber implements EventSubscriberInterface
  {
 
 +    public function __construct(
-+        private Environment $twig, 
++        private Environment $twig,
 +        private ConferenceRepository $conferenceRepository
 +    ) { }
 +
@@ -2532,14 +2510,17 @@ Maintenant, vous pouvez ajouter autant de contrôleurs que vous le souhaitez : l
 > .info[🗒 Nous parlerons d'une alternative bien plus performante dans une prochaine étape.]
 
 ---
+
 class: middle
 .center[
+
 ### **Trier les conférences par année et par ville**
+
 ]
 
 Le tri de la liste des conférences par année peut faciliter la navigation. Nous pourrions créer notre propre méthode pour récupérer et trier toutes les conférences.
 
-* ⏩ **Mais nous allons plutôt remplacer l'implémentation par défaut de la méthode `CommentRepository::findAll()` , afin que le tri s'applique partout :**
+- ⏩ **Mais nous allons plutôt remplacer l'implémentation par défaut de la méthode `CommentRepository::findAll()` , afin que le tri s'applique partout :**
 
 ```diff
 +    public function findAll(): array
@@ -2554,13 +2535,15 @@ Le tri de la liste des conférences par année peut faciliter la navigation. Nou
 
 .center[<img src="img/header.png" alt="header" width="340px" />]
 
-* ⏩ **Commitez notre travail via `git commit -am "Écouter les événements"`**
+- ⏩ **Commitez notre travail via `git commit -am "Écouter les événements"`**
 
 ---
 
 class: middle
 .center[
+
 ### **Définir des lifecycle callbacks**
+
 ]
 
 Lors de la création d'un nouveau commentaire, ce serait bien si la date `createdAt` était automatiquement définie à la date et à l'heure courantes.
@@ -2569,7 +2552,7 @@ Doctrine a différentes façons de manipuler les objets et leurs propriétés pe
 
 Lorsque le comportement n'a besoin d'aucun service et ne doit être appliqué qu'à un seul type d'entité.
 
-* ⏩ **Définissez un callback dans la classe entité :**
+- ⏩ **Définissez un callback dans la classe entité :**
 
 ```diff
  #[ORM\Entity(repositoryClass: CommentRepository::class)]
@@ -2590,13 +2573,15 @@ Lorsque le comportement n'a besoin d'aucun service et ne doit être appliqué qu
 
 L'événement `ORM\PrePersist` est déclenché lorsque l'objet est enregistré dans la base de données pour la toute première fois. Lorsque cela se produit, la méthode `setCreatedAtValue()` est appelée et la date et l'heure courantes sont utilisées pour la valeur de la propriété `createdAt`.
 
-* ⏩ **Ajoutez un commentaire depuis l'interface d'administration et vérifiez que la date est correcte.**
+- ⏩ **Ajoutez un commentaire depuis l'interface d'administration et vérifiez que la date est correcte.**
 
 ---
 
 class: middle
 .center[
+
 ### **Ajouter des slugs aux conférences**
+
 ]
 
 Les URLs des conférences n'ont pas de sens : `/conference/1`. Plus important encore, ils dépendent d'un détail d'implémentation
@@ -2605,20 +2590,24 @@ Les URLs des conférences n'ont pas de sens : `/conference/1`. Plus important en
 
 Pourquoi ne pas plutôt utiliser des URLs telles que `/conference/paris-2020` ? Ce serait plus joli. `paris-2020`, c'est ce que l'on appelle le slug de la conférence.
 
-* ⏩ **Ajoutez une nouvelle propriété `slug` pour les conférences (une chaîne non nulle de 255 caractères) :**
+- ⏩ **Ajoutez une nouvelle propriété `slug` pour les conférences (une chaîne non nulle de 255 caractères) :**
+
 ```sh
 symfony console make:entity Conference
 ```
+
 La commande vous demande le nom de la propriété. Entrez `slug` et choisissez `string` comme type.
 
 ---
 
 class: middle
 .center[
+
 ### **Applicons la migration**
+
 ]
 
-* ⏩ **Créez un fichier de migration pour ajouter la nouvelle colonne et Et exécutez cette nouvelle migration.**
+- ⏩ **Créez un fichier de migration pour ajouter la nouvelle colonne et Et exécutez cette nouvelle migration.**
 
 ❗ Vous avez une erreur ? C'était prévu. Pourquoi ?
 
@@ -2638,19 +2627,21 @@ class: middle
 L'astuce ici est d'ajouter la colonne et de lui permettre d'être `null`, puis de définir une valeur non `null` pour le `slug`, et enfin, de changer la colonne de `slug` pour ne plus permettre `null`.
 
 La migration devrait fonctionner maintenant.
-* ⏩ ** Exécutez la migration**
 
+- ⏩ ** Exécutez la migration**
 
 ---
 
 class: middle
 .center[
+
 ### **Assurer l'unicité des slugs**
+
 ]
 
 Étant donné que l'application utilisera bientôt les slugs pour trouver chaque conférence, ajustons l'entité `Conference` pour s'assurer que les valeurs des slugs soient uniques dans la base de données :
 
-* ⏩ **Ajoutez une contrainte d'unicité sur la propriété `slug` de la classe `Conference` :**
+- ⏩ **Ajoutez une contrainte d'unicité sur la propriété `slug` de la classe `Conference` :**
 
 ```diff
 +use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -2673,20 +2664,22 @@ class: middle
 
 💃 Comme vous l'aurez deviné, nous devons exécuter la danse de la migration
 
-* ⏩ **Créez une nouvelle migration et exécutez-la.**
+- ⏩ **Créez une nouvelle migration et exécutez-la.**
 
 ---
 
 class: middle
 .center[
+
 ### **Générer des slugs**
+
 ]
 
-Générer un ***slug*** qui se lit bien dans une URL (où tout ce qui n'est pas des caractères **ASCII** doit être encodé) est une tâche difficile, surtout pour les langues autres que l'anglais. Comment convertir é en e par exemple ?
+Générer un **_slug_** qui se lit bien dans une URL (où tout ce qui n'est pas des caractères **ASCII** doit être encodé) est une tâche difficile, surtout pour les langues autres que l'anglais. Comment convertir é en e par exemple ?
 
-Au lieu de réinventer la roue, utilisons le composant ***Symfony String***, qui facilite la manipulation des chaînes et fournit **un slugger**.
+Au lieu de réinventer la roue, utilisons le composant **_Symfony String_**, qui facilite la manipulation des chaînes et fournit **un slugger**.
 
-* ⏩ **Dans la classe Conference, ajoutez une méthode `computeSlug()`, qui calcule le slug en fonction des données de la conférence :**
+- ⏩ **Dans la classe Conference, ajoutez une méthode `computeSlug()`, qui calcule le slug en fonction des données de la conférence :**
 
 ```diff
 +use Symfony\Component\String\Slugger\SluggerInterface;
@@ -2717,14 +2710,16 @@ La méthode `computeSlug()` ne calcule un slug que lorsque le slug courant est v
 
 class: middle
 .center[
+
 ### **Définir un lifecycle callback complexe**
+
 ]
 
 Comme pour la propriété createdAt, la propriété slug doit être définie automatiquement à chaque fois que la conférence est mise à jour en appelant la méthode `computeSlug()`.
 
 Mais comme cette méthode dépend d'une implémentation de `SluggerInterface`, nous ne pouvons pas ajouter un événement `prePersist` comme avant (nous n'avons pas la possibilité d'injecter le slugger).
 
-* ⏩ **Créez plutôt une classe de listener d'entité Doctrine `src/EntityListener/ConferenceEntityListener.php`**
+- ⏩ **Créez plutôt une classe de listener d'entité Doctrine `src/EntityListener/ConferenceEntityListener.php`**
 
 ```php
 namespace App\EntityListener;
@@ -2750,15 +2745,18 @@ Notez que le slug est modifié lorsqu'une nouvelle conférence est créée et lo
 
 class: middle
 .center[
+
 ### **Le conteneur d'injection de dépendance**
+
 ]
 
-🤔 Jusqu'à présent, nous n'avons pas parlé d'un élément clé de Symfony, ***"le conteneur d'injection de dépendance"***.
-* 👉 **Le conteneur est responsable de la gestion des services : leur création, et leur injection en cas de besoin.**
+🤔 Jusqu'à présent, nous n'avons pas parlé d'un élément clé de Symfony, **_"le conteneur d'injection de dépendance"_**.
 
-* 👉 **Un service** est un objet **"global"** qui fournit des fonctionnalités (par exemple un **mailer**, un **logger**, un **slugger**, etc.) contrairement aux objets de données (par exemple les instances d'entités Doctrine `App\Entity`).
+- 👉 **Le conteneur est responsable de la gestion des services : leur création, et leur injection en cas de besoin.**
 
-* 👉 Vous interagissez rarement directement avec le conteneur, car **il injecte automatiquement des objets de service** quand vous en avez besoin.
+- 👉 **Un service** est un objet **"global"** qui fournit des fonctionnalités (par exemple un **mailer**, un **logger**, un **slugger**, etc.) contrairement aux objets de données (par exemple les instances d'entités Doctrine `App\Entity`).
+
+- 👉 Vous interagissez rarement directement avec le conteneur, car **il injecte automatiquement des objets de service** quand vous en avez besoin.
 
 **Par exemple**, le conteneur injecte les objets en arguments du contrôleur lorsque vous les typez, comme nous l'avons fait avec `Environment` et `ConferenceRepository` dans la méthode `index()` du contrôleur `ConferenceController`.
 
@@ -2777,14 +2775,16 @@ class ConferenceController extends AbstractController
 
 class: middle
 .center[
+
 ### **Configurer un service dans le conteneur**
+
 ]
 
 🤔 Si vous vous demandez comment le listener d'événement a été initialisé à l'étape précédente, vous avez maintenant la réponse :
 
-.center[ 
+.center[
 
-**"Le conteneur"** 
+**"Le conteneur"**
 
 ]
 
@@ -2792,7 +2792,7 @@ Lorsqu'une classe implémente des **interfaces spécifiques**, ⇒ le conteneur 
 
 Dans ce cas précis, puisque notre classe `ConferenceEntityListener` n'implémente aucune interface et n'étend d'aucune autre classe, Symfony ne peux pas la configurer automatiquement.
 
-* ⏩ **Utilisons un attribut pour l'aider :**
+- ⏩ **Utilisons un attribut pour l'aider :**
 
 ```diff
 +use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
@@ -2814,14 +2814,16 @@ L'attribut `AsEntityListener` indique au conteneur que la classe `ConferenceEnti
 
 class: middle
 .center[
+
 ### **Utiliser des slugs dans l'application**
+
 ]
 
-* ⏩ **Essayez d'ajouter d'autres conférences dans l'interface d'administration et changez la ville ou l'année d'une conférence existante.**
+- ⏩ **Essayez d'ajouter d'autres conférences dans l'interface d'administration et changez la ville ou l'année d'une conférence existante.**
 
   Le slug ne sera pas mis à jour sauf si vous utilisez la valeur spéciale "-"
 
-* ⏩ **La dernière modification consiste à mettre à jour les contrôleurs et les modèles pour utiliser le slug de la conférence pour les routes, au lieu de son id :**
+- ⏩ **La dernière modification consiste à mettre à jour les contrôleurs et les modèles pour utiliser le slug de la conférence pour les routes, au lieu de son id :**
 
 ```diff
 # src/Controller/ConferenceController.php
@@ -2835,7 +2837,7 @@ class: middle
 +                <li><a href="{{ path('conference', { slug: conference.slug }) }}">{{ conference }}</a></li>
              {% endfor %}
 
-# templates/conference/index.html.twig  
+# templates/conference/index.html.twig
          <p>
 -            <a href="{{ path('conference', { id: conference.id }) }}">View</a>
 +            <a href="{{ path('conference', { slug: conference.slug }) }}">View</a>
@@ -2856,48 +2858,57 @@ class: middle
 
 class: middle
 .center[
+
 ### **Naviguer avec les slugs**
+
 ]
 
 L'accès à la page d'une conférence devrait maintenant se faire grâce à son slug : `/conference/paris-2020`.
 
 .center[<img src="img/slug.png" alt="Slug" width="400px">]
 
-
-* ⏩ **📬 Commitez notre travail via `git commit -am "Gérer le cycle de vie des objets Doctrine"`**
+- ⏩ **📬 Commitez notre travail via `git commit -am "Gérer le cycle de vie des objets Doctrine"`**
 
 ---
+
 class: middle
 .center[
+
 ### **.red[Travaux pratique]**
+
 ]
 
 **1. Faire le Quizz : Symfony Part 7**
 
 **2. Objectif :**
 
-* ⏩ **Ajouter une propriété createdAt et updatedAt à toutes les entités**
+- ⏩ **Ajouter une propriété createdAt et updatedAt à toutes les entités**
 
-* ⏩ **Ajouter un listener pour mettre à jour les propriété updatedAt et createdAt**
+- ⏩ **Ajouter un listener pour mettre à jour les propriété updatedAt et createdAt**
 
-  * A savoir que la propriété updatedAt doit être mise à jour à chaque modification de l'entité
-  * La propriété createdAt doit être mise à jour à la création de l'entité
+  - A savoir que la propriété updatedAt doit être mise à jour à chaque modification de l'entité
+  - La propriété createdAt doit être mise à jour à la création de l'entité
 
-* ⏩ **Bonus utilisez le trait pour factoriser le code**
-
+- ⏩ **Bonus utilisez le trait pour factoriser le code**
 
 ---
+
 class: center, middle, inverse
+
 # 8. Les formulaires
+
 ---
+
 class: middle
 .center[
+
 ### **Générer un form type**
+
 ]
 
 Il est temps de permettre aux personnes présentes de donner leur avis sur les conférences. Elles feront part de leurs commentaires au moyen d'un formulaire HTML.
 
-* ⏩ **Utilisez le Maker Bundle pour générer une classe de formulaire :**
+- ⏩ **Utilisez le Maker Bundle pour générer une classe de formulaire :**
 
 ```sh
 symfony console make:form CommentFormType Comment
@@ -2911,15 +2922,16 @@ Par défaut, Symfony utilise les métadonnées de l'entité `Comment`, comme les
 
 **Par exemple**, le champ `text` se présente sous la forme d'un `textarea` parce qu'il utilise une colonne plus grande dans la base de données. En effet, on lui a défini le type de column doctrine `Types::TEXT` dans l'entité `Comment`.
 
-
 ---
 
 class: middle
 .center[
+
 ### **Transmettre le formulaire au template**
+
 ]
 
-* ⏩ **Pour afficher le formulaire, créez-le dans le contrôleur et transmettez-le au template :**
+- ⏩ **Pour afficher le formulaire, créez-le dans le contrôleur et transmettez-le au template :**
 
 ```diff
 +use App\Entity\Comment;
@@ -2943,7 +2955,7 @@ class: middle
 
 Vous ne devriez jamais instancier directement le form type.
 
-* 👉 Utilisez plutôt la méthode `createForm()`. Cette méthode fait partie d'`AbstractController` et facilite la création de formulaires.
+- 👉 Utilisez plutôt la méthode `createForm()`. Cette méthode fait partie d'`AbstractController` et facilite la création de formulaires.
 
 .info[
 🪄 Pour transmettre le formulaire au template, nous l'ajoutons à la liste des variables transmises au template. Il n'est plus nécessaire d'utiliser la méthode `createView()` pour obtenir l'objet form adapté au template.
@@ -2953,10 +2965,12 @@ Vous ne devriez jamais instancier directement le form type.
 
 class: middle
 .center[
+
 ### **Afficher un formulaire**
+
 ]
 
-* ⏩ **L'affichage du formulaire dans le template peut se faire via la fonction Twig `form` dans le template `templates/conference/show.html.twig`:**
+- ⏩ **L'affichage du formulaire dans le template peut se faire via la fonction Twig `form` dans le template `templates/conference/show.html.twig`:**
 
 ```diff
      {% endif %}
@@ -2966,6 +2980,7 @@ class: middle
 +    {{ form(comment_form) }}
  {% endblock %}
 ```
+
 .pull-left[
 
 Lorsque vous rafraîchissez la page d'une conférence dans le navigateur, notez que chaque champ de formulaire affiche la balise HTML appropriée (le type de données est défini à partir du modèle) :
@@ -2986,12 +3001,14 @@ La fonction `form()` génère le formulaire HTML en fonction de toutes les infor
 
 class: middle
 .center[
+
 ### **Personnaliser un form type**
+
 ]
 
 Même si les champs de formulaire sont configurés en fonction de leur modèle associé, vous pouvez personnaliser la configuration par défaut directement dans la classe de form type :
 
-* ⏩ **Modifiez la classe `CommentFormType` pour personnaliser certains champs :**
+- ⏩ **Modifiez la classe `CommentFormType` pour personnaliser certains champs :**
 
 ```diff
  class CommentFormType extends AbstractType
@@ -3026,48 +3043,52 @@ Notez que nous avons ajouté un bouton `submit` (qui nous permet de continuer à
 
 class: middle
 .center[
+
 ### **Gerer les champs non mappés**
+
 ]
 
 Certains champs ne peuvent pas être auto-configurés, comme par example `photoFilename`.
-* 👉 L'entité `Comment` n'a besoin d'enregistrer que le nom du fichier photo, **mais le formulaire doit s'occuper de l'upload du fichier lui-même**.
+
+- 👉 L'entité `Comment` n'a besoin d'enregistrer que le nom du fichier photo, **mais le formulaire doit s'occuper de l'upload du fichier lui-même**.
 
 Pour traiter ce cas, nous avons ajouté un champ appelé `photo` qui est un champ **"non mapped"** : il ne sera associé à aucune propriété de `Comment`. Nous le gérerons manuellement pour implémenter une logique spécifique (comme l'upload de la photo sur le disque).
 
-* ⏩ **Rafraîchissez la page d'une conférence dans le navigateur, et vous verrez que le formulaire a été mis à jour :**
+- ⏩ **Rafraîchissez la page d'une conférence dans le navigateur, et vous verrez que le formulaire a été mis à jour :**
 
 .center[<img src="img/form-customized.png" width="400px">]
 
 Comme autre exemple de personnalisation, nous avons également modifié le libellé par défaut de certains champs.
 
-
 ---
 
 class: middle
 .center[
+
 ### **Valider des modèles**
+
 ]
 
 👮 Pour verifier que les données soumises sont valides, le formulaire utilise le type de champ `email` pour l'email du commentaire et définit la plupart des champs en `required`. Notez qu'il contient également un champ `_token` caché pour nous protéger des attaques `CSRF`.
 
 🥷 Mais si la soumission du formulaire contourne la validation HTML (en utilisant un client HTTP comme cURL, qui n'applique pas ces règles de validation), des données invalides peuvent atteindre le serveur. 😱
 
-* ⏩ **Pour éviter cela, nous devons ajouter des contraintes de validation à l'entité `Comment` :**
+- ⏩ **Pour éviter cela, nous devons ajouter des contraintes de validation à l'entité `Comment` :**
 
   ```diff
    use Doctrine\ORM\Mapping as ORM;
   +use Symfony\Component\Validator\Constraints as Assert;
-  
+
   @@ ....
-  
+
   +    #[Assert\NotBlank]
   +    #[Assert\Length(max: 255)]
        private ?string $author = null;
-  
+
        #[ORM\Column(type: Types::TEXT)]
   +    #[Assert\NotBlank]
        private ?string $text = null;
-  
+
        #[ORM\Column(length: 255)]
   +    #[Assert\NotBlank]
   +    #[Assert\Length(max: 255)]
@@ -3081,22 +3102,24 @@ Nous utilisons ici les **contraintes de validation de Symfony** pour définir le
 
 class: middle
 .center[
+
 ### **Gérer la soumission d'un formulaire**
+
 ]
 
 Le code que nous avons écrit jusqu'à présent est suffisant pour afficher le formulaire et ses messages d'erreur.
 
 Nous devrions maintenant nous occuper de la soumission du formulaire et de la persistance de ses informations dans la base de données depuis le contrôleur :
 
-* ⏩ **Modifiez la méthode `show()` du contrôleur pour gérer la soumission du formulaire :**
+- ⏩ **Modifiez la méthode `show()` du contrôleur pour gérer la soumission du formulaire :**
 
   ```diff
    class ConferenceController extends AbstractController
    {
   +    public function __construct(private readonly EntityManagerInterface $entityManager) { }
-  
+
   @@ ...
-  
+
            $form = $this->createForm(CommentFormType::class, $comment);
   +        $form->handleRequest($request);
   +        if ($form->isSubmitted() && $form->isValid()) {
@@ -3113,26 +3136,30 @@ Nous devrions maintenant nous occuper de la soumission du formulaire et de la pe
 
 class: middle
 .center[
+
 ### **Essayer le formulaire**
+
 ]
 
 Faisons un récapitulatif de ce que nous avons fait jusqu'à présent :
 
-* Lorsque le formulaire est soumis, l'objet `Comment` est mis à jour en fonction des données soumises. Puis redirection vers la conférence qui doit être la même que celle de l'URL (nous l'avons supprimée du formulaire).
+- Lorsque le formulaire est soumis, l'objet `Comment` est mis à jour en fonction des données soumises. Puis redirection vers la conférence qui doit être la même que celle de l'URL (nous l'avons supprimée du formulaire).
 
-* Si le formulaire n'est pas valide, nous affichons la page, mais le formulaire contiendra maintenant les valeurs soumises et les messages d'erreur afin qu'ils puissent être affichés à l'internaute.
+- Si le formulaire n'est pas valide, nous affichons la page, mais le formulaire contiendra maintenant les valeurs soumises et les messages d'erreur afin qu'ils puissent être affichés à l'internaute.
 
-* ⏩ **Essayez le formulaire.**
+- ⏩ **Essayez le formulaire.**
 
-  * ✅ Il devrait fonctionner correctement et les données devraient être stockées dans la base de données (vérifiez-les dans l'interface d'administration).
+  - ✅ Il devrait fonctionner correctement et les données devraient être stockées dans la base de données (vérifiez-les dans l'interface d'administration).
 
-  * 🚨 Il y a cependant un problème : les photos. Elles ne fonctionnent pas puisque nous ne les avons pas encore traitées dans le contrôleur. Choses que nous allons faire dans la prochaine étape.
+  - 🚨 Il y a cependant un problème : les photos. Elles ne fonctionnent pas puisque nous ne les avons pas encore traitées dans le contrôleur. Choses que nous allons faire dans la prochaine étape.
 
 ---
 
 class: middle
 .center[
+
 ### **Définition du chemin de stockage des photos**
+
 ]
 
 Les photos uploadées doivent **être stockées sur le disque local**, à un endroit accessible par un navigateur afin que nous puissions les afficher sur la page d'une conférence.
@@ -3141,7 +3168,7 @@ Les photos uploadées doivent **être stockées sur le disque local**, à un end
 
 Comme nous ne souhaitons pas mettre le répertoire en dur dans le code, nous devons trouver un moyen de le stocker de façon globale. **Le conteneur Symfony** est capable de stocker des paramètres (`parameters`) en plus des services pour permettre de les configurer :
 
-* ⏩ **Ajoutez un paramètre `photo_dir` dans le fichier `config/services.yaml` :**
+- ⏩ **Ajoutez un paramètre `photo_dir` dans le fichier `config/services.yaml` :**
 
   ```diff
   # config/services.yaml
@@ -3153,14 +3180,16 @@ Comme nous ne souhaitons pas mettre le répertoire en dur dans le code, nous dev
 
 class: middle
 .center[
+
 ### **Utiliser le chemin dans le contrôleur**
+
 ]
 
 Nous avons déjà vu comment les services sont automatiquement injectés dans les arguments des constructeurs. Pour les paramètres du conteneur, nous pouvons les injecter explicitement en utilisant l'attribut `Autowire`.
 
 Maintenant, nous avons tout ce qu'il nous faut pour implémenter la logique nécessaire au stockage du fichier soumis sous sa destination finale.
 
-* ⏩ **Modifiez la signature de méthode `show()` du contrôleur pour récupérer le paramètre `photo_dir` :**
+- ⏩ **Modifiez la signature de méthode `show()` du contrôleur pour récupérer le paramètre `photo_dir` :**
 
   ```diff
   # src/Controller/ConferenceController.php
@@ -3170,7 +3199,7 @@ Maintenant, nous avons tout ce qu'il nous faut pour implémenter la logique néc
   +        Request $request,
   +        Conference $conference,
   +        CommentRepository $commentRepository,
-  +        #[Autowire('%photo_dir%')] 
+  +        #[Autowire('%photo_dir%')]
   +        string $photoDir,
   +    ): Response {
   ```
@@ -3179,17 +3208,19 @@ Maintenant, nous avons tout ce qu'il nous faut pour implémenter la logique néc
 
 class: middle
 .center[
+
 ### **Gérer l'uploader des fichiers**
+
 ]
 
-* ⏩ **Modifiez la méthode `show()` du contrôleur pour gérer l'upload de la photo :**
+- ⏩ **Modifiez la méthode `show()` du contrôleur pour gérer l'upload de la photo :**
 
   ```diff
   # src/Controller/ConferenceController.php
-  
+
            if ($form->isSubmitted() && $form->isValid()) {
                $comment->setConference($conference);
-  
+
   +            if ($photo = $form['photo']->getData()) {
   +                $filename = bin2hex(random_bytes(6)).'.'.$photo->guessExtension();
   +                try {
@@ -3199,25 +3230,27 @@ class: middle
   +                }
   +                $comment->setPhotoFilename($filename);
   +            }
-  
+
                $this->entityManager->persist($comment);
                $this->entityManager->flush();
   ```
 
-* Pour gérer les uploads de photos, nous créons un nom aléatoire pour le fichier.
-* Ensuite, nous déplaçons le fichier uploadé à son emplacement final (le répertoire photo).
-* Enfin, nous stockons le nom du fichier dans l'objet Comment.
+- Pour gérer les uploads de photos, nous créons un nom aléatoire pour le fichier.
+- Ensuite, nous déplaçons le fichier uploadé à son emplacement final (le répertoire photo).
+- Enfin, nous stockons le nom du fichier dans l'objet Comment.
 
 Notre code est maintenant capable de gérer les uploads de photos.
 
-* ⏩ **Essayez d'uploader un fichier PDF au lieu d'une photo.**
-> ❌ Vous devriez voir les messages d'erreur en action. Déboguons-les dans la prochaine étape.
+- ⏩ **Essayez d'uploader un fichier PDF au lieu d'une photo.**
+  > ❌ Vous devriez voir les messages d'erreur en action. Déboguons-les dans la prochaine étape.
 
 ---
 
 class: middle
 .center[
+
 ### **Déboguer des formulaires**
+
 ]
 
 Lorsqu'un formulaire est soumis et que quelque chose ne fonctionne pas correctement, utilisez le panneau **"Form" du Symfony Profiler**. Il vous donne des informations sur le formulaire, toutes ses options, les données soumises et comment elles sont converties en interne. Si le formulaire contient des erreurs, elles seront également répertoriées.
@@ -3226,9 +3259,9 @@ Lorsqu'un formulaire est soumis et que quelque chose ne fonctionne pas correctem
 
 Le workflow classique d'un formulaire est le suivant :
 
-* Le formulaire est affiché sur une page ;
-* L'internaute soumet le formulaire via une requête `POST` ;
-* Le serveur redirige l'internaute, soit vers une autre page, soit vers la même page.
+- Le formulaire est affiché sur une page ;
+- L'internaute soumet le formulaire via une requête `POST` ;
+- Le serveur redirige l'internaute, soit vers une autre page, soit vers la même page.
 
 Mais comment pouvez-vous accéder au profileur pour une requête de soumission réussie ? Étant donné que la page est immédiatement redirigée, nous ne voyons jamais la barre d'outils de débogage Web pour la requête `POST`.
 
@@ -3248,19 +3281,21 @@ Pas de problème : sur la page redirigée, survolez la partie verte `"200"` à g
 
 class: middle
 .center[
+
 ### **Gérer les photos depuis l'interface d'administration**
+
 ]
 
 L'interface d'administration affiche actuellement le nom du fichier photo, mais nous voulons voir la vraie photo :
 
-* ⏩ **Modifiez la classe `CommentCrudController` pour afficher la photo :**
+- ⏩ **Modifiez la classe `CommentCrudController` pour afficher la photo :**
 
   ```diff
    use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
   +use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
-  
+
    @@ ...
-  
+
   -        yield TextField::new('photoFilename')
   +        yield ImageField::new('photoFilename')
   +            ->setUploadDir('/public/uploads/photos')
@@ -3269,48 +3304,53 @@ L'interface d'administration affiche actuellement le nom du fichier photo, mais 
   +            ->setLabel('Photo')
                ->onlyOnIndex();
   ```
-  
-* ⏩ **Ajoutez une méthode statique `setFilename()` à la classe `Comment` afin de factoriser la logique de génération de nom de fichier :**
+
+- ⏩ **Ajoutez une méthode statique `setFilename()` à la classe `Comment` afin de factoriser la logique de génération de nom de fichier :**
   ```php
   public static function setFilename(UploadedFile $photo): string
   {
       return bin2hex(random_bytes(6)).'.'.$photo->guessExtension();
   }
-  ``` 
-
+  ```
 
 ---
 
 class: middle
 
 #### Exclure les photos uploadées de Git
+
 .red[**Ne commitez pas encore !**] Nous ne voulons pas stocker les images uploadées dans le dépôt Git. Ajoutez le dossier `/public/uploads` au fichier `.gitignore` :
 
-* ⏩ **Ajoutez `/public/uploads` au fichier `.gitignore` :**
+- ⏩ **Ajoutez `/public/uploads` au fichier `.gitignore` :**
 
   ```diff
   +/public/uploads
-  
+
    ###> symfony/framework-bundle ###
   ```
 
-* ⏩ **📬 Commitez notre travail via**
+- ⏩ **📬 Commitez notre travail via**
   ```sh
   git add . && git commit -m "Formulaire"
   ```
 
 ---
+
 class: center, middle, inverse
+
 # 9. Sécurité
 
 .center[
 <img src="https://images.unsplash.com/photo-1584433144760-1946bb52e9a4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" />
 ]
+
 ---
 
 class: middle
 .center[
+
 ### **Sécuriser l'interface d'admin**
+
 ]
 
 👮 L'interface d'administration ne doit être accessible que par des personnes autorisées. La sécurisation de cette zone du site peut se faire à l'aide du composant **Symfony Security**.
@@ -3324,21 +3364,24 @@ Pour utiliser l'entité `Admin` dans le système d'authentification de Symfony, 
 .center[<img src="https://em-content.zobj.net/source/telegram/358/locked-with-key_1f510.webp" width="200px">]
 
 ---
+
 class: middle
 .center[
+
 ### **Définir une entité User**
+
 ]
 
-* ⏩ **Utilisez la commande dédiée `make:user` pour créer l'entité `Admin` au lieu de la commande traditionnelle `make:entity`**
+- ⏩ **Utilisez la commande dédiée `make:user` pour créer l'entité `Admin` au lieu de la commande traditionnelle `make:entity`**
 
   ```sh
   symfony console make:user Admin
   ```
 
-* ⏩ **Répondez aux questions qui vous sont posées :**
-  * Nous voulons utiliser Doctrine pour stocker nos users (`yes`)
-  * Utiliser `username` pour le nom d'affichage unique des admins
-  * Et chaque admin aura un mot de passe (`yes`).
+- ⏩ **Répondez aux questions qui vous sont posées :**
+  - Nous voulons utiliser Doctrine pour stocker nos users (`yes`)
+  - Utiliser `username` pour le nom d'affichage unique des admins
+  - Et chaque admin aura un mot de passe (`yes`).
 
 La commande a généré une classe `App\Entity\Admin` avec les propriétés `username` et `password`. Elle contient des aussi des méthodes comme `getRoles()`, `eraseCredentials()` et d'autres qui sont nécessaires au système d'authentification de Symfony.
 
@@ -3346,7 +3389,7 @@ La commande a généré une classe `App\Entity\Admin` avec les propriétés `use
 💡 Si vous voulez ajouter d'autres propriétés à l'entité Admin, exécutez `make:entity`.
 ]
 
-* ⏩ **Implementer l'interface `\Stringable` dans l'entité `Admin` et ajouter notre nouvelle entité à Easyadmin :**
+- ⏩ **Implementer l'interface `\Stringable` dans l'entité `Admin` et ajouter notre nouvelle entité à Easyadmin :**
 
   ```diff
   - class Admin implements UserInterface, PasswordAuthenticatedUserInterface
@@ -3363,10 +3406,13 @@ La commande a généré une classe `App\Entity\Admin` avec les propriétés `use
 
 class: middle
 .center[
+
 ### **Configuration de la sécurité**
+
 ]
 
 En plus de générer l'entité `Admin`, la commande `make:user` a également mis à jour la configuration de sécurité pour connecter l'entité au système d'authentification :
+
 ```diff
 # config/packages/security.yaml
 
@@ -3382,24 +3428,28 @@ En plus de générer l'entité `Admin`, la commande `make:user` a également mis
 -            provider: users_in_memory
 +            provider: app_user_provider
 ```
+
 🤖 Nous laissons Symfony choisir le meilleur algorithme possible pour hacher les mots de passe (il évoluera avec le temps).
 
 ```yaml
-    password_hashers:
-        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+password_hashers:
+  Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: "auto"
 ```
 
-* ⏩ **Il est temps de générer une migration et de migrer la base de données :**
+- ⏩ **Il est temps de générer une migration et de migrer la base de données :**
 
 ---
+
 class: middle
 .center[
+
 ### **Générer un mot de passe pour l'admin**
+
 ]
 
 Nous ne développerons pas de système dédié pour créer des comptes d'administration. Encore une fois, nous **n'aurons qu'un seul admin**. Le login sera admin et nous devons générer le hash du mot de passe.
 
-* ⏩ **Lancer la commande `security:hash-password` pour générer le hash du mot de passe**
+- ⏩ **Lancer la commande `security:hash-password` pour générer le hash du mot de passe**
 
   ```sh
   symfony console security:hash-password myPassword 'App\User\Admin
@@ -3407,8 +3457,7 @@ Nous ne développerons pas de système dédié pour créer des comptes d'adminis
 
 > ❗Notez le hash généré, nous en aurons besoin pour insérer l'admin dans la base de données.
 
-
-* ⏩ **Ajouter le CRUD Admin de la classe `Admin` dans easyadmin et definissez-y le contenu de la methode crudFields comme ce qui suit:**
+- ⏩ **Ajouter le CRUD Admin de la classe `Admin` dans easyadmin et definissez-y le contenu de la methode crudFields comme ce qui suit:**
 
   ```php
   public function configureFields(string $pageName): iterable
@@ -3419,31 +3468,37 @@ Nous ne développerons pas de système dédié pour créer des comptes d'adminis
       yield ArrayField::new('roles');
   }
   ```
+
 ---
 
 class: middle
 .center[
+
 ### **Configurer le système d'authentification**
+
 ]
 
 Maintenant que nous avons un admin, nous pouvons sécuriser l'interface d'administration. Symfony accepte plusieurs stratégies d'authentification. Utilisons un classique système d'authentification par formulaire.
 
-* ⏩ **Exécutez la commande `make:security`**
-  * pour mettre à jour la configuration de sécurité
-  * générer un template pour la connexion
-  * créer une classe d'authentification (`Authenticator`) :
-  
+- ⏩ **Exécutez la commande `make:security`**
+
+  - pour mettre à jour la configuration de sécurité
+  - générer un template pour la connexion
+  - créer une classe d'authentification (`Authenticator`) :
+
   ```sh
   symfony console make:security
   ```
 
 **La commande vous pose quelques questions :**
-* Sélectionnez `1` pour générer une classe d'authentification pour le formulaire de connexion
-* Nommez la classe d'authentification `AppAuthenticator`
-* Le contrôleur `SecurityController`
-* Créez une URL `/logout` (yes).
+
+- Sélectionnez `1` pour générer une classe d'authentification pour le formulaire de connexion
+- Nommez la classe d'authentification `AppAuthenticator`
+- Le contrôleur `SecurityController`
+- Créez une URL `/logout` (yes).
 
 La commande a mis à jour la configuration de sécurité `config/packages/security.yaml` pour lier les classes générées :
+
 ```diff
          main:
              lazy: true
@@ -3459,15 +3514,18 @@ La commande a mis à jour la configuration de sécurité `config/packages/securi
 
 class: middle
 .center[
+
 ### **Ajouter les règles de contrôle d'accès**
+
 ]
 
 Comme l'indique la sortie de la commande `make:auth`.
-* ⏩ **Nous devons personnaliser la route dans la méthode `onAuthenticationSuccess()` pour rediriger l'admin lorsqu'il a réussi à se connecter :**
-  
+
+- ⏩ **Nous devons personnaliser la route dans la méthode `onAuthenticationSuccess()` pour rediriger l'admin lorsqu'il a réussi à se connecter :**
+
   ```diff
   # src/Security/AppAuthenticator.php
-  
+
   -        // For example:
   -        // return new RedirectResponse($this->urlGenerator->generate('some_route'));
   -        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
@@ -3476,11 +3534,11 @@ Comme l'indique la sortie de la commande `make:auth`.
 
 Un système de sécurité se compose de deux parties : l'authentification et l'autorisation. Lors de la création de l'admin, nous lui avons donné le rôle `ROLE_ADMIN`.
 
-* ⏩ **Limitons la section `/admin` aux seules personnes ayant ce rôle en ajoutant une règle à `access_control` :**
-  
+- ⏩ **Limitons la section `/admin` aux seules personnes ayant ce rôle en ajoutant une règle à `access_control` :**
+
   ```diff
   # config/packages/security.yaml
-  
+
        access_control:
   -        # - { path: ^/admin, roles: ROLE_ADMIN }
   +        - { path: ^/admin, roles: ROLE_ADMIN }
@@ -3492,14 +3550,16 @@ Les règles access_control limitent l'accès par des expressions régulières. L
 
 class: middle
 .center[
+
 ### **S'authentifier avec le formulaire de connexion**
+
 ]
 
 .pull-left[
 
 Si vous essayez d'accéder à l'interface d'administration, vous devriez maintenant être redirigé vers la page de connexion et être invité à entrer un identifiant et un mot de passe :
 
-* ⏩ **Connectez-vous en utilisant `admin` et le mot de passe que vous avez choisi précédemment.**
+- ⏩ **Connectez-vous en utilisant `admin` et le mot de passe que vous avez choisi précédemment.**
 
   Si vous avez copié exactement ma requête SQL, le mot de passe est `admin`.
 
@@ -3529,14 +3589,16 @@ class: middle, center, inverse
 
 class: middle
 .center[
+
 ### **Empêcher le spam avec une API**
+
 ]
 
 N'importe qui peut soumettre un commentaire, même des robots ou des spammeurs. Nous pourrions ajouter un "captcha" au formulaire pour nous protéger des robots, ou nous pouvons utiliser des API tierces.
 
 J'ai décidé d'utiliser le service gratuit [Akismet](https://akismet.com/) pour montrer comment appeler une API et comment faire un appel "vers l'extérieur".
 
-* ⏩ **Créez un compte gratuit sur [akismet.com](https://akismet.com/) et récupérez la clé de l'API Akismet.**
+- ⏩ **Créez un compte gratuit sur [akismet.com](https://akismet.com/) et récupérez la clé de l'API Akismet.**
 
 Au lieu d'utiliser une bibliothèque qui abstrait l'API d'Akismet, nous ferons directement tous les appels API avec Symfony/HttpClient. Faire nous-mêmes les appels HTTP est plus efficace (et nous permet de bénéficier de tous les outils de débogage de Symfony comme l'intégration avec le Symfony Profiler).
 
@@ -3546,11 +3608,11 @@ class: middle
 
 Nous allons concevoir une classe de vérification de spam.
 
-* ⏩ **Créez une nouvelle classe dans `src/` nommée `SpamChecker` pour contenir la logique d'appel à l'API d'Akismet et l'interprétation de ses réponses**
+- ⏩ **Créez une nouvelle classe dans `src/` nommée `SpamChecker` pour contenir la logique d'appel à l'API d'Akismet et l'interprétation de ses réponses**
 
-* ⏩ **Définissez la propriété `private readonly string $endpoint` pour stocker l'URL de l'API Akismet**
+- ⏩ **Définissez la propriété `private readonly string $endpoint` pour stocker l'URL de l'API Akismet**
 
-* ⏩ **Définissez le constructeur pour injecter l'URL de l'API Akismet et le client HTTP**
+- ⏩ **Définissez le constructeur pour injecter l'URL de l'API Akismet et le client HTTP**
 
   ```php
   public function __construct(
@@ -3566,10 +3628,12 @@ Nous allons concevoir une classe de vérification de spam.
 
 class: middle
 .center[
+
 ### **Empêcher le spam avec une API**
+
 ]
 
-* ⏩ **Ajoutez une méthode `getSpamScore()` pour vérifier si un commentaire est du spam :**
+- ⏩ **Ajoutez une méthode `getSpamScore()` pour vérifier si un commentaire est du spam :**
 
   ```php
       /**
@@ -3604,6 +3668,7 @@ class: middle
           return 'true' === $content ? 1 : 0;
       }
   ```
+
 ---
 
 class: middle
@@ -3612,23 +3677,24 @@ Identifions ce que fait la méthode `getSpamScore()`.
 
 Dans un premier temps, elle va transmettre à **Akismet** certaines données concernant le commentaire posté. Puis en fonction des données de la réponse, on retourne 3 valeurs différentes :
 
-* `2` : si le commentaire est un "spam flagrant" ; On lèvera une exception pour le signaler.
+- `2` : si le commentaire est un "spam flagrant" ; On lèvera une exception pour le signaler.
 
-* `1` : si le commentaire pourrait être du spam ;
+- `1` : si le commentaire pourrait être du spam ;
 
-* `0` : si le commentaire n'est pas du spam (ham).
-
+- `0` : si le commentaire n'est pas du spam (ham).
 
 ---
 
 class: middle
 .center[
+
 ### **Identifier le spam dans les commentaires**
+
 ]
 
 Une façon simple de vérifier la présence de spam lorsqu'un nouveau commentaire est soumis est d'appeler le vérificateur de spam avant de stocker les données dans la base de données :
 
-* ⏩ **Modifiez la méthode `show()` du contrôleur pour appeler le vérificateur de spam :**
+- ⏩ **Modifiez la méthode `show()` du contrôleur pour appeler le vérificateur de spam :**
 
 ```diff
          #[Autowire('%photo_dir%')] string $photoDir,
@@ -3650,16 +3716,19 @@ Une façon simple de vérifier la présence de spam lorsqu'un nouveau commentair
 +
              $this->entityManager->flush();
 ```
-* ⏩ **Essayez de soumettre un commentaire avec le mot "spam" dans le texte.**
 
-  * ✅ Le commentaire est stocké dans la base de données.
-  * 🚨 Mais il n'est pas affiché sur la page de la conférence. Nous devons mettre à jour le contrôleur pour filtrer les commentaires marqués comme spam.
+- ⏩ **Essayez de soumettre un commentaire avec le mot "spam" dans le texte.**
+
+  - ✅ Le commentaire est stocké dans la base de données.
+  - 🚨 Mais il n'est pas affiché sur la page de la conférence. Nous devons mettre à jour le contrôleur pour filtrer les commentaires marqués comme spam.
 
 ---
 
 class: middle
 .center[
+
 ### .red[**Travaux pratique Kata**]
+
 ]
 
 Créer une application Symfony pour gérer une bibliothèque de livres, avec des fonctionnalités d’authentification utilisateur et d’intégration avec l’API Google Books pour obtenir les informations complètes des livres à partir du titre et de l’auteur.
@@ -3667,22 +3736,24 @@ Créer une application Symfony pour gérer une bibliothèque de livres, avec des
 **Fonctionnalités Principales**
 
 1. **Gestion des Livres**
-   * Données d'un livre : titre, auteur, date de publication, ISBN, date d’ajout, de modification et l'utilisateur qui a ajouté le livre.
-   * Lister les Livres : Afficher une liste de tous les livres dans la bibliothèque.
-   * Voir les Détails d’un Livre : Afficher les détails d’un livre spécifique.
-   * Ajouter un Livre (authentification requise) : Permettre aux utilisateurs d’ajouter de nouveaux livres en entrant uniquement le titre et l’auteur. Les autres informations seront récupérées via l’API Google Books.
-   * Modifier un Livre (authentification requise) : Permettre aux utilisateurs de modifier les informations d’un livre existant.
-   * Supprimer un Livre (authentification requise) : Permettre aux utilisateurs de supprimer un livre de la bibliothèque.
+
+   - Données d'un livre : titre, auteur, date de publication, ISBN, date d’ajout, de modification et l'utilisateur qui a ajouté le livre.
+   - Lister les Livres : Afficher une liste de tous les livres dans la bibliothèque.
+   - Voir les Détails d’un Livre : Afficher les détails d’un livre spécifique.
+   - Ajouter un Livre (authentification requise) : Permettre aux utilisateurs d’ajouter de nouveaux livres en entrant uniquement le titre et l’auteur. Les autres informations seront récupérées via l’API Google Books.
+   - Modifier un Livre (authentification requise) : Permettre aux utilisateurs de modifier les informations d’un livre existant.
+   - Supprimer un Livre (authentification requise) : Permettre aux utilisateurs de supprimer un livre de la bibliothèque.
 
 2. **Authentification Utilisateur**
-   * Inscription : Les nouveaux utilisateurs peuvent créer un compte.
-   * Connexion : Les utilisateurs existants peuvent se connecter.
-   * Déconnexion : Les utilisateurs peuvent se déconnecter.
-   * Sécurité : Restreindre l’accès aux fonctionnalités de gestion des livres (ajout, modification, suppression) aux utilisateurs authentifiés uniquement.
+
+   - Inscription : Les nouveaux utilisateurs peuvent créer un compte.
+   - Connexion : Les utilisateurs existants peuvent se connecter.
+   - Déconnexion : Les utilisateurs peuvent se déconnecter.
+   - Sécurité : Restreindre l’accès aux fonctionnalités de gestion des livres (ajout, modification, suppression) aux utilisateurs authentifiés uniquement.
 
 3. **Intégration avec l’API Google Books (https://developers.google.com/books/docs/v1/getting_started?hl=fr)**
-   * Obtenir les Informations Complètes des Livres : Utiliser l’API Google Books pour récupérer les informations complètes d’un livre à partir du titre et de l’auteur fournis par l’utilisateur.
-   * Affichage des Informations : Afficher les informations récupérées dans la fiche du livre.
+   - Obtenir les Informations Complètes des Livres : Utiliser l’API Google Books pour récupérer les informations complètes d’un livre à partir du titre et de l’auteur fournis par l’utilisateur.
+   - Affichage des Informations : Afficher les informations récupérées dans la fiche du livre.
 
 ---
 
@@ -3694,7 +3765,9 @@ class: middle, center, inverse
 
 class: middle
 .center[
+
 ### **Installer PHPUnit**
+
 ]
 
 .pull-left[
@@ -3702,68 +3775,73 @@ class: middle
 Comme nous commençons à ajouter, de plus en plus de fonctionnalités dans l'application, c'est probablement le bon moment pour parler des tests.
 
 Symfony s'appuie sur PHPUnit pour les tests unitaires.
-* ⏩ **Installons-le :**
+
+- ⏩ **Installons-le :**
 
   ```sh
   symfony composer req phpunit/phpunit:^11 -W --dev
   ```
 
-* ⏩ **Modifier le contenu du fichier `phpunit.xml.dist` pour ajouter la configuration de PHPUnit 11 :**
+- ⏩ **Modifier le contenu du fichier `phpunit.xml.dist` pour ajouter la configuration de PHPUnit 11 :**
 
 ]
 
 .pull-right[
 
-  ```xml
-  <?xml version="1.0" encoding="UTF-8"?>
-  
-  <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
-    backupGlobals="false" colors="true"
-    bootstrap="tests/bootstrap.php"
-    failOnRisky="true" failOnWarning="true"
-    failOnEmptyTestSuite="true"
-    beStrictAboutChangesToGlobalState="true"
-    beStrictAboutOutputDuringTests="true"
-    cacheDirectory=".phpunit.cache"
-    >
-        <php>
-            <ini name="display_errors" value="1" />
-            <ini name="error_reporting" value="-1" />
-            <server name="APP_ENV" value="test" force="true" />
-            <server name="SHELL_VERBOSITY" value="-1" />
-            <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
-            <server name="SYMFONY_PHPUNIT_VERSION" value="11" />
-            <server name="SYMFONY_DEPRECATIONS_HELPER" value="disabled" />
-        </php>
-        <testsuites>
-            <testsuite name="Project Test Suite">
-                <directory>tests</directory>
-            </testsuite>
-        </testsuites>
-        <source>
-            <include>
-                <directory>src</directory>
-            </include>
-        </source>
-    </phpunit>
-  ```
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+  backupGlobals="false" colors="true"
+  bootstrap="tests/bootstrap.php"
+  failOnRisky="true" failOnWarning="true"
+  failOnEmptyTestSuite="true"
+  beStrictAboutChangesToGlobalState="true"
+  beStrictAboutOutputDuringTests="true"
+  cacheDirectory=".phpunit.cache"
+  >
+      <php>
+          <ini name="display_errors" value="1" />
+          <ini name="error_reporting" value="-1" />
+          <server name="APP_ENV" value="test" force="true" />
+          <server name="SHELL_VERBOSITY" value="-1" />
+          <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
+          <server name="SYMFONY_PHPUNIT_VERSION" value="11" />
+          <server name="SYMFONY_DEPRECATIONS_HELPER" value="disabled" />
+      </php>
+      <testsuites>
+          <testsuite name="Project Test Suite">
+              <directory>tests</directory>
+          </testsuite>
+      </testsuites>
+      <source>
+          <include>
+              <directory>src</directory>
+          </include>
+      </source>
+  </phpunit>
+```
+
 ]
 
 ---
+
 class: middle
 
 .center[
+
 ### **Générer une classe de test unitaire**
+
 ]
 
 `SpamChecker` est la première classe pour laquelle nous allons écrire des tests.
 
-* ⏩ **Générez un test unitaire avec le maker :**
+- ⏩ **Générez un test unitaire avec le maker :**
 
-    ```sh
-    symfony console make:test TestCase SpamCheckerTest
-    ```
+  ```sh
+  symfony console make:test TestCase SpamCheckerTest
+  ```
 
 Suite à cette commande, une nouvelle classe `SpamCheckerTest` est créée dans le répertoire `tests/`. Elle contient une méthode de test `testSomething` qui vérifie que `true` est égal à `true`.
 
@@ -3773,10 +3851,12 @@ Tester le `SpamChecker` est un défi, car nous ne voulons certainement pas utili
 
 class: middle
 .center[
+
 ### **Écrire des tests unitaires**
+
 ]
 
-* ⏩ **Supprimez la méthode `testSomething()` et écrivons un premier test pour le cas où l'API renverrait une erreur :**
+- ⏩ **Supprimez la méthode `testSomething()` et écrivons un premier test pour le cas où l'API renverrait une erreur :**
 
   ```php
   class SpamCheckerTest extends TestCase
@@ -3784,10 +3864,10 @@ class: middle
       public function testSpamScoreWithInvalidRequest(): void
       {
           ($comment = new Comment())->setCreatedAtValue();
-  
+
           $client = new MockHttpClient([new MockResponse('invalid', ['response_headers' => ['x-akismet-debug-help: Invalid key']])]);
           $checker = new SpamChecker($client, 'abcde');
-  
+
           static::expectException(\RuntimeException::class);
           static::expectExceptionMessage('Unable to check for spam: invalid (Invalid key).');
           $checker->getSpamScore(comment: $comment, context: []);
@@ -3801,20 +3881,22 @@ Elle implémente l'interface `HttpClientInterface` dont a besoin notre `SpamChec
 
 Ensuite, nous appelons la méthode `getSpamScore()` et vérifions qu'une exception est levée via la méthode `expectException()` de PHPUnit.
 
-* ⏩ **Lancez notre premier test unitaire :**
+- ⏩ **Lancez notre premier test unitaire :**
 
   ```sh
   symfony php bin/phpunit
   ```
+
 ---
 
 class: middle
 .center[
+
 ### **Ecrire le test pour le cas où l'API renverrai un spam flagrant**
+
 ]
 
-
-* ⏩ **Écrivons un autre test pour le cas où l'API renverrait un spam flagrant :**
+- ⏩ **Écrivons un autre test pour le cas où l'API renverrait un spam flagrant :**
 
   ```php8
       #[DataProvider('provideComments')]
@@ -3822,13 +3904,13 @@ class: middle
       {
           $client = new MockHttpClient([$response]);
           $checker = new SpamChecker($client, 'abcde');
-  
+
           $score = $checker->getSpamScore($comment, $context);
           static::assertSame($expectedScore, $score);
       }
   ```
 
-* ⏩ **Ajoutez une méthode `provideComments()` pour fournir des données de test :**
+- ⏩ **Ajoutez une méthode `provideComments()` pour fournir des données de test :**
 
   ```php
     /** @return iterable<string, array<mixed>> */
@@ -3846,7 +3928,7 @@ class: middle
 
 Les `DataProvider` de PHPUnit nous permettent de réutiliser la même logique de test pour plusieurs scénarios.
 
-* ⏩ **Lancez les tests unitaires :**
+- ⏩ **Lancez les tests unitaires :**
 
   ```sh
   symfony php bin/phpunit
@@ -3856,25 +3938,28 @@ Les `DataProvider` de PHPUnit nous permettent de réutiliser la même logique de
 
 class: middle
 .center[
+
 ### **Écrire des tests fonctionnels pour les contrôleurs**
+
 ]
 
 Tester les contrôleurs est un peu différent de tester une classe PHP "ordinaire" car nous voulons les exécuter dans le contexte d'une requête HTTP. On appelle ces tests des tests fonctionnels.
 
 Le maker de Symfony peut générer des classes de test fonctionnel pour les contrôleurs.
 
-* ⏩ **Générez une classe de test fonctionnel :**
+- ⏩ **Générez une classe de test fonctionnel :**
 
   ```sh
   symfony console make:test WebTestCase ConferenceControllerTest
   ```
-  
+
 Suite à cette commande, une nouvelle classe `ConferenceControllerTest` est créée dans le répertoire `tests/`.
 
 ---
 
-class: middle 
-* ⏩ **Supprimez la methode `testSomething()` et écrivez un test pour vérifier que la page d'accueil fonctionne :**
+class: middle
+
+- ⏩ **Supprimez la methode `testSomething()` et écrivez un test pour vérifier que la page d'accueil fonctionne :**
 
   ```php
     public function testIndex(): void
@@ -3886,11 +3971,13 @@ class: middle
         static::assertSelectorTextContains('h2', 'Give your feedback!');
     }
   ```
-Utiliser `Symfony\Bundle\FrameworkBundle\Test\WebTestCase` à la place de `PHPUnit\Framework\TestCase` comme classe de base pour nos tests nous fournit une abstraction bien pratique pour les tests fonctionnels.
+
+  Utiliser `Symfony\Bundle\FrameworkBundle\Test\WebTestCase` à la place de `PHPUnit\Framework\TestCase` comme classe de base pour nos tests nous fournit une abstraction bien pratique pour les tests fonctionnels.
 
 La variable `$client` simule un navigateur. Au lieu de faire des appels HTTP au serveur, il appelle directement l'application Symfony. Cette stratégie présente plusieurs avantages ✅ :
-* Elle est beaucoup plus rapide que les allers-retours entre le client et le serveur,
-* Mais elle permet aussi aux tests d'analyser l'état des services après chaque requête HTTP.
+
+- Elle est beaucoup plus rapide que les allers-retours entre le client et le serveur,
+- Mais elle permet aussi aux tests d'analyser l'état des services après chaque requête HTTP.
 
 Ce premier test vérifie que la page d'accueil renvoie une réponse HTTP `200` ✅
 
@@ -3898,7 +3985,9 @@ Ce premier test vérifie que la page d'accueil renvoie une réponse HTTP `200` �
 
 class: middle
 .center[
+
 ### **Configurer l'environnement de test**
+
 ]
 
 Par défaut, les tests PHPUnit sont exécutés dans l'environnement Symfony test tel qu'il est défini dans le fichier de configuration de PHPUnit `phpunit.xml.dist` :
@@ -3917,20 +4006,21 @@ Par défaut, les tests PHPUnit sont exécutés dans l'environnement Symfony test
 </phpunit>
 ```
 
-* ⏩ **Pour faire fonctionner les tests, nous devons définir la clé secrète `AKISMET_KEY` pour cet environnement test dans le fichier `.env.test.local` :**
+- ⏩ **Pour faire fonctionner les tests, nous devons définir la clé secrète `AKISMET_KEY` pour cet environnement test dans le fichier `.env.test.local` :**
 
   ```sh
   # .env.test.local
   AKISMET_KEY=abcde
   ```
-* ⏩ **Mettez à jour le fichier `test/bootstrap.php` pour supporter phpunit 11 :**
+
+- ⏩ **Mettez à jour le fichier `test/bootstrap.php` pour supporter phpunit 11 :**
 
   ```diff
   <?php
 
   use Symfony\Component\Dotenv\Dotenv;
   +use Symfony\Component\ErrorHandler\ErrorHandler;
-  
+
   require dirname(__DIR__).'/vendor/autoload.php';
   +set_exception_handler([new ErrorHandler(), 'handleException']);
   ```
@@ -3939,7 +4029,9 @@ Par défaut, les tests PHPUnit sont exécutés dans l'environnement Symfony test
 
 class: middle
 .center[
+
 ### **Utiliser une base de données de test**
+
 ]
 
 Comme nous l'avons déjà vu, la commande Symfony définit automatiquement la variable d'environnement `DATABASE_URL`. Quand `APP_ENV` a pour valeur `test`, comme c'est le cas lors de l'exécution de PHPUnit, cela change le nom de la base de données de `app` en `app_test` pour que les tests utilisent leur propre base de données :
@@ -3947,10 +4039,10 @@ Comme nous l'avons déjà vu, la commande Symfony définit automatiquement la va
 ```yaml
 # config/packages/doctrine.yaml
 when@test:
-    doctrine:
-        dbal:
-            # "TEST_TOKEN" is typically set by ParaTest
-            dbname_suffix: '_test%env(default::TEST_TOKEN)%'
+  doctrine:
+    dbal:
+      # "TEST_TOKEN" is typically set by ParaTest
+      dbname_suffix: "_test%env(default::TEST_TOKEN)%"
 ```
 
 Cela est très important, car nous aurons besoin d'un jeu de données stable pour exécuter nos tests et nous ne voulons certainement pas écraser celui stocké dans la base de développement.
@@ -3958,17 +4050,18 @@ Cela est très important, car nous aurons besoin d'un jeu de données stable pou
 ---
 
 class: middle
-* ⏩ **Avant de pouvoir lancer les tests, nous devons "initialiser" la base de données test (créez la base de données et jouez les migrations) :**
 
-    ```sh
-    APP_ENV=test symfony console doctrine:database:create
-  
-    APP_ENV=test symfony console doctrine:migrations:migrate -n
-    ```
+- ⏩ **Avant de pouvoir lancer les tests, nous devons "initialiser" la base de données test (créez la base de données et jouez les migrations) :**
+
+  ```sh
+  APP_ENV=test symfony console doctrine:database:create
+
+  APP_ENV=test symfony console doctrine:migrations:migrate -n
+  ```
 
 Si vous lancez les tests maintenant, PHPUnit n'interagira plus avec votre base de données de développement. Pour lancer les nouveaux tests uniquement, passez le chemin de leur classe en argument.
 
-* ⏩ **Lancez les tests unitaires :**
+- ⏩ **Lancez les tests unitaires :**
 
   ```sh
   symfony php bin/phpunit tests/ConferenceControllerTest.php
@@ -3978,12 +4071,14 @@ Si vous lancez les tests maintenant, PHPUnit n'interagira plus avec votre base d
 
 class: middle
 .center[
+
 ### **Définir des fixtures (données de test)**
+
 ]
 
 Pour pouvoir tester la liste des commentaires, la pagination et la soumission du formulaire, nous devons remplir la base de données avec quelques données. Nous voulons également que les données soient identiques entre les cycles de tests pour qu'ils réussissent. Les fixtures sont exactement ce dont nous avons besoin.
 
-* ⏩ **Installez le composant `doctrine/doctrine-fixtures-bundle` :**
+- ⏩ **Installez le composant `doctrine/doctrine-fixtures-bundle` :**
 
   ```sh
   symfony composer req --dev doctrine/doctrine-fixtures-bundle
@@ -3992,11 +4087,12 @@ Pour pouvoir tester la liste des commentaires, la pagination et la soumission du
 Un nouveau répertoire `src/DataFixtures/` a été créé lors de l'installation, avec une classe d'exemple prête à être personnalisée.
 
 ---
+
 class: middle
 
 Dans le fichier `src/DataFixtures/AppFixtures.php`, nous allons ajouter des conférences et des commentaires pour les tests.
 
-* ⏩ **Remplacez le contenu de la méthode `load()` par le code suivant qui ajoute deux conférences et un commentaire :**
+- ⏩ **Remplacez le contenu de la méthode `load()` par le code suivant qui ajoute deux conférences et un commentaire :**
 
   ```php
     public function load(ObjectManager $manager): void
@@ -4027,12 +4123,15 @@ Dans le fichier `src/DataFixtures/AppFixtures.php`, nous allons ajouter des conf
 
 class: middle
 .center[
+
 ### **Charger les fixtures**
+
 ]
 
 Lorsque nous chargerons les données de test, toutes les données présentes seront supprimées, y compris celles de l'admin.
 
-* ⏩ **Pour éviter cela, modifions les fixtures :**
+- ⏩ **Pour éviter cela, modifions les fixtures :**
+
   ```diff
   class AppFixtures extends Fixture
   {
@@ -4045,7 +4144,7 @@ Lorsque nous chargerons les données de test, toutes les données présentes ser
       {
 
   @@ ...
-          
+
           $manager->persist($comment1);
 
   +        $admin = new Admin();
@@ -4059,44 +4158,48 @@ Lorsque nous chargerons les données de test, toutes les données présentes ser
   }
   ```
 
-* ⏩ **Chargez les données de test pour l'environnement/la base de données de test :**
+- ⏩ **Chargez les données de test pour l'environnement/la base de données de test :**
 
-    ```sh
-    APP_ENV=test symfony console doctrine:fixtures:load --no-interaction
-    ```
+  ```sh
+  APP_ENV=test symfony console doctrine:fixtures:load --no-interaction
+  ```
 
 ---
 
 class: middle
 .center[
+
 ### **Parcourir un site web avec des tests fonctionnels**
+
 ]
 
 Comme nous l'avons vu, le client `HTTP` utilisé dans les tests simule un navigateur, afin que nous puissions parcourir le site comme si nous utilisions un navigateur.
 
 .pull-left[
-* ⏩ **Ajoutez à la classe `ConferenceControllerTest` un nouveau test qui clique sur une page de conférence depuis la page d'accueil :**
+
+- ⏩ **Ajoutez à la classe `ConferenceControllerTest` un nouveau test qui clique sur une page de conférence depuis la page d'accueil :**
+
   ```php
 
     public function testConferencePage() : void
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/');
-  
+
         static::assertCount(2, $crawler->filter('h4'));
-  
+
         $client->clickLink('View');
-  
+
         static::assertPageTitleContains('Amsterdam');
-  
+
         static::assertResponseIsSuccessful();
         static::assertSelectorTextContains('h2', 'Amsterdam 2019');
-  
+
         static::assertSelectorExists('div:contains("There are 1 comments")');
     }
   ```
-  
-* ⏩ **Exécutez les tests :**
+
+- ⏩ **Exécutez les tests :**
   ```sh
   symfony php bin/phpunit tests/ConferenceControllerTest.php
   ```
@@ -4106,46 +4209,48 @@ Comme nous l'avons vu, le client `HTTP` utilisé dans les tests simule un naviga
 
 **Décrivons ce qu’il se passe dans ce test :**
 
-  * Comme pour le premier test, nous allons sur la page d'accueil
+- Comme pour le premier test, nous allons sur la page d'accueil
 
-  * La méthode `request()` retourne une instance de `Crawler` qui aide à trouver des éléments sur la page (comme des liens, des formulaires, ou tout ce que vous pouvez atteindre avec des sélecteurs CSS ou XPath) ;
+- La méthode `request()` retourne une instance de `Crawler` qui aide à trouver des éléments sur la page (comme des liens, des formulaires, ou tout ce que vous pouvez atteindre avec des sélecteurs CSS ou XPath) ;
 
-  * Grâce à un sélecteur CSS, nous testons que nous avons bien deux conférences listées sur la page d'accueil ;
+- Grâce à un sélecteur CSS, nous testons que nous avons bien deux conférences listées sur la page d'accueil ;
 
-  * On clique ensuite sur le lien `"View"` (comme il n'est pas possible de cliquer sur plus d'un lien à la fois, Symfony choisit automatiquement le premier qu'il trouve) ;
+- On clique ensuite sur le lien `"View"` (comme il n'est pas possible de cliquer sur plus d'un lien à la fois, Symfony choisit automatiquement le premier qu'il trouve) ;
 
-  * Nous vérifions le titre de la page, la réponse et le `<h2>` de la page pour être sûr d'être sur la bonne page (nous aurions aussi pu vérifier la route correspondante) ;
+- Nous vérifions le titre de la page, la réponse et le `<h2>` de la page pour être sûr d'être sur la bonne page (nous aurions aussi pu vérifier la route correspondante) ;
 
-  * Enfin, nous vérifions qu'il y a 1 commentaire sur la page. `div:contains()` n'est pas un sélecteur CSS valide, mais Symfony a quelques ajouts intéressants, empruntés à jQuery.
+- Enfin, nous vérifions qu'il y a 1 commentaire sur la page. `div:contains()` n'est pas un sélecteur CSS valide, mais Symfony a quelques ajouts intéressants, empruntés à jQuery.
 
 ]
-
 
 ---
 
 class: middle
 .center[
+
 ### **Soumettre un formulaire dans un test fonctionnel**
+
 ]
 
 🆙 Voulez-vous passer au niveau supérieur ?
 
 Essayez d'ajouter un nouveau commentaire avec une photo sur une conférence, à partir d'un test, en simulant une soumission de formulaire. Cela semble ambitieux, n'est-ce pas ?
 
-* ⏩ **Regardez le code nécessaire : pas plus compliqué que ce que nous avons déjà écrit. Ajoutez cd test à notre classe `ConferenceControllerTest`**
+- ⏩ **Regardez le code nécessaire : pas plus compliqué que ce que nous avons déjà écrit. Ajoutez cd test à notre classe `ConferenceControllerTest`**
+
   ```php
       public function testCommentSubmission() : void
       {
           $client = static::createClient();
           $client->request('GET', '/conference/amsterdam-2019');
-  
+
           $client->submitForm('Submit', [
               'comment_form[author]' => 'Fabien',
               'comment_form[text]' => 'Some feedback from an automated functional test',
               'comment_form[email]' => 'me@automat.ed',
               'comment_form[photo]' => dirname(__DIR__, 2).'/public/images/under-construction.gif',
           ]);
-  
+
           static::assertResponseRedirects();
           $client->followRedirect();
           static::assertSelectorExists('div:contains("There are 2 comments")');
@@ -4155,19 +4260,22 @@ Essayez d'ajouter un nouveau commentaire avec une photo sur une conférence, à 
   Pour soumettre un formulaire via `submitForm()`, recherchez les noms de champs grâce aux outils de développement du navigateur ou via l'onglet **Form du Symfony Profiler**. Notez la réutilisation pratique de l'image en construction !
 
 ---
+
 class:middle
 
-* ⏩ **Relancez les tests pour vérifier que tout est bon :**
+- ⏩ **Relancez les tests pour vérifier que tout est bon :**
+
   ```sh
   symfony php bin/phpunit tests/Controller/ConferenceControllerTest.php
   ```
-  
+
   .center[<img src="https://em-content.zobj.net/source/telegram/386/check-mark-button_2705.webp" width=50>]
 
-* ⏩ **Si vous voulez vérifier le résultat dans un navigateur, arrêtez le serveur web et relancer le pour l'environnement test :**
+- ⏩ **Si vous voulez vérifier le résultat dans un navigateur, arrêtez le serveur web et relancer le pour l'environnement test :**
+
   ```sh
   symfony server:stop
-  
+
   APP_ENV=test symfony server:start
   ```
 
@@ -4175,10 +4283,12 @@ class:middle
 
 class: middle
 .center[
+
 ### **Recharger les données de test**
+
 ]
 
-* ⏩ **Si vous effectuez les tests une deuxième fois, ils devraient échouer.**
+- ⏩ **Si vous effectuez les tests une deuxième fois, ils devraient échouer.**
 
 .center[
 <img src="https://em-content.zobj.net/source/telegram/358/firecracker_1f9e8.webp" width="40px" />
@@ -4186,14 +4296,14 @@ class: middle
 
 🤔 Comme il y a maintenant plus de commentaires dans la base de données, l'assertion qui vérifie le nombre de commentaires est erronée.
 
-* ⏩ **Nous devons réinitialiser l'état de la base de données entre chaque exécution, en rechargeant les données de test avant chacune d'elles :**
-  
+- ⏩ **Nous devons réinitialiser l'état de la base de données entre chaque exécution, en rechargeant les données de test avant chacune d'elles :**
+
   ```
   APP_ENV=test symfony console doctrine:fixtures:load -n
-  
+
   symfony php bin/phpunit tests/ConferenceControllerTest.php
   ```
-  
+
 .center[
 
 Yeap ! Les tests passent à nouveau.
@@ -4206,13 +4316,15 @@ Yeap ! Les tests passent à nouveau.
 
 class: middle
 .center[
+
 ### **Automatiser votre workflow avec un Makefile**
+
 ]
 
 <img src="https://em-content.zobj.net/source/telegram/358/pouting-face_1f621.webp" width="24px" /> 
-Il est assez pénible d'avoir à se souvenir d'une séquence de commandes pour exécuter les tests. Cela devrait au moins être documenté, même si cette documentation ne devrait être consultée qu'en dernier recours. 
+Il est assez pénible d'avoir à se souvenir d'une séquence de commandes pour exécuter les tests. Cela devrait au moins être documenté, même si cette documentation ne devrait être consultée qu'en dernier recours.
 
-👉 Et si on automatisait plutôt les opérations récurrentes ? 
+👉 Et si on automatisait plutôt les opérations récurrentes ?
 
 Cela servirait aussi de documentation rapidement accessible aux autres, et rendrait le développement plus facile et plus productif.
 
@@ -4224,7 +4336,7 @@ Cela servirait aussi de documentation rapidement accessible aux autres, et rendr
 
 class:middle
 
-* ⏩ **L'utilisation d'un fichier `Makefile` est une façon d'automatiser les commandes :**
+- ⏩ **L'utilisation d'un fichier `Makefile` est une façon d'automatiser les commandes :**
 
   ```makefile
   # Makefile
@@ -4236,7 +4348,7 @@ class:middle
       APP_ENV=test symfony console doctrine:schema:update --force
       APP_ENV=test symfony console doctrine:fixtures:load -n
       APP_ENV=dev symfony php bin/phpunit $(MAKECMDGOALS)
-  
+
   .PHONY: tests
   ```
 
@@ -4246,7 +4358,8 @@ class:middle
 
 Notez l'option `-n` sur la commande Doctrine ; c'est une option standard sur les commandes Symfony qui les rend non interactives.
 
-* ⏩ **Chaque fois que vous voulez exécuter les tests, utilisez make tests :**
+- ⏩ **Chaque fois que vous voulez exécuter les tests, utilisez make tests :**
+
 ```sh
 make tests
 ```
@@ -4255,14 +4368,16 @@ make tests
 
 class: middle
 .center[
+
 ### **Réinitialiser la base de données après chaque test**
+
 ]
 
 Réinitialiser la base de données après chaque test, c'est bien ! Mais avoir des tests vraiment indépendants, c'est encore mieux. 🚀🚀
 
 Nous ne voulons pas qu'un test s'appuie sur les résultats des précédents. Le changement de l'ordre des tests ne devrait pas changer le résultat. Comme nous allons le découvrir maintenant, ce n'est pas le cas pour le moment.
 
-* ⏩ **Déplacez le test `testConferencePage` après `testCommentSubmission` et rejouez les tests avec `make tests`**
+- ⏩ **Déplacez le test `testConferencePage` après `testCommentSubmission` et rejouez les tests avec `make tests`**
 
 > 🛑 Les tests échouent maintenant. Le test `testCommentSubmission` ne peut pas trouver la conférence car elle a été supprimée par le test `testConferencePage`.
 
@@ -4272,7 +4387,7 @@ class:middle
 
 Pour résoudre ce problème, nous devons réinitialiser la base de données après chaque test en installant le composant `DoctrineTestBundle`
 
-* ⏩ **Installez le composant `DoctrineTestBundle` :**
+- ⏩ **Installez le composant `DoctrineTestBundle` :**
 
   ```sh
   symfony composer require "dama/doctrine-test-bundle:^8" --dev
@@ -4284,7 +4399,7 @@ Pour résoudre ce problème, nous devons réinitialiser la base de données apr�
 
 La recette `dama/doctrine-test-bundle` a mis à jour le fichier `phpunit.xml.dist` pour ajouter une configuration spécifique à `DoctrineTestBundle`. Celle-ci n'est pas compatible avec la configuration de PHPUnit 11 que nous avons ajoutée précédemment.
 
-* ⏩ **Modifiez le fichier `phpunit.xml.dist` pour ajouter la configuration de `DoctrineTestBundle` :**
+- ⏩ **Modifiez le fichier `phpunit.xml.dist` pour ajouter la configuration de `DoctrineTestBundle` :**
 
 ```xml
     <extensions>
@@ -4294,17 +4409,19 @@ La recette `dama/doctrine-test-bundle` a mis à jour le fichier `phpunit.xml.dis
 
 Et voilà. Toute modification apportée pendant les tests est automatiquement annulée à la fin de chaque test.
 
-* ⏩ **Les tests devraient passer à nouveau :**
+- ⏩ **Les tests devraient passer à nouveau :**
 
-    ```sh
-    make tests
-    ```
+  ```sh
+  make tests
+  ```
 
 ---
 
 class: middle
 .center[
+
 ### **Choisir le bon type de test**
+
 ]
 
 Nous avons créé trois types de tests jusqu'à maintenant. Bien que nous n'ayons utilisé le bundle maker que pour générer des tests unitaires, nous aurions tout aussi bien pu l'utiliser pour générer les classes des autres tests :
@@ -4316,15 +4433,15 @@ symfony console make:test PantherTestCase Controller\\ConferenceController
 
 Le bundle maker supporte la génération des types de tests suivants en fonction de la manière dont vous voulez tester votre application :
 
-* `TestCase`: Tests PHPUnit basiques ;
-* `KernelTestCase` : Tests basiques ayant accès aux services Symfony ;
-* `WebTestCase` : Pour exécuter des scénarios à la manière d'un navigateur, mais sans exécution du code JavaScript ;
-* `ApiTestCase` : Pour jouer des scénarios orientés API ;
-* `PantherTestCase` : Pour jouer des scénarios e2e, en utilisant un vrai navigateur ou client HTTP et un vrai serveur web.
+- `TestCase`: Tests PHPUnit basiques ;
+- `KernelTestCase` : Tests basiques ayant accès aux services Symfony ;
+- `WebTestCase` : Pour exécuter des scénarios à la manière d'un navigateur, mais sans exécution du code JavaScript ;
+- `ApiTestCase` : Pour jouer des scénarios orientés API ;
+- `PantherTestCase` : Pour jouer des scénarios e2e, en utilisant un vrai navigateur ou client HTTP et un vrai serveur web.
 
 Les tests sont importants pour garantir que votre application fonctionne correctement. Ils vous permettent de vérifier que les nouvelles fonctionnalités que vous ajoutez ne cassent pas les fonctionnalités existantes.
 
-* ⏩ **Commitez les modifications :**
+- ⏩ **Commitez les modifications :**
 
   ```sh
   git add .
@@ -4341,28 +4458,29 @@ class: middle, center, inverse
 
 class: middle
 .center[
+
 ### **PHPStan**
+
 ]
 
 Le composant `phpunit` est un outil de test unitaire. Il existe d'autres outils pour tester la qualité de votre code. Tel que `phpstan` qui est un outil d'analyse statique du code PHP et `phpcs-fixer` qui est un outil de correction de code.
 
-
 PHPStan est un outil d'analyse statique du code PHP qui vous aide à détecter les erreurs potentielles dans votre code. Il est capable de détecter les erreurs de type, les erreurs de logique, les erreurs de syntaxe, les erreurs de performance et les erreurs de style.
 
-* ⏩ **Installez le composant `phpstan` :**
+- ⏩ **Installez le composant `phpstan` :**
 
   ```sh
   symfony composer req --dev phpstan/phpstan
   ```
 
-* ⏩ **Ajouter a notre fichier Makefile la commande pour lancer `phpstan` :**
+- ⏩ **Ajouter a notre fichier Makefile la commande pour lancer `phpstan` :**
 
   ```makefile
     phpstan:
         APP_ENV=dev symfony php vendor/bin/phpstan analyse --level max
-    ```
+  ```
 
-* ⏩ **Lancez `phpstan` :**
+- ⏩ **Lancez `phpstan` :**
 
   ```sh
   make phpstan
@@ -4374,33 +4492,35 @@ PHPStan est un outil d'analyse statique du code PHP qui vous aide à détecter l
 
 class: middle
 .center[
+
 ### **PHPCs-fixer**
+
 ]
 
 PHP-CS-Fixer est un outil de correction de code qui vous aide à maintenir un code propre et conforme à un ensemble de règles de style. Il peut corriger automatiquement les erreurs de style de votre code.
 
-* ⏩ **Installez le composant `php-cs-fixer` :**
+- ⏩ **Installez le composant `php-cs-fixer` :**
 
   ```sh
   symfony composer req --dev friendsofphp/php-cs-fixer
   ```
 
-* ⏩ **Ajouter a notre fichier Makefile la commande pour lancer `php-cs-fixer` :**
+- ⏩ **Ajouter a notre fichier Makefile la commande pour lancer `php-cs-fixer` :**
 
   ```makefile
     php-cs-fixer:
         APP_ENV=dev symfony php vendor/bin/php-cs-fixer fix
-  
+
     php-cs-fixer-dry-run:
         APP_ENV=dev symfony php vendor/bin/php-cs-fixer fix --dry-run
-    ```
+  ```
 
-* ⏩ **Lancer la correction du code :**
+- ⏩ **Lancer la correction du code :**
 
   ```sh
     make php-cs-fixer
   ```
-  
+
 Le Cs-fixer corrige les erreurs de style dans notre code. Cela nous permet de nous concentrer sur l'écriture de code et de ne pas perdre de temps à le formater.
 
 ---
@@ -4409,21 +4529,21 @@ class: middle
 
 Pour automatiser la vérification de la qualité de notre code, nous pouvons ajouter une commande `quality` à notre `Makefile` qui exécute `phpstan`, `php-cs-fixer` et les tests.
 
-* ⏩ **Ajouter la commande `quality` à notre `Makefile` :**
+- ⏩ **Ajouter la commande `quality` à notre `Makefile` :**
 
   ```makefile
     quality: phpstan php-cs-fixer tests
   ```
-  
-* ⏩ **Lancer la vérification de la qualité du code :**
+
+- ⏩ **Lancer la vérification de la qualité du code :**
 
   ```sh
     make quality
   ```
-  
+
 Grâce à cette commande, nous pouvons vérifier la qualité de notre code en une seule commande. Cela nous permet de nous permet de gagner du temps et de nous concentrer sur l'écriture de code.
 
-* ⏩ **Commitez les modifications :**
+- ⏩ **Commitez les modifications :**
 
   ```sh
   git add .
@@ -4440,10 +4560,12 @@ class: middle, center, inverse
 
 class: middle
 .center[
+
 ### **Marquer les commentaires**
+
 ]
 
-Vérifier la présence de spam pendant le traitement de la soumission du formulaire peut entraîner certains problèmes. 
+Vérifier la présence de spam pendant le traitement de la soumission du formulaire peut entraîner certains problèmes.
 
 🤔 Si l'API d'Akismet devient lente, notre site web sera également lent pour les internautes. Mais pire encore 😱, si nous atteignons le délai d'attente maximal ou si l'API d'Akismet n'est pas disponible, nous pourrions perdre des commentaires.
 
@@ -4455,15 +4577,16 @@ class: middle
 
 Nous avons besoin d'introduire un état (`state`) pour les commentaires : `submitted`, `spam` et `published`.
 
-* ⏩ **Ajoutez la propriété state à la classe `Comment` :**
+- ⏩ **Ajoutez la propriété state à la classe `Comment` :**
   ```sh
   symfony console make:entity Comment
   ```
-* ⏩ **Ajouter une classe enum `App\Entity\Enum\CommentStateEnum.php` pour définir les états possible :**
+- ⏩ **Ajouter une classe enum `App\Entity\Enum\CommentStateEnum.php` pour définir les états possible :**
+
   ```php
 
       namespace App\Entity\Enum;
-  
+
       enum CommentStateEnum : string
       {
           case Submitted = 'submitted';
@@ -4474,7 +4597,7 @@ Nous avons besoin d'introduire un état (`state`) pour les commentaires : `submi
 
 Au niveau de notre entité `Comment`, utilisons cette classe enum pour définir les états possibles. Et nous devrions également nous assurer que, par défaut, le paramètre `state` est initialisé avec la valeur `submitted`
 
-* ⏩ **Mettez à jour la classe `Comment` :**
+- ⏩ **Mettez à jour la classe `Comment` :**
   ```diff
   -    #[ORM\Column(length: 255)]
   -    private ?string $state = null;
@@ -4492,33 +4615,41 @@ Au niveau de notre entité `Comment`, utilisons cette classe enum pour définir 
 
 class: middle
 .center[
+
 ### **Migration de la base de données**
+
 ]
 
-* ⏩ **Créez une migration de base de données :**
+- ⏩ **Créez une migration de base de données :**
+
   ```sh
   symfony console make:migration --formatted
   ```
 
-* ⏩ **Modifiez la migration pour mettre à jour tous les commentaires existants comme étant published par défaut :**
+- ⏩ **Modifiez la migration pour mettre à jour tous les commentaires existants comme étant published par défaut :**
+
   ```diff
            $this->addSql('ALTER TABLE comment ADD state VARCHAR(255) DEFAULT \'submitted\' NOT NULL');
   +        $this->addSql("UPDATE comment SET state='published'");
     }
   ```
 
-* ⏩ **Exécutez la migration :**
+- ⏩ **Exécutez la migration :**
   ```sh
   symfony console doctrine:migrations:migrate -n
   ```
 
 ---
+
 class: middle
 .center[
+
 ### **Mis à jour de notre code**
+
 ]
 
-* ⏩ **Modifiez la logique d'affichage pour éviter que des commentaires non publiés n'apparaissent sur le site :**
+- ⏩ **Modifiez la logique d'affichage pour éviter que des commentaires non publiés n'apparaissent sur le site :**
+
   ```diff
   # src/Repository/CommentRepository.php
 
@@ -4529,7 +4660,8 @@ class: middle
   +            ->setParameter('state', CommentStateEnum::Published)
   ```
 
-* ⏩ **Modifiez la configuration d'EasyAdmin pour voir l'état du commentaire :**
+- ⏩ **Modifiez la configuration d'EasyAdmin pour voir l'état du commentaire :**
+
   ```diff
   # src/Controller/Admin/CommentCrudController.php
               ->setLabel('Photo')
@@ -4538,7 +4670,8 @@ class: middle
   +        yield TextField::new('state');
   ```
 
-* ⏩ **N'oubliez pas de modifier les tests en renseignant le state dans les fixtures `AppFixtures`, profitons aussi pour ajouter un autre commentaire :**
+- ⏩ **N'oubliez pas de modifier les tests en renseignant le state dans les fixtures `AppFixtures`, profitons aussi pour ajouter un autre commentaire :**
+
   ```diff
           $comment1->setText('This was a great conference.');
   +        $comment1->setState(CommentStateEnum::Published);
@@ -4558,10 +4691,12 @@ class: middle
 class: middle
 
 .center[
+
 ### **Mis à jour de notre code**
+
 ]
 
-* ⏩ **Pour les tests du contrôleur `tests/Controller/ConferenceControllerTest.php`, simulez la validation :**
+- ⏩ **Pour les tests du contrôleur `tests/Controller/ConferenceControllerTest.php`, simulez la validation :**
 
   ```diff
   +use App\Repository\CommentRepository;
@@ -4583,7 +4718,7 @@ class: middle
   +        $comment = static::getContainer()->get(CommentRepository::class)->findOneByEmail($email);
   +        $comment->setState(CommentStateEnum::Published);
   +        static::getContainer()->get(EntityManagerInterface::class)->flush();
-  
+
           $client->followRedirect();
   -        static::assertSelectorExists('div:contains("There are 2 comments")');
   +        self::assertSelectorExists('div:contains("There are 3 comments")');
@@ -4591,21 +4726,24 @@ class: middle
 
 À partir d'un test PHPUnit, vous pouvez obtenir n'importe quel service depuis le conteneur grâce à `static::getContainer()->get('service');` il donne également accès aux services non publics.
 
-* ⏩ **Lancez les tests :**
+- ⏩ **Lancez les tests :**
 
   ```sh
   make tests
   ```
+
 ---
 
 class: middle
 .center[
+
 ### **Comprendre Messenger**
+
 ]
 
 La gestion du code asynchrone avec Symfony est faite par le composant Messenger :
 
-* ⏩ **Installez le composant Messenger :**
+- ⏩ **Installez le composant Messenger :**
   ```sh
   symfony composer require doctrine-messenger
   ```
@@ -4624,19 +4762,23 @@ C'est très similaire à la façon dont les requêtes HTTP sont traitées, **sau
 
 class: middle
 .center[
+
 ### **Coder un gestionnaire de messages**
+
 ]
 
 Un message est une classe de données (data object), qui ne doit contenir aucune logique. Il sera sérialisé pour être stocké dans une file d'attente, donc ne stockez que des données "simples" et sérialisables.
 
-* ⏩ **Générez nos classe de Message et Handler via le maker :**
+- ⏩ **Générez nos classe de Message et Handler via le maker :**
+
   ```sh
     symfony console make:message CommentMessage
   ```
 
   Une classe `CommentMessage` est générée dans le répertoire `src/Message` et une classe `CommentMessageHandler` est générée dans le répertoire `src/MessageHandler`.
 
-* ⏩ **Modifiez la classe `CommentMessage` pour ajouter un contexte :**
+- ⏩ **Modifiez la classe `CommentMessage` pour ajouter un contexte :**
+
   ```php
   namespace App\Message;
 
@@ -4655,7 +4797,8 @@ Dans le monde de Messenger, nous n'avons pas de contrôleurs, mais des gestionna
 
 class: middle
 
-* ⏩ **Sous un nouveau namespace `App\MessageHandler`, modifiez la classe `CommentMessageHandler` qui saura comment gérer les messages `CommentMessage` :**
+- ⏩ **Sous un nouveau namespace `App\MessageHandler`, modifiez la classe `CommentMessageHandler` qui saura comment gérer les messages `CommentMessage` :**
+
   ```php
   namespace App\MessageHandler;
 
@@ -4696,7 +4839,7 @@ class: middle
 
 class: middle
 
-`#[AsMessageHandler]` aide Symfony à enregistrer et à configurer automatiquement la classe en tant que gestionnaire Messenger. 
+`#[AsMessageHandler]` aide Symfony à enregistrer et à configurer automatiquement la classe en tant que gestionnaire Messenger.
 
 Par convention, la logique d'un gestionnaire réside dans une méthode appelée `__invoke()`. Le type `CommentMessage` précisé en tant qu'argument unique de cette méthode indique à Messenger quelle classe elle va gérer.
 
@@ -4704,7 +4847,8 @@ Par convention, la logique d'un gestionnaire réside dans une méthode appelée 
 
 class: middle
 
-* ⏩ **Modifiez le contrôleur `src/Controller/ConferenceController.php` pour utiliser le nouveau système :**
+- ⏩ **Modifiez le contrôleur `src/Controller/ConferenceController.php` pour utiliser le nouveau système :**
+
   ```diff
   use App\Repository\ConferenceRepository;
   +use App\Message\CommentMessage;
@@ -4722,7 +4866,7 @@ class: middle
               $this->entityManager->persist($comment);
   +         $this->entityManager->flush();
   @@ ...
-                
+
   -            if (2 === $spamChecker->getSpamScore($comment, $context)) {
   -                throw new \RuntimeException('Blatant spam, go away!');
   -            }
@@ -4739,18 +4883,23 @@ class: middle
 Au lieu de dépendre du `SpamChecker`, nous envoyons maintenant un message dans le **bus**. Le gestionnaire décide alors ce qu'il en fait.
 
 Nous avons fait quelque chose que nous n'avions pas prévu. Nous avons découplé notre contrôleur du vérificateur de spam, et déplacé la logique vers une nouvelle classe, le gestionnaire. C'est un cas d'utilisation parfait pour le bus.
-* ⏩ **Testez le code, il fonctionne.**
+
+- ⏩ **Testez le code, il fonctionne.**
   > Tout se fait encore de manière synchrone, mais le code est probablement déjà "meilleur".
 
 ---
 
 class: middle
 .center[
+
 ### **Faire vraiment de l'asynchrone**
+
 ]
 
 Par défaut, les gestionnaires sont appelés de manière synchrone. Pour les rendre asynchrone, vous devez :
-* ⏩ **configurer explicitement la file d'attente à utiliser pour chaque gestionnaire dans le fichier de configuration `config/packages/messenger.yaml` :**
+
+- ⏩ **configurer explicitement la file d'attente à utiliser pour chaque gestionnaire dans le fichier de configuration `config/packages/messenger.yaml` :**
+
   ```diff
               Symfony\Component\Notifier\Message\SmsMessage: async
 
@@ -4769,13 +4918,16 @@ La configuration indique au bus d'envoyer les instances de `App\Message\CommentM
 
 class: middle
 .center[
+
 ### **Consommer des messages**
+
 ]
 
 Si vous essayez de soumettre un nouveau commentaire, le vérificateur de spam ne sera plus appelé. Ajoutez un appel à la fonction `error_log()` dans la méthode `getSpamScore()` pour le confirmer. Au lieu d'avoir un nouveau commentaire, un message est en attente dans la file d'attente, prêt à être consommé par d'autres processus.
 
 Comme vous pouvez l'imaginer, Symfony est livré avec une commande pour consommer les messages.
-* ⏩ **Exécutez-la maintenant :**
+
+- ⏩ **Exécutez-la maintenant :**
   ```sh
   symfony console messenger:consume async -vv
   ```
@@ -4802,20 +4954,23 @@ Cette commande devrait immédiatement consommer le message envoyé pour le comme
 
 L'activité du `consumer` de messages est enregistrée dans les logs, mais vous pouvez avoir un affichage instantané dans la console en passant l'option `-vv`. Vous devriez même voir l'appel vers l'API d'Akismet.
 
-* ⏩ **Pour arrêter le consumer, appuyez sur `Ctrl+C`.**
+- ⏩ **Pour arrêter le consumer, appuyez sur `Ctrl+C`.**
 
 ---
 
 class: middle
 .center[
+
 ### **Lancer des workers en arrière-plan**
+
 ]
 
 Au lieu de lancer le consumer à chaque fois que nous publions un commentaire et de l'arrêter immédiatement après, nous voulons l'exécuter en continu sans avoir trop de fenêtres ou d'onglets du terminal ouverts.
 
 La commande `symfony` peut gérer des commandes en tâche de fond ou des workers en utilisant l'option daemon (`-d`) sur la commande `run`.
 
-* ⏩ **Exécutez à nouveau le consumer du message, mais en tâche de fond :**
+- ⏩ **Exécutez à nouveau le consumer du message, mais en tâche de fond :**
+
   ```sh
   symfony run -d --watch=config,src,templates,vendor symfony console messenger:consume async
   ```
@@ -4832,7 +4987,8 @@ class: middle
 
 Les logs sont diffusés en continu par la commande symfony `server:log`, en même temps que ceux de PHP, du serveur web et de l'application.
 
-* ⏩ **Utilisez la commande `server:status` pour lister tous les workers en arrière-plan gérés pour le projet en cours :**
+- ⏩ **Utilisez la commande `server:status` pour lister tous les workers en arrière-plan gérés pour le projet en cours :**
+
   ```sh
   symfony server:status
 
@@ -4840,7 +4996,7 @@ Les logs sont diffusés en continu par la commande symfony `server:log`, en mêm
       Command symfony console messenger:consume async running with PID 15774 (watching config/, src/, templates/)
   ```
 
-* ⏩ **Pour arrêter un worker, arrêtez le serveur web ou tuez le PID (identifiant du processus) donné par la commande `server:status`** : 
+- ⏩ **Pour arrêter un worker, arrêtez le serveur web ou tuez le PID (identifiant du processus) donné par la commande `server:status`** :
   ```
   kill 15774
   ```
@@ -4849,7 +5005,9 @@ Les logs sont diffusés en continu par la commande symfony `server:log`, en mêm
 
 class: middle
 .center[
+
 ### **Renvoyer des messages ayant échoué**
+
 ]
 
 Que faire si Akismet est en panne alors qu'un message est en train d'être consommé ? Il n'y a aucun impact pour les personnes qui soumettent des commentaires, mais le message est perdu et le spam n'est pas vérifié.
@@ -4858,21 +5016,21 @@ Messenger dispose d'un mécanisme de relance lorsqu'une exception se produit lor
 
 ```yaml
 framework:
-    messenger:
-        failure_transport: failed
+  messenger:
+    failure_transport: failed
 
-        transports:
-            # https://symfony.com/doc/current/messenger.html#transport-configuration
-            async:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-                options:
-                    use_notify: true
-                    check_delayed_interval: 60000
-                retry_strategy:
-                    max_retries: 3
-                    multiplier: 2
-            failed: 'doctrine://default?queue_name=failed'
-            # sync: 'sync://'
+    transports:
+      # https://symfony.com/doc/current/messenger.html#transport-configuration
+      async:
+        dsn: "%env(MESSENGER_TRANSPORT_DSN)%"
+        options:
+          use_notify: true
+          check_delayed_interval: 60000
+        retry_strategy:
+          max_retries: 3
+          multiplier: 2
+      failed: "doctrine://default?queue_name=failed"
+      # sync: 'sync://'
 ```
 
 ---
@@ -4881,29 +5039,30 @@ class: middle
 
 Si un problème survient lors de la manipulation d'un message, le consumer réessaiera 3 fois avant d'abandonner. Mais au lieu de jeter le message, il le stockera indéfiniment dans la file d'attente `failed`, qui utilise une autre table de la base de données.
 
-* ⏩ **Inspectez les messages ayant échoué et relancez-les à l'aide des commandes suivantes :**
+- ⏩ **Inspectez les messages ayant échoué et relancez-les à l'aide des commandes suivantes :**
+
   ```sh
   symfony console messenger:failed:show
-  
+
   symfony console messenger:failed:retry
   ```
-  
-* ⏩ **Commitez votre travail via Git :**
+
+- ⏩ **Commitez votre travail via Git :**
   ```sh
   git add .
   git commit -m "Add asynchronous processing"
   ```
-  
+
 .info[
 
- Liens utiles :
-  * [Messenger Component](https://symfony.com/doc/current/messenger.html)
-]
+Liens utiles :
+
+- [Messenger Component](https://symfony.com/doc/current/messenger.html)
+  ]
 
 ---
 
 class: middle, center, inverse
-
 
 # 13. Symfony Workflow
 
@@ -4911,20 +5070,22 @@ class: middle, center, inverse
 
 class: middle
 .center[
+
 #### **Prendre des décisions avec un workflow**
+
 ]
 
 Avoir un état pour un modèle est assez commun. L'état du commentaire n'est déterminé que par le vérificateur de spam. Et si on ajoutait d'autres critères de décision ?
 
 Nous pourrions laisser l'admin du site modérer tous les commentaires après le vérificateur de spam. Le processus serait quelque chose comme :
 
-* Commencez par un état `submitted` lorsqu'un commentaire est soumis par un internaute ;
-* Laissez le vérificateur de spam analyser le commentaire et changer l'état en `potential_spam`, `ham` ou `rejected`
-* S'il n'est pas rejeté, attendez que l'admin du site décide si le commentaire est suffisamment utile en changeant l'état pour `published` ou `rejected`.
+- Commencez par un état `submitted` lorsqu'un commentaire est soumis par un internaute ;
+- Laissez le vérificateur de spam analyser le commentaire et changer l'état en `potential_spam`, `ham` ou `rejected`
+- S'il n'est pas rejeté, attendez que l'admin du site décide si le commentaire est suffisamment utile en changeant l'état pour `published` ou `rejected`.
 
 La mise en œuvre de cette logique n'est pas trop complexe, mais vous pouvez imaginer que l'ajout de règles supplémentaires augmenterait considérablement la complexité. Au lieu de coder la logique nous-mêmes, nous pouvons utiliser le composant Symfony Workflow :
 
-* ⏩ **Installez le composant Workflow :**
+- ⏩ **Installez le composant Workflow :**
   ```sh
   symfony composer req workflow
   ```
@@ -4933,65 +5094,75 @@ La mise en œuvre de cette logique n'est pas trop complexe, mais vous pouvez ima
 
 class: middle
 .center[
+
 ### **Définir un workflow**
+
 ]
 
 .pull-left[
-* ⏩ **Le workflow de commentaires peut être décrit dans le fichier `config/packages/workflow.yaml` :**
-    ```yaml
-    framework:
-        workflows:
-            comment:
-                type: state_machine
-                audit_trail:
-                    enabled: "%kernel.debug%"
-                marking_store:
-                    type: 'method'
-                    property: 'stateAsString'
-                supports: [App\Entity\Comment]
-                initial_marking: submitted
-                places: [submitted, ham, potential_spam, spam, rejected, published]
-                transitions:
-                    accept:
-                        from: submitted
-                        to:   ham
-                    might_be_spam:
-                        from: submitted
-                        to:   potential_spam
-                    reject_spam:
-                        from: submitted
-                        to:   spam
-                    publish:
-                        from: potential_spam
-                        to:   published
-                    reject:
-                        from: potential_spam
-                        to:   rejected
-                    publish_ham:
-                        from: ham
-                        to:   published
-                    reject_ham:
-                        from: ham
-                        to:   rejected
-   ``` 
-]
+
+- ⏩ **Le workflow de commentaires peut être décrit dans le fichier `config/packages/workflow.yaml` :**
+
+  ```yaml
+  framework:
+  workflows:
+  comment:
+  type: state_machine
+  audit_trail:
+  enabled: "%kernel.debug%"
+  marking_store:
+  type: 'method'
+  property: 'stateAsString'
+  supports: [App\Entity\Comment]
+  initial_marking: submitted
+  places: [submitted, ham, potential_spam, spam, rejected, published]
+  transitions:
+  accept:
+  from: submitted
+  to: ham
+  might_be_spam:
+  from: submitted
+  to: potential_spam
+  reject_spam:
+  from: submitted
+  to: spam
+  publish:
+  from: potential_spam
+  to: published
+  reject:
+  from: potential_spam
+  to: rejected
+  publish_ham:
+  from: ham
+  to: published
+  reject_ham:
+  from: ham
+  to: rejected
+  ```
+
+  ]
+
+  ```
+
+  ```
 
 .pull-right[
 
-* ⏩ **Ajouter l'accesseur et le mutateur sur notre champ state en tant que méthode `getStateAsString()` et `setStateAsString()` dans la classe `Comment` :**
-    ```php
-    public function getStateAsString(): string
-    {
-        return $this->state->value;
-    }
+- ⏩ **Ajouter l'accesseur et le mutateur sur notre champ state en tant que méthode `getStateAsString()` et `setStateAsString()` dans la classe `Comment` :**
 
-    public function setStateAsString(string $state): void
-    {
-        $this->state = CommentStateEnum::from($state);
-    }
-    ```
-  
-* ⏩ **Mettons à jour notre class enum CommentStateEnum avec les nouveaux `state` possible :**
+  ```php
+  public function getStateAsString(): string
+  {
+      return $this->state->value;
+  }
+
+  public function setStateAsString(string $state): void
+  {
+      $this->state = CommentStateEnum::from($state);
+  }
+  ```
+
+- ⏩ **Mettons à jour notre class enum CommentStateEnum avec les nouveaux `state` possible :**
   ```php
     enum CommentStateEnum : string
     {
@@ -5010,7 +5181,7 @@ class: middle
 
 class:middle
 
-* ⏩ **Pour valider le workflow, générez une représentation visuelle :**
+- ⏩ **Pour valider le workflow, générez une représentation visuelle :**
 
   ```sh
   symfony console workflow:dump comment | dot -Tpng -o workflow.png
@@ -5030,10 +5201,12 @@ La commande `dot` fait partie de l'utilitaire [Graphviz](https://www.graphviz.or
 
 class: middle
 .center[
+
 ### **Utiliser le workflow**
+
 ]
 
-* ⏩ **Remplacez la logique actuelle dans le gestionnaire de messages `src/MessageHandler/CommentMessageHandler.php` par le workflow :**
+- ⏩ **Remplacez la logique actuelle dans le gestionnaire de messages `src/MessageHandler/CommentMessageHandler.php` par le workflow :**
 
 .pull-left[
 
@@ -5056,8 +5229,10 @@ class: middle
      ) {
      }
 ```
+
 ]
 .pull-right[
+
 ```diff
 @@ -25,12 +31,18 @@ class CommentMessageHandler
              return;
@@ -5084,6 +5259,7 @@ class: middle
 -        $this->entityManager->flush();
      }
 ```
+
 ]
 
 ---
@@ -5092,31 +5268,33 @@ class: middle
 
 La nouvelle logique se lit comme ceci :
 
-* Si la transition `accept` est disponible pour le commentaire dans le message, vérifiez si c'est un spam ;
+- Si la transition `accept` est disponible pour le commentaire dans le message, vérifiez si c'est un spam ;
   ```php
   if ($this->commentStateMachine->can($comment, 'accept')) {
   ```
-* Selon le résultat, choisissez la bonne transition à appliquer ;
+- Selon le résultat, choisissez la bonne transition à appliquer ;
+
   ```php
     $transition = match ($score) {
         2 => 'reject_spam',
         1 => 'might_be_spam',
         default => 'accept',
     };
-    
+
   ```
-* Appelez `apply()` pour mettre à jour le `Comment` via un appel à la méthode `setStateASString()` ;
+
+- Appelez `apply()` pour mettre à jour le `Comment` via un appel à la méthode `setStateASString()` ;
   ```php
     $this->commentStateMachine->apply($comment, $transition);
   ```
-* Appelez `flush()` pour valider les changements dans la base de données ;
+- Appelez `flush()` pour valider les changements dans la base de données ;
   ```php
     $this->entityManager->flush();
   ```
-* Réexpédiez le message pour permettre au workflow d'effectuer une nouvelle transition.
-    ```php
-        $this->bus->dispatch($message);
-    ```
+- Réexpédiez le message pour permettre au workflow d'effectuer une nouvelle transition.
+  ```php
+      $this->bus->dispatch($message);
+  ```
 
 ---
 
@@ -5124,14 +5302,14 @@ class: middle
 
 Comme nous n'avons pas implémenté la fonctionnalité de validation par l'admin, la prochaine fois que le message sera consommé, le message "Dropping comment message" sera enregistré.
 
-* ⏩ **Mettons en place une validation automatique en attendant le prochain chapitre dans `src/MessageHandler/CommentMessageHandler.php`:**
+- ⏩ **Mettons en place une validation automatique en attendant le prochain chapitre dans `src/MessageHandler/CommentMessageHandler.php`:**
 
   ```diff
                $this->commentStateMachine->apply($comment, $transition);
                $this->entityManager->flush();
                $this->bus->dispatch($message);
   +
-  +        } elseif ($this->commentStateMachine->can($comment, 'publish') 
+  +        } elseif ($this->commentStateMachine->can($comment, 'publish')
   +            || $this->commentStateMachine->can($comment, 'publish_ham')) {
   +
   +            $this->commentStateMachine->apply($comment, $this->commentStateMachine->can($comment, 'publish') ? 'publish' : 'publish_ham');
@@ -5141,19 +5319,22 @@ Comme nous n'avons pas implémenté la fonctionnalité de validation par l'admin
                $this->logger->debug('Dropping comment message', ['comment' => $comment->getId(), 'state' => $comment->getState()]);
            }
   ```
-* ⏩ **Exécutez symfony `server:log` et ajoutez un commentaire sur le site pour voir toutes les transitions se produire les unes après les autres.**
 
-* ⏩ **Commitez votre travail via Git :**
+- ⏩ **Exécutez symfony `server:log` et ajoutez un commentaire sur le site pour voir toutes les transitions se produire les unes après les autres.**
+
+- ⏩ **Commitez votre travail via Git :**
   ```sh
   git add .
   git commit -m "Add workflow"
   ```
-  
+
 ---
 
 class: middle
 .center[
+
 ### **Trouver des services depuis le conteneur d'injection de dépendances**
+
 ]
 
 Quand nous utilisons l'injection de dépendances, nous récupérons des services depuis le conteneur d'injection de dépendances en utilisant le typage par interface ou parfois par une implémentation de classe concrète. Mais quand une interface à plusieurs implémentations, Symfony ne peut deviner celle dont vous avez besoin. Nous avons besoin d'être explicite.
@@ -5162,7 +5343,8 @@ Nous venons juste de rencontrer un cas semblable avec l'injection de `WorkflowIn
 
 Comme nous injectons n'importe quelle instance de l'interface générique `WorkflowInterface` dans le constructeur, comment Symfony peut savoir quelle implémentation du workflow utiliser ? Symfony utilise une convention basée sur le nom de l'argument : `$commentStateMachine` fait référence au workflow comment de la configuration (dont le type est `state_machine`). Essayez n'importe quel autre argument et l'injection échouera.
 
-* ⏩ **Si vous ne vous rappelez pas de la convention, utilisez la commande `debug:container`. Cherchez tous les services contenant "`workflow`" :**
+- ⏩ **Si vous ne vous rappelez pas de la convention, utilisez la commande `debug:container`. Cherchez tous les services contenant "`workflow`" :**
+
 ```sh
 symfony console debug:container workflow
 
@@ -5171,7 +5353,8 @@ symfony console debug:container workflow
   [8] Symfony\Component\Workflow\WorkflowInterface $commentStateMachine
   [9] Psr\Log\LoggerInterface $workflowLogger
  >
- ```
+```
+
 Remarquez le choix 8, `Symfony\Component\Workflow\WorkflowInterface $commentStateMachine` qui vous indique qu'utiliser `$commentStateMachine` comme argument nommé a une signification particulière.
 
 ---
@@ -5184,14 +5367,16 @@ class: middle, center, inverse
 
 class: middle
 .center[
-  ### **Envoyer des emails aux admins**
+
+### **Envoyer des emails aux admins**
+
 ]
 
 Pour garantir des commentaires de haute qualité, l'administrateur doit modérer tous les commentaires. Lorsqu'un commentaire est à l'état `ham` ou `potential_spam`, un e-mail doit être envoyé à l'administrateur avec deux liens : un pour accepter le commentaire et un pour le rejeter.
 
 Pour stocker l'email de l'admin, utilisez un paramètre de conteneur. Pour l'exemple, nous autorisons également son paramétrage grâce à une variable d'environnement (ce qui ne devrait pas être nécessaire dans la "vraie vie") :
 
-* ⏩ **Ajoutez le paramètre `admin_email` dans le fichier `config/services.yaml` :**
+- ⏩ **Ajoutez le paramètre `admin_email` dans le fichier `config/services.yaml` :**
   ```diff
   parameters:
      photo_dir: "%kernel.project_dir%/public/uploads/photos"
@@ -5205,12 +5390,14 @@ Une variable d'environnement peut-être "traitée" avant d'être utilisée. Ici,
 
 class: middle
 .center[
-  ### **Envoyer une notification par email**
+
+### **Envoyer une notification par email**
+
 ]
 
 Pour envoyer un email, vous pouvez choisir entre plusieurs classes abstraites de `Email`; de `Message`, le niveau le plus bas, à `NotificationEmail`, le niveau le plus élevé. C’est probablement la classe `Email` que vous utiliserez le plus, mais `NotificationEmail` est le choix idéal pour les e-mails internes.
 
-* ⏩ **Ajoutez l'envoi d'un email dans le gestionnaire de messages `src/MessageHandler/CommentMessageHandler.php` :**
+- ⏩ **Ajoutez l'envoi d'un email dans le gestionnaire de messages `src/MessageHandler/CommentMessageHandler.php` :**
   ```diff
         private WorkflowInterface $commentStateMachine,
   +        private MailerInterface $mailer,
@@ -5229,7 +5416,7 @@ Pour envoyer un email, vous pouvez choisir entre plusieurs classes abstraites de
   +                ->context(['comment' => $comment])
   +            );
   ```
-  
+
 Le `MailerInterface` est notre service de messagerie. Il est capable d'envoyer des emails. Nous utilisons la méthode `send()` pour envoyer un email.
 
 ---
@@ -5238,40 +5425,42 @@ class: middle
 
 Pour envoyer un email, nous avons besoin d’un expéditeur (l’en-tête `From` / `Sender`). Au lieu de le définir explicitement sur l'instance Email, définissez-le globalement :
 
-* ⏩ **Définissez l'expéditeur par défaut dans le fichier `config/packages/mailer.yaml` :**
+- ⏩ **Définissez l'expéditeur par défaut dans le fichier `config/packages/mailer.yaml` :**
   ```yaml
   framework:
-      mailer:
-          dsn: '%env(MAILER_DSN)%'
-          envelope:
-              sender: "%admin_email%"
+    mailer:
+      dsn: "%env(MAILER_DSN)%"
+      envelope:
+        sender: "%admin_email%"
   ```
-  
+
 ---
 
 class: middle
 
 .center[
+
 ### **Personnaliser le contenu de l'email**
+
 ]
 
 Pour personnaliser le contenu de l'email, créez un modèle Twig dans le répertoire `templates/emails/comment_notification.html.twig` :
 
-* ⏩ **Créez le modèle Twig `templates/emails/comment_notification.html.twig` :**
+- ⏩ **Créez le modèle Twig `templates/emails/comment_notification.html.twig` :**
 
   ```twig
   {% extends '@email/default/notification/body.html.twig' %}
-  
+
   {% block content %}
       Author: {{ comment.author }}<br />
       Email: {{ comment.email }}<br />
       State: {{ comment.state }}<br />
-  
+
       <p>
           {{ comment.text }}
       </p>
   {% endblock %}
-  
+
   {% block action %}
       <spacer size="16"></spacer>
       <button href="{{ url('review_comment', { id: comment.id }) }}">Accept</button>
@@ -5291,57 +5480,61 @@ Pour une compatibilité maximale avec les lecteurs de courrier électronique, la
 
 Ces deux fonctionnalités font partie des extensions Twig facultatives qui doivent être installées :
 
-* ⏩ **Installez les extensions Twig pour Inky et CSS inliner :**
+- ⏩ **Installez les extensions Twig pour Inky et CSS inliner :**
   ```sh
   symfony composer req "twig/cssinliner-extra:^3" "twig/inky-extra:^3"
   ```
-  
+
 ---
 
 class: middle
 
 .center[
+
 ### **Générer des URL absolues dans une commande Symfony**
+
 ]
 
 Dans les e-mails, on génère des URL avec `url()` au lieu de `path()` pour obtenir des URL absolues (avec schéma et hôte).
 
 L'e-mail est envoyé depuis le gestionnaire de messages, dans un contexte de console. Générer des URL absolues dans un contexte Web est plus facile, car nous connaissons le schéma et le domaine de la page actuelle. Ce n'est pas le cas dans un contexte de console.
 
-* ⏩ **Définissez le nom de domaine et le schéma à utiliser explicitement :**
+- ⏩ **Définissez le nom de domaine et le schéma à utiliser explicitement :**
+
   ```diff
       admin_email: "%env(string:default:default_admin_email:ADMIN_EMAIL)%"
   +    default_base_url: 'http://127.0.0.1'
   +    router.request_context.base_url: '%env(default:default_base_url:SYMFONY_DEFAULT_ROUTE_URL)%'
 
   ```
-  
+
 ---
 
 class: middle
 
 .center[
+
 ### **Ajouter la route de review_comment**
+
 ]
 
-* ⏩ **Ajoutez le controller `src/Controller/Admin/CommentReviewController.php` via le maker:**
+- ⏩ **Ajoutez le controller `src/Controller/Admin/CommentReviewController.php` via le maker:**
   ```sh
   symfony console make:controller 'Admin\ReviewComment' --invokable --no-interaction
   ```
-  
-* ⏩ **Modifiez le controller pour accepter ou rejeter un commentaire :**
+- ⏩ **Modifiez le controller pour accepter ou rejeter un commentaire :**
 
   ```php
   #[Route('/admin/review/comment/{id}', name: 'review_comment')]
   public function __invoke(
-      Request $request, 
-      Comment $comment, 
+      Request $request,
+      Comment $comment,
       WorkflowInterface $commentStateMachine,
       EntityManagerInterface $entityManager,
       MessageBusInterface $bus,
   ): Response {
       $accepted = !$request->query->getBoolean('reject');
-  
+
       if ($commentStateMachine->can($comment, 'publish')) {
           $transition = $accepted ? 'publish' : 'reject';
       } elseif ($commentStateMachine->can($comment, 'publish_ham')) {
@@ -5349,18 +5542,18 @@ class: middle
       } else {
           return new Response('Comment already reviewed or not in the right state.');
       }
-  
+
       $commentStateMachine->apply($comment, $transition);
       $entityManager->flush();
-  
+
       if ($accepted) {
           $bus->dispatch(new CommentMessage($comment->getId()));
       }
-  
+
       return $this->render('admin/review_comment.html.twig', ['transition' => $transition, 'comment' => $comment, ]);
   }
   ```
-  
+
 ---
 
 class: middle
@@ -5369,34 +5562,36 @@ L'URL du commentaire de révision commence par `/admin/` pour la protéger avec 
 
 Une fois l'examen terminé, un court modèle remercie l'administrateur pour son travail acharné :
 
-* ⏩ **Créez le modèle Twig `templates/admin/review.html.twig` :**
+- ⏩ **Créez le modèle Twig `templates/admin/review.html.twig` :**
 
   ```twig
   {% extends 'base.html.twig' %}
-  
+
   {% block title %}Revue de commenataire{% endblock %}
-  
+
   {% block body %}
       <h2>Comment reviewed, thank you!</h2>
-  
+
       <p>Applied transition: <strong>{{ transition }}</strong></p>
       <p>New state: <strong>{{ comment.state }}</strong></p>
   {% endblock %}
   ```
-  
+
 ---
 
 class: middle
 
 .center[
+
 ### **Utiliser un mail catcher**
+
 ]
 
-Au lieu d'utiliser un "vrai" serveur SMTP ou un fournisseur tiers pour envoyer des e-mails, utilisons un **mail catcher**. 
+Au lieu d'utiliser un "vrai" serveur SMTP ou un fournisseur tiers pour envoyer des e-mails, utilisons un **mail catcher**.
 
 .info[
 
-  ℹ️ **Un mail catcher** fournit un serveur SMTP qui ne délivre pas les e-mails, mais les rend disponibles via une interface Web. 
+ℹ️ **Un mail catcher** fournit un serveur SMTP qui ne délivre pas les e-mails, mais les rend disponibles via une interface Web.
 
 ]
 
@@ -5425,7 +5620,7 @@ class: middle
 
 ]
 
-* ⏩ **Démarrez le mail catcher :**
+- ⏩ **Démarrez le mail catcher :**
   ```sh
   symfony open:local:webmail
   ```
@@ -5462,26 +5657,26 @@ Les tests les plus courants que vous écrirez sont cependant des tests fonctionn
 
 Symfony est livré avec des assertions qui facilitent de tels tests, voici un exemple de test qui démontre quelques possibilités :
 
-  ```php
-  public function testMailerAssertions()
-  {
-    $client = static::createClient();
-    $client->request('GET', '/');
-  
-    $this->assertEmailCount(1);
-    $event = $this->getMailerEvent(0);
-    $this->assertEmailIsQueued($event);
+```php
+public function testMailerAssertions()
+{
+  $client = static::createClient();
+  $client->request('GET', '/');
 
-    $email = $this->getMailerMessage(0);
-    $this->assertEmailHeaderSame($email, 'To', 'fabien@example.com');
-    $this->assertEmailTextBodyContains($email, 'Bar');
-    $this->assertEmailAttachmentCount($email, 1);
-  }
-  ```
+  $this->assertEmailCount(1);
+  $event = $this->getMailerEvent(0);
+  $this->assertEmailIsQueued($event);
+
+  $email = $this->getMailerMessage(0);
+  $this->assertEmailHeaderSame($email, 'To', 'fabien@example.com');
+  $this->assertEmailTextBodyContains($email, 'Bar');
+  $this->assertEmailAttachmentCount($email, 1);
+}
+```
 
 Ces assertions fonctionnent lorsque les e-mails sont envoyés de manière synchrone ou asynchrone.
 
-* ⏩ **Commitez votre travail via Git :**
+- ⏩ **Commitez votre travail via Git :**
   ```sh
   git add .
   git commit -m "Add email notifications"
@@ -5507,7 +5702,7 @@ Des problèmes de performances peuvent survenir avec la popularité. Quelques ex
 
 L'utilisation de stratégies de mise en cache `HTTP` est un excellent moyen d'optimiser les performances pour les utilisateurs finaux avec peu d'effort. Ajoutez un cache proxy inverse en production pour activer la mise en cache et utilisez un [https://en.wikipedia.org/wiki/Content_delivery_network](CDN) pour mettre en cache en périphérie pour des performances encore meilleures.
 
-* ⏩ **Mettons en cache la page d'accueil pendant une heure :**
+- ⏩ **Mettons en cache la page d'accueil pendant une heure :**
   ```diff
            return $this->render('conference/index.html.twig', [
                'conferences' => $conferenceRepository->findAll(),
@@ -5532,7 +5727,7 @@ class: middle
 
 Pour tester la mise en cache, vous pouvez activer le **Symfony HTTP Cache Kernel** mais seulement en développement (pour l'environnement "production", nous utiliserons une solution "plus robuste").
 
-* ⏩ **Ajouter le cache en dev dans le fichier `config/packages/framework.yaml` :**
+- ⏩ **Ajouter le cache en dev dans le fichier `config/packages/framework.yaml` :**
 
   ```diff
          session:
@@ -5545,11 +5740,11 @@ Pour tester la mise en cache, vous pouvez activer le **Symfony HTTP Cache Kernel
 
 En plus d'être un HTTP reverse proxy à part entière, le HTTP reverse proxy de Symfony (via la classe `HttpCache`) ajoute de belles informations de débogage sous forme d'en-têtes HTTP. Cela aide grandement à valider les en-têtes de cache que nous avons définis.
 
-* ⏩ **Vérifiez-le sur la page d'accueil :**
+- ⏩ **Vérifiez-le sur la page d'accueil :**
 
   ```sh
   curl -s -I -X GET https://127.0.0.1:8000/
-  
+
   HTTP/2 200
   age: 0
   cache-control: public, s-maxage=3600
@@ -5581,7 +5776,7 @@ class: middle
 
 Nous n'avons pas consacré de temps à la conception de l'interface utilisateur. Pour styliser comme un pro, nous utiliserons une stack moderne, basée sur Webpack. Et pour ajouter une touche Symfony et faciliter son intégration avec l'application, utilisons Webpack Encore :
 
-* ⏩ **Installez Webpack Encore et supprimer Asset Mapper :**
+- ⏩ **Installez Webpack Encore et supprimer Asset Mapper :**
 
   ```sh
   symfony composer rem asset-mapper
@@ -5599,37 +5794,43 @@ Le répertoire `assets` contient les principaux points d'entrée des actifs du p
 class: middle
 
 .center[
+
 ### **Utiliser Sass**
 
 ]
 
-* ⏩ **Au lieu d'utiliser du CSS simple, passons à [Sass](https://sass-lang.com/) :**
+- ⏩ **Au lieu d'utiliser du CSS simple, passons à [Sass](https://sass-lang.com/) :**
 
   ```sh
   mv assets/styles/app.css assets/styles/app.scss
   ```
+
   _assets/app.js_
+
   ```diff
   # assets/app.js
-  
+
    // any CSS you import will output into a single css file (app.css in this case)
   -import './styles/app.css';
   +import './styles/app.scss';
   ```
 
-* ⏩ **Installez le chargeur Sass :**
+- ⏩ **Installez le chargeur Sass :**
 
   ```sh
   npm install node-sass sass-loader@13 --save-dev
   ```
-* ⏩ ** Et activez le chargeur Sass dans webpack _webpack.config.js_**
+
+- ⏩ ** Et activez le chargeur Sass dans webpack _webpack.config.js_**
+
   ```diff
-   
+
      // enables Sass/SCSS support
   -    //.enableSassLoader()
   +    .enableSassLoader()
   ```
-Comment savoir quels packages installer ? Si nous avions essayé de créer nos actifs sans eux, `Encore` nous aurait donné un joli message d'erreur suggérant la commande `npm install` nécessaire pour installer les dépendances pour charger les fichiers `.scss`.
+
+  Comment savoir quels packages installer ? Si nous avions essayé de créer nos actifs sans eux, `Encore` nous aurait donné un joli message d'erreur suggérant la commande `npm install` nécessaire pour installer les dépendances pour charger les fichiers `.scss`.
 
 ---
 
@@ -5643,13 +5844,13 @@ class: middle
 
 Pour commencer avec de bonnes valeurs par défaut et créer un site Web réactif, un framework CSS comme Bootstrap peut aller très loin. Installez-le sous forme de package :
 
-* ⏩ **Installez Bootstrap :**
+- ⏩ **Installez Bootstrap :**
 
   ```sh
   npm install bootstrap @popperjs/core bs-custom-file-input --save-dev
   ```
 
-* ⏩ **Exiger Bootstrap dans le fichier CSS `assets/styles/app.scss` (nous avons également nettoyé le fichier) :**
+- ⏩ **Exiger Bootstrap dans le fichier CSS `assets/styles/app.scss` (nous avons également nettoyé le fichier) :**
 
   ```diff
   -body {
@@ -5657,7 +5858,8 @@ Pour commencer avec de bonnes valeurs par défaut et créer un site Web réactif
   -}
   +@import '~bootstrap/scss/bootstrap';
   ```
-* ⏩ **Faites de même pour le fichier JS `assets/app.js` :**
+
+- ⏩ **Faites de même pour le fichier JS `assets/app.js` :**
 
   ```diff
    // any CSS you import will output into a single css file (app.css in this case)
@@ -5668,11 +5870,11 @@ Pour commencer avec de bonnes valeurs par défaut et créer un site Web réactif
   +bsCustomFileInput.init();
   ```
 
-* ⏩ **Activer le thème Bootstrap dans le fichier `config/packages/twig.yaml` :**
+- ⏩ **Activer le thème Bootstrap dans le fichier `config/packages/twig.yaml` :**
 
   ```yaml
   twig:
-      form_themes: ['bootstrap_5_layout.html.twig']
+    form_themes: ["bootstrap_5_layout.html.twig"]
   ```
 
 ---
@@ -5684,9 +5886,9 @@ class: middle
 
 ]
 
-Nous sommes maintenant prêts à styliser l'application. 
+Nous sommes maintenant prêts à styliser l'application.
 
-* ⏩ **Téléchargez et développez l'archive à la racine du projet :**
+- ⏩ **Téléchargez et développez l'archive à la racine du projet :**
 
   ```shell
   php -r "copy('https://symfony.com/uploads/assets/guestbook-6.4.zip', 'guestbook-6.4.zip');"
@@ -5695,7 +5897,6 @@ Nous sommes maintenant prêts à styliser l'application.
   ```
 
 Jetez un œil aux modèles, vous apprendrez peut-être une astuce ou deux sur Twig.
-
 
 ---
 
@@ -5708,15 +5909,15 @@ class: middle
 
 Un changement majeur lors de l'utilisation de Webpack est que les fichiers CSS et JS ne sont pas utilisables directement par l'application. Ils doivent d'abord être "compilés".
 
-* ⏩ **En développement, la compilation des actifs peut se faire via la commande `encore dev` :**
+- ⏩ **En développement, la compilation des actifs peut se faire via la commande `encore dev` :**
 
   ```shell
   symfony run npm run dev
   ```
 
-Au lieu d'exécuter la commande à chaque fois qu'il y a un changement, 
+Au lieu d'exécuter la commande à chaque fois qu'il y a un changement,
 
-* ⏩ **envoyez-la en arrière-plan et laissez-la surveiller les modifications JS et CSS :**
+- ⏩ **envoyez-la en arrière-plan et laissez-la surveiller les modifications JS et CSS :**
 
   ```shell
   symfony run -d npm run watch
