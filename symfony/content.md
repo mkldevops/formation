@@ -109,12 +109,19 @@ class: middle
 #### Au programme
 
 - Nouveau projet Symfony 7
+
 - **Base de données avec PostgreSQL** : Intégration et utilisation de PostgreSQL pour la gestion des données.
+
 - **Interface web (EasyAdmin, Twig)** : Création d'interfaces utilisateur dynamiques et administratives.
+
 - **Environnement de développement** : Setup et configuration pour un développement fluide.
+
 - **Entité, Contrôleur, Event** : Définition des modèles de données, gestion des requêtes et réponse aux événements.
+
 - **Messages** : Gestion de la communication entre les différents composants de l'application.
+
 - **Workflows** : Implémentation de workflows Symfony pour automatiser des processus métier complexes et gérer des états d'entités.
+
 - **Redisq** : Utilisation de Redis pour la gestion des files d'attente et des tâches asynchrones.
 
 #### Exemples Pratiques
@@ -132,9 +139,70 @@ class: center, middle, inverse
 class: middle
 .center[
 
-### **Editeur en ligne Gitpod**
+### **Environnement de travail windows (WSL) ou Linux**
 
 ]
+
+- Pour les utilisateurs de Windows, assurez-vous d'avoir WSL (Windows Subsystem for Linux) installé sur votre système. Si ce n'est pas le cas, allez sur le [site de téléchargement de WSL](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10) et suivez les instructions pour l'installer.
+
+- Vous pouvez installer PHP 8.4 via le gestionnaire de paquets en exécutant la commande suivante :
+
+  ```shell
+  sudo LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php # Press enter to confirm.
+  sudo apt update
+
+  sudo apt-get install php8.4-common php8.4-{intl, xml}
+  ```
+
+- Installation de symfony cli
+
+  ```sh
+  curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | sudo -E bash
+  sudo apt install symfony-cli
+  ```
+
+- Vous pouvez installer Node.js via le gestionnaire de paquets en exécutant la commande suivante :
+
+  ```sh
+  curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+  sudo apt-get install -y nodejs
+  ```
+
+- Vous pouvez installer Docker via [Install Docker Engine](https://docs.docker.com/engine/install/):
+
+
+---
+
+class: middle
+.center[
+
+### **Configuration de l'environnement macOs**
+
+]
+
+- Installation de php8.4
+
+  ```sh
+  brew install php@8.4
+  ```
+
+- Installation de nodejs
+
+  ```sh
+  brew install node
+  ```
+
+- Installation de docker via orbstack
+
+  ```sh
+  brew install orbstack
+  ```
+
+- Installation de symfony cli
+
+  ```sh
+  brew install symfony-cli
+  ```
 
 
 ---
@@ -156,10 +224,9 @@ Sur l'éditeur de code en ligne, certains logiciels sont déjà installés. Vér
 | -------------- | ---------------------------- | ----------- |
 | docker         | `docker --version`           | +26.10      |
 | docker compose | `docker compose version`     | +2.23       |
-| php            | `php -version`               | +8.3        |
+| php            | `php -version`               | +8.2        |
 | composer       | `symfony composer --version` | +2.7        |
 | node           | `node --version`             | +20         |
-| yarn           | `yarn --version`             | +1.22       |
 
 ---
 
@@ -171,19 +238,16 @@ class: middle
 ]
 
 - Nous allons initialiser le projet avec le client Symfony.
-- Nous utiliserons la **version 7.0+**, la dernière en date.
-- Nous utiliserons également **PHP 8.3+**.
+- Nous utiliserons la **version 7.2+**, la dernière en date.
+- Nous utiliserons également **PHP 8.2+**.
 
 Assurez-vous de suivre ces étapes pour initialiser correctement votre projet avec Symfony en utilisant les dernières versions disponibles.
 
 - ⏩ **Lancer la commande suivante depuis le terminal pour initialiser un nouveau projet Symfony** :
 
 ```sh
-  symfony new --dir=guestbook --webapp --version=7.0
-  rm -rf guestbook/.git
-  shopt -s dotglob
-  mv guestbook/* ./
-  rm -rf guestbook/
+  symfony new --dir=guestbook --webapp --version=7.2
+  cd guestbook
 ```
 
 - **`new`** L'argument permet de construire un nouveau projet
@@ -204,9 +268,10 @@ class: middle
 ### IDE et Extensions
 
 ]
-.right-column[
 
-Vous pouvez utiliser n'importe quel éditeur de code pour travailler sur votre projet Symfony. Cependant, pour une expérience de développement optimale, nous vous recommandons d'utiliser Visual Studio Code (VSCode) avec les extensions suivantes :
+Vous pouvez utiliser n'importe quel éditeur de code pour travailler sur votre projet Symfony.
+
+Cependant, pour une expérience de développement optimale, nous vous recommandons d'utiliser Visual Studio Code (VSCode) avec les extensions suivantes :
 
 - PHP Debug
 - PHP Intelephense
@@ -215,13 +280,13 @@ Vous pouvez utiliser n'importe quel éditeur de code pour travailler sur votre p
 - YAML
 - PHP 8 Getter & Setter
 - Extension Twig Language 2
-  ]
 
 ---
 
 class: middle
-
+.center[
 ### Rappel sur quelques notions de php orienté objet
+]
 
 - **Les classes** : Les classes sont des modèles pour les objets. Elles définissent les propriétés et les méthodes des objets.
 
@@ -229,16 +294,16 @@ class: middle
   class ClassName { /** propriétés, méthodes, ... */}
   ```
 
-- **Le constructeur** : Le constructeur est une méthode spéciale qui est appelée lorsqu'un objet est instancié.
-
-  ```php
-  public function __construct() { /** code */}
-  ```
-
 - **Les objets** : Les objets sont des instances de classes. Ils ont des propriétés et des méthodes.
 
   ```php
   $object = new ClassName();
+  ```
+
+- **Le constructeur** : Le constructeur est une méthode spéciale qui est appelée lorsqu'un objet est instancié.
+
+  ```php
+  public function __construct() { /** code */}
   ```
 
 - **Les propriétés** : Les propriétés sont les variables d'un objet. Elles contiennent les données de l'objet.
@@ -253,12 +318,29 @@ class: middle
   public function method() { /** code */}
   ```
 
+---
+
+class: middle
+
 - **La visibilité** : La visibilité est le fait de définir l'accès aux propriétés et aux méthodes d'une classe.
 
   ```php
   public $property; // accessible partout
   protected $property; // accessible dans la classe et les classes héritées
   private $property; // accessible uniquement dans la classe
+  ```
+
+- **La constante** : La constante est une valeur qui ne peut pas être modifiée une fois qu'elle a été définie.
+
+  ```php
+  public const string CONSTANT_NAME = 'value';
+  ```
+
+- **Le typage** : Le typage est le fait de définir le type des propriétés et des paramètres des méthodes.
+
+  ```php
+  private readonly string $property;
+  public function method(string $param) : bool {  return true; }
   ```
 
 ---
@@ -274,12 +356,6 @@ class: middle
   new NamespaceName\ClassName();
   ```
 
-- **La constante** : La constante est une valeur qui ne peut pas être modifiée une fois qu'elle a été définie.
-
-  ```php
-  public const string CONSTANT_NAME = 'value';
-  ```
-
 - **L'encapsulation** : L'encapsulation est le fait de regrouper les propriétés et les méthodes d'un objet dans une classe.
 
   ```php
@@ -290,13 +366,6 @@ class: middle
       public function setProperty($value) { $this->property = $value; }
   }
 
-  ```
-
-- **Le typage** : Le typage est le fait de définir le type des propriétés et des paramètres des méthodes.
-
-  ```php
-  private readonly string $property;
-  public function method(string $param) : bool {  return true; }
   ```
 
 - **Les enums** : Les enums sont des listes de valeurs constantes.
@@ -343,11 +412,25 @@ class: middle
   class ClassName { use TraitName; }
   ```
 
-- **Injection de dependance** : L'injection de dépendance est le fait de passer des objets à une classe au lieu de les instancier à l'intérieur de la classe.
+---
 
-  ```php
-  class ClassName { public function __construct(Dependency $dependency) { /** code */} }
-  ```
+class: middle
+
+- **L'injection de dépendance** : L'injection de dépendance dans Symfony est un mécanisme qui permet de fournir automatiquement à une classe les services dont elle a besoin, au lieu de les créer directement à l'intérieur. 
+
+.info[
+  C'est comme un serveur qui apporte automatiquement les bons ingrédients à un chef cuisinier, plutôt que le chef aille les chercher lui-même.
+]
+
+```php
+class ClassName 
+{ 
+  public function __construct(Dependency $dependency) 
+  {
+    /** code */
+  }
+}
+```
 
 ---
 
@@ -460,14 +543,13 @@ class: middle
 
 Prenons l'habitude après chaque chapitre de commiter notre travail. Cela nous permettra de revenir en arrière si nous rencontrons des problèmes.
 
-- ⏩ **Commitez notre travail via :**
+- ⏩ **Utilisez `git add .` et `git commit` pour commiter votre travail :**
   ```sh
-  git add .
-  git commit -m "Init structre"
+  git add . &&  git commit -m "Init structre"
   ```
 
 .center[
-<img src="https://images.unsplash.com/photo-1589995186011-a7b485edc4bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&h=200&q=80" />
+<img src="img/git-save.png" width="400px" />
 ]
 
 ---
@@ -511,23 +593,30 @@ La commande symfony inclut un serveur web optimisé pour le développement. Comm
   symfony server:start -d --no-tls
   ```
 
-Depuis l'éditeur en ligne **Gitpod** vous pouvez retrouver le lien de notre serveur lancé sur l'onglet **PORTS**. Choisissez le port **8000**, un nouvel onglet s'ouvre affichant une page **"welcome to symfony"**
+Rendez-vous sur http://localhost:8000.
 
 .pull-right[
-.info[
-🤖 Ce n'est qu'une page de remplissage, car nous n'avons toujours pas défini de page d'accueil. Même si la page par défaut qui vous accueille est belle, c'est une page d'erreur **`404`**.
+  .info[
+    🤖 Ce n'est qu'une page de remplissage, car nous n'avons toujours pas défini de page d'accueil. Même si la page par défaut qui vous accueille est belle, c'est une page d'erreur **`404`**.
+  ]
+]
+.pull-left[
+  .center[![Debug page](img/debug-page.png)]
 ]
 
-- ⏩ **Naviguez vers `/images/under-construction.gif.` Pour percevoir notre image animé sur notre projet symfony.**
+---
+
+class: middle
+
+- ⏩ **Naviguez vers `http://localhost:8000/images/under-construction.gif` Pour percevoir notre image animé sur notre projet symfony.**
 
   _Le repertoire `public/` est le répertoire racine du site web, et le script `index.php` est le point d'entrée principal de toutes les ressources HTTP dynamiques._
 
-- ⏩ **📬 Commitez notre travail**
-  ]
-  .pull-left[
-  .center[![Debug page](img/debug-page.png)]
-  ]
 
+- ⏩ **📬 Commitez notre travail**
+```sh
+git add . && git commit -m "First resource"
+```
 ---
 
 class: middle
@@ -544,31 +633,21 @@ Mettre en place un projet, c'est aussi avoir les bons outils pour déboguer les 
 
 Pour commencer, Symfony Profiler vous fait gagner du temps lorsque vous devez trouver la cause première d'un problème.
 
-Si vous regardez la page d'accueil, vous devriez voir une barre d'outils en bas de l'écran :
+Si vous regardez la page d'accueil, vous devriez voir une barre d'outils en bas de l'écran, c'est le **Symfony Profiler**.:
 
-.pull-left.center[
+.center[
 <img src="img/debug/404-toolbar.png" width=420 />
 ]
 
-.pull-right[
-
-.info[
-En utilisant Gitpod, la barre d'outils de débogage n'apparaît pas car le projet fonctionne sans `HTTPS`, alors que l'accès à Gitpod lui-même est sécurisé par `HTTPS`. Pour résoudre ce problème, il faut insérer la fonction header suivante dans le fichier `index.php` :
-
-```php
-header('Content-Security-Policy: upgrade-insecure-requests');
-```
-
-]
-]
 
 ---
 
 class: middle
+.center[
+### **Symfony Profiler**
+]
 
-#### **Symfony Profiler**
-
-La première chose que vous remarquerez peut-être est la .red[404 en rouge]. N'oubliez pas que cette page est un espace réservé car nous n'avons pas encore défini de page d'accueil. Même si la page par défaut qui vous accueille est belle, cela reste une page d'erreur. Le code d'état `HTTP` correct est donc 404 et non 200. Grâce à la barre d'outils de débogage Web, vous disposez immédiatement de l'information.
+La première chose que vous remarquerez peut être est la .red[404 en rouge]. N'oubliez pas que cette page est un espace réservé car nous n'avons pas encore défini de page d'accueil. Même si la page par défaut qui vous accueille est belle, cela reste une page d'erreur. Le code d'état `HTTP` correct est donc 404 et non 200. Grâce à la barre d'outils de débogage Web, vous disposez immédiatement de l'information.
 
 Si vous cliquez sur le petit point d'exclamation, vous obtenez le **"vrai"** message d'exception dans les **journaux du profileur Symfony**. Si vous souhaitez voir la trace de la pile, cliquez sur le lien **"Exception"** dans le menu de gauche.
 
@@ -654,31 +733,38 @@ class: center, middle, inverse
 class: middle
 .center[
 
-### **Les controlleurs**
+### **Les contrôleurs**
 
 ]
 
 La page d'accueil est une ennuyeuse page d'erreur 404. Corrigeons cela.
 
-Lorsqu'une requête HTTP arrive au serveur, comme pour notre page d'accueil (http://localhost:8000/), **Symfony** essaie de trouver une route qui corresponde au chemin de la requête (`/` ici). Une route est le lien entre le chemin de la requête et un callable PHP, une fonction devant créer la réponse HTTP associée à cette requête.
+Lorsqu'une requête HTTP arrive au serveur, comme pour notre page d'accueil (http://localhost:8000/), **Symfony** essaie de trouver une route qui corresponde au chemin de la requête (`/` ici).
+
+**Une route** est le lien entre le chemin de la requête et un `callable` PHP, une fonction devant créer la réponse HTTP associée à cette requête.
 
 Ces callables sont nommés **"contrôleurs"**. Dans Symfony, la plupart des contrôleurs sont implémentés sous la forme de classes PHP. Vous pouvez créer ces classes manuellement, mais comme nous aimons aller vite, voyons comment Symfony peut nous aider.
 
 ---
 
 class: middle
-
-#### Se faciliter la vie avec le Maker Bundle
+.center[
+### Se faciliter la vie avec le Maker Bundle
+]
 
 Pour générer des contrôleurs facilement, nous pouvons utiliser le paquet `symfony/maker-bundle`, qui a été installé en tant que composant du paquet `webapp`.
 
-**Le Maker Bundle** vous permet de générer un grand nombre de classes différentes. Nous l'utiliserons constamment dans cette formation. Chaque **"générateur"** correspond à une commande et chacune d'entre elles appartient au même namespace `make`.
+**Le Maker Bundle** vous permet de générer un grand nombre de classes différentes. 
 
-La commande `list`, intégrée nativement à la console symfony, permet d'afficher toutes les commandes disponibles sous un namespace donné. Utilisez-la pour découvrir les générateurs fournis par **Maker Bundle** :
+Nous l'utiliserons constamment dans cette formation. Chaque **"générateur"** correspond à une commande et chacune d'entre elles appartient au même namespace `make`.
 
-```sh
-symfony console list make
-```
+La commande `list`, intégrée nativement à la console symfony, permet d'afficher toutes les commandes disponibles sous un namespace donné.
+
+- ⏩ **Utilisez-la pour découvrir les générateurs fournis par Maker Bundle** :
+
+  ```sh
+  symfony console list make
+  ```
 
 ---
 
@@ -695,27 +781,29 @@ class: middle
   symfony console make:controller ConferenceController
   ```
 
-La commande crée une classe `ConferenceController` dans le répertoire `src/Controller/`. La classe générée contient du code standard prêt à être ajusté :
+  La commande crée une classe `ConferenceController` dans le répertoire `src/Controller/`. 
+  
+  La classe générée contient du code standard prêt à être ajusté :
 
-```php
-# src/Controller/ConferenceController.php
-namespace App\Controller;
+  ```php
+  # src/Controller/ConferenceController.php
+  namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+  use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+  use Symfony\Component\HttpFoundation\Response;
+  use Symfony\Component\Routing\Annotation\Route;
 
-class ConferenceController extends AbstractController
-{
-    #[Route('/conference', name: 'conference')]
-    public function index(): Response
-    {
-        return $this->render('conference/index.html.twig', [
-            'controller_name' => 'ConferenceController',
-        ]);
-    }
-}
-```
+  class ConferenceController extends AbstractController
+  {
+      #[Route('/conference', name: 'conference')]
+      public function index(): Response
+      {
+          return $this->render('conference/index.html.twig', [
+              'controller_name' => 'ConferenceController',
+          ]);
+      }
+  }
+  ```
 
 ---
 
@@ -781,7 +869,7 @@ Le nom de la route (`name`) sera utile lorsque nous voudrons faire référence �
 
 class: middle
 
-- ⏩ **Rafraîchissez le navigateur**
+- ⏩ **Rendez-vous sur la page d'accueil https://localhost:8000/**
 
 Nous avons maintenant une page d'accueil qui affiche une image animée. Nous avons également une route nommée `homepage` qui correspond à cette page. Nous utiliserons ce nom pour faire référence à cette page dans notre code.
 
@@ -922,13 +1010,27 @@ class: middle
 
 - Créer un contrôleur qui gère une liste fictive de produits avec `/products`
 
-- Récupérer des détails au format json (sans template twig)
+- Récupérer des détails au format json `JsonResponse` (sans template twig)
+  ```json
+  [{
+      "id": 1,
+      "name": "Iphone 13",
+      "price": 999.99,
+      "description": "Apple iPhone 13 Pro 256 Go Bleu Pacifique",
+      "category": "smartphone"
+  }
+  ...
+  ]
+  ```
 
 - Ajouter une route pour un produit spécifique en utilisant des routes dynamiques `/product/{id}`.
 
 - Re-factoriser le code pour utiliser une seule liste de produits.
 
 - Commitez votre travail.
+```sh
+git add . && git commit -m "Travaux pratique contrôleur"
+```
 
 ]
 
@@ -1035,24 +1137,9 @@ volumes:
 
 Un serveur **PostgreSQL** sera alors installé et certaines variables d'environnement, qui contrôlent le nom de la base de données et ses identifiants, seront configurées. Les valeurs n'ont pas vraiment d'importance.
 
----
-
-class: middle
-
-##### **Extrait du fichier `compose.override.yaml`**
-
-Le fichier `compose.override.yaml` est un fichier de configuration qui permet de surcharger les valeurs par défaut du fichier `compose.yaml`.
-
-Nous exposons également le port PostgreSQL (`5432`) du conteneur à l'hôte local. Cela nous aidera à accéder à la base de données à partir de notre machine :
-
-```diff
-###> doctrine/doctrine-bundle ###
-database:
-  ports:
--    - "5432"
-+    - "5432:5432"
-###< doctrine/doctrine-bundle ###
-```
+.info[
+  Le fichier `compose.override.yaml` est un fichier de configuration qui permet de surcharger les valeurs par défaut du fichier `compose.yaml`.
+]
 
 ---
 
