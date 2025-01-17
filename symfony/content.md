@@ -151,7 +151,7 @@ class: middle
   sudo LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php # Press enter to confirm.
   sudo apt update
 
-  sudo apt-get install php8.4-common php8.4-{intl, xml}
+  sudo apt-get install php8.4-common php8.4-intl php8.4-xml php8.4-mbstring php8.4-zip
   ```
 
 - Installation de symfony cli
@@ -350,10 +350,14 @@ class: middle
 - **Les espaces de noms** : Les espaces de noms sont des moyens de regrouper des classes, des interfaces, des fonctions et des constantes dans un espace de noms.
 
   ```php
-  namespace NamespaceName;
-  class ClassName { /** code */}
+  namespace NamespaceName1;
+  class MyClass { /** code */}
 
-  new NamespaceName\ClassName();
+  namespace NamespaceName2;
+  class MyClass { /** code */}
+
+  new \NamespaceName1\MyClass();
+  new \NamespaceName2\MyClass();
   ```
 
 - **L'encapsulation** : L'encapsulation est le fait de regrouper les propriétés et les méthodes d'un objet dans une classe.
@@ -371,9 +375,15 @@ class: middle
 - **Les enums** : Les enums sont des listes de valeurs constantes.
 
   ```php
-  enum EnumName : string { VALUE1 = 'value1', VALUE2 = 'value2', VALUE3 = 'value3'}
+  enum EnumName : string { 
+      VALUE1 = 'value1';
+      VALUE2 = 'value2';
+      VALUE3 = 'value3';
+  }
 
-  private EnumName $property = EnumName::VALUE1;
+  class MyClass {
+      private EnumName $property = EnumName::VALUE1;
+  }
   ```
 
 ---
@@ -739,6 +749,11 @@ class: middle
 
 La page d'accueil est une ennuyeuse page d'erreur 404. Corrigeons cela.
 
+.center[
+![Symfony Contrôleur](img/debug-page.png)
+]
+
+
 Lorsqu'une requête HTTP arrive au serveur, comme pour notre page d'accueil (http://localhost:8000/), **Symfony** essaie de trouver une route qui corresponde au chemin de la requête (`/` ici).
 
 **Une route** est le lien entre le chemin de la requête et un `callable` PHP, une fonction devant créer la réponse HTTP associée à cette requête.
@@ -749,7 +764,7 @@ Ces callables sont nommés **"contrôleurs"**. Dans Symfony, la plupart des cont
 
 class: middle
 .center[
-### Se faciliter la vie avec le Maker Bundle
+### **Se faciliter la vie avec le Maker Bundle**
 ]
 
 Pour générer des contrôleurs facilement, nous pouvons utiliser le paquet `symfony/maker-bundle`, qui a été installé en tant que composant du paquet `webapp`.
@@ -1360,6 +1375,10 @@ class: middle
 
 Le **Maker Bundle** peut nous aider à générer une classe (une classe `Entity`) qui représente une conférence.
 
+
+---
+class: middle
+
 - ⏩ **Il est maintenant temps de générer l'entité `Conference`**
 
   ```sh
@@ -1375,6 +1394,11 @@ Utilisez les réponses suivantes (la plupart d'entre elles sont les valeurs par 
 - `city`, `string`, `255`, `no` ;
 - `year`, `string`, `4`, `no` ;
 - `isInternational`, `boolean`, `no`.
+
+
+.red[
+  Attention ! Verifiez que la methode `setIsInternational` est bien définie correctement ! 
+]
 
 La classe `Conference` a été stockée sous le namespace `App\Entity\.` La commande a également généré une classe de repository Doctrine : `App\Repository\ConferenceRepository.`
 
@@ -1504,15 +1528,22 @@ class: middle
 
 ]
 
-**Objectif :**
+**Le TP :**
 
-- ⏩ **Créer une entité `Product` et `Category` en vous basant sur les données du précédent TP, pour définir les propriétés.**
+En vous basant sur le TP prédédent.
 
-- ⏩ **Ajouter une relation `ManyToOne` entre `Product` et `Category`**
+- ⏩ **Créez une entité `Product`**
 
-- ⏩ **Générer la migration et mettre à jour la base de données.**
+- ⏩ ** Créez une entité `Category` avec comme champs `id` et `name`.**
 
-- ⏩ **Bonus: Ajouter des données de test dans la base de données via la console `psql`**
+- ⏩ **Ajoutez une relation `ManyToOne` entre `Product` et `Category`**
+
+- ⏩ **Génerez la migration et mettez à jour la base de données.**
+
+- ⏩ **Bonus: Ajoutez des données de test dans la base de données via la console**
+```
+docker compose exec database psql app app
+```
 
 ---
 
@@ -1721,7 +1752,9 @@ class: middle
 
 ]
 
-Quand nous affichons les relations entre les entités (la conférence liée à un commentaire), EasyAdmin essaie d'utiliser la représentation textuelle de la conférence. Par défaut, il s'appuie sur une convention qui utilise le nom de l'entité et la clé primaire (par exemple `Conference #1`) si l'entité ne définit pas la méthode "magique" `__toString()`. Pour rendre l'affichage plus parlant, ajoutez cette méthode sur la classe `Conference`.
+Quand nous affichons les relations entre les entités (la conférence liée à un commentaire), EasyAdmin essaie d'utiliser la représentation textuelle de la conférence.
+
+Par défaut, il s'appuie sur une convention qui utilise le nom de l'entité et la clé primaire (par exemple `Conference #1`) si l'entité ne définit pas la méthode "magique" `__toString()`. Pour rendre l'affichage plus parlant, ajoutez cette méthode sur la classe `Conference`.
 
 - ⏩ **La méthode `__toString()` fait partie du contrat de l'interface `\Stringable`. Nous devons l'implémenter pour respecter le contrat sur nos entités.**
 
@@ -1764,9 +1797,13 @@ Quand nous affichons les relations entre les entités (la conférence liée à u
 
 ]
 
+---
+
+class: middle
+
 Vous pouvez maintenant **ajouter/modifier/supprimer** des conférences directement depuis l'interface d'administration.
 
-- ⏩ **Jouez avec et ajoutez au moins une conférence.**
+- ⏩ **Jouez avec et ajoutez au moins 3 conférences dont une à l'international.**
 
   .info[
   Notez qu'il ne sera pas possible d'ajouter de commentaires pour l'instant. Car certains champs sont obligatoires et ne sont pas affichés dans le formulaire.
@@ -1784,7 +1821,7 @@ class: middle
 
 L'interface d'administration par défaut fonctionne bien, mais elle peut être personnalisée de plusieurs façons pour améliorer son utilisation.
 
-- ⏩ **Faisons quelques changements simples pour montrer quelques possibilités, comme la recherche, le tri et le filtrage des données.**
+- ⏩ **Faisons quelques changements simples pour montrer quelques possibilités, comme la recherche, le tri.**
 
   ```diff
   # src/Controller/Admin/CommentCrudController.php
@@ -1802,6 +1839,27 @@ L'interface d'administration par défaut fonctionne bien, mais elle peut être p
   +            ->setDefaultSort(['createdAt' => 'DESC']);
   +    }
   +
+  ```
+
+  🔹 La méthode `configureCrud()` permet de personnaliser le CRUD. Ici, nous avons changé le nom de l'entité, ajouté des champs de recherche, et défini un tri par défaut.
+
+.center[
+<img src="img/easy-admin/easy-admin-search.png" alt="Easy admin crud" width="600">
+]
+
+---
+
+class: middle
+
+- ⏩ **Faisons aussi quelques changements simples pour montrer quelques possibilités, comme le filtrage des données.**
+
+  ```diff
+  # src/Controller/Admin/CommentCrudController.php
+
+          ->setDefaultSort(['createdAt' => 'DESC']);
+      }
+
+  +
   +    public function configureFilters(Filters $filters): Filters
   +    {
   +        return $filters
@@ -1810,9 +1868,11 @@ L'interface d'administration par défaut fonctionne bien, mais elle peut être p
   +
   ```
 
-  🔹 La méthode `configureCrud()` permet de personnaliser le CRUD. Ici, nous avons changé le nom de l'entité, ajouté des champs de recherche, et défini un tri par défaut.
+🔹 La méthode `configureFilters()` permet de personnaliser les filtres et définissent quels filtres apparaissent au dessus du champ de recherche. Ici, nous avons ajouté un filtre pour la conférence.
 
-  🔹 La méthode `configureFilters()` permet de personnaliser les filtres et définissent quels filtres apparaissent au dessus du champ de recherche. Ici, nous avons ajouté un filtre pour la conférence.
+.center[
+<img src="img/easy-admin/filter.png" alt="Easy admin crud" width="600">
+]
 
 ---
 
@@ -1945,6 +2005,10 @@ Tout est maintenant en place pour créer la première version de l'interface du 
 
 Vous vous souvenez de l'échappement de caractères que nous avons dû faire dans le contrôleur, pour l'easter egg, afin d'éviter les problèmes de sécurité ? Nous n'utiliserons pas PHP pour nos templates pour cette raison. À la place, nous utiliserons **[Twig](https://twig.symfony.com/)**. En plus de gérer l'échappement de caractères, Twig apporte de nombreuses fonctionnalités intéressantes, comme l'héritage des modèles.
 
+
+---
+class: middle
+
 Toutes les pages du site Web suivront le même modèle de mise en page, la même structure HTML de base. Lors de l'installation de Twig, un répertoire `templates/` a été créé automatiquement, ainsi qu'un exemple de structure de base dans `base.html.twig`.
 
 ```twig
@@ -1953,6 +2017,7 @@ Toutes les pages du site Web suivront le même modèle de mise en page, la même
     <head>
         ...
         {% block stylesheets %}
+
         {% endblock %}
 
         {% block javascripts %}
@@ -1966,6 +2031,28 @@ Toutes les pages du site Web suivront le même modèle de mise en page, la même
 ```
 
 Un modèle peut définir des `blocks`. Un `block` est un emplacement où les _templates enfants_, qui _étendent_ le modèle, ajoutent leur contenu.
+
+---
+
+class: middle
+
+.center[
+
+### **Ajouter TailwindCSS**
+
+]
+
+TailwindCSS est un outil css qui vous permet de personnaliser rapidement votre site web. Il vous permet de créer un design unique sans avoir à écrire de code CSS. C'est un outil très populaire qui est utilisé par de nombreux développeurs et il est très facile d'utilisation.
+
+
+- ⏩ **Ajoutez TailwindCSS au projet dans le tempate `base.html.twig` :**
+
+  ```diff
+  {% block javascripts %}
+  +     <script src="https://cdn.tailwindcss.com"></script>
+      {% block importmap %}{{ importmap('app') }}{% endblock %}
+  {% endblock %}
+  ```
 
 ---
 
@@ -1984,7 +2071,7 @@ class: middle
   {% block title %}Conference Guestbook{% endblock %}
 
   {% block body %}
-      <h2>Give your feedback!</h2>
+      <h2 class="text-center text-2xl">Give your feedback!</h2>
 
       {% for conference in conferences %}
           <h4>{{ conference }}</h4>
@@ -2052,6 +2139,10 @@ Pour pouvoir générer le contenu du template, nous avons besoin de l'objet `Env
 ```php
 public function index(..., ConferenceRepository $conferenceRepository): Response
 ```
+
+---
+
+class: middle
 
 Nous avons également besoin du _repository_ des conférences pour récupérer toutes les conférences depuis la base de données.
 
@@ -2143,7 +2234,9 @@ La récupération des commentaires associés à la conférence peut se faire via
   {% endblock %}
   ```
 
-## Dans ce template, nous utilisons le symbole `|` pour appeler les filtres Twig. Un filtre transforme une valeur. `comments|length` retourne le nombre de commentaires et `comment.createdAt|format_datetime('medium', 'short')` affiche la date dans un format lisible par l'internaute.
+Dans ce template, nous utilisons le symbole `|` pour appeler les filtres Twig. Un filtre transforme une valeur. `comments|length` retourne le nombre de commentaires et `comment.createdAt|format_datetime('medium', 'short')` affiche la date dans un format lisible par l'internaute.
+
+---
 
 class: middle
 .center[
@@ -2639,6 +2732,14 @@ Doctrine a différentes façons de manipuler les objets et leurs propriétés pe
 
 Lorsque le comportement n'a besoin d'aucun service et ne doit être appliqué qu'à un seul type d'entité.
 
+.center[
+<img src="img/event/lifecycle-events.png" alt="lifecycle callbacks" width="500px" />
+]
+
+---
+
+class: middle
+
 - ⏩ **Définissez un callback dans la classe entité :**
 
 ```diff
@@ -3057,16 +3158,28 @@ class: middle
 
 ]
 
-- ⏩ **L'affichage du formulaire dans le template peut se faire via la fonction Twig `form` dans le template `templates/conference/show.html.twig`:**
+L'affichage du formulaire dans le template peut se faire via la fonction Twig `form` dans le template `templates/conference/show.html.twig`
+
+- ⏩ **Ajoutez le formulaire au template:**
 
 ```diff
      {% endif %}
+
++     <h2>Add your own feedback</h2>
 +
-+    <h2>Add your own feedback</h2>
-+
-+    {{ form(comment_form) }}
++     {{ form_start(comment_form) }}
++         {{ form_row(comment_form.author) }}
++         {{ form_row(comment_form.email) }}
++         {{ form_row(comment_form.text) }}
++         {{ form_row(comment_form.photo) }}
++     {{ form_end(comment_form) }}
+
  {% endblock %}
 ```
+
+---
+
+class: middle
 
 .pull-left[
 
@@ -3476,13 +3589,20 @@ La commande a généré une classe `App\Entity\Admin` avec les propriétés `use
 💡 Si vous voulez ajouter d'autres propriétés à l'entité Admin, exécutez `make:entity`.
 ]
 
+
+---
+
+class: middle
+
 - ⏩ **Implementer l'interface `\Stringable` dans l'entité `Admin` et ajouter notre nouvelle entité à Easyadmin :**
 
   ```diff
   - class Admin implements UserInterface, PasswordAuthenticatedUserInterface
   + class Admin implements UserInterface, PasswordAuthenticatedUserInterface, \Stringable
   {
+
     @@...
+
   +    public function __toString(): string
   +    {
   +        return $this->username;
@@ -3512,8 +3632,6 @@ En plus de générer l'entité `Admin`, la commande `make:user` a également mis
      firewalls:
          main:
              lazy: true
--            provider: users_in_memory
-+            provider: app_user_provider
 ```
 
 🤖 Nous laissons Symfony choisir le meilleur algorithme possible pour hacher les mots de passe (il évoluera avec le temps).
@@ -3539,7 +3657,7 @@ Nous ne développerons pas de système dédié pour créer des comptes d'adminis
 - ⏩ **Lancer la commande `security:hash-password` pour générer le hash du mot de passe**
 
   ```sh
-  symfony console security:hash-password myPassword 'App\User\Admin
+  symfony console security:hash-password myPassword 'App\Entity\Admin
   ```
 
 > ❗Notez le hash généré, nous en aurons besoin pour insérer l'admin dans la base de données.
@@ -3547,12 +3665,17 @@ Nous ne développerons pas de système dédié pour créer des comptes d'adminis
 - ⏩ **Ajouter le CRUD Admin de la classe `Admin` dans easyadmin et definissez-y le contenu de la methode crudFields comme ce qui suit:**
 
   ```php
-  public function configureFields(string $pageName): iterable
+  class AdminCrudController extends AbstractCrudController
   {
-      yield IdField::new('id')->hideOnForm();
-      yield TextField::new('username');
-      yield TextField::new('password');
-      yield ArrayField::new('roles');
+      //...
+
+      public function configureFields(string $pageName): iterable
+      {
+          yield IdField::new('id')->hideOnForm();
+          yield TextField::new('username');
+          yield TextField::new('password');
+          yield ArrayField::new('roles');
+      }
   }
   ```
 
@@ -3571,7 +3694,6 @@ Maintenant que nous avons un admin, nous pouvons sécuriser l'interface d'admini
 
   - pour mettre à jour la configuration de sécurité
   - générer un template pour la connexion
-  - créer une classe d'authentification (`Authenticator`) :
 
   ```sh
   symfony console make:security
@@ -3580,7 +3702,6 @@ Maintenant que nous avons un admin, nous pouvons sécuriser l'interface d'admini
 **La commande vous pose quelques questions :**
 
 - Sélectionnez `1` pour générer une classe d'authentification pour le formulaire de connexion
-- Nommez la classe d'authentification `AppAuthenticator`
 - Le contrôleur `SecurityController`
 - Créez une URL `/logout` (yes).
 
@@ -3590,11 +3711,10 @@ La commande a mis à jour la configuration de sécurité `config/packages/securi
          main:
              lazy: true
              provider: app_user_provider
-+            custom_authenticator: App\Security\AppAuthenticator
 +            logout:
 +                path: app_logout
 +                # where to redirect after logout
-+                # target: app_any_route
++                target: homepage
 ```
 
 ---
@@ -3605,19 +3725,6 @@ class: middle
 ### **Ajouter les règles de contrôle d'accès**
 
 ]
-
-Comme l'indique la sortie de la commande `make:auth`.
-
-- ⏩ **Nous devons personnaliser la route dans la méthode `onAuthenticationSuccess()` pour rediriger l'admin lorsqu'il a réussi à se connecter :**
-
-  ```diff
-  # src/Security/AppAuthenticator.php
-
-  -        // For example:
-  -        // return new RedirectResponse($this->urlGenerator->generate('some_route'));
-  -        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
-  +        return new RedirectResponse($this->urlGenerator->generate('admin'));
-  ```
 
 Un système de sécurité se compose de deux parties : l'authentification et l'autorisation. Lors de la création de l'admin, nous lui avons donné le rôle `ROLE_ADMIN`.
 
