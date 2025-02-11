@@ -5819,20 +5819,10 @@ class: middle
   symfony open:local:webmail
   ```
 
-.pull-left.center[
-
+.center[
 Ou depuis la barre d'outils de débogage Web :
 
-<img src="img/mail/webmail-toolbar.png" />
-
-]
-
-.pull-right.center[
-
-Depuis gitpod, vous pouvez accéder à l'interface Webmail via le lien fourni dans la console.
-
-<img src="img/mail/webmail-terminal.png" width="500" />
-
+<img src="img/mail/webmail-toolbar.png" width="300" />
 ]
 
 ---
@@ -5876,6 +5866,56 @@ Ces assertions fonctionnent lorsque les e-mails sont envoyés de manière synchr
   git commit -m "Add email notifications"
   ```
 
+---
+
+class: middle
+
+.center[
+
+### **.red[Travaux pratique] : Système de Gestion des Demandes de Congés**
+
+]
+
+Créer une application de gestion des demandes de congés avec validation par email et workflow de validation.
+
+####  Entités à créer
+
+- User (email : string, roles : array, password : string, firstName : string, lastName : string)
+- LeaveRequest (user : User, startDate : DateTime, endDate : DateTime, reason : string, status : StatusEnum)
+- StatusEnum (enum: DRAFT, SUBMITTED, APPROVED, REJECTED)
+
+#### Fonctionnalités requises
+
+.pull-left[
+- **Système d'authentification**
+  - Créer deux types d'utilisateurs : ROLE_ADMIN et ROLE_USER
+  - Interface de connexion
+- **Gestion des demandes**
+  - Un utilisateur peut créer une demande de congés
+  - Un utilisateur peut voir la liste de ses demandes
+  - Un admin peut voir toutes les demandes
+  - Un admin peut approuver/rejeter les demandes
+- **Workflow**
+  - Implémenter un workflow pour les statuts des demandes
+  - États : DRAFT → SUBMITTED → APPROVED/REJECTED
+  - Les transitions doivent respecter ce flux
+]
+
+.pull-right[
+
+- **Notifications par email**
+  - Envoi asynchrone d'emails lors de la soumission d'une demande
+  - L'admin doit recevoir un email pour chaque nouvelle demande
+  - Utiliser Symfony Messenger pour l'envoi asynchrone
+- **Interface d'administration**
+  - Utiliser EasyAdmin
+  - CRUD pour les utilisateurs et les demandes
+  - Filtres sur les statuts des demandes
+- **Fixtures de données de test** : 
+  - Créer des données de test
+  - Au moins un admin et deux utilisateurs
+  - Quelques demandes de congés avec différents statuts
+]
 ---
 
 class: middle, center, inverse
@@ -5956,7 +5996,7 @@ En plus d'être un HTTP reverse proxy à part entière, le HTTP reverse proxy de
 
 class: middle,center,inverse
 
-# 16. Styliser l'interface utilisateur avec Webpack
+# 16. Redimensionner des images
 
 ---
 
@@ -5964,161 +6004,298 @@ class: middle
 
 .center[
 
-### **Installer Webpack Encore**
+### **Redimensionner des images**
 
 ]
 
-Nous n'avons pas consacré de temps à la conception de l'interface utilisateur. Pour styliser comme un pro, nous utiliserons une stack moderne, basée sur Webpack. Et pour ajouter une touche Symfony et faciliter son intégration avec l'application, utilisons Webpack Encore :
+Dans le rendu de la page d'une conférence, les photos sont limitées à une taille maximale de 200 x 150 pixels. Ne faudrait-il pas optimiser les images, et réduire leur taille, si l'image originale est plus grande que celle qui est affichée ?
 
-- ⏩ **Installez Webpack Encore et supprimer Asset Mapper :**
+C'est une tâche idéale pour être ajoutée au workflow des commentaires, probablement juste après la validation du commentaire, et juste avant sa publication.
+
+Ajoutons un nouvel état ready et une transition optimize :
+
+```diff
+-            places: [submitted, ham, potential_spam, spam, rejected, published]
++            places: [submitted, ham, potential_spam, spam, ready, rejected, published]
+
+...
+                 publish:
+                     from: potential_spam
+-                    to:   published
++                    to:   ready
+                 reject:
+                     from: potential_spam
+                     to:   rejected
+                 publish_ham:
+                     from: ham
+-                    to:   published
++                    to:   ready
+...
++                optimize:
++                    from: ready
++                    to:   published
+```
+
+---
+
+class: middle
+
+Générez une représentation visuelle de la nouvelle configuration du workflow pour valider qu'elle décrit ce que nous voulons :
+
+```sh
+symfony console workflow:dump comment | dot -Tpng -o workflow.png
+```
+
+---
+
+class: middle
+
+.center[
+### **Optimiser les images avec Imagine**
+]
+
+L'optimisation des images se fera grâce à GD (vérifiez que l'extension GD est activée dans votre installation locale de PHP) et Imagine :
+
+```sh
+symfony composer req "imagine/imagine:^1.2"
+```
+
+Le redimensionnement d'une image peut être effectué via la classe de service suivante `App\ImageOptimizer`: :
+
+
+```php
+namespace App;
+
+use Imagine\Gd\Imagine;
+use Imagine\Image\Box;
+
+class ImageOptimizer
+{
+    private const MAX_WIDTH = 200;
+    private const MAX_HEIGHT = 150;
+
+    public function __construct(
+        private Imagine $imagine = new Imagine()
+    ) { }
+
+    public function resize(string $filename): void
+    {
+        list($iwidth, $iheight) = getimagesize($filename);
+        $ratio = $iwidth / $iheight;
+        $width = self::MAX_WIDTH;
+        $height = self::MAX_HEIGHT;
+        if ($width / $height > $ratio) {
+            $width = $height * $ratio;
+        } else {
+            $height = $width / $ratio;
+        }
+        $photo = $this->imagine->open($filename);
+        $photo->resize(new Box($width, $height))->save($filename);
+    }
+}
+```
+
+---
+
+class: middle
+.center[
+
+### **Ajouter une nouvelle étape au workflow**
+
+]
+
+Modifiez le code du messenger handler pour gérer le nouvel état :
+
+```diff
+         #[Autowire('%admin_email%')] private string $adminEmail,
++        private ImageOptimizer $imageOptimizer,
++        #[Autowire('%photo_dir%')] private string $photoDir,
+         private ?LoggerInterface $logger = null,
+     ) {
+     }
+@@ -54,6 +57,12 @@ class CommentMessageHandler
+                 ->to($this->adminEmail)
+                 ->context(['comment' => $comment])
+             );
++        } elseif ($this->commentStateMachine->can($comment, 'optimize')) {
++            if ($comment->getPhotoFilename()) {
++                $this->imageOptimizer->resize($this->photoDir.'/'.$comment->getPhotoFilename());
++            }
++            $this->commentStateMachine->apply($comment, 'optimize');
++            $this->entityManager->flush();
+         } elseif ($this->logger) {
+             $this->logger->debug('Dropping comment message', ['comment' => $comment->getId(), 'state' => $comment->getState()]);
+         }
+```
+
+.info[
+  Notez que $photoDir est automatiquement injecté parce que nous avons défini un paramètre (parameter) de conteneur sur ce nom de variable lors d'une étape précédente :
+]
+
+---
+
+class: middle, inverse, center
+
+# 17. Exécuter des crons
+
+---
+
+class: middle
+
+.center[
+### **Exécuter des crons**
+]
+
+Les crons sont utiles pour les tâches de maintenance. Contrairement aux workers, ils travaillent selon un horaire établi pour une courte période de temps.
+
+Nettoyer les commentaires
+Les commentaires marqués comme spam ou refusés par l'admin sont conservés dans la base de données, car l'admin peut vouloir les inspecter pendant un certain temps. Mais ils devraient probablement être supprimés au bout d'un moment. Les garder pendant une semaine après leur création devrait être suffisant.
+
+- ⏩ **Créez des méthodes utilitaires dans le repository des commentaires pour trouver les commentaires rejetés** :
+
+```diff
+ class CommentRepository extends ServiceEntityRepository
+ {
++    private const DAYS_BEFORE_REJECTED_REMOVAL = 7;
++
++    private function getOldRejectedQueryBuilder(): QueryBuilder
++    {
++        return $this->createQueryBuilder('c')
++            ->andWhere('c.state = :state_rejected or c.state = :state_spam')
++            ->andWhere('c.createdAt < :date')
++            ->setParameter('state_rejected', 'rejected')
++            ->setParameter('state_spam', 'spam')
++            ->setParameter('date', new \DateTimeImmutable(-self::DAYS_BEFORE_REJECTED_REMOVAL.' days'))
++        ;
++    }
+```
+
+---
+
+class: middle
+
+- ⏩ **Créez une méthode `countOldRejectedComments()` dans `CommentRepository` pour compter les commentaires rejetés** :
+
+```diff
+ class CommentRepository extends ServiceEntityRepository
+ {
++    public function countOldRejectedComments(): int
++    {
++        return $this->getOldRejectedQueryBuilder()->select('COUNT(c.id)')->getQuery()->getSingleScalarResult();
++    }
++
+     public function getOldRejectedComments(): array
+     {
+         return $this->getOldRejectedQueryBuilder()->getQuery()->getResult();
+     }
+```
+
+.info[
+  Pour les requêtes plus complexes, il est parfois utile de jeter un coup d'œil aux requêtes SQL générées (elles se trouvent dans les logs et dans le profileur de requêtes web).
+]
+
+
+---
+
+class: middle
+.center[
+
+### **Utiliser des constantes de classe, des paramètres de conteneur et des variables d'environnement**
+
+]
+
+7 jours ? Nous aurions pu choisir un autre chiffre, pourquoi pas 10 ou 20 ? Ce nombre pourrait évoluer avec le temps. Nous avons décidé de le stocker en tant que constante dans la classe, mais nous aurions peut-être pu le stocker en tant que paramètre dans le conteneur, ou même le définir en tant que variable d'environnement.
+
+Voici quelques règles de base pour décider quelle abstraction utiliser :
+
+- Si la valeur est sensible (mots de passe, jetons API, etc.), utilisez le stockage de chaîne secrète de Symfony ou un Vault ;
+- Si la valeur est dynamique et que vous devriez pouvoir la modifier sans redéployer, utilisez une variable d'environnement ;
+- Si la valeur peut être différente d'un environnement à l'autre, utilisez un paramètre de conteneur ;
+- Pour tout le reste, stockez la valeur dans le code, comme dans une constante de classe.
+
+---
+
+class: middle
+.center[
+### **Créer une commande de console**
+]
+
+Supprimer les anciens commentaires est une tâche idéale pour un cron job. Il faut le faire de façon régulière, et un petit retard n'a pas d'impact majeur.
+
+- ⏩ **Créez une commande nommée `app:comment:cleanup` en créant un fichier `src/Command/CommentCleanupCommand.php` :**
+
+```sh
+symfony console make:command app:comment:cleanup
+```
+
+- ⏩ **Ajouter l'option `--dry-run` :**
+
+
+```diff
+  protected function configure()
+  {
+-       $this
+-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
+-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
+-        ;
++      $this->addOption('dry-run', null, InputOption::VALUE_NONE, 'Dry run');
+  }
+```
+
+---
+
+class: middle
+
+- **Mettez à jour la methode `execute` :**
+  ```php
+  public function __construct(
+        private CommentRepository $commentRepository,
+  ) {
+      parent::__construct();
+  }
+
+  #...
+
+  protected function execute(InputInterface $input, OutputInterface $output): int
+  {
+      $io = new SymfonyStyle($input, $output);
+
+      if ($input->getOption('dry-run')) {
+          $io->note('Dry mode enabled');
+
+          $count = $this->commentRepository->countOldRejected();
+      } else {
+          $count = $this->commentRepository->deleteOldRejected();
+      }
+
+      $io->success(sprintf('Deleted "%d" old rejected/spam comments.', $count));
+
+      return Command::SUCCESS;
+  }
+```
+
+Toutes les commandes de l'application sont enregistrées avec les commandes par défaut de Symfony, et sont toutes accessibles avec `symfony console`.
+
+
+
+---
+
+class: middle
+
+.info[
+  Comme le nombre de commandes disponibles peut être important, vous devez les mettre dans le bon namespace. Par convention, les commandes spécifiques à l'application devraient être stockées sous le namespace `app`. Ajoutez autant de sous-namespaces que vous le souhaitez en les séparant par deux points (`:`).
+]
+
+Une commande reçoit l'entrée (les arguments et les options passés à la commande) et vous pouvez utiliser la sortie pour écrire dans la console.
+
+- **Nettoyez la base de données en exécutant la commande :**
+
+```sh
+symfony console app:comment:cleanup
+```
+
+- **Committez les changements :**
 
   ```sh
-  symfony composer rem asset-mapper
-  symfony composer req encore
+  git add . && git commit -m "Delete old rejected comments"
   ```
-
-Un environnement Webpack complet a été créé pour vous : package.jsonil webpack.config.jsa été généré et contient une bonne configuration par défaut. Open webpack.config.js, il utilise l'abstraction Encore pour configurer Webpack.
-
-Le fichier `package.json` définit quelques commandes intéressantes que nous utiliserons tout le temps.
-
-Le répertoire `assets` contient les principaux points d'entrée des actifs du projet : `styles/app.css` et `app.js`.
-
----
-
-class: middle
-
-.center[
-
-### **Utiliser Sass**
-
-]
-
-- ⏩ **Au lieu d'utiliser du CSS simple, passons à [Sass](https://sass-lang.com/) :**
-
-  ```sh
-  mv assets/styles/app.css assets/styles/app.scss
-  ```
-
-  _assets/app.js_
-
-  ```diff
-  # assets/app.js
-
-   // any CSS you import will output into a single css file (app.css in this case)
-  -import './styles/app.css';
-  +import './styles/app.scss';
-  ```
-
-- ⏩ **Installez le chargeur Sass :**
-
-  ```sh
-  npm install node-sass sass-loader@13 --save-dev
-  ```
-
-- ⏩ ** Et activez le chargeur Sass dans webpack _webpack.config.js_**
-
-  ```diff
-
-     // enables Sass/SCSS support
-  -    //.enableSassLoader()
-  +    .enableSassLoader()
-  ```
-
-  Comment savoir quels packages installer ? Si nous avions essayé de créer nos actifs sans eux, `Encore` nous aurait donné un joli message d'erreur suggérant la commande `npm install` nécessaire pour installer les dépendances pour charger les fichiers `.scss`.
-
----
-
-class: middle
-
-.center[
-
-### **Tirer parti de Bootstrap**
-
-]
-
-Pour commencer avec de bonnes valeurs par défaut et créer un site Web réactif, un framework CSS comme Bootstrap peut aller très loin. Installez-le sous forme de package :
-
-- ⏩ **Installez Bootstrap :**
-
-  ```sh
-  npm install bootstrap @popperjs/core bs-custom-file-input --save-dev
-  ```
-
-- ⏩ **Exiger Bootstrap dans le fichier CSS `assets/styles/app.scss` (nous avons également nettoyé le fichier) :**
-
-  ```diff
-  -body {
-  -    background-color: lightgray;
-  -}
-  +@import '~bootstrap/scss/bootstrap';
-  ```
-
-- ⏩ **Faites de même pour le fichier JS `assets/app.js` :**
-
-  ```diff
-   // any CSS you import will output into a single css file (app.css in this case)
-  import './styles/app.scss';
-  +import 'bootstrap';
-  +import bsCustomFileInput from 'bs-custom-file-input';
-  +
-  +bsCustomFileInput.init();
-  ```
-
-- ⏩ **Activer le thème Bootstrap dans le fichier `config/packages/twig.yaml` :**
-
-  ```yaml
-  twig:
-    form_themes: ["bootstrap_5_layout.html.twig"]
-  ```
-
----
-
-class: middle
-.center[
-
-### **Styliser le HTML**
-
-]
-
-Nous sommes maintenant prêts à styliser l'application.
-
-- ⏩ **Téléchargez et développez l'archive à la racine du projet :**
-
-  ```shell
-  php -r "copy('https://symfony.com/uploads/assets/guestbook-6.4.zip', 'guestbook-6.4.zip');"
-  unzip -o guestbook-6.4.zip
-  rm guestbook-6.4.zip
-  ```
-
-Jetez un œil aux modèles, vous apprendrez peut-être une astuce ou deux sur Twig.
-
----
-
-class: middle
-.center[
-
-### **Construisons Assets**
-
-]
-
-Un changement majeur lors de l'utilisation de Webpack est que les fichiers CSS et JS ne sont pas utilisables directement par l'application. Ils doivent d'abord être "compilés".
-
-- ⏩ **En développement, la compilation des actifs peut se faire via la commande `encore dev` :**
-
-  ```shell
-  symfony run npm run dev
-  ```
-
-Au lieu d'exécuter la commande à chaque fois qu'il y a un changement,
-
-- ⏩ **envoyez-la en arrière-plan et laissez-la surveiller les modifications JS et CSS :**
-
-  ```shell
-  symfony run -d npm run watch
-  ```
-
----
-
-class: middle
-
-Prenez le temps de découvrir les changements visuels. Jetez un œil au nouveau design dans un navigateur.
