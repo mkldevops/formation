@@ -5714,7 +5714,7 @@ class: middle
 
 - ⏩ **Ajoutez le controller `src/Controller/Admin/CommentReviewController.php` via le maker:**
   ```sh
-  symfony console make:controller 'Admin\ReviewComment' --invokable --no-interaction
+  symfony console make:controller 'Admin\ReviewComment' --invokable
   ```
 - ⏩ **Modifiez le controller pour accepter ou rejeter un commentaire :**
 
