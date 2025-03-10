@@ -52,51 +52,82 @@ class: middle, inverse, center
 ---
 
 class: middle
-L'introduction à **API Platform** vise à fournir une vue d'ensemble de l'outil, de ses fonctionnalités et de son écosystème.
 
-#### Qu'est-ce que API Platform ?
+.center[
 
-API Platform est un **framework PHP open source basé sur Symfony**, qui permet de créer des API REST et des applications web modernes. Il offre une approche pragmatique pour créer des API web sécurisées, performantes et évolutives.
+### **Qu'est-ce qu'une API ?**
 
-#### Les fonctionnalités d'API Platform
+]
 
-API Platform est livré avec une large gamme de fonctionnalités, y compris :
+Une API (Application Programming Interface) est un ensemble de règles et de protocoles qui permettent à différentes applications de communiquer entre elles. C'est une interface qui définit comment les composants logiciels doivent interagir.
 
-- La génération automatique de la documentation Swagger et ReDoc pour votre API
+#### **Types d'APIs courants**
 
-- Le support de formats de données variés (JSON-LD, HAL, Hydra, etc.)
+- **REST**: APIs basées sur HTTP utilisant ses méthodes standards (`GET`, `POST`, `PUT`, `DELETE`)
 
-- Le support de multiples formats de requêtes (CRUD, filtres, pagination, tri, etc.)
+- **GraphQL**: Permet aux clients de demander exactement les données dont ils ont besoin
 
-- L'authentification et l'autorisation avec OAuth2 et JWT
+- **SOAP**: Protocole plus ancien utilisé principalement dans les systèmes d'entreprise
 
-- La validation automatique des données entrantes et des réponses sortantes
-
-- La personnalisation de l'interface d'administration avec EasyAdmin
-
-- L'optimisation des performances avec le cache de doctrine et le HTTP/2 Push
-
-- La prise en charge de GraphQL
+- **WebSocket**: Pour les communications bidirectionnelles en temps réel
 
 ---
 
 class: middle
 
-#### L'écosystème d'API Platform
+.center[
 
-API Platform s'intègre facilement avec de nombreux autres outils et technologies, tels que :
+### **L'utilité d'API Platform**
 
-- **Symfony :** API Platform est construit sur Symfony, donc il est compatible avec toutes les fonctionnalités de Symfony.
+]
 
-- **Doctrine :** API Platform utilise Doctrine pour la gestion de la base de données, ce qui facilite la création et la manipulation des entités.
+API Platform est un framework PHP open source basé sur Symfony qui offre de nombreux avantages pour le développement d'API modernes:
 
-- **React et Angular :** API Platform offre une compatibilité prête à l'emploi avec les bibliothèques React et Angular, ce qui facilite la création d'applications web modernes.
+#### **Fonctionnalités principales**
 
-- **Docker :** API Platform peut facilement être intégré dans des environnements Dockerisés pour la production.
+- **Création rapide d'API REST et GraphQ**L: Permet de développer des API web professionnelles avec un minimum d'effort de codage.
 
-En résumé, API Platform est un outil puissant et flexible pour la création d'API REST modernes.
+- **Approche "API-first"**: Facilite la création d'applications web modernes en suivant les meilleures pratiques de conception d'API.
 
-Avec ses fonctionnalités riches et son écosystème étendu, il est facile de démarrer rapidement avec API Platform pour créer des applications web sécurisées, performantes et évolutives.
+- **Documentation automatique**: Génère automatiquement une documentation interactive (Swagger/OpenAPI et ReDoc) qui se met à jour en temps réel.
+
+- **Opérations CRUD générées automatiquement**: Crée automatiquement les endpoints pour les opérations Create, Read, Update et Delete à partir de vos entités.
+
+---
+
+class: middle
+.center[
+
+### **Avantages techniques**
+
+]
+
+- **Performance et évolutivité**: Optimisé pour des performances élevées grâce à des techniques comme le cache HTTP et le lazy loading.
+
+- **Sécurité robuste**: Facilite l'implémentation de l'authentification (JWT, OAuth) et la gestion des autorisations.
+
+- **Formats multiples**: Prend en charge de nombreux formats de données (JSON-LD, HAL, Hydra, etc.) pour une meilleure interopérabilité.
+
+- **Validation des données intégrée**: Utilise le système de validation de Symfony pour garantir l'intégrité des données.
+
+---
+
+class: middle
+.center[
+
+### **Intégration et écosystème**
+
+]
+
+- **Compatible avec l'écosystème Symfony**: S'intègre parfaitement avec tous les composants Symfony.
+
+- **Compatible avec l'écosystème Laravel**: Peut être intégré avec Laravel pour bénéficier de ses fonctionnalités
+
+- **Prêt pour les frameworks frontend**: Fonctionne harmonieusement avec React, Angular, Vue.js et d'autres frameworks frontend.
+
+- **Support pour Docker**: Facilement déployable dans des environnements conteneurisés.
+
+API Platform permet aux développeurs de se concentrer sur la logique métier plutôt que sur l'infrastructure, accélérant ainsi considérablement le développement d'applications web modernes tout en maintenant une haute qualité technique.
 
 ---
 
@@ -115,9 +146,16 @@ class: middle
 
 Pour commencer avec API Platform, il est nécessaire d'installer Symfony. Symfony est un framework PHP qui fournit un ensemble de composants pour construire des applications web modernes.
 
-Durant cette formation, nous allons utiliser Gitpod pour installer Symfony, il suffit d'utiliser le template suivant : https://github.com/mkl-devops-ri7/gitpod-template
+- Créer un nouveau projet Symfony avec le template `symfony-template` :
 
-Suivons les étapes du `README.md`, l'installation de symfony se fera automatiquement et lancera le projet sur le port `8080` [http://localhost:8080](http://localhost:8080).
+  ```bash
+  symfony new --dir=api-platform --webapp --version=7.2
+  cd api-platform
+
+  # Lancer le serveur Symfony
+  docker compose up -d
+  symfony server:start -d
+  ```
 
 Une fois Symfony installé, il est recommandé de configurer l'environnement de développement. Il est possible de créer un fichier `.env.local` à la racine du projet pour stocker les variables d'environnement spécifiques au développement.
 
@@ -127,7 +165,9 @@ Dans ce fichier, vous pouvez définir des paramètres tels que la configuration 
 
 class: middle
 .center[
+
 ### **Installation de API Platform via Composer**
+
 ]
 
 Vous pouvez installer API Platform en utilisant **Composer**. API Platform est disponible sous forme de paquet Composer, qui peut être installé en utilisant la commande suivante :
@@ -137,41 +177,46 @@ symfony composer require api
 ```
 
 .info[
-    L'installation de API Platform, s'est réalisée automatiquement lors de la création du projet Symfony avec le template `symfony-template`.
+L'installation de API Platform, s'est réalisée automatiquement lors de la création du projet Symfony avec le template `symfony-template`.
 ]
 
 Cette commande a installé tous les composants nécessaires pour utiliser API Platform dans votre projet Symfony, y compris la **documentation Swagger**, la prise en charge de **JSON-LD** et de **HAL**, et les composants pour la **validation**, la **pagination**, le **tri** et le **filtrage**.
 
-🪄 Api Platform est installé vous pouvez vous rendre sur `/api/docs`. Vous êtes prêt à commencer à développer des API REST modernes avec API Platform.
+🪄 Api Platform est installé vous pouvez vous rendre sur `https://localhost:8000/api/docs`. Vous êtes prêt à commencer à développer des API REST modernes avec API Platform.
 
 .center[
 <img src="img/api-platform-doc-page.png" alt="Api Platform doc page" width="400" />
 ]
 
 ---
+
 class: middle
 .center[
+
 ### **Configuration d'API Platform**
+
 ]
 
-- Ajouter la configuration d'API Platform dans le fichier `config/packages/api_platform.yaml` le format `['application/json']` :
-    ```diff
-    formats:
-      jsonld: ['application/ld+json']
-    +  json:     ['application/json']
-    docs_formats:
-      jsonld: ['application/ld+json']
-    +  json:     ['application/json']
-    ```
+- Ajouter la configuration d'API Platform dans le fichier `config/packages/api_platform.yaml` les formats `['application/json']` et `['application/ld+json']` :
+
+```yaml
+api_platform:
+  formats:
+    jsonld: ["application/ld+json"]
+    json: ["application/json"]
+```
 
 .info[
-   Cette configuration permet de définir les formats de données pris en charge par API Platform. Par défaut, API Platform prend en charge les formats JSON-LD et HAL. En ajoutant le format JSON, vous pouvez également prendre en charge les données JSON.
+Cette configuration permet de définir les formats de données pris en charge par API Platform. Par défaut, API Platform prend en charge les formats JSON-LD et HAL. En ajoutant le format JSON, vous pouvez également prendre en charge les données JSON.
 ]
 
 ---
+
 class: middle
 .center[
+
 ### **Installation d’un Outil pour API (Postman, Insomnia, Bruno)**
+
 ]
 
 Pour tester et interagir avec vos API, l’utilisation d’outils dédiés comme Postman, Insomnia ou Bruno est recommandée. Ces outils permettent d’envoyer des requêtes HTTP, de visualiser les réponses, et d’automatiser les tests.
@@ -196,20 +241,22 @@ class: middle, inverse, center
 
 class: middle
 .center[
+
 ### **Création d'une entité**
+
 ]
 
 Pour créer une API avec API Platform, vous devez d'abord créer une entité. Les entités sont des objets qui représentent des données que vous souhaitez stocker dans votre base de données.
 
 Par exemple, si vous créez une application de gestion de bibliothèque, vous pourriez créer une entité "`Book`" pour stocker les informations sur les livres.
 
-* Pour créer une entité avec Symfony, vous pouvez utiliser la commande `make:entity`. Par exemple, pour créer une entité "`Book`", vous pouvez exécuter la commande suivante :
-    ```bash
-    symfony console make:entity Book --api-resource
-    ```
-   .info[
-    L'option `--api-resource` permet de créer une ressource API pour l'entité.
-   ]
+- Pour créer une entité avec Symfony, vous pouvez utiliser la commande `make:entity`. Par exemple, pour créer une entité "`Book`", vous pouvez exécuter la commande suivante :
+  ```bash
+  symfony console make:entity Book --api-resource
+  ```
+  .info[
+  L'option `--api-resource` permet de créer une ressource API pour l'entité.
+  ]
 
 Cette commande va créer une classe `Book` dans le dossier `src/Entity`. Définissez les propriétes suivantes:
 
@@ -219,20 +266,22 @@ Cette commande va créer une classe `Book` dans le dossier `src/Entity`. Défini
 
 * Génerer le fichier de migration, puis l'appliquer
 
-    ```bash
-    symfony console make:migration
-    symfony console doctrine:migrations:migrate -n
-    ```
+  ```bash
+  symfony console make:migration
+  symfony console doctrine:migrations:migrate -n
+  ```
 
 ---
 
 class: middle
 
 .center[
+
 ### **Définition de la ressource API**
+
 ]
 
-Une fois que l'entité est créée, il est temps de définir la ressource API correspondante pour cette entité. Vous pouvez le faire en ajoutant des annotations à la classe entité. Dans cet exemple, nous avons utilisé l'attribute `#[ApiResource]` pour définir la ressource API pour l'entité `Book`.
+Une fois que l'entité est créée, vous obtenez une classe `Book` avec l'attribute `#[ApiResource]` déjà ajouté.
 
 ```diff
   <?php
@@ -246,14 +295,14 @@ Une fois que l'entité est créée, il est temps de définir la ressource API co
 + #[ApiResource]
   #[ORM\Entity(repositoryClass: BookRepository::class)]
   class Book
-  {
     ...
-  }
 ```
 
 API Platform utilisera cette attribute pour générer automatiquement une API CRUD complète pour votre entité.
 
-Cela signifie que les opérations **CRUD** (Create, Read, Update, Delete) seront disponibles pour la ressource API.
+Cela signifie que les opérations **CRUD** (Create, Read, Update, Delete) seront disponibles pour la ressource API `Book`.
+
+Vous pouvez vous rendre sur `https://localhost:8000/api/docs` pour voir la documentation de la ressource API `Book` se met à jour automatiquement.
 
 .center[<img src="img/api-platform-doc-book.png" alt="Api Platform doc page" width="350" />]
 
@@ -261,18 +310,22 @@ Cela signifie que les opérations **CRUD** (Create, Read, Update, Delete) seront
 
 class: middle
 .center[
-### **Ajout de données à la base de données**
+
+### **Ajouter des données - Super simple!s**
+
 ]
 
-Avec la ressource API définie, API Platform générera automatiquement les opérations CRUD correspondantes pour la ressource. 
+Pas besoin de créer un formulaire ou une interface d'administration. Vous pouvez immédiatement utiliser votre API.
+
+Choisissez votre outil préféré pour envoyer une requête `POST` pour créer un nouveau livre.
 
 - Vous pouvez envoyer une requête `POST` pour créer un nouveau livre via un curl dans le container ou l'outil de votre choix :
 
-    ```bash
-    curl -sX POST "http://localhost:8000/api/books" \
-      -H "Content-Type: application/json" \
-      -d '{"title": "The Hitchhikers Guide to the Galaxy", "author": "Douglas Adams", "year": "1979"}' | jq
-    ```
+  ```bash
+  curl -sX POST "https://localhost:8000/api/books" \
+    -H "Content-Type: application/json" \
+    -d '{"title": "The Hitchhikers Guide to the Galaxy", "author": "Douglas Adams", "year": "1979"}' | jq
+  ```
 
 Vous aurez une réponse similaire à celle-ci :
 
@@ -284,68 +337,73 @@ Vous aurez une réponse similaire à celle-ci :
 }
 ```
 
-API Platform a effectué la validation des données entrantes et a créé un nouveau livre dans la base de données.
+Et voilà! Votre livre est sauvegardé dans la base de données.
 
 ---
 
 class: middle
 .center[
-### **Récupération des données de la base de données**
+
+### **Récupérer vos données**
+
 ]
 
+C'est tout aussi simple que l'ajout de données.
 
-* Vous pouvez également envoyer une requête `GET` pour récupérer une liste de livres :
+- Vous pouvez envoyer une requête `GET` pour récupérer une liste de livres :
 
-    ```bash
-    curl -sX GET "http://localhost:8000/api/books" \
-      -H "Content-Type: application/json" | jq
-    ```
+  ```bash
+  curl -sX GET "https://localhost:8000/api/books" \
+    -H "Content-Type: application/json" | jq
+  ```
 
-    API Platform retournera une liste de tous les livres disponibles dans la base de données.
-    
-    ```json
-    {
-      "@context": "/api/contexts/Book",
-      "@id": "/api/books",
-      "@type": "hydra:Collection",
-      "hydra:totalItems": 1,
-      "hydra:member": [
-        {
-          "@id": "/api/books/1",
-          "@type": "Book",
-          "id": 1,
-          "title": "The Hitchhikers Guide to the Galaxy",
-          "author": "Douglas Adams",
-          "year": "1979"
-        }
-      ]
-    }
-    ```
-  
+  API Platform retournera une liste de tous les livres disponibles dans la base de données.
+
+  ```json
+  {
+    "@context": "/api/contexts/Book",
+    "@id": "/api/books",
+    "@type": "hydra:Collection",
+    "hydra:totalItems": 1,
+    "hydra:member": [
+      {
+        "@id": "/api/books/1",
+        "@type": "Book",
+        "id": 1,
+        "title": "The Hitchhikers Guide to the Galaxy",
+        "author": "Douglas Adams",
+        "year": "1979"
+      }
+    ]
+  }
+  ```
+
 API Platform gère automatiquement les opérations de lecture pour les ressources API.
 
 ---
 
 class: middle
 .center[
+
 ### **Mise à jour et suppression des données**
+
 ]
 
-* Vous pouvez envoyer une requête `PUT` pour mettre à jour un livre existant :
+- Vous pouvez envoyer une requête `PUT` pour mettre à jour un livre existant :
 
-    ```bash
-    curl -sX PUT "http://localhost:8000/api/books/1" \
-      -H "Content-Type: application/json" \
-      -d '{"title": "The Hitchhikers Guide to the Galaxy", "author": "Douglas Adams", "year": "1980"}' | jq
-    ```
-  
-* Vous pouvez envoyer une requête `DELETE` pour supprimer un livre existant :
+  ```bash
+  curl -sX PUT "https://localhost:8000/api/books/1" \
+    -H "Content-Type: application/json" \
+    -d '{"title": "The Hitchhikers Guide to the Galaxy", "author": "Douglas Adams", "year": "1980"}' | jq
+  ```
 
-    ```bash
-    curl -sX DELETE "http://localhost:8000/api/books/1" \
-      -H "Content-Type: application/json" | jq
-    ```
-  
+- Vous pouvez envoyer une requête `DELETE` pour supprimer un livre existant :
+
+  ```bash
+  curl -sX DELETE "https://localhost:8000/api/books/1" \
+    -H "Content-Type: application/json" | jq
+  ```
+
 API Platform gère automatiquement les opérations de mise à jour et de suppression pour les ressources API.
 
 ---
@@ -376,7 +434,7 @@ Dans ces exemples nous avons comment gérer la configuration depuis notre projet
 ```
 
 ```sh
-curl -sX GET "http://localhost:8000/api/books?itemsPerPage=10" -H "Content-Type: application/json" | jq
+curl -sX GET "https://localhost:8000/api/books?itemsPerPage=10" -H "Content-Type: application/json" | jq
 ```
 
 ---
@@ -412,7 +470,7 @@ Par exemple, si vous souhaitez filtrer les livres en fonction de leur titre, vou
 Dans cet exemple, nous avons utilisé le filtre `SearchFilter` pour permettre le filtrage sur le champ `title` des livres. Le paramètre partial indique que la recherche sera partielle, c'est-à-dire que les résultats incluront tous les livres dont le titre contient la valeur de recherche. Vous pouvez maintenant envoyer une requête `GET` avec le paramètre `title` pour filtrer les résultats en fonction du titre :
 
 ```bash
-curl -X GET "http://localhost:8000/api/books?title=Hitchhikers" \
+curl -X GET "https://localhost:8000/api/books?title=Hitchhikers" \
   -H "Content-Type: application/json" | jq
 ```
 
@@ -444,7 +502,7 @@ Le tri permet de trier les résultats renvoyés par une requête en fonction d'u
 Dans cet exemple, nous avons utilisé le filtre `OrderFilter` pour permettre le tri sur le champ `title` des livres. Vous pouvez maintenant envoyer une requête GET avec le paramètre order pour trier les résultats en fonction du titre :
 
 ```bash
-curl -X GET "http://localhost:8000/api/books?order%5Btitle%5D=asc" \
+curl -X GET "https://localhost:8000/api/books?order%5Btitle%5D=asc" \
   -H "Content-Type: application/json" | jq
 ```
 
@@ -704,7 +762,7 @@ symfony console doctrine:query:sql "insert into public.user (id, email, password
 Pour obtenir un token, vous devez envoyer une requête `POST` à l'URL `/api/login_check` avec les informations d'identification de l'utilisateur. Par exemple, si vous avez créé un utilisateur avec l'adresse e-mail
 
 ```bash
-curl -sX POST -H "Content-Type: application/json" http://localhost:8000/api/login_check \
+curl -sX POST -H "Content-Type: application/json" https://localhost:8000/api/login_check \
  -d '{"email":"john@doe.com","password":"myPassword"}' | jq
 ```
 
@@ -713,7 +771,7 @@ Faites à nouveau une requête HTTP pour récupérer les livres, on aura une err
 En `effet` il faudra à présent vous authentifier pour avoir accès au données de l'api. stockez le token obtenu dans une variable d'environnement `TOKEN`, puis lancer la requête suivante.
 
 ```bash
-curl -sX GET  http://localhost:8000/api/books \
+curl -sX GET  https://localhost:8000/api/books \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer ${TOKEN}" | jq
 ```
@@ -764,7 +822,7 @@ class: middle
 Voici un exemple de commande curl pour tester la validation des données de l'entité `Book` :
 
 ```sh
-curl -X 'POST' http://localhost:8000/api/books \
+curl -X 'POST' https://localhost:8000/api/books \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer ${TOKEN}" \
   -d '{ "title" : "Symfony fast track", "author": "Fa", "year": "22" }' | jq
@@ -777,7 +835,7 @@ Comme nous avons ajouté des contraintes de validation à ces deux propriétés,
 Vous pouvez également tester la validation en envoyant une requête `PUT` ou `PATCH` pour mettre à jour un livre existant avec des données non valides. Par exemple :
 
 ```sh
-curl -X 'PUT' http://localhost:8000/api/books/1 \
+curl -X 'PUT' https://localhost:8000/api/books/1 \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer ${TOKEN}" \
   -d '{ "title" : "a", "year": "" }' | jq
@@ -791,10 +849,12 @@ Comme nous avons ajouté des contraintes de validation à ces deux propriétés,
 
 class: middle
 .center[
+
 ### **Personnalisation des messages d'erreur**
+
 ]
 
-Vous pouvez personnaliser les messages d'erreur renvoyés par la validation en ajoutant des messages personnalisés à chaque contrainte. 
+Vous pouvez personnaliser les messages d'erreur renvoyés par la validation en ajoutant des messages personnalisés à chaque contrainte.
 Par exemple, si vous voulez personnaliser le message d'erreur pour la contrainte Length, vous pouvez modifier la validation comme suit :
 
 ```diff
@@ -806,8 +866,8 @@ Par exemple, si vous voulez personnaliser le message d'erreur pour la contrainte
 
 #### Validation conditionnelle
 
-Vous pouvez également valider les données de manière conditionnelle en utilisant des groupes de validation. 
-Les groupes de validation vous permettent de valider uniquement certaines propriétés de l'entité en fonction du contexte. 
+Vous pouvez également valider les données de manière conditionnelle en utilisant des groupes de validation.
+Les groupes de validation vous permettent de valider uniquement certaines propriétés de l'entité en fonction du contexte.
 Par exemple, si vous souhaitez valider la propriété `$year` uniquement lors de la création d'un nouveau livre, vous pouvez ajouter la contrainte NotBlank à cette propriété dans le groupe de validation creation comme suit :
 
 ```diff
@@ -823,7 +883,9 @@ Par exemple, si vous souhaitez valider la propriété `$year` uniquement lors de
 
 class: middle
 .center[
+
 ### **Travaux Pratiques**
+
 ]
 
 #### Objectif
@@ -842,11 +904,12 @@ Ajout des contraintes de validation
 
 #### Test de la validation
 
-- Utilisez la commande curl pour tester la validation des données de l'entité `User`. 
+- Utilisez la commande curl pour tester la validation des données de l'entité `User`.
+
   - Envoyez une requête `POST` pour créer un nouvel utilisateur avec des données invalides (par exemple, un nom d'utilisateur vide ou une adresse e-mail invalide).
   - Vérifiez que la requête renvoie une erreur de validation avec des messages d'erreur appropriés.
 
-- Ensuite, envoyez une requête `PUT` ou `PATCH` pour mettre à jour un utilisateur existant avec des données invalides (par exemple, un mot de passe trop court). 
+- Ensuite, envoyez une requête `PUT` ou `PATCH` pour mettre à jour un utilisateur existant avec des données invalides (par exemple, un mot de passe trop court).
   - Vérifiez que la requête renvoie une erreur de validation avec des messages d'erreur appropriés.
 
 ---
@@ -874,6 +937,7 @@ Nous devrons définir une relation `OneToMany` inverse dans l'entité `Category`
 ```sh
 symfony console make:entity Category
 ```
+
 Appliquer la migration
 
 ```bash
@@ -886,7 +950,9 @@ symfony console doctrine:migrations:migrate -n
 class: middle
 
 .center[
+
 ### **Travaux Pratiques**
+
 ]
 
 L'objectif de ce mini TP : est de vous familiariser avec l'utilisation des endpoints REST actuels de l'API (Book et Category) pour alimenter la base de données à partir d'un jeu de données JSON généré.
@@ -907,7 +973,9 @@ Ce mini TP vous a permis de découvrir comment alimenter la base de données de 
 
 class: middle
 .center[
+
 ### **Groupe de sérialisation**
+
 ]
 
 API Platform utilise le composant Serializer de Symfony pour convertir les objets PHP en formats de données tels que JSON ou XML. Les groupes de sérialisation et de désérialisation permettent de contrôler les propriétés qui sont incluses ou exclues de l'objet sérialisé ou désérialisé.
@@ -960,6 +1028,7 @@ Lors de la récupération d'une catégorie à l'aide de l'API, la réponse JSON 
   "name": "Fiction"
 }
 ```
+
 ]
 
 ---
@@ -1052,7 +1121,9 @@ class: middle, center, inverse
 
 class: middle
 .center[
+
 ### **Installation de GraphQL**
+
 ]
 
 **GraphQL** est un langage de requête pour les APIs créé par Facebook. Contrairement aux APIs REST, qui exposent un ensemble d'URLs pour interagir avec les ressources, GraphQL permet aux clients de définir les données exactes dont ils ont besoin et d'obtenir une réponse qui correspond exactement à cette demande. API Platform prend en charge GraphQL et vous permet de définir des types de ressources personnalisés pour GraphQL.
@@ -1060,27 +1131,28 @@ class: middle
 Pour activer GraphQL et son IDE (GraphiQL et GraphQL Playground) dans votre API, il suffit d'installer le paquet `webonyx/graphql-php` à l'aide de Composer et de vider le cache une fois de plus:
 
 ```bash
-symfony composer require webonyx/graphql-php
+symfony composer require api-platform/graphql
 symfony console cache:clear
 ```
 
-
-
 ---
+
 class: middle
 .center[
+
 ### **Configuration de GraphQL**
+
 ]
 
 API Platform detect automatiquement la presence de GraphQL et vous pourrez utiliser le endpoint sur la route `api/graphql`
 
 .pull-left[
-**l'IDE GraphiQL** est disponible sur `api/graphql/graphiql`, qui est un IDE web pour GraphQL développé par Facebook. 
-Il est disponible en tant qu'interface utilisateur intégrée à API Platform. 
+**l'IDE GraphiQL** est disponible sur `api/graphql/graphiql`, qui est un IDE web pour GraphQL développé par Facebook.
+Il est disponible en tant qu'interface utilisateur intégrée à API Platform.
 GraphiQL offre des fonctionnalités telles que l'autocomplétion, la validation de requêtes et l'exploration de schémas GraphQL.
 ]
 .pull-right[
-**GraphQL Playground** est disponible sur `api/graphql/graphiql`qui est un IDE web pour GraphQL qui offre une interface utilisateur moderne et intuitive. 
+**GraphQL Playground** est disponible sur `api/graphql/graphiql`qui est un IDE web pour GraphQL qui offre une interface utilisateur moderne et intuitive.
 Il permet de tester et d'explorer les requêtes GraphQL en temps réel, ainsi que de visualiser les résultats et les erreurs de manière claire.
 ]
 
@@ -1098,7 +1170,9 @@ Donnons un accès publique à ses deux IDE, depuis le fichier `config/packages/s
 
 class: middle
 .center[
+
 ### **Définition des types de ressources pour GraphQL**
+
 ]
 
 API Platform vous permet de définir des types de ressources personnalisés pour GraphQL à l'aide de l'attribute `#[ApiResource]`.
@@ -1107,9 +1181,9 @@ Les entités `Book` et `Category` utilise cet attributes, et son directement dis
 
 #### Utilisation de l'API GraphQL
 
-Pour tester l'API GraphQL, vous pouvez utiliser un client GraphQL tel que GraphiQL ou Playground. Ces clients vous permettent de créer et d'envoyer des requêtes GraphQL à votre API. 
+Pour tester l'API GraphQL, vous pouvez utiliser un client GraphQL tel que GraphiQL ou Playground. Ces clients vous permettent de créer et d'envoyer des requêtes GraphQL à votre API.
 
-* **Voici un exemple de requête GraphQL pour récupérer un livre par son identifiant :**
+- **Voici un exemple de requête GraphQL pour récupérer un livre par son identifiant :**
 
 ```graphql
 query {
@@ -1128,3 +1202,168 @@ query {
 ```
 
 Dans cet exemple, nous demandons à l'API de récupérer un livre avec l'identifiant 1. Nous demandons également les propriétés id, title et author, du livre, ainsi que le nom de la catégorie.
+
+---
+
+class: middle
+
+.center[
+
+### **Recuperer la liste des livres**
+
+]
+
+- **Voici un exemple de requête GraphQL pour récupérer la liste des livres :**
+
+```graphql
+query {
+  books {
+    id
+    title
+    author
+    category {
+      name
+    }
+  }
+}
+```
+
+---
+
+class: middle
+.center[
+
+### **Mutations**
+
+]
+
+Les mutations sont utilisées pour modifier ou créer des données. Elles sont similaires aux requêtes, mais permettent de modifier ou de créer des ressources.
+
+- **Voici un exemple de mutation pour créer un nouveau livre :**
+
+```graphql
+mutation {
+  createBook(
+    input: {
+      title: "The Great Gatsby"
+      author: "F. Scott Fitzgerald"
+      year: "1925"
+      category: "/api/categories/1"
+    }
+  ) {
+    id
+    title
+    author
+    category {
+      name
+    }
+  }
+}
+```
+
+- **Voici un exemple de mutation pour modifier un livre existant :**
+
+```graphql
+mutation {
+  updateBook(
+    id: "/api/books/1"
+    input: {
+      title: "The Great Gatsby"
+      author: "F. Scott Fitzgerald"
+      year: "1925"
+      category: "/api/categories/1"
+    }
+  ) {
+    id
+    title
+    author
+    category {
+      name
+    }
+  }
+}
+```
+
+---
+
+class: middle
+.center[
+
+### **Endpoints personnalisés avec GraphQL**
+
+]
+
+API Platform permet de créer des endpoints personnalisés en GraphQL en utilisant des resolvers personnalisés. Voici comment créer un endpoint personnalisé :
+
+1. **Créer un resolver personnalisé :**
+
+````php
+class BookResolver extends AbstractItemResolver
+{
+    public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
+    {
+        return Book::class === $resourceClass && 'custom_endpoint' === $operationName;
+    }
+
+    public function getItem(string $resourceClass, $id, string $operationName = null, array $context = []): object
+    {
+        return $this->getRepository($resourceClass)->find($id);
+    }
+}
+    ```
+
+2. **Ajouter l'endpoint personnalisé à la configuration API Platform :**
+
+```yaml
+api_platform:
+  graphql:
+    enabled: true
+    path: /api/graphql
+    playground: /api/graphql/playground
+    schema_cache_ttl: 3600
+    resolvers:
+      - App\GraphQL\Resolver\BookResolver
+````
+
+3. **Créer un endpoint personnalisé :**
+
+```graphql
+query {
+  custom_endpoint {
+    id
+    title
+    author
+    category {
+      name
+    }
+  }
+}
+```
+
+---
+
+class: middle, center, inverse
+
+# Conclusion
+
+---
+
+class: middle
+
+API Platform est un framework puissant qui simplifie considérablement le développement d'APIs modernes. Ses principaux avantages sont :
+
+- **Développement rapide** : Génération automatique des endpoints CRUD et de la documentation
+- **Standards modernes** : Support natif de REST, GraphQL, JSON-LD, OpenAPI
+- **Flexibilité** : Personnalisation facile via les attributs et la configuration
+- **Performance** : Optimisations intégrées comme le cache HTTP et le lazy loading
+- **Sécurité** : Intégration simple de l'authentification et des autorisations
+- **Validation robuste** : Validation des données et gestion des erreurs intégrées
+- **Extensibilité** : Écosystème riche de composants et d'intégrations
+
+API Platform permet aux développeurs de se concentrer sur la logique métier plutôt que sur l'infrastructure, tout en garantissant des APIs de haute qualité respectant les meilleures pratiques.
+
+Pour aller plus loin :
+
+- Documentation officielle : [https://api-platform.com/docs](https://api-platform.com/docs)
+- Tutoriels et exemples : [https://api-platform.com/docs/distribution](https://api-platform.com/docs/distribution)
+- Communauté : [https://api-platform.com/community](https://api-platform.com/community)
