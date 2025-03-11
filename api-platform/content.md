@@ -1294,11 +1294,12 @@ mutation {
       category: "/api/categories/1"
     }
   ) {
-    id
-    title
-    author
-    category {
-      name
+    book {
+      title
+      author
+      category {
+        name
+      }
     }
   }
 }
@@ -1313,19 +1314,21 @@ class: middle
 ```graphql
 mutation {
   updateBook(
-    id: "/api/books/1"
     input: {
+      id: "/api/books/17"
       title: "The Great Gatsby"
       author: "F. Scott Fitzgerald"
-      year: "1925"
+      year: "1900"
       category: "/api/categories/1"
     }
   ) {
-    id
-    title
-    author
-    category {
-      name
+    book {
+      title
+      author
+      year
+      category {
+        name
+      }
     }
   }
 }
