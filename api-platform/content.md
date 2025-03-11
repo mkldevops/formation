@@ -1183,7 +1183,26 @@ Les entités `Book` et `Category` utilise cet attributes, et son directement dis
 
 Pour tester l'API GraphQL, vous pouvez utiliser un client GraphQL tel que GraphiQL ou Playground. Ces clients vous permettent de créer et d'envoyer des requêtes GraphQL à votre API.
 
-- **Voici un exemple de requête GraphQL pour récupérer un livre par son identifiant :**
+- **Récupérer la liste des livres :**
+
+```
+query {
+  books {
+    edges {
+      node {
+        title
+        author
+      }
+    }
+  }
+}
+```
+
+---
+
+class: middle
+
+- **Récupérer un livre par son identifiant :**
 
 ```graphql
 query {
@@ -1195,15 +1214,39 @@ query {
       name
     }
   }
-  categories {
-    name
-  }
 }
 ```
 
-Dans cet exemple, nous demandons à l'API de récupérer un livre avec l'identifiant 1. Nous demandons également les propriétés id, title et author, du livre, ainsi que le nom de la catégorie.
+Dans cet exemple, nous demandons à l'API de récupérer un livre avec l'identifiant 1. Nous demandons également les propriétés id, title et author, du livre.
 
 ---
+
+class: middle
+
+- **Récupérer la liste des catégories et des livres :**
+
+```graphql
+query {
+  categories {
+    edges {
+      node {
+        name
+      }
+    }
+  }
+  books {
+    edges {
+      node {
+        title
+        author
+        category {
+          name
+        }
+      }
+    }
+  }
+}
+```
 
 class: middle
 
@@ -1213,7 +1256,7 @@ class: middle
 
 ]
 
-- **Voici un exemple de requête GraphQL pour récupérer la liste des livres :**
+- **Voici un exemple de requête GraphQL pour récupérer la liste des livres avec la catégorie associée :**
 
 ```graphql
 query {
@@ -1260,6 +1303,10 @@ mutation {
   }
 }
 ```
+
+---
+
+class: middle
 
 - **Voici un exemple de mutation pour modifier un livre existant :**
 
@@ -1324,6 +1371,10 @@ api_platform:
     resolvers:
       - App\GraphQL\Resolver\BookResolver
 ````
+
+---
+
+class: middle
 
 3. **Créer un endpoint personnalisé :**
 
