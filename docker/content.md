@@ -1002,10 +1002,13 @@ Ces options permettent de créer une image Docker personnalisée selon les besoi
 
 class: middle
 .center[
+
 ### **Découvrir les images Docker personnalisées**
+
 ]
 
 Pour créer une image Docker personnalisée, vous devez créer un fichier `Dockerfile` dans le répertoire de votre application.
+
 ```dockerfile
 FROM php:8.3-alpine
 
@@ -1020,25 +1023,27 @@ CMD php -S 0.0.0.0:80 -t /app
 
 Ce `Dockerfile` crée une image Docker personnalisée à partir de l'image de base `php:8.3-alpine`. Il définit le répertoire de travail `/app`, copie un fichier `index.php` dans le répertoire de travail, expose le port `80` et définit la commande par défaut pour lancer le serveur web intégré de PHP.
 
-* **Construisons cette image en utilisant la commande `docker build` **
+- **Construisons cette image en utilisant la commande `docker build` **
   ```sh
   docker build -t mon-image-php-8.3 .
   ```
   .info[
-* L'option `-t` permet de donner un nom à l'image. Dans ce cas, le nom de l'image est `mon-image-php-8.3`.
-* Le `.` à la fin de la commande indique que le `Dockerfile` se trouve dans le répertoire actuel.
-]
+- L'option `-t` permet de donner un nom à l'image. Dans ce cas, le nom de l'image est `mon-image-php-8.3`.
+- Le `.` à la fin de la commande indique que le `Dockerfile` se trouve dans le répertoire actuel.
+  ]
 
-* **Verifions que l'image a bien été créée en utilisant la commande `docker images`**
+- **Verifions que l'image a bien été créée en utilisant la commande `docker images`**
   ```sh
   docker images
   ```
-  
+
 ---
 
 class: middle
 .center[
+
 ### **Lancer un conteneur à partir de l'image Docker personnalisée**
+
 ]
 
 Pour lancer un conteneur à partir de l'image Docker personnalisée que nous venons de créer, vous pouvez utiliser la commande `docker run`.
@@ -1047,7 +1052,7 @@ Pour lancer un conteneur à partir de l'image Docker personnalisée que nous ven
   ```sh
   docker run -d -p 8080:80 --name mon-conteneur-php-8.3 mon-image-php-8.3
   ```
-  
+
 Accédez à l'application PHP en utilisant l'URL `http://localhost:8080` dans votre navigateur. Vous devriez voir le message `Hello World!` affiché dans votre navigateur.
 
 ---
@@ -1062,38 +1067,40 @@ class: middle
 Vous pouvez personnaliser davantage votre image Docker en utilisant des arguments pour définir des variables d'environnement, des options de configuration ou des paramètres de version.
 
 - ⏩ **Mettons à jour le `Dockerfile` pour définir des arguments et des variables d'environnement :**
+
   ```sh
   # Definition d'un argument pour la version de PHP
   ARG PHP_VERSION=8.2
-  
+
   # Utiliser une image de base officielle de PHP avec Alpine Linux
   FROM php:${PHP_VERSION}-alpine
-  
+
   # Definition d'un argument pour le nom du développeur
   ARG DEVELOPED_BY=username
-  
+
   # Definition d'une variable d'environnement pour le port
   ENV PORT=80
   # Definition d'une variable d'environnement pour le nom du développeur en utilisant l'argument DEVELOPED_BY
   ENV DEVELOPED_BY=${DEVELOPED_BY:-username}
-  
+
   RUN echo "PORT : ${PORT}"
-  
+
   # Définir le répertoire de travail dans le conteneur
   WORKDIR /app
-  
+
   # Copier tous les fichiers de l'application dans le répertoire de travail
   COPY . .
-  
+
   # Exposer le port 8080 pour accéder à l'application
   EXPOSE ${PORT}
-  
+
   # Définir la commande par défaut pour lancer l'application
   CMD php -S 0.0.0.0:${PORT} -t /app
   ```
 
-Construisez une nouvelle image Docker à partir du `Dockerfile` en utilisant la commande `docker build` avec des arguments et des variables d'environnement personnalisés. 
+Construisez une nouvelle image Docker à partir du `Dockerfile` en utilisant la commande `docker build` avec des arguments et des variables d'environnement personnalisés.
 Puis lancez un conteneur à partir de l'image Docker personnalisée.
+
 ---
 
 class: middle
@@ -1149,8 +1156,6 @@ La commande `docker build` crée une nouvelle image Docker à partir du fichier 
   ```sh
   docker build -t mon-image-php-8.2 --build-arg DEVELOPED_BY=my-name .
   ```
-  
-
 
 ---
 
@@ -1473,10 +1478,12 @@ Dans ce TP, vous allez mettre en pratique les connaissances acquises lors de cet
   - Installez-y les extensions php `pdo_pgsql intl zip opcache` avec `install-php-extensions` inclus dans l'image `dunglas/frankenphp:alpine`
   - Installez-y le `symfony-cli`
   - Définissez le repertoire de travail qui est `/app`
+  - Définissez la variable d'environnement `SERVER_NAME=:80` pour ne pas utilser le SSL
   - Copiez notre application symfony dans l'image
   - Lancez le `composer install`
 
 - Rédiger un `compose.yaml` qui :
+
   - Build notre fichier `Dockerfile` pour le service `web`
   - Inclus un service `database` qui est base de données postgresql avec un volume pour persister les données
   - Indiquez au service `web` une config de `prod`
